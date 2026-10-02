@@ -100,3 +100,9 @@ Linux/macOS/Windows CI 配置已提交并推送，运行结果尚未核对。远
 ## 概览操作简化（2026-10-03）
 
 按用户要求删除概览中的暂停/恢复学习按钮，停止使用通过 dsh 插件启停开关完成。设置中的自动学习配置继续用于资产维护与已有暂停状态；后台预算和队列逻辑未改动。
+
+## 容器内真实工具与 Linux 资产闭环（2026-10-03）
+
+新增可重复的 `npm run test:container` 检查，使用官方 npm CLI `0.2.0-rc.2` 与当前插件源码副本，整个 dsh 运行在容器内。两种官方 Bash 实现、文件读写编辑、ripgrep 搜索、PTC 直接 Node/子进程和嵌套工具调用均通过；宿主标记文件不可见，外网连接失败，镜像写入失败，子进程保持非 root。Docker 配置检查确认无宿主 bind/volume/socket，断网、只读 rootfs、capabilities 全部移除，设置 CPU/内存/进程数限制。
+
+同一 Linux ARM64 镜像复用已有完整资产闭环检查，通过中文分词、L0–L3、Skill 提炼、实际后续请求消费、版本和独立进程恢复。没有改动后端和冻结核心。详见 [执行边界说明](experiment-container.md)与[回执](evidence/container-isolation-20261003.json)。本检查使用固定模型响应，没有真实任务成绩；联网模型服务的 egress 与官方判分尚未验收。用户已明确：仅继续到少量真实任务试跑，优先 `qwen3.8-27b`，正式配对 benchmark 前停止。

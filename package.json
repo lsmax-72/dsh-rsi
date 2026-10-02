@@ -29,7 +29,8 @@
     "test:runtime": "python3 scripts/probe-runtime.py",
     "verify:panel": "node scripts/verify-panel.mjs",
     "prepare": "npm run build",
-    "test:package": "node scripts/probe-package.mjs"
+    "test:package": "node scripts/probe-package.mjs",
+    "test:container": "python3 scripts/probe-container.py"
   },
   "dsh": {
     "bundle": {

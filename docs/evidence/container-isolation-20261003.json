@@ -1,0 +1,218 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-02T20:21:06.411587+00:00",
+  "imageId": "sha256:18c4e8ccd649ddfd59c24038b6ab7deb849ba995b01e50fad0b3fa5d6c923051",
+  "hostVersion": "0.2.0-rc.2",
+  "policy": {
+    "network": "none",
+    "rootfsReadOnly": true,
+    "uid": 1000,
+    "binds": [],
+    "capDrop": [
+      "ALL"
+    ],
+    "memoryBytes": 2147483648,
+    "nanoCpus": 2000000000,
+    "pidsLimit": 256
+  },
+  "toolProbes": [
+    {
+      "status": "PASS",
+      "shell": "persistent",
+      "node": "v24.21.0",
+      "platform": "linux",
+      "arch": "arm64",
+      "uid": 1000,
+      "fixtureDispatches": 10,
+      "realProviderRequests": 0,
+      "executedTools": [
+        {
+          "name": "write",
+          "isError": false
+        },
+        {
+          "name": "read",
+          "isError": false
+        },
+        {
+          "name": "edit",
+          "isError": false
+        },
+        {
+          "name": "grep",
+          "isError": false
+        },
+        {
+          "name": "glob",
+          "isError": false
+        },
+        {
+          "name": "bash",
+          "isError": false
+        },
+        {
+          "name": "run_code",
+          "isError": false
+        },
+        {
+          "name": "read",
+          "isError": true
+        },
+        {
+          "name": "write",
+          "isError": true
+        }
+      ],
+      "toolSchemas": [
+        "bash",
+        "edit",
+        "glob",
+        "grep",
+        "read",
+        "rsi_conversation_search",
+        "rsi_memory_search",
+        "rsi_profile_read",
+        "run_code",
+        "skill",
+        "write"
+      ],
+      "checks": [
+        "real-agent-dispatch",
+        "native-file-write-read-edit",
+        "native-search-subprocess",
+        "official-shell",
+        "native-ptc-direct-child-and-nested-tool",
+        "host-sentinel-absent",
+        "no-docker-socket",
+        "non-root-descendants",
+        "read-only-harness",
+        "network-denied"
+      ],
+      "limitation": "This no-network fixture proves execution containment, not real-model compatibility or benchmark effectiveness."
+    },
+    {
+      "status": "PASS",
+      "shell": "oneshot",
+      "node": "v24.21.0",
+      "platform": "linux",
+      "arch": "arm64",
+      "uid": 1000,
+      "fixtureDispatches": 10,
+      "realProviderRequests": 0,
+      "executedTools": [
+        {
+          "name": "write",
+          "isError": false
+        },
+        {
+          "name": "read",
+          "isError": false
+        },
+        {
+          "name": "edit",
+          "isError": false
+        },
+        {
+          "name": "grep",
+          "isError": false
+        },
+        {
+          "name": "glob",
+          "isError": false
+        },
+        {
+          "name": "bash",
+          "isError": false
+        },
+        {
+          "name": "run_code",
+          "isError": false
+        },
+        {
+          "name": "read",
+          "isError": true
+        },
+        {
+          "name": "write",
+          "isError": true
+        }
+      ],
+      "toolSchemas": [
+        "bash",
+        "edit",
+        "glob",
+        "grep",
+        "read",
+        "rsi_conversation_search",
+        "rsi_memory_search",
+        "rsi_profile_read",
+        "run_code",
+        "skill",
+        "write"
+      ],
+      "checks": [
+        "real-agent-dispatch",
+        "native-file-write-read-edit",
+        "native-search-subprocess",
+        "official-shell",
+        "native-ptc-direct-child-and-nested-tool",
+        "host-sentinel-absent",
+        "no-docker-socket",
+        "non-root-descendants",
+        "read-only-harness",
+        "network-denied"
+      ],
+      "limitation": "This no-network fixture proves execution containment, not real-model compatibility or benchmark effectiveness."
+    }
+  ],
+  "nativeClosure": {
+    "status": "PASS",
+    "clientRpc": {
+      "status": "PASS",
+      "calls": 1,
+      "carrier": "official client projection to actual host Gateway; in-process fixture carrier"
+    },
+    "fixtureDispatches": 12,
+    "realProviderRequests": 0,
+    "taskCommandsExecuted": 0,
+    "memory": 1,
+    "skillVersions": 4,
+    "checks": [
+      "native-gateway-management-RPC",
+      "management-L0-L3-native-reads",
+      "skill-edit-version-conflict",
+      "resource-preview-binary-and-path-isolation",
+      "official-client-RPC-contribution-mount",
+      "real-agent-turn-capture",
+      "native-L1-and-skill-extractor",
+      "native-L2-scene-and-L3-persona-tools",
+      "next-task-memory-injection",
+      "native-skill-tool-load",
+      "durable-injection-reconstruction",
+      "workspace-isolation",
+      "disable-provider",
+      "version-rollback",
+      "daily-budget-no-dispatch",
+      "memory-correction",
+      "import-managed-copy-with-binary-resources",
+      "export-version-resources",
+      "promote-global-provider",
+      "clear-scope-assets",
+      "profile-path-isolation",
+      "asset-language-conversion-preserves-history",
+      "single-owner-store-lock"
+    ],
+    "limitation": "Fixture integration; no model-quality benchmark, task commands or container isolation validated.",
+    "restart": {
+      "status": "PASS",
+      "memory": 1,
+      "skillVersions": 4,
+      "requests": 0
+    },
+    "hostVersion": "0.2.0-rc.2",
+    "checkedAt": "2026-10-02T20:21:06.275227+00:00",
+    "isolatedHome": true,
+    "diagnostics": []
+  },
+  "limitation": "No-network fixture only; real-model egress, official scoring and real tasks remain unverified."
+}
