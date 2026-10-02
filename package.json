@@ -9,7 +9,8 @@
     ".": "./lib/index.js",
     "./core": "./lib/core-entry.js",
     "./model-bridge": "./lib/model-bridge.js",
-    "./client": "./lib/client.js"
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
   },
   "files": [
     "lib",

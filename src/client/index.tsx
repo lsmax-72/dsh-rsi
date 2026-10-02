@@ -51,5 +51,5 @@ function Panel({ctx}:any) {
 export async function apply(ctx:any) {
   const unmount=await ctx.remote.$mount(remoteContribution);ctx.effect(()=>unmount);
   ctx.effect(()=>ctx.locale.register('rsi',{zh:{title:'自进化'},en:{title:'Self evolution'}}));
-  ctx.inject(['remote.rsi'],(child:any)=>child.effect(()=>child.slots.inject('plugins.bundle.config',()=>child.slots.register({name:'plugins.bundle.config',id:'dsh-rsi',locale:'rsi'},()=> <Panel ctx={child}/>))));
+  ctx.inject(['remote.rsi'],(child:any)=>child.effect(()=>child.slots.inject('plugins.bundle.config',()=>child.slots.register({name:'plugins.bundle.config',key:'dsh-rsi',locale:'rsi'},()=> <Panel ctx={child}/>))));
 }

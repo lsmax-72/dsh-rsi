@@ -48,7 +48,7 @@ npm run test:runtime
 'skill-plugin':'---\nname: plugin-integration\ndescription: 验证真实调用链\n---\n# 插件集成检查\n\n## 验证链路\n\n- 插件加载与服务挂载\n- 任务结束事件与源日志\n- 原生提炼和资产写入\n- 后续请求实际读取记忆与技能\n',
 'skill-review':'---\nname: review-notes\ndescription: 整理任务经验\n---\n# 任务经验整理\n\n保存来源、具体行为与修正依据。'};
 const resources=[{path:'references/test-checklist.md',size_bytes:412},{path:'scripts/check-environment.sh',size_bytes:236}];
-const ctx:any={inject:(_deps:any,fn:any)=>fn(ctx),effect:(fn:any)=>fn(),locale:{register:()=>()=>{}},slots:{inject:(_name:any,fn:any)=>fn(),register:(spec:any,component:any)=>{if(spec.id!=='dsh-rsi')throw Error('wrong slot');createRoot(document.getElementById('root')!).render(React.createElement(component));return()=>{};}},remote:{$mount:async()=>()=>{},rsi:{request:async(operation:string,payload:any)=>{
+const ctx:any={inject:(_deps:any,fn:any)=>fn(ctx),effect:(fn:any)=>fn(),locale:{register:()=>()=>{}},slots:{inject:(_name:any,fn:any)=>fn(),register:(spec:any,component:any)=>{if(spec.name!=='plugins.bundle.config'||spec.key!=='dsh-rsi')throw Error('wrong keyed slot');createRoot(document.getElementById('root')!).render(React.createElement(component));return()=>{};}},remote:{$mount:async()=>()=>{},rsi:{request:async(operation:string,payload:any)=>{
  document.getElementById('receipt')!.textContent=JSON.stringify({operation,payload});
  const row=snapshot.skills.find((s:any)=>s.skill_id===payload.id&&s.scope===payload.scope);
  let value:any=snapshot;

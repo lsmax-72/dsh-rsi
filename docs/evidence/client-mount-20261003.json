@@ -1,0 +1,39 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-02T16:23:58.315402+00:00",
+  "hostVersion": "0.2.0-rc.2",
+  "surface": "official installed dsh web profile",
+  "profile": "rsi-ui",
+  "isolatedHome": true,
+  "installation": "CLI local directory link",
+  "sourceRevisionBeforeFix": "b9b314e",
+  "beforeFix": {
+    "backendRunning": true,
+    "configPanelVisible": false,
+    "nativeSlotError": "keyed slot \"plugins.bundle.config\" requires options.key"
+  },
+  "afterFix": {
+    "configPanelVisible": true,
+    "tabs": [
+      "概览",
+      "记忆",
+      "技能",
+      "设置"
+    ],
+    "packageDescriptionVisible": true,
+    "settingsRpcPersisted": true,
+    "persistedDailyCallBudget": 101,
+    "learningEnabled": false,
+    "disableUnmountsPanel": true,
+    "reenableRestoresPanel": true,
+    "reenablePreservesSettings": true
+  },
+  "realModelRequests": 0,
+  "taskCommands": 0,
+  "limitations": [
+    "User desktop must reload updated client to confirm the fix.",
+    "Git URL installation and cross-platform installation not checked by this run.",
+    "Empty-asset UI and settings checked; no real-model benchmark performed."
+  ],
+  "screenshot": "ui/host-mounted-20261003.png"
+}

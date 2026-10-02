@@ -6,7 +6,7 @@
 
 已有可构建的开发插件。真实 dsh `0.2.0-rc.2` 运行时下，固定模型夹具验证了任务捕获、原生提炼、记忆注入、官方技能工具消费、工作区隔离、预算、版本与重启恢复。管理 API 使用官方 Gateway，页面构建和交互经过独立夹具检查。
 
-尚未公开发布，未安装到个人日常 profile，未完成任务容器隔离与真实模型 benchmark，不能据此宣称效果提升。详细边界见[实现进度](docs/implementation-progress.md)。
+用户桌面已安装本地链接；管理页缺失问题已修复，并通过独立官方 web profile 的实际挂载、RPC 设置保存和启停验收，个人桌面重启后待确认。尚未公开发布，未完成任务容器隔离与真实模型 benchmark，不能据此宣称效果提升。详细边界见[实现进度](docs/implementation-progress.md)。
 
 ## 本地开发
 
@@ -30,7 +30,7 @@ dsh plugin --profile rsi-dev add /Users/lsmax/Coder/dsh-rsi
 dsh --profile rsi-dev
 ```
 
-上面的命令是官方本地 bundle 安装方式；本项目尚未记录完整安装验收。建议先用独立测试 profile；不要把缺少沙箱验证的 profile 用于实验任务执行。安装后，进入插件详情页查看「概览 / 记忆 / 技能 / 设置」。
+上面的命令是官方本地 bundle 安装方式；本地安装与官方 web 页面验收见 [挂载修复记录](docs/client-mount-review.md)；个人桌面更新后待确认。建议先用独立测试 profile；不要把缺少沙箱验证的 profile 用于实验任务执行。安装后，进入插件详情页查看「概览 / 记忆 / 技能 / 设置」。
 
 源码安装已配置 `prepare` 自动构建；正常 `npm ci` 会生成 `lib/`。上方使用 `--ignore-scripts` 时仍需显式执行构建。包保持 `private: true`，`npm pack` 可生成本地安装 tarball；远程 Git URL 经 dsh 安装器的流程和正式 npm 发布尚未验收。
 
@@ -49,6 +49,7 @@ dsh --profile rsi-dev
 - [接入审查](docs/integration-audit.md)
 - [安装打包与发布审查](docs/packaging-review.md)
 - [管理页组件复用与适配边界](docs/ui-reuse.md)
+- [实际管理页挂载验收](docs/client-mount-review.md)
 - [整体验收与实验方案](docs/evaluation-plan.md)
 - [闭环运行回执](docs/evidence/runtime-phase2.json)
 - [复用源码清单](vendor/core/manifest.json)与[许可证](vendor/core/LICENSE)

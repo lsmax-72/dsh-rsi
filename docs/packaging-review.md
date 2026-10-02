@@ -20,14 +20,14 @@
 
 jieba 需要平台原生二进制，通过依赖包的 `optionalDependencies` 选择。当前本机为 macOS ARM64，已确认 `.node` 被实际加载，且中文分词成功。生产安装探针通过核心的 `buildFtsQuery` 检查二进制确实加载，避免把缺失二进制后的原生回退当成兼容验证成功。
 
-新增 `.github/workflows/package.yml` 对 Linux/macOS/Windows 配置 Node 24 安装检查。配置尚未提交或推送，CI 未运行；不能声称三个平台都已通过，也不能由 OS 名称覆盖所有 CPU/libc 组合。
+新增 `.github/workflows/package.yml` 对 Linux/macOS/Windows 配置 Node 24 安装检查。配置已提交并推送，CI 运行结果尚未核对；不能声称三个平台都已通过，也不能由 OS 名称覆盖所有 CPU/libc 组合。
 
 ## 发布状态
 
 - 保持 `private: true`，当前是开发包；本地 `npm pack` 不受该字段阻止，正式 npm 发布前必须解除。
 - 只读查询公共 npm registry 的 `dsh-rsi` 返回 E404。目前没有查到公开包；这不证明名称已被保留或当前账号有发布权。
 - 包名及 scope 在正式发布前按实际 npm 账号权限确认；若改名，需要同步客户端模块 ID 与 RPC contribution 的 package 字段，不能只改 `package.json`。
-- 桌面安装与页面挂载仍待验收；打包探针不代替 dsh 安装器和真实 benchmark。
+- 本地链接安装及独立官方 web 页面挂载已通过，见 [实际挂载记录](client-mount-review.md)；个人桌面重启后的结果待确认，真实 benchmark 仍未执行。
 
 ## 重现验证
 
