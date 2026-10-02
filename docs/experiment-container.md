@@ -43,3 +43,13 @@
 ## 下一步与停止条件
 
 先设置只允许声明模型服务的 egress，再验证 qwen3.8-27b 的工具调用和官方判分器；之后少量真实任务试跑，保留轨迹、资产形成/消费与成本记录。正式配对 benchmark 前停止并报告。固定响应检查不能替代真实模型结果。
+
+## 模型服务访问边界与真实工具兼容性（2026-10-03）
+
+已通过内部 Docker network + 固定上游模型网关检查。任务容器仅连接 internal network；网关另外连接出站网络，没有发布端口，不挂载宿主目录或 socket。网关只转发声明模型的 `/v1/models` 和 `/v1/chat/completions`，拒绝其他 URL、模型和重定向，限制请求数量、请求体大小和输出 token 上限。task 侧通用网页访问与外网 TCP 失败。AMD64 和 Ubuntu 官方任务基础环境的真实工具检查也已通过。
+
+`qwen / qwen3.8-27b` 使用官方 dsh-llm-pi-ai 的 `openai-completions` 协议，经 3 次真实请求完成 `write → read`。公开模型目录返回 `max_model_len=262144`，试跑容量据此固定为 262144。当前服务不要求转发密钥；任务容器的 QWEN_API_KEY 为非秘密占位符 EMPTY，没有读取或复制个人凭据。
+
+模型 API 对容器内所有进程可见，Bash/PTC 也可能请求该 API；不能声称只有 LLM adapter 拥有联网权限。固定上游网关不提供网页搜索或任意 HTTP 代理，网关请求上限同时覆盖绕过 Agent 直接访问的推理成本。事件请求数与网关计数还需在真实任务结束后核对。
+
+复现：先构建 `test:container` 的镜像，再运行 `npm run test:model -- --upstream <声明的模型服务地址/v1> --output <回执路径>`。地址不写入仓库；该命令会进行真实模型推理。见 [兼容性回执](evidence/model-compatibility-20261003.json)。本次真实任务仅为两题接入试跑，正式配对 benchmark 前停止。

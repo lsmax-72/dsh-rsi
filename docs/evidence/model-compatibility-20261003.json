@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "model": "qwen3.8-27b",
+  "provider": "qwen",
+  "requests": 3,
+  "tools": [
+    {
+      "name": "write",
+      "isError": false
+    },
+    {
+      "name": "read",
+      "isError": false
+    }
+  ],
+  "limitation": "Declared model API is reachable by all container processes; generic web and external network are blocked. Not a benchmark task.",
+  "networkInternal": true,
+  "modelGatewayOnly": true,
+  "gatewayRequests": 3
+}

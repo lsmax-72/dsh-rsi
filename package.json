@@ -30,7 +30,8 @@
     "verify:panel": "node scripts/verify-panel.mjs",
     "prepare": "npm run build",
     "test:package": "node scripts/probe-package.mjs",
-    "test:container": "python3 scripts/probe-container.py"
+    "test:container": "python3 scripts/probe-container.py",
+    "test:model": "python3 scripts/probe-model.py"
   },
   "dsh": {
     "bundle": {
