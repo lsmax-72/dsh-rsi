@@ -1,0 +1,234 @@
+{
+  "revision": "e09899c2136fb6bc27ecc68505e32bdb637cdfa8",
+  "files": [
+    {
+      "path": "adapters/standalone/storage-tools.ts",
+      "sha256": "530436d6432fafc64552276f3a9178193634ca6a8f14020934b5715c443e7895"
+    },
+    {
+      "path": "config.ts",
+      "sha256": "d92270e0f4392dfed8b885104d4a682526ede7221673ec191c6783a2a695e2c0"
+    },
+    {
+      "path": "core/conversation/l0-recorder.ts",
+      "sha256": "2ad5e3c4b3fd6fd076fff64cfabbe0b73ae6155f44dc81fdbf2c7241a3317995"
+    },
+    {
+      "path": "core/hooks/auto-recall.ts",
+      "sha256": "fb5d89e2ec41bcd6c8787012d13e4f0b310705f5764fb34f97c25903ffe12c0c"
+    },
+    {
+      "path": "core/hooks/recall-errors.ts",
+      "sha256": "fe0c4e32055451778c97b38ccd0f2ab718b07ce4b0b82321a56423fdd52c0fc4"
+    },
+    {
+      "path": "core/local-mutation-boundary.ts",
+      "sha256": "3ef5c3c3a5ac9c1faac5a20a890d3907643cef80d1e3c8172985bcfb725bdb8a"
+    },
+    {
+      "path": "core/memory-generation-log/best-effort.ts",
+      "sha256": "238d4380f509d594b037d1a029536f4e46ba8e2d9e6543937b36d1b48ac713cc"
+    },
+    {
+      "path": "core/memory-generation-log/store.ts",
+      "sha256": "9bce9db60634edfc97130ef29d228124cccc3a487c80ab07342400e459c3b132"
+    },
+    {
+      "path": "core/memory-generation-log/types.ts",
+      "sha256": "2e8f1c66aa3056c63b7f491cef5d716a794ef2beb077433a81c9294ff158a0bd"
+    },
+    {
+      "path": "core/memory-prompt/composer.ts",
+      "sha256": "085269d76f3052f184d81e8dd00b2dd137b6fd77f89d34db0053d4936e730bda"
+    },
+    {
+      "path": "core/persona/persona-generator.ts",
+      "sha256": "d9d95b9d120d21abc788f0a19b954195094b072f1ddd8bd206a992cc671d362c"
+    },
+    {
+      "path": "core/profile/profile-sync.ts",
+      "sha256": "80433ae88358e2f928c0a73edd84a20730cc042560eecd05c769f552d6fec185"
+    },
+    {
+      "path": "core/prompts/l1-dedup.ts",
+      "sha256": "be6c909e78bc9d8d8fa58b1111e6d7d5de41af0778fd7062ceeeababd497f389"
+    },
+    {
+      "path": "core/prompts/l1-extraction.ts",
+      "sha256": "4a443a170a5c6d754c8212728a2fa23b1d1f647d49f960b7e10b6a6cc5761816"
+    },
+    {
+      "path": "core/prompts/persona-generation.ts",
+      "sha256": "28726a3bfe63aced0de2985609268fb79438b7adc2a49850429187e50ae823b2"
+    },
+    {
+      "path": "core/prompts/scene-extraction.ts",
+      "sha256": "3385f4df97c21189a7f429984a3d149391ed7874854973888792cbf3094c98bf"
+    },
+    {
+      "path": "core/record/l1-dedup.ts",
+      "sha256": "3a23f2b2ae1b55ef374dad10310e1dd68024c48a25c9e49e921e23acc357a9ad"
+    },
+    {
+      "path": "core/record/l1-extractor.ts",
+      "sha256": "a618c84ae40c7348dfb49a031e60a30227b1e5bb7523ef7a37031476c8e9499e"
+    },
+    {
+      "path": "core/record/l1-reader.ts",
+      "sha256": "2f87ff571cfd410279a5c8568b70e49c63a829e26e6da048edad2607405779b5"
+    },
+    {
+      "path": "core/record/l1-writer.ts",
+      "sha256": "616cc7102efc9e3ab2165e5314ac5255314a01e29fcdf2e5e3935b52d926d944"
+    },
+    {
+      "path": "core/report/kafka-metric-producer.ts",
+      "sha256": "7351d4e108671b6f828715d0df64d79efb5d69ad18e852f49c66238812b5345c"
+    },
+    {
+      "path": "core/report/metric-tracking-l1-latency.ts",
+      "sha256": "2a6dcc900d628c1e9abda9e1fe0dc245bd87c54b997be96a90b7abdf19af47dc"
+    },
+    {
+      "path": "core/report/metric-tracking-l2-latency.ts",
+      "sha256": "a985987710b001f7af4298e10c34b04775d814f4a8303bbbdca2790ec3f356ed"
+    },
+    {
+      "path": "core/report/metric-tracking-l3-latency.ts",
+      "sha256": "12f0a694e970867788f9ffda93435b33b0cebe28c2d5635333b780c558fabbb9"
+    },
+    {
+      "path": "core/report/noop-backend.ts",
+      "sha256": "306d284ce411ebc1ab677067906c9c7c36104f3f6baa3129ce657a9ff3385b0c"
+    },
+    {
+      "path": "core/report/reporter.ts",
+      "sha256": "decfea736c5b98de5c99028e333bd6404d2814503b08b06c34398930ff36fc77"
+    },
+    {
+      "path": "core/report/trace.ts",
+      "sha256": "07a6ea5085b1e36044cc3fdf98224f01ca7dc1fb3c0426b6ff55bd374ea80efb"
+    },
+    {
+      "path": "core/scene/filename-normalizer.ts",
+      "sha256": "876a30a2922ae1fa20d356d53d2842b9190fa7fc9305c33eab8329fbac928a9f"
+    },
+    {
+      "path": "core/scene/scene-extractor.ts",
+      "sha256": "50670c601ded5acc919b7dfa198981c06a8f5ecc40cea117cc3af08028c1516e"
+    },
+    {
+      "path": "core/scene/scene-format.ts",
+      "sha256": "d4a7a908633869c3163f93d3ce8c08ce005b7afe745c4b3fa8f5e2bdad0604c6"
+    },
+    {
+      "path": "core/scene/scene-index.ts",
+      "sha256": "787ad0e839be5d9d1911208a1a0bc211b26a5f73a176ec1a94d181d96e7027be"
+    },
+    {
+      "path": "core/scene/scene-navigation.ts",
+      "sha256": "78b6b0075f23d622badfc94aa017f74d4cf7667b6f15430c08cf5d0de54b0983"
+    },
+    {
+      "path": "core/skill/skill-core.ts",
+      "sha256": "5de6360c46ca84d8292e2972bbd5930dd790f29b89b102b2ffb273460b1d0b04"
+    },
+    {
+      "path": "core/skill/skill-extractor.ts",
+      "sha256": "59925d8c3bc1b0e80edae12b0e7c3671bf54baa5f2bc5f6fc58360e665c66711"
+    },
+    {
+      "path": "core/skill/skill-format.ts",
+      "sha256": "f7f2bc415da3d78947318a402439cc0a1babbc6cb40b3f069a204c45708e70b1"
+    },
+    {
+      "path": "core/skill/skill-permission.ts",
+      "sha256": "77c411fd3bd1442e65a96f906b6271b46814ebe031aec95efcb835e502148cb5"
+    },
+    {
+      "path": "core/skill/skill-resource-store.ts",
+      "sha256": "81dbaaeba0daa8b333ddacf7ba8aeeab246b0396ef32ece8a211c2415f6b6759"
+    },
+    {
+      "path": "core/skill/skill-store-ddl.ts",
+      "sha256": "0f868d156900fe103dd87e8845591fc31aa24f425fa75bccad13b62ce4ac0fad"
+    },
+    {
+      "path": "core/skill/skill-store.ts",
+      "sha256": "9b0b99c4db964c5bdc1991c08927993b0445700beff4cabe2472e49eeb54922e"
+    },
+    {
+      "path": "core/skill/skill-tools.ts",
+      "sha256": "9cd54c1225cf33228cfcb9d5776e24c631f400c709071f741b1aa3ac6d8eaa1c"
+    },
+    {
+      "path": "core/skill/skill-versioning.ts",
+      "sha256": "51c473ca300462279d2a5faa481021d6797ed803d47196c8c1916c886ff1d120"
+    },
+    {
+      "path": "core/storage/adapter.ts",
+      "sha256": "11811140dde0180ab2effd79ca6e9e63c1aae13629d907c8db4dea6a7bf5ca75"
+    },
+    {
+      "path": "core/storage/local-backend.ts",
+      "sha256": "92b53af427cc74bfc80c34391c39b565fa434d872cfc08ea07f3cdf8bebdee39"
+    },
+    {
+      "path": "core/storage/types.ts",
+      "sha256": "7d5ed74f07d17cd88174d4ef82a887f0e9f811088925d21f65bd357ea67ef12d"
+    },
+    {
+      "path": "core/store/isolation.ts",
+      "sha256": "e9426032b390c37a340cec13207a1447bbdcc017d704421179ae7b26be9d43f3"
+    },
+    {
+      "path": "core/store/sqlite.ts",
+      "sha256": "1e501088bcd981765e18dd3782501fda8286ca06e1be0188d1326fbd2ca1c7da"
+    },
+    {
+      "path": "core/store/types.ts",
+      "sha256": "7dfa45ba9d4d8cf3593b96b3db0b8b8aa92672446724602c973a129d7fb07b95"
+    },
+    {
+      "path": "core/types.ts",
+      "sha256": "1ec3b531661e7e63371242c053c38a9dbb5f9aa70148c40f227f541cf841ef4d"
+    },
+    {
+      "path": "utils/backup.ts",
+      "sha256": "eb4e7760ac843655759111676c020a73e8b90cbdf7fa62ae6ab9701a58ad861f"
+    },
+    {
+      "path": "utils/checkpoint.ts",
+      "sha256": "c73a9485471ea7b512231742fd160352b88bbec924aa488cd7d6135453862330"
+    },
+    {
+      "path": "utils/managed-timer.ts",
+      "sha256": "ddf24a118fd1f69487dc6d9d3b985d94253b4175a49b65f468a0acb157019445"
+    },
+    {
+      "path": "utils/pipeline-manager.ts",
+      "sha256": "c8866c978dcfa82e5cc5fae32f799fb24baf0e3a15abe46775b4c39c5b9bfeff"
+    },
+    {
+      "path": "utils/sanitize.ts",
+      "sha256": "f8953b19d70263846dd59e9a784f9414b5614e1b8780f07103f1631e457eebff"
+    },
+    {
+      "path": "utils/serial-queue.ts",
+      "sha256": "9b832ad7d61dcbf10f00d5f220326344a85ab9b451265c46b12c9e5ff8bf9b12"
+    },
+    {
+      "path": "utils/session-filter.ts",
+      "sha256": "a1bd113e570389e8ae165e058133f546729bcc04af980dc604ca882667b4a46d"
+    },
+    {
+      "path": "utils/short-id.ts",
+      "sha256": "0b04454315daf30d118c8f4e956291bf1defc1d9c3c94a4fe9e4efde74b49082"
+    }
+  ],
+  "buildSeams": {
+    "clean-context-runner.js": "required-runner.ts",
+    "factory.js": "local-observability.ts",
+    "obs-logger.js": "local-obs-logger.ts"
+  }
+}

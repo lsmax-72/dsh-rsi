@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-02T15:38:54.635Z",
+  "freshSourcePrepareBuild": true,
+  "tarballArtifactsPresent": true,
+  "productionInstallWithoutEsbuild": true,
+  "platform": "darwin",
+  "arch": "arm64",
+  "nativeBinaries": [
+    "@node-rs/jieba-darwin-arm64/jieba.darwin-arm64.node"
+  ],
+  "ftsQuery": "\"中文\" OR \"测试\" OR \"环境\" OR \"测试环境\"",
+  "clientExternalSpecifiers": [
+    "react",
+    "react/jsx-runtime"
+  ],
+  "serverExportsLoaded": true,
+  "privatePublishGuard": true,
+  "realModelRequests": 0,
+  "limitation": "Current host only; Git URL installation and other OS/CPU combinations require separate checks."
+}

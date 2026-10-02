@@ -1,0 +1,8 @@
+import { build } from 'esbuild';
+import { createServer } from 'node:http';
+import { mkdir,readFile,writeFile } from 'node:fs/promises';
+import { join } from 'node:path';
+const root=new URL('..',import.meta.url).pathname;await mkdir(join(root,'.preview'),{recursive:true});
+const output=await build({entryPoints:[join(root,'scripts/preview-fixture.tsx')],bundle:true,format:'iife',platform:'browser',write:false,define:{'process.env.NODE_ENV':'"development"'}});await writeFile(join(root,'.preview/shell.js'),output.outputFiles[0].contents);
+const html='<!doctype html><html lang="zh"><meta charset="utf-8"><title>dsh-rsi 管理页 · 交互夹具</title><style>body{margin:0;background:#fafbfd;color:#222;font-family:ui-sans-serif,system-ui}main{margin:24px auto;width:min(1300px,calc(100% - 64px));padding:28px 0}.fixture{font-size:12px;color:#777}#receipt{font-size:11px;white-space:pre-wrap}</style><main><p class="fixture">dsh-rsi 管理页交互夹具 · 使用构建产物与模拟数据</p><div id="root"></div><details><summary>交互回执</summary><pre id="receipt"></pre></details></main><script src="/shell.js"></script></html>';
+const server=createServer(async(req,res)=>{try{if(req.url==='/client.js'||req.url==='/shell.js'){res.setHeader('Content-Type','text/javascript');res.end(await readFile(join(root,req.url==='/client.js'?'lib/client.js':'.preview/shell.js')));}else if(req.url==='/'){res.setHeader('Content-Type','text/html');res.end(html);}else{res.writeHead(404);res.end();}}catch(error){res.writeHead(500);res.end(error.message);}});server.listen(45177,'127.0.0.1',()=>console.log('UI fixture: http://127.0.0.1:45177'));process.on('SIGINT',()=>server.close(()=>process.exit(0)));

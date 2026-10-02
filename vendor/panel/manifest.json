@@ -1,0 +1,76 @@
+{
+  "revision": "e09899c2136fb6bc27ecc68505e32bdb637cdfa8",
+  "files": [
+    {
+      "path": "components/asset/AssetSplitLayout.tsx",
+      "sha256": "b40a21f6a28723850f9ce6f6a681b69dcfdef44147c5277fae33d7570d8045ff",
+      "upstreamPath": "MemoryPanel/web/src/components/asset/AssetSplitLayout.tsx",
+      "mode": "unchanged"
+    },
+    {
+      "path": "components/asset/asset-split-layout.css",
+      "sha256": "e5ed45efd75c3a82c175051ee45081e335386c8934dcd7f0ad3db68e77f52e0a",
+      "upstreamPath": "MemoryPanel/web/src/components/asset/asset-split-layout.css",
+      "mode": "unchanged"
+    },
+    {
+      "path": "components/asset/AssetListPanel.tsx",
+      "sha256": "1d5b52d182e01060201b03e2fcba433e289c8b77ed30f9c346f7d9597f26c1b9",
+      "upstreamPath": "MemoryPanel/web/src/components/asset/AssetListPanel.tsx",
+      "mode": "unchanged"
+    },
+    {
+      "path": "components/asset/asset-list-panel.css",
+      "sha256": "9f8989c2181272736fd15c38d3ebdbf5117f84248c150573e5dcb739bd67c4fc",
+      "upstreamPath": "MemoryPanel/web/src/components/asset/asset-list-panel.css",
+      "mode": "unchanged"
+    },
+    {
+      "path": "components/asset/AssetPageHeader.tsx",
+      "sha256": "91dbec251b46d8083cbeff54f73e98798a565cba51f51d419962929f50179767",
+      "upstreamPath": "MemoryPanel/web/src/components/asset/AssetPageHeader.tsx",
+      "mode": "unchanged"
+    },
+    {
+      "path": "components/asset/asset-page-header.css",
+      "sha256": "c9cfdbf3140b54f00fa721c83817fac2630f0365df1831223d70a25d4f003a1e",
+      "upstreamPath": "MemoryPanel/web/src/components/asset/asset-page-header.css",
+      "mode": "unchanged"
+    },
+    {
+      "path": "components/MarkdownView.tsx",
+      "sha256": "3c9e14ed2ddddb1a250a17e25a31eff72f794e8841315a5b013abb9c90bf5753",
+      "upstreamPath": "MemoryPanel/web/src/components/MarkdownView.tsx",
+      "mode": "unchanged"
+    },
+    {
+      "path": "components/markdown-view.css",
+      "sha256": "21ffbb8542a68ec9552c179d99ff470baa0961ef647585570222bd98db2b3639",
+      "upstreamPath": "MemoryPanel/web/src/components/markdown-view.css",
+      "mode": "unchanged"
+    },
+    {
+      "path": "components/SkillFileTree.tsx",
+      "sha256": "e64c320b188f46fce5be01dcf4458da243b24ac40bfbf7c12f0976bd27555a9c",
+      "upstreamPath": "MemoryPanel/web/src/pages/SkillsPage/components/SkillDetailPane.tsx",
+      "upstreamSha256": "8e29db1f6e8de69df356335167a8046a933d80468442338bef9cc29dde57a5ec",
+      "mode": "extracted",
+      "changes": [
+        "Only export buildFileTree and FileTreeView; function bodies unchanged."
+      ]
+    },
+    {
+      "path": "components/skill-file-tree.css",
+      "sha256": "286254732fb8e4e95ce4c19d8ba7903214ea5a000577820cce79cab80b43c24e",
+      "upstreamPath": "MemoryPanel/web/src/pages/SkillsPage/styles/skill-detail.css",
+      "mode": "extracted",
+      "changes": [
+        "File tree selectors only; contents unchanged."
+      ]
+    }
+  ],
+  "buildSeams": {
+    "react-i18next": "adapters/client-split-label.ts",
+    "tea-component": "adapters/client-card.tsx"
+  }
+}

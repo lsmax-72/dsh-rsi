@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-02T15:04:19.556123+00:00",
+  "surface": "Built plugin client artifact with simulated business RPC responses",
+  "sourceRevision": "e09899c2136fb6bc27ecc68505e32bdb637cdfa8",
+  "reusedPanelFiles": 10,
+  "nativeRuntimeFiles": 56,
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "checks": [
+    "L0-L3 switching",
+    "scope navigation rendering",
+    "skill search and detail selection",
+    "native file tree resource preview",
+    "SKILL.md edit and new-version rendering",
+    "version-history markdown",
+    "no horizontal page overflow",
+    "fresh-tab console has no warnings or errors"
+  ],
+  "screenshots": [
+    "ui/memory.png",
+    "ui/skills.png"
+  ],
+  "limitations": [
+    "Preview data are fixtures.",
+    "No desktop profile install or full UI to native Host transport verified here.",
+    "No real model quality or benchmark result."
+  ]
+}

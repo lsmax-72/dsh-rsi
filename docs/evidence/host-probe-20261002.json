@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "modelCalls": 0,
+  "sessionId": "session-1",
+  "durabilityListenerParticipated": true,
+  "checks": [
+    "isolated-skill-discovery",
+    "skill-body-reload",
+    "session-event-observation",
+    "logged-message-projection",
+    "session-flush-api",
+    "builtin-sqlite"
+  ],
+  "provider": "dsh-rsi-probe-files",
+  "limitation": "Interface probe only. No agent task, learning extraction, model inference, or persistence round trip was executed.",
+  "hostVersion": "0.2.0-rc.2",
+  "checkedAt": "2026-10-02T12:36:21.139424+00:00",
+  "isolatedHome": true,
+  "taskCommandsExecuted": 0,
+  "diagnostics": [
+    "[1002/203620.881988:ERROR:electron/shell/common/mac/codesign_util.cc:79] task_name_for_pid: (os/kern) failure (5)"
+  ]
+}

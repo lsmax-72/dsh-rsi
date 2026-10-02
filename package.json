@@ -1,0 +1,74 @@
+{
+  "name": "dsh-rsi",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "Local memory and skill evolution for DeepSeek Harness",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./core": "./lib/core-entry.js",
+    "./model-bridge": "./lib/model-bridge.js",
+    "./client": "./lib/client.js"
+  },
+  "files": [
+    "lib",
+    "src",
+    "adapters",
+    "vendor",
+    "scripts/build.mjs",
+    "cordis.patch.yml",
+    "scripts/verify-core.mjs",
+    "scripts/verify-panel.mjs"
+  ],
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test:integration": "python3 scripts/probe-bridge.py",
+    "verify:core": "node scripts/verify-core.mjs",
+    "test:runtime": "python3 scripts/probe-runtime.py",
+    "verify:panel": "node scripts/verify-panel.mjs",
+    "prepare": "npm run build",
+    "test:package": "node scripts/probe-package.mjs"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-api-remotes",
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-plugin-manager"
+      ],
+      "platform": "web"
+    }
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "dependencies": {
+    "@node-rs/jieba": "2.0.3",
+    "ai": "6.0.272",
+    "ajv": "8.20.0",
+    "crc-32": "1.2.2",
+    "fflate": "0.8.3",
+    "react-markdown": "10.1.0",
+    "remark-gfm": "4.0.1",
+    "yaml": "2.9.0"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "~4.0.4",
+    "@deepseek-ai/dsh-llm": "0.2.0-rc.2",
+    "@deepseek-ai/dsh-session": "0.2.0-rc.2",
+    "@deepseek-ai/dsh-session-persistence": "0.2.0-rc.2",
+    "@deepseek-ai/dsh-skill": "0.2.0-rc.2",
+    "@deepseek-ai/dsh-tools": "0.2.0-rc.2",
+    "@deepseek-ai/dsh-typert-protocol": "0.2.0-rc.2"
+  },
+  "devDependencies": {
+    "@deepseek-ai/dsh-api-gateway": "0.2.0-rc.2",
+    "esbuild": "0.28.2",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  }
+}
