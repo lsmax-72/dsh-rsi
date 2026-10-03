@@ -1,0 +1,46 @@
+{
+  "status": "PASS",
+  "swebenchVersion": "3.0.0",
+  "cases": [
+    {
+      "instanceId": "django__django-10973",
+      "condition": "oracle",
+      "resolved": true,
+      "failToPassTests": 5,
+      "parsedTests": 5,
+      "runId": "rsi-oracle-85d9870fc9",
+      "testLogSha256": "be8ad9c2f1125f3fca5b436640e2f4c3be682f27fb6fe055f828b825a51f8893"
+    },
+    {
+      "instanceId": "django__django-10973",
+      "condition": "wrong",
+      "resolved": false,
+      "failToPassTests": 5,
+      "parsedTests": 10,
+      "runId": "rsi-wrong-42a6c7312c",
+      "testLogSha256": "d70c46956eae68b7173f315be5ed1c26ec137f940f7f5587352eef9989c9cc5e"
+    },
+    {
+      "instanceId": "django__django-11292",
+      "condition": "oracle",
+      "resolved": true,
+      "failToPassTests": 1,
+      "parsedTests": 32,
+      "runId": "rsi-oracle-055aa15379",
+      "testLogSha256": "e45070b71059bdacfea11b0d10cded0498f78346c5962f4edb60d6a3a2f29582"
+    },
+    {
+      "instanceId": "django__django-11292",
+      "condition": "wrong",
+      "resolved": false,
+      "failToPassTests": 1,
+      "parsedTests": 33,
+      "runId": "rsi-wrong-2619ce9c36",
+      "testLogSha256": "f4b7772e38b3caf8422842af58a672d4e5c7593693b74b84d153e96afb0d157f"
+    }
+  ],
+  "realProviderRequests": 0,
+  "limitation": "Scorer controls only; no Agent task or product effectiveness result.",
+  "verifiedSourceFiles": 50,
+  "datasetSha256": "a45b1fe4e2f0c8390b2b2938ac83e92ed5979000856808f3679c07812e9e6dcd"
+}
