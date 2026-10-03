@@ -25,7 +25,7 @@ def overlay(shell, sentinel):
         ('rsi-files', '@deepseek-ai/dsh-tool-fs', {}),
         ('rsi-search', '@deepseek-ai/dsh-tool-fs-search', {'sampleOverCapGlobResults': False}),
         ('rsi-ptc', '@deepseek-ai/dsh-ptc-runtime-node', {}),
-        ('rsi', '/opt/rsi/lib/index.js', {'dataDir': '/state/assets', 'learningEnabled': False}),
+        ('rsi', '/opt/rsi/lib/index.js', {'dataDir': '/state/assets', 'settings': {'learningEnabled': False}}),
         ('rsi-probe', '/opt/rsi/scripts/isolation-probe.mjs', {'shell': shell, 'sentinel': sentinel}),
     ]
     if shell == 'oneshot':

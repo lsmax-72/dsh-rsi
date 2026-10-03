@@ -1,0 +1,135 @@
+[
+  {
+    "id": "sdk-app-startup",
+    "disabled": true
+  },
+  {
+    "id": "sdk-jsonrpc-server",
+    "disabled": true
+  },
+  {
+    "id": "llm-deepseek",
+    "disabled": true
+  },
+  {
+    "id": "tools",
+    "config": {
+      "mode": "both"
+    }
+  },
+  {
+    "id": "persistent-bash",
+    "disabled": true
+  },
+  {
+    "insert": [
+      {
+        "id": "rsi-registry",
+        "name": "@deepseek-ai/dsh-typert-registry"
+      },
+      {
+        "id": "rsi-gateway",
+        "name": "@deepseek-ai/dsh-api-gateway"
+      },
+      {
+        "id": "rsi-skills",
+        "name": "@deepseek-ai/dsh-skill"
+      },
+      {
+        "id": "rsi-tool-skill",
+        "name": "@deepseek-ai/dsh-tool-skill"
+      },
+      {
+        "id": "rsi-fs",
+        "name": "@deepseek-ai/dsh-fs-local",
+        "config": {
+          "cwd": "/workspace"
+        }
+      },
+      {
+        "id": "rsi-files",
+        "name": "@deepseek-ai/dsh-tool-fs"
+      },
+      {
+        "id": "rsi-search",
+        "name": "@deepseek-ai/dsh-tool-fs-search",
+        "config": {
+          "sampleOverCapGlobResults": false
+        }
+      },
+      {
+        "id": "rsi-ptc",
+        "name": "@deepseek-ai/dsh-ptc-runtime-node"
+      },
+      {
+        "id": "rsi",
+        "name": "/opt/rsi/lib/index.js",
+        "config": {
+          "dataDir": "/state/assets",
+          "provider": "qwen",
+          "model": "qwen3.8-27b",
+          "settings": {
+            "dailyCallBudget": 30
+          }
+        }
+      },
+      {
+        "id": "rsi-shell",
+        "name": "@deepseek-ai/dsh-bash-local"
+      },
+      {
+        "id": "rsi-shell-env",
+        "name": "@deepseek-ai/dsh-shell-env"
+      },
+      {
+        "id": "rsi-bash",
+        "name": "@deepseek-ai/dsh-tool-bash",
+        "config": {
+          "enableRunInBackground": false
+        }
+      },
+      {
+        "id": "rsi-credentials",
+        "name": "@deepseek-ai/dsh-credentials-local",
+        "config": {
+          "path": "/state/credentials.yml",
+          "watch": false
+        }
+      },
+      {
+        "id": "rsi-qwen",
+        "name": "@deepseek-ai/dsh-llm-pi-ai",
+        "config": {
+          "providers": {
+            "qwen": {
+              "api": "openai-completions",
+              "apiKeyEnv": "QWEN_API_KEY",
+              "baseURL": "http://model:8080/v1",
+              "defaultContextWindow": 262144,
+              "models": [
+                {
+                  "id": "qwen3.8-27b",
+                  "name": "qwen3.8-27b"
+                }
+              ],
+              "retryPolicy": {
+                "mode": "normal",
+                "maxRetries": 0
+              }
+            }
+          }
+        }
+      },
+      {
+        "id": "rsi-pilot-task",
+        "name": "/opt/rsi/scripts/pilot-task.mjs",
+        "config": {
+          "instanceId": "TASK_INSTANCE_ID",
+          "learningCallBudget": 30,
+          "dispatchLimit": 50,
+          "wallTimeMs": 1200000
+        }
+      }
+    ]
+  }
+]
