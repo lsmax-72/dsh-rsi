@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {readFile,writeFile} from 'node:fs/promises';
 import {join} from 'node:path';
 import {createHash} from 'node:crypto';
-import {LlmAdapter} from '@deepseek-ai/dsh-llm';
+import {LlmAdapter,createUserMessage} from '@deepseek-ai/dsh-llm';
 import {Session} from '@deepseek-ai/dsh-session';
 import {appendPersonaHistory} from './personamem-history.mjs';
 export const name='personamem-import-probe';
@@ -32,7 +32,19 @@ export function apply(ctx,config){
     const raw=input.history.filter(m=>m.role!=='system'),job=ctx.rsi.runtime.state.jobs(snapshot.workspace.id)[0];
     assert.deepEqual(job.payload.messages.filter(m=>['user','assistant'].includes(m.role)).map(m=>({role:m.role,content:m.content})),raw);
     assert.equal(snapshot.layers[snapshot.workspace.id].L0,raw.length);assert.ok(calls.length>0);
-    const response={status:'PASS',checkedAt:new Date().toISOString(),importedMessages:input.history.length,rawMemoryMessages:raw.length,historyCutoffExclusive:input.historyCutoffExclusive,historySha256:createHash('sha256').update(JSON.stringify(imported.reconstructed)).digest('hex'),durableHistoryExactlyReconstructed:true,nativeTurnEndCapture:true,nativeL0Record:true,fixtureChatCalls:calls.length,realModelRequests:0,answersProvided:false,limitation:'Native import fixture only; model capacity and answering requests with unchanged history still require verification.'};
+    await ctx.rsi.request('settings',{cwd:config.root,settings:{learningEnabled:false}});
+    handleAgent.agent.followup(createUserMessage({source:{kind:'user'},content:[{type:'text',text:input.questions[0].prompt}]}));await handleAgent.agent.whenIdle();await ctx.sessions.flush(session);
+    const rawRequest=calls.find(r=>r.sessionId===session.id),rawTexts=rawRequest.messages.map(m=>m.content.filter(b=>b.type==='text').map(b=>b.text).join(''));
+    const missingBeforeAdaptation=input.history.map((row,index)=>({role:row.role,index,content:row.content})).filter(row=>!rawTexts.includes(row.content));
+    // The ordinary agent renderer owns system nodes; restore dataset system backgrounds as explicit history context.
+    const comparison=await ctx.agents.create({sessionId:'personamem-history-system-adapted',meta:{cwd:config.root},seed:imported.events,agentOptions:{provider:'personamem-fixture',model:'fixture'}});
+    const backgrounds=input.history.map((row,index)=>({...row,index})).filter(row=>row.role==='system');
+    comparison.agent.inject(createUserMessage({source:{kind:'personamem-history',form:'recall',sessionId:session.id},content:[{type:'text',text:'Original system backgrounds in this public history, in historical order (indices refer to the imported log):\n'+backgrounds.map(row=>`[Historical system at original index ${row.index}]\n${row.content}`).join('\n\n')}]}));
+    comparison.agent.followup(createUserMessage({source:{kind:'user'},content:[{type:'text',text:input.questions[0].prompt}]}));await comparison.agent.whenIdle();await ctx.sessions.flush(comparison.agent.session);
+    const adapted=calls.find(r=>r.sessionId===comparison.agent.session.id),actualText=adapted.messages.flatMap(m=>m.content).filter(b=>b.type==='text').map(b=>b.text).join('\n');
+    const missingAfterAdaptation=input.history.map((row,index)=>({index,role:row.role,chars:row.content.length,content:row.content})).filter(row=>!actualText.includes(row.content)).map(({content,...row})=>row);
+    assert.equal(missingAfterAdaptation.length,0,JSON.stringify({missingAfterAdaptation,missingBeforeAdaptation:missingBeforeAdaptation.map(({content,...row})=>row)}));
+    const response={status:'PASS',checkedAt:new Date().toISOString(),importedMessages:input.history.length,rawMemoryMessages:raw.length,historyCutoffExclusive:input.historyCutoffExclusive,historySha256:createHash('sha256').update(JSON.stringify(imported.reconstructed)).digest('hex'),durableHistoryExactlyReconstructed:true,nativeTurnEndCapture:true,nativeL0Record:true,fixtureChatCalls:calls.length,historySystemNodesNormalizedAway:missingBeforeAdaptation.filter(row=>row.role==='system').map(row=>row.index),historyAfterExplicitSystemBackgroundAdaptation:true,foregroundFixtureCalls:2,realModelRequests:0,answersProvided:false,limitation:'Native import fixture only; All historical text is preserved in the adapted answering request; system backgrounds become labelled historical user context. Real model capacity still requires verification.'};
     await writeFile(join(config.root,'receipt.json'),JSON.stringify(response,null,2));process.exit(0);
   }catch(error){console.error(error);process.exit(1);}},50);return()=>clearTimeout(timer);});
 }

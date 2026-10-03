@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-03T23:39:48.293Z",
+  "importedMessages": 182,
+  "rawMemoryMessages": 177,
+  "historyCutoffExclusive": 182,
+  "historySha256": "eeb336ef1029bdd8818a0a503b589dcb51bb249be5511729b6645f779ebddb37",
+  "durableHistoryExactlyReconstructed": true,
+  "nativeTurnEndCapture": true,
+  "nativeL0Record": true,
+  "fixtureChatCalls": 4,
+  "historySystemNodesNormalizedAway": [
+    0,
+    47,
+    78,
+    109,
+    154
+  ],
+  "historyAfterExplicitSystemBackgroundAdaptation": true,
+  "foregroundFixtureCalls": 2,
+  "realModelRequests": 0,
+  "answersProvided": false,
+  "limitation": "Native import fixture only; All historical text is preserved in the adapted answering request; system backgrounds become labelled historical user context. Real model capacity still requires verification."
+}
