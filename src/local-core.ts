@@ -48,7 +48,9 @@ export async function openLocalCore(dataDir: string, runner: any, logger: any) {
       record: (input: any) => recordConversation({ ...input, baseDir:join(dataDir,'history'), storage:history, logger }),
       async extractMemories(input: any) {
         const result = await extractL1Memories({ ...input, baseDir:join(dataDir,'history'), config:{}, storage:history, logger,
-          options:{ llmRunner:runner, enableDedup:true, vectorStore:memory } });
+          // dsh emits many assistant messages inside one turn; the native ten-message default can drop its user input.
+          options:{ llmRunner:runner, enableDedup:true, vectorStore:memory,
+            maxMessagesPerExtraction:Math.max(10,input.messages.length) } });
         if (!result.success) throw new Error('记忆提炼失败，请查看后台会话日志');
         return result;
       },
