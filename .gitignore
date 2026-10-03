@@ -4,3 +4,6 @@ lib/
 .DS_Store
 
 .preview/
+
+# Local experiment traces and scorer outputs must never enter task images or published packages.
+.artifacts/

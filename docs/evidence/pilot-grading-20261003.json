@@ -1,0 +1,120 @@
+{
+  "status": "GRADED",
+  "swebenchVersion": "3.0.0",
+  "verifiedSourceFiles": 50,
+  "datasetSha256": "a45b1fe4e2f0c8390b2b2938ac83e92ed5979000856808f3679c07812e9e6dcd",
+  "cases": [
+    {
+      "instanceId": "django__django-10973",
+      "condition": "pilot",
+      "resolved": false,
+      "failToPassTests": 5,
+      "parsedTests": 9,
+      "runId": "rsi-pilot-4e45dd7e3b",
+      "patchBytes": 2498,
+      "parsed": true,
+      "officialReport": {
+        "patch_is_None": false,
+        "patch_exists": true,
+        "patch_successfully_applied": true,
+        "resolved": false,
+        "tests_status": {
+          "FAIL_TO_PASS": {
+            "success": [],
+            "failure": [
+              "test_accent (dbshell.test_postgresql.PostgreSqlDbshellCommandTestCase)",
+              "test_basic (dbshell.test_postgresql.PostgreSqlDbshellCommandTestCase)",
+              "test_column (dbshell.test_postgresql.PostgreSqlDbshellCommandTestCase)",
+              "test_nopass (dbshell.test_postgresql.PostgreSqlDbshellCommandTestCase)",
+              "SIGINT is ignored in Python and passed to psql to abort quries."
+            ]
+          },
+          "PASS_TO_PASS": {
+            "success": [],
+            "failure": []
+          },
+          "FAIL_TO_FAIL": {
+            "success": [],
+            "failure": []
+          },
+          "PASS_TO_FAIL": {
+            "success": [],
+            "failure": []
+          }
+        }
+      },
+      "testLogSha256": "07a5c808b90f04462d5a3d18e677868a0dbd2ce6b027309c369b41ff4adec6fd"
+    },
+    {
+      "instanceId": "django__django-11292",
+      "condition": "pilot",
+      "resolved": false,
+      "failToPassTests": 1,
+      "parsedTests": 33,
+      "runId": "rsi-pilot-8e8d507aef",
+      "patchBytes": 0,
+      "parsed": true,
+      "officialReport": {
+        "patch_is_None": false,
+        "patch_exists": true,
+        "patch_successfully_applied": true,
+        "resolved": false,
+        "tests_status": {
+          "FAIL_TO_PASS": {
+            "success": [],
+            "failure": [
+              "test_skip_checks (user_commands.tests.CommandRunTests)"
+            ]
+          },
+          "PASS_TO_PASS": {
+            "success": [
+              "test_get_random_secret_key (user_commands.tests.UtilsTests)",
+              "test_is_ignored_path_false (user_commands.tests.UtilsTests)",
+              "test_is_ignored_path_true (user_commands.tests.UtilsTests)",
+              "test_no_existent_external_program (user_commands.tests.UtilsTests)",
+              "test_normalize_path_patterns_truncates_wildcard_base (user_commands.tests.UtilsTests)",
+              "test_call_command_no_checks (user_commands.tests.CommandTests)",
+              "test_call_command_option_parsing (user_commands.tests.CommandTests)",
+              "test_call_command_option_parsing_non_string_arg (user_commands.tests.CommandTests)",
+              "test_call_command_unrecognized_option (user_commands.tests.CommandTests)",
+              "test_call_command_with_required_parameters_in_mixed_options (user_commands.tests.CommandTests)",
+              "test_call_command_with_required_parameters_in_options (user_commands.tests.CommandTests)",
+              "test_calling_a_command_with_no_app_labels_and_parameters_should_raise_a_command_error (user_commands.tests.CommandTests)",
+              "test_calling_a_command_with_only_empty_parameter_should_ends_gracefully (user_commands.tests.CommandTests)",
+              "test_calling_command_with_app_labels_and_parameters_should_be_ok (user_commands.tests.CommandTests)",
+              "test_calling_command_with_parameters_and_app_labels_at_the_end_should_be_ok (user_commands.tests.CommandTests)",
+              "test_check_migrations (user_commands.tests.CommandTests)",
+              "test_command (user_commands.tests.CommandTests)",
+              "test_command_add_arguments_after_common_arguments (user_commands.tests.CommandTests)",
+              "test_command_style (user_commands.tests.CommandTests)",
+              "BaseCommand.create_parser() passes kwargs to CommandParser.",
+              "test_discover_commands_in_eggs (user_commands.tests.CommandTests)",
+              "An unknown command raises CommandError",
+              "test_find_command_without_PATH (user_commands.tests.CommandTests)",
+              "test_language_preserved (user_commands.tests.CommandTests)",
+              "test_no_translations_deactivate_translations (user_commands.tests.CommandTests)",
+              "test_output_transaction (user_commands.tests.CommandTests)",
+              "test_subparser (user_commands.tests.CommandTests)",
+              "test_subparser_invalid_option (user_commands.tests.CommandTests)",
+              "Exception raised in a command should raise CommandError with",
+              "test_disallowed_abbreviated_options (user_commands.tests.CommandRunTests)",
+              "test_script_prefix_set_in_commands (user_commands.tests.CommandRunTests)"
+            ],
+            "failure": []
+          },
+          "FAIL_TO_FAIL": {
+            "success": [],
+            "failure": []
+          },
+          "PASS_TO_FAIL": {
+            "success": [],
+            "failure": []
+          }
+        }
+      },
+      "testLogSha256": "265d192e9a6012869d1f44853cc8bcb59b5e4084e3f89a743865fc4d1cb32299"
+    }
+  ],
+  "realProviderRequests": 0,
+  "limitation": "Two integration pilot attempts; not a paired benchmark or product-effect claim."
+}

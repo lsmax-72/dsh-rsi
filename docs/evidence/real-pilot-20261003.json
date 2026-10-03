@@ -1,0 +1,341 @@
+{
+  "status": "INTEGRATION_INCOMPLETE",
+  "provider": "qwen",
+  "model": "qwen3.8-27b",
+  "pairedBenchmarkStarted": false,
+  "resolved": 0,
+  "tasks": 2,
+  "gatewayRequests": 30,
+  "loggedDispatches": 30,
+  "usage": {
+    "inputTokens": 668043,
+    "outputTokens": 53369,
+    "totalTokens": 721412
+  },
+  "assetConsumptionInRealFollowup": "UNPROVEN",
+  "cases": [
+    {
+      "instanceId": "django__django-10973",
+      "status": "ABORTED",
+      "rawReceiptStatus": "COMPLETED",
+      "stopReason": {
+        "kind": "aborted",
+        "reason": {
+          "kind": "hook",
+          "reason": "Pilot wall time limit reached"
+        }
+      },
+      "taskDispatches": 21,
+      "backgroundDispatches": 0,
+      "patchBytes": 2498,
+      "before": {
+        "memory": 0,
+        "skills": 0,
+        "layers": {
+          "c52ddf65534b7b4603508435": {
+            "L0": 0,
+            "L1": 0,
+            "L2": 0,
+            "L3": 0
+          },
+          "global": {
+            "L0": 0,
+            "L1": 0,
+            "L2": 0,
+            "L3": 0
+          }
+        }
+      },
+      "after": {
+        "memory": 0,
+        "skills": 0,
+        "layers": {
+          "c52ddf65534b7b4603508435": {
+            "L0": 0,
+            "L1": 0,
+            "L2": 0,
+            "L3": 0
+          },
+          "global": {
+            "L0": 0,
+            "L1": 0,
+            "L2": 0,
+            "L3": 0
+          }
+        },
+        "jobs": []
+      },
+      "memoryInjections": [],
+      "skillLoads": [
+        {
+          "name": "skill",
+          "args": {
+            "name": "django"
+          },
+          "isError": true
+        }
+      ],
+      "toolCalls": {
+        "rsi_memory_search": 1,
+        "rsi_conversation_search": 1,
+        "rsi_profile_read": 1,
+        "bash": 16,
+        "skill": 1,
+        "read": 4,
+        "grep": 3,
+        "write": 2
+      },
+      "artifactSearchAttempts": 1,
+      "usage": {
+        "inputTokens": 564271,
+        "outputTokens": 37158,
+        "totalTokens": 601429
+      },
+      "missingUsageRequests": 0,
+      "logReconstructionMatches": true,
+      "grading": {
+        "instanceId": "django__django-10973",
+        "condition": "pilot",
+        "resolved": false,
+        "failToPassTests": 5,
+        "parsedTests": 9,
+        "runId": "rsi-pilot-4e45dd7e3b",
+        "patchBytes": 2498,
+        "parsed": true,
+        "officialReport": {
+          "patch_is_None": false,
+          "patch_exists": true,
+          "patch_successfully_applied": true,
+          "resolved": false,
+          "tests_status": {
+            "FAIL_TO_PASS": {
+              "success": [],
+              "failure": [
+                "test_accent (dbshell.test_postgresql.PostgreSqlDbshellCommandTestCase)",
+                "test_basic (dbshell.test_postgresql.PostgreSqlDbshellCommandTestCase)",
+                "test_column (dbshell.test_postgresql.PostgreSqlDbshellCommandTestCase)",
+                "test_nopass (dbshell.test_postgresql.PostgreSqlDbshellCommandTestCase)",
+                "SIGINT is ignored in Python and passed to psql to abort quries."
+              ]
+            },
+            "PASS_TO_PASS": {
+              "success": [],
+              "failure": []
+            },
+            "FAIL_TO_FAIL": {
+              "success": [],
+              "failure": []
+            },
+            "PASS_TO_FAIL": {
+              "success": [],
+              "failure": []
+            }
+          }
+        },
+        "testLogSha256": "07a5c808b90f04462d5a3d18e677868a0dbd2ce6b027309c369b41ff4adec6fd"
+      },
+      "generatedSkills": [],
+      "evidenceSha256": {
+        "receipt.json": "53a26b526305e05fef13bfd7e20ff80b43a22777ceca3ce52a0d42b90c209583",
+        "source-events.json": "454d7e6a41a67e6ce5a107b68b21c11890a3ee94a0519dc25ad7d09e40b786cb",
+        "model-requests.json": "11c2824f0599b5a1ddfccda769794aaca00c7576bd2ef517f0036c701e7574ac",
+        "prediction.patch": "1cb7294126f57cc61184e3fbd6a269d99cf857a3759b1c73ec89621e77cb937f",
+        "assets.json": "0128e4c8ff6dc59bf7c7e0509b75751439e649a798d1b63b1722e69beca823ea"
+      }
+    },
+    {
+      "instanceId": "django__django-11292",
+      "status": "TOKEN_LIMIT",
+      "rawReceiptStatus": "COMPLETED",
+      "stopReason": {
+        "kind": "max-tokens"
+      },
+      "taskDispatches": 4,
+      "backgroundDispatches": 5,
+      "patchBytes": 0,
+      "before": {
+        "memory": 0,
+        "skills": 0,
+        "layers": {
+          "c52ddf65534b7b4603508435": {
+            "L0": 0,
+            "L1": 0,
+            "L2": 0,
+            "L3": 0
+          },
+          "global": {
+            "L0": 0,
+            "L1": 0,
+            "L2": 0,
+            "L3": 0
+          }
+        }
+      },
+      "after": {
+        "memory": 0,
+        "skills": 1,
+        "layers": {
+          "c52ddf65534b7b4603508435": {
+            "L0": 5,
+            "L1": 0,
+            "L2": 0,
+            "L3": 0
+          },
+          "global": {
+            "L0": 0,
+            "L1": 0,
+            "L2": 0,
+            "L3": 0
+          }
+        },
+        "jobs": [
+          {
+            "id": "pilot-django__django-11292:1",
+            "scope": "c52ddf65534b7b4603508435",
+            "session": "pilot-django__django-11292",
+            "turn": 1,
+            "status": "completed",
+            "stages": {
+              "recorded": true,
+              "memory": {
+                "stored": 0
+              },
+              "skills": {
+                "candidates": [
+                  {
+                    "action": "create",
+                    "name": "django-workspace-task-playbook",
+                    "skill_id": "skl-2wxcDASeaVaW",
+                    "version": 1,
+                    "description": "在 /workspace 的 Django 3.0.dev 离线 testbed 中执行源码修改任务的标准流程（环境验证、基线测试、实现、聚焦回归、中文汇报），并附"
+                  }
+                ]
+              }
+            },
+            "error": null,
+            "created": 1790975429133,
+            "updated": 1790975645513,
+            "sourceSessionId": "pilot-django__django-11292",
+            "reason": {
+              "kind": "max-tokens"
+            }
+          }
+        ]
+      },
+      "memoryInjections": [],
+      "skillLoads": [],
+      "toolCalls": {
+        "rsi_memory_search": 1,
+        "rsi_conversation_search": 1,
+        "rsi_profile_read": 1,
+        "bash": 2,
+        "grep": 1,
+        "read": 2
+      },
+      "artifactSearchAttempts": 0,
+      "usage": {
+        "inputTokens": 103772,
+        "outputTokens": 16211,
+        "totalTokens": 119983
+      },
+      "missingUsageRequests": 0,
+      "logReconstructionMatches": true,
+      "grading": {
+        "instanceId": "django__django-11292",
+        "condition": "pilot",
+        "resolved": false,
+        "failToPassTests": 1,
+        "parsedTests": 33,
+        "runId": "rsi-pilot-8e8d507aef",
+        "patchBytes": 0,
+        "parsed": true,
+        "officialReport": {
+          "patch_is_None": false,
+          "patch_exists": true,
+          "patch_successfully_applied": true,
+          "resolved": false,
+          "tests_status": {
+            "FAIL_TO_PASS": {
+              "success": [],
+              "failure": [
+                "test_skip_checks (user_commands.tests.CommandRunTests)"
+              ]
+            },
+            "PASS_TO_PASS": {
+              "success": [
+                "test_get_random_secret_key (user_commands.tests.UtilsTests)",
+                "test_is_ignored_path_false (user_commands.tests.UtilsTests)",
+                "test_is_ignored_path_true (user_commands.tests.UtilsTests)",
+                "test_no_existent_external_program (user_commands.tests.UtilsTests)",
+                "test_normalize_path_patterns_truncates_wildcard_base (user_commands.tests.UtilsTests)",
+                "test_call_command_no_checks (user_commands.tests.CommandTests)",
+                "test_call_command_option_parsing (user_commands.tests.CommandTests)",
+                "test_call_command_option_parsing_non_string_arg (user_commands.tests.CommandTests)",
+                "test_call_command_unrecognized_option (user_commands.tests.CommandTests)",
+                "test_call_command_with_required_parameters_in_mixed_options (user_commands.tests.CommandTests)",
+                "test_call_command_with_required_parameters_in_options (user_commands.tests.CommandTests)",
+                "test_calling_a_command_with_no_app_labels_and_parameters_should_raise_a_command_error (user_commands.tests.CommandTests)",
+                "test_calling_a_command_with_only_empty_parameter_should_ends_gracefully (user_commands.tests.CommandTests)",
+                "test_calling_command_with_app_labels_and_parameters_should_be_ok (user_commands.tests.CommandTests)",
+                "test_calling_command_with_parameters_and_app_labels_at_the_end_should_be_ok (user_commands.tests.CommandTests)",
+                "test_check_migrations (user_commands.tests.CommandTests)",
+                "test_command (user_commands.tests.CommandTests)",
+                "test_command_add_arguments_after_common_arguments (user_commands.tests.CommandTests)",
+                "test_command_style (user_commands.tests.CommandTests)",
+                "BaseCommand.create_parser() passes kwargs to CommandParser.",
+                "test_discover_commands_in_eggs (user_commands.tests.CommandTests)",
+                "An unknown command raises CommandError",
+                "test_find_command_without_PATH (user_commands.tests.CommandTests)",
+                "test_language_preserved (user_commands.tests.CommandTests)",
+                "test_no_translations_deactivate_translations (user_commands.tests.CommandTests)",
+                "test_output_transaction (user_commands.tests.CommandTests)",
+                "test_subparser (user_commands.tests.CommandTests)",
+                "test_subparser_invalid_option (user_commands.tests.CommandTests)",
+                "Exception raised in a command should raise CommandError with",
+                "test_disallowed_abbreviated_options (user_commands.tests.CommandRunTests)",
+                "test_script_prefix_set_in_commands (user_commands.tests.CommandRunTests)"
+              ],
+              "failure": []
+            },
+            "FAIL_TO_FAIL": {
+              "success": [],
+              "failure": []
+            },
+            "PASS_TO_FAIL": {
+              "success": [],
+              "failure": []
+            }
+          }
+        },
+        "testLogSha256": "265d192e9a6012869d1f44853cc8bcb59b5e4084e3f89a743865fc4d1cb32299"
+      },
+      "generatedSkills": [
+        {
+          "name": "django-workspace-task-playbook",
+          "version": 1,
+          "contentSha256": "ff445164c081d188f67a23975266fa7fad172682ad3275193ea52662cd6da4cd"
+        }
+      ],
+      "evidenceSha256": {
+        "receipt.json": "e6de408f6a48285797aca0fdff398a51a475b32c829286a4b4f08ec9c1897d62",
+        "source-events.json": "bda81b1370931d64ad66ea1b714bcb207f466967e536e87ac944842d7cde5098",
+        "model-requests.json": "8ac3a88af642984cfed11d5c5f5d2fd681781367495623c3b3a49c539be3c620",
+        "prediction.patch": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "assets.json": "b69ed4ece7623041996121b0f35180682d9c655a95ecf52197f9d5646fb1dc12"
+      }
+    }
+  ],
+  "limitation": "Two integration attempts only. No baseline, no paired comparison, no product-effect claim. ERROR tests are preserved in the official report; the pinned official parser omits their entries.",
+  "subjectCommit": "5db79be",
+  "historicalDriverSha256": "88b8de3e77000e0e88b6ad21d91a4181bf0bd4b52bf66da385d1858b05ec3360",
+  "taskImages": {
+    "django__django-10973": "sha256:6457c394c1698b1e05a039ef637d646f3d3a7f74a5f748f1d28a6939183f086e",
+    "django__django-11292": "sha256:67440fcd07511733b3ca5755df2658fa2378769352fa083853f96533c6da5b6d"
+  },
+  "configurationDiscrepancy": {
+    "intendedDailyLearningCallBudget": 30,
+    "effectiveDailyLearningCallBudget": 100,
+    "actualLearningCalls": 5,
+    "cause": "Pilot supplied dailyCallBudget outside config.settings. Fixed future overlay and added startup assertion; historical results preserved."
+  }
+}
