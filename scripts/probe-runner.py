@@ -1,0 +1,147 @@
+#!/usr/bin/env python3
+"""Run one isolated preflight arm. This entry never starts a formal benchmark."""
+import argparse
+import json
+import os
+from pathlib import Path
+import shutil
+import subprocess
+import tempfile
+import time
+import uuid
+
+
+def command(*args, **kwargs):
+    return subprocess.run(args, check=True, text=True, **kwargs)
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--image', default='dsh-rsi-pilot2:django-11292', help='Prepared task image; source is /opt/task-source')
+    parser.add_argument('--arm', choices=['baseline', 'rsi'], required=True)
+    parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--fixture', action='store_true')
+    parser.add_argument('--interrupt-checkpoint', action='store_true', help='Fixture-only SIGKILL after tool edit and durable request ledger')
+    parser.add_argument('--seed-assets', type=Path, help='Copy an experiment-owned frozen asset store; never a personal profile')
+    parser.add_argument('--phases', type=Path, help='JSON list of named prompts for a small preflight only')
+    parser.add_argument('--dispatch-limit', type=int, default=25)
+    parser.add_argument('--request-limit', type=int, default=40)
+    parser.add_argument('--learning-call-budget', type=int, default=15)
+    parser.add_argument('--wall-seconds', type=int, default=1200)
+    parser.add_argument('--settle-seconds', type=int, default=90)
+    args = parser.parse_args()
+    if args.interrupt_checkpoint and not args.fixture:
+        parser.error('Interruption control must use a fixture, not a paid model request.')
+    if args.arm == 'baseline' and args.seed_assets:
+        parser.error('Baseline cannot receive RSI assets.')
+    if not args.fixture and not os.environ.get('RSI_MODEL_UPSTREAM'):
+        parser.error('Real preflight requires the authorized RSI_MODEL_UPSTREAM environment variable.')
+    for value in [args.dispatch_limit,args.request_limit,args.wall_seconds]:
+        if value < 1: parser.error('Limits must be positive.')
+    output = args.output.resolve()
+    output.mkdir(parents=True,exist_ok=True)
+    if any(output.iterdir()): parser.error('Output must be empty; preserve every prior attempt.')
+    project = Path(__file__).resolve().parent.parent
+    patch = json.loads((project/'scripts/container/pilot.patch.json').read_text())
+    services = patch[-1]['insert']
+    driver = next(s for s in services if s['id']=='rsi-pilot-task')
+    driver['config'] = {'arm':args.arm, 'instanceId':'preflight', 'fixture':args.fixture,
+        'interruptCheckpoint':args.interrupt_checkpoint, 'dispatchLimit':args.dispatch_limit,
+        'learningCallBudget':args.learning_call_budget, 'wallTimeMs':args.wall_seconds*1000,
+        'settleMs':args.settle_seconds*1000}
+    if args.phases: driver['config']['phases']=json.loads(args.phases.read_text())
+    if args.arm == 'baseline': services[:] = [s for s in services if s['id']!='rsi']
+    else:
+        service = next(s for s in services if s['id']=='rsi')
+        service['config']['settings']={'dailyCallBudget':args.learning_call_budget}
+        if args.fixture: service['config']['settings']['learningEnabled']=False
+    if args.fixture: services[:] = [s for s in services if s['id'] not in ['rsi-qwen','rsi-credentials']]
+    prefix = 'rsi-preflight-' + uuid.uuid4().hex[:10]
+    network, volume, image = prefix+'-net',prefix+'-state',prefix+':local'
+    containers = []
+    started = False
+    exported = False
+    policy = ['--read-only','--cap-drop','ALL','--security-opt','no-new-privileges',
+        '--cpus','2','--memory','3g','--pids-limit','256',
+        '--tmpfs','/tmp:rw,exec,uid=1000,gid=1000,mode=700,size=512m',
+        '--tmpfs','/workspace:uid=1000,gid=1000,mode=700,size=512m']
+    try:
+        with tempfile.TemporaryDirectory(prefix='rsi-preflight-build-') as temp:
+            root=Path(temp)
+            shutil.copytree(project/'lib',root/'lib')
+            shutil.copy2(project/'scripts/pilot-task.mjs',root/'pilot-task.mjs')
+            shutil.copy2(project/'scripts/audit-session-requests.mjs',root/'audit-session-requests.mjs')
+            # Only public problem metadata already present in the prepared task image is reused.
+            (root/'pilot.json').write_text(json.dumps(patch,ensure_ascii=False))
+            dockerfile = f'FROM {args.image}\nCOPY lib /opt/rsi/lib\nCOPY pilot-task.mjs audit-session-requests.mjs pilot.json /opt/rsi/scripts/\n'
+            if args.seed_assets:
+                shutil.copytree(args.seed_assets.resolve(),root/'seed-assets')
+                dockerfile += 'COPY --chown=1000:1000 seed-assets /opt/seed-assets\n'
+            (root/'Dockerfile').write_text(dockerfile)
+            with (output/'build.log').open('w') as log:
+                command('docker','build','--platform','linux/amd64','-t',image,str(root),stdout=log,stderr=subprocess.STDOUT)
+        command('docker','network','create','--internal',network,stdout=subprocess.DEVNULL)
+        command('docker','volume','create',volume,stdout=subprocess.DEVNULL)
+        gateway = None
+        if not args.fixture:
+            gateway = subprocess.check_output(['docker','run','-d','--network',network,'--network-alias','model',
+                '--read-only','--cap-drop','ALL','--security-opt','no-new-privileges','--memory','256m','--pids-limit','32',
+                '-e','RSI_MODEL_UPSTREAM='+os.environ['RSI_MODEL_UPSTREAM'],
+                '-e','RSI_MODEL_REQUEST_LIMIT='+str(args.request_limit),
+                'dsh-rsi-pilot2:gateway','python3','/opt/rsi/scripts/model-gateway.py'],text=True).strip()
+            containers.append(gateway)
+            command('docker','network','connect','bridge',gateway)
+        startup = ('cp -a /opt/seed-assets /state/assets && ' if args.seed_assets else '')
+        startup += 'exec dsh --profile sdk-minimal --patch /opt/rsi/scripts/pilot.json'
+        cid = subprocess.check_output(['docker','create','--platform','linux/amd64','--init','--network',network,*policy,
+            '--mount',f'type=volume,source={volume},target=/state','-e','QWEN_API_KEY=EMPTY',image,'sh','-c',startup],text=True).strip()
+        containers.append(cid)
+        info = json.loads(subprocess.check_output(['docker','inspect',cid],text=True))[0]
+        assert info['Config']['User']=='1000:1000' and info['HostConfig']['ReadonlyRootfs'] and not info['HostConfig']['Binds']
+        assert len(info['Mounts'])==1 and info['Mounts'][0]['Name']==volume
+        assert len(info['NetworkSettings']['Networks'])==1
+        (output/'policy.json').write_text(json.dumps({'arm':args.arm,'imageId':info['Image'],
+            'user':info['Config']['User'],'networkInternal':True,'rootfsReadOnly':True,'hostBinds':[],
+            'experimentOwnedVolume':True,'fixture':args.fixture,'requestLimit':args.request_limit,
+            'dispatchLimit':args.dispatch_limit,'learningCallBudget':args.learning_call_budget,
+            'wallSecondsPerPhase':args.wall_seconds,'settleSecondsPerPhase':args.settle_seconds,
+            'effectivePatch':patch},indent=2))
+        phase_count = len(driver['config'].get('phases',[{}]))
+        until = time.monotonic() + phase_count*(args.wall_seconds+args.settle_seconds)+90
+        killed = False
+        with (output/'run.log').open('w') as log:
+            process = subprocess.Popen(['docker','start','-a',cid],stdout=log,stderr=subprocess.STDOUT,text=True)
+            started = True
+            while process.poll() is None:
+                if args.interrupt_checkpoint and 'RSI_CHECKPOINT_READY' in (output/'run.log').read_text():
+                    command('docker','kill',cid,stdout=subprocess.DEVNULL); killed=True; break
+                if time.monotonic()>until:
+                    command('docker','stop','--time','10',cid,stdout=subprocess.DEVNULL); break
+                time.sleep(1)
+            process.wait(timeout=20)
+        state=json.loads(subprocess.check_output(['docker','inspect',cid],text=True))[0]['State']
+        (output/'state.json').write_text(json.dumps({'container':state,'deliberatelyKilled':killed}))
+        copied=command('docker','cp',cid+':/state/.',str(output/'state'),capture_output=True)
+        exported=True
+        if gateway: (output/'gateway.log').write_text(subprocess.check_output(['docker','logs',gateway],text=True))
+        receipt=output/'state/pilot/preflight/receipt.json'
+        if args.interrupt_checkpoint: assert killed and state['ExitCode']==137
+        else: assert state['ExitCode']==0 and receipt.exists(), (output/'run.log').read_text()[-6000:]
+        print(json.dumps({'status':'INTERRUPTION_CAPTURED' if killed else 'PASS','arm':args.arm,'fixture':args.fixture,
+            'output':str(output),'formalBenchmarkStarted':False}))
+    finally:
+        # Export on host timeout or exception too, before removing the only durable state volume.
+        if started and not exported:
+            stopped=subprocess.run(['docker','stop','--time','10',containers[-1]],capture_output=True)
+            copied=subprocess.run(['docker','cp',containers[-1]+':/state/.',str(output/'state')],capture_output=True,text=True)
+            (output/'export-status.json').write_text(json.dumps({'returncode':copied.returncode,'stderr':copied.stderr}))
+            exported=copied.returncode==0
+        for cid in reversed(containers): subprocess.run(['docker','rm','-f',cid],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+        # If export failed, retain the experiment volume for recovery instead of destroying evidence.
+        if not started or exported: subprocess.run(['docker','volume','rm',volume],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+        else: (output/'retained-volume.json').write_text(json.dumps({'volume':volume}))
+        subprocess.run(['docker','network','rm',network],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+        subprocess.run(['docker','image','rm',image],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+
+
+if __name__=='__main__': main()

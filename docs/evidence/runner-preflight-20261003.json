@@ -1,0 +1,40 @@
+{
+  "status": "PASS",
+  "formalBenchmarkStarted": false,
+  "realProviderRequests": 0,
+  "baselineTree": "8b7d7f277e352e03b8b6adcb2673488aed659636",
+  "frozenExportSha256": "00a6d658dbc5b157822a342b77c58a33f45fe3a3e6162147dd246636185bdae1",
+  "patchSha256": "ebcfc396778dad8548b290ccb367af71c1bcbf172a9a25d615fb6d2404f5dd0c",
+  "successfulControls": [
+    "baseline-final",
+    "rsi-a2",
+    "rsi-b",
+    "rsi-final"
+  ],
+  "interruption": {
+    "exitCode": 137,
+    "observedRequests": 2,
+    "missingUsage": 1,
+    "reconstructedInputs": 2,
+    "patchSaved": true
+  },
+  "preservedFailures": [
+    {
+      "run": "rsi-a",
+      "reason": "Restored budget 30 differs from requested 15",
+      "providerRequests": 0
+    }
+  ],
+  "checks": [
+    "baseline-service-assets-catalog-absent",
+    "same-source-tree",
+    "same-frozen-asset-state",
+    "same-tool-edit-result",
+    "all-finished-inputs-reconstructable",
+    "unfinished-input-reconstructable",
+    "SIGKILL-evidence-export",
+    "unknown-usage-not-zero",
+    "effective-budget-mismatch-rejected"
+  ],
+  "limitation": "Fixed responses validate isolation and bookkeeping; they do not prove model effectiveness or natural Skill selection."
+}
