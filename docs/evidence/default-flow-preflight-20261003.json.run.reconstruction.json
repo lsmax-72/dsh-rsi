@@ -1,0 +1,72 @@
+[
+  {
+    "sessionId": "pilot-preflight-source",
+    "request": 1,
+    "prefixEndSeq": 8,
+    "matches": true,
+    "responseFramePresent": true
+  },
+  {
+    "sessionId": "pilot-preflight-source",
+    "request": 2,
+    "prefixEndSeq": 13,
+    "matches": true,
+    "responseFramePresent": true
+  },
+  {
+    "sessionId": "pilot-preflight-source",
+    "request": 3,
+    "prefixEndSeq": 18,
+    "matches": true,
+    "responseFramePresent": true
+  },
+  {
+    "sessionId": "pilot-preflight-source",
+    "request": 4,
+    "prefixEndSeq": 23,
+    "matches": true,
+    "responseFramePresent": true
+  },
+  {
+    "sessionId": "pilot-preflight-source",
+    "request": 5,
+    "prefixEndSeq": 28,
+    "matches": true,
+    "responseFramePresent": true
+  },
+  {
+    "sessionId": "pilot-preflight-source",
+    "request": 6,
+    "prefixEndSeq": 33,
+    "matches": true,
+    "responseFramePresent": true
+  },
+  {
+    "sessionId": "pilot-preflight-consumer",
+    "request": 1,
+    "prefixEndSeq": 8,
+    "matches": true,
+    "responseFramePresent": true
+  },
+  {
+    "sessionId": "pilot-preflight-consumer",
+    "request": 2,
+    "prefixEndSeq": 15,
+    "matches": true,
+    "responseFramePresent": true
+  },
+  {
+    "sessionId": "pilot-preflight-consumer",
+    "request": 3,
+    "prefixEndSeq": 22,
+    "matches": true,
+    "responseFramePresent": true
+  },
+  {
+    "sessionId": "pilot-preflight-consumer",
+    "request": 4,
+    "prefixEndSeq": 27,
+    "matches": true,
+    "responseFramePresent": true
+  }
+]

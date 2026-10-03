@@ -24,6 +24,7 @@ def main():
     parser.add_argument('--interrupt-checkpoint', action='store_true', help='Fixture-only SIGKILL after tool edit and durable request ledger')
     parser.add_argument('--seed-assets', type=Path, help='Copy an experiment-owned frozen asset store; never a personal profile')
     parser.add_argument('--phases', type=Path, help='JSON list of named prompts for a small preflight only')
+    parser.add_argument('--baseline-date', help='Verified scorer image HEAD date at the base source tree; required for real runs')
     parser.add_argument('--dispatch-limit', type=int, default=25)
     parser.add_argument('--request-limit', type=int, default=40)
     parser.add_argument('--learning-call-budget', type=int, default=15)
@@ -34,6 +35,8 @@ def main():
         parser.error('Interruption control must use a fixture, not a paid model request.')
     if args.arm == 'baseline' and args.seed_assets:
         parser.error('Baseline cannot receive RSI assets.')
+    if not args.fixture and not args.baseline_date:
+        parser.error('Real runs require --baseline-date from the scorer image HEAD at the base source tree; current time changes Django development version.')
     if not args.fixture and not os.environ.get('RSI_MODEL_UPSTREAM'):
         parser.error('Real preflight requires the authorized RSI_MODEL_UPSTREAM environment variable.')
     for value in [args.dispatch_limit,args.request_limit,args.wall_seconds]:
@@ -46,7 +49,7 @@ def main():
     services = patch[-1]['insert']
     driver = next(s for s in services if s['id']=='rsi-pilot-task')
     driver['config'] = {'arm':args.arm, 'instanceId':'preflight', 'fixture':args.fixture,
-        'interruptCheckpoint':args.interrupt_checkpoint, 'dispatchLimit':args.dispatch_limit,
+        'interruptCheckpoint':args.interrupt_checkpoint, 'baselineDate':args.baseline_date, 'dispatchLimit':args.dispatch_limit,
         'learningCallBudget':args.learning_call_budget, 'wallTimeMs':args.wall_seconds*1000,
         'settleMs':args.settle_seconds*1000}
     if args.phases: driver['config']['phases']=json.loads(args.phases.read_text())

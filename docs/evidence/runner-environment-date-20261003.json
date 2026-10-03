@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "realProviderRequests": 0,
+  "formalBenchmarkStarted": false,
+  "codeTree": "8b7d7f277e352e03b8b6adcb2673488aed659636",
+  "scorerHeadTime": 1786582916,
+  "originalBaseCommitTime": 1556608156,
+  "djangoVersion": "3.0.dev20260813010156",
+  "officialImage": "swebench/sweb.eval.x86_64.django_1776_django-11292:latest",
+  "officialHead": "9dddd47fd397852aa5234f7717d7f5d2aebb33d8",
+  "baseCommit": "eb16c7260e573ec513d84cb586d96bdf508f3173",
+  "officialHeadVsBaseSourceDiffEmpty": true,
+  "controls": [
+    "baseline-official",
+    "rsi-official"
+  ],
+  "limitation": "Version alignment verified for this cached task image; each formal image must be checked independently."
+}

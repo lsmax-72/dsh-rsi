@@ -4,6 +4,7 @@ import {mkdirSync, openSync, closeSync, fsyncSync, writeFileSync, renameSync, ap
 import {execFileSync} from 'node:child_process';
 import {LlmAdapter, createUserMessage} from '@deepseek-ai/dsh-llm';
 import {auditRequests} from './audit-session-requests.mjs';
+import {Session} from '@deepseek-ai/dsh-session';
 
 export const name = 'rsi-pilot-task';
 export const inject = ['llm', 'agents', 'sessions', 'sessionPersistence', 'skills', 'tools'];
@@ -17,7 +18,8 @@ export function apply(ctx, config) {
   let foreground = 0, phaseCalls = 0, phaseLimit, deadline, initialized = false, currentPhase = 'setup';
   const dispatchLimit = config.dispatchLimit ?? 50;
   const wallTimeMs = config.wallTimeMs ?? 1200000;
-  const git = (...args) => execFileSync('git', args, {cwd:'/workspace', encoding:'utf8'});
+  const git = (...args) => execFileSync('git', args, {cwd:'/workspace', encoding:'utf8',
+    env:config.baselineDate?{...process.env,GIT_AUTHOR_DATE:config.baselineDate,GIT_COMMITTER_DATE:config.baselineDate}:process.env});
   const durable = (path, value) => {
     const tmp = path + '.tmp';
     writeFileSync(tmp, typeof value === 'string' ? value : JSON.stringify(value, null, 2));
@@ -46,8 +48,17 @@ export function apply(ctx, config) {
     if (!background && (foreground >= dispatchLimit || phaseCalls >= phaseLimit)) throw new Error('Pilot foreground dispatch limit reached');
     if (!background) {foreground++; phaseCalls++;}
     const session = sessions.get(options.sessionId);
-    assert.ok(session, 'Model input must have a native session');
-    await ctx.sessions.flush(session);
+    if (session) await ctx.sessions.flush(session);
+    else {
+      // The native background bridge writes persistence directly and flushes before stream.
+      assert.ok(background, 'Foreground request has no observed native session');
+      const handle = await ctx.sessionPersistence.open(options.sessionId,'read');
+      try {
+        const stored = await handle.read();
+        const restored = Session.fromRestore(options.sessionId,stored.events,handle.header,handle.inheritedEventCount,stored.eventState);
+        assert.deepEqual([...restored.deriveMessages()],options.messages);
+      } finally {await handle.close();}
+    }
     const request = {sessionId:options.sessionId, phase:background?'learning':currentPhase,
       messages:structuredClone(options.messages), status:'DISPATCHING', usage:null, observedAt:Date.now()};
     requests.push(request); patch(); ledger();
@@ -102,12 +113,15 @@ export function apply(ctx, config) {
         if (before) assert.equal(before.settings.dailyCallBudget, config.learningCallBudget ?? 30);
         const exportedBefore = rsi ? await rsi.request('export',{cwd:'/workspace'}) : null;
         durable(dir + '/initial.json', {arm:config.arm, baselineTree, settings:before?.settings??null,
+          baselineCommitTime:git('show','-s','--format=%ct','HEAD').trim(),
+          djangoVersion:execFileSync('python',['-c','import django; print(django.get_version())'],{cwd:'/workspace',encoding:'utf8'}).trim(),
           assets:exportedBefore, toolSchemas:ctx.tools.schemas().map(t=>t.name),
           skillCandidates:await ctx.skills.list({cwd:'/workspace'})});
         const task = JSON.parse(await readFile('/opt/rsi/task.json','utf8'));
         const defaultPrompt = `修复以下 Django 仓库问题。工作区为 /workspace，测试环境已离线准备，python 来自官方 testbed 环境。先验证环境，再运行聚焦测试，保留失败原因。禁止联网检索答案。完成后用中文说明修改、测试及局限。\n\n${task.problem_statement}`;
         const phases = config.phases ?? [{name:'task', prompt:defaultPrompt}];
         for (const phase of phases) {
+          assert.match(phase.name,/^[a-zA-Z0-9_-]+$/);
           currentPhase = phase.name; phaseCalls = 0; phaseLimit = phase.dispatchLimit ?? dispatchLimit;
           if (phase.resetWorkspace) {git('reset','--hard','HEAD');git('clean','-fdx');}
           const id = 'pilot-' + config.instanceId + '-' + phase.name;
@@ -116,6 +130,7 @@ export function apply(ctx, config) {
           deadline = setTimeout(()=>handle.agent.cancel({kind:'hook',reason:'Pilot wall time limit reached'}),wallTimeMs);
           handle.agent.followup(createUserMessage({source:{kind:'user'},content:[{type:'text',text:phase.prompt}]}));
           await handle.agent.whenIdle(); await ctx.sessions.flush(handle.agent.session); clearTimeout(deadline); patch();
+          durable(dir + '/prediction-' + phase.name + '.patch',git('diff','--cached','--binary','HEAD'));
           const stored = await ctx.sessionPersistence.open(id,'read');
           const outcome = await stored.read(); await stored.close();
           const stopReason = outcome.events.filter(e=>e.type==='turn/end').at(-1)?.data.reason;

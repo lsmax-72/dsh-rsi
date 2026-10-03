@@ -1,0 +1,203 @@
+{
+  "status": "DEFAULT_CAPTURE_AND_NATURAL_DELIVERY_PASS",
+  "formalBenchmarkStarted": false,
+  "sourceNormallyCompleted": true,
+  "consumerStopReason": {
+    "kind": "error",
+    "error": {
+      "message": "Pilot foreground dispatch limit reached",
+      "code": "UNKNOWN"
+    }
+  },
+  "memoryDelivered": true,
+  "skillNaturallyLoaded": true,
+  "memoryEvidence": [
+    {
+      "id": "m_1791015014415_6787c066",
+      "version": 0,
+      "scope": "c52ddf65534b7b4603508435",
+      "sourceMessageIds": [
+        "0cb38dbe-2043-495e-a532-a140f1eace0b"
+      ],
+      "bodySha256": "5205213edde2b70e3617d741e9975043fcad6e1c4bef2deb59cd7e5c5abf6679",
+      "requests": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "m_1791015014416_b8aab9dc",
+      "version": 0,
+      "scope": "c52ddf65534b7b4603508435",
+      "sourceMessageIds": [
+        "0cb38dbe-2043-495e-a532-a140f1eace0b"
+      ],
+      "bodySha256": "5a7c4d2bbd6935be5d9c8cfa6fee4c2d1bc399590a40e2615f2ebf9d8567b82b",
+      "requests": [
+        1,
+        2
+      ]
+    }
+  ],
+  "skillEvidence": [
+    {
+      "id": "skl-cayFjALZ1iUf",
+      "name": "rsi-django-workspace-env-check",
+      "version": 1,
+      "scope": "c52ddf65534b7b4603508435",
+      "sourceTaskId": "pilot-preflight-source:1",
+      "bodySha256": "ca239c014d4e7921072fcc38ac5cf0f5e6b2944cf2c4ab4813de6f355a775525",
+      "callIds": [
+        "call_5acce8096fe24fdc9b513da5"
+      ],
+      "requests": [
+        2
+      ]
+    }
+  ],
+  "defaultLayers": {
+    "L0": 7,
+    "L1": 2,
+    "L2": 1,
+    "L3": 1
+  },
+  "sourcePatchSha256": "bc9aba83e74a41cff23794a0d139894b58cad202108329056c216db46a20bf08",
+  "consumerPatchBytes": 0,
+  "attempts": [
+    {
+      "run": "run",
+      "phases": [
+        {
+          "phase": "source",
+          "sessionId": "pilot-preflight-source",
+          "stopReason": {
+            "kind": "error",
+            "error": {
+              "message": "Pilot foreground dispatch limit reached",
+              "code": "UNKNOWN"
+            }
+          },
+          "requests": 6
+        },
+        {
+          "phase": "consumer",
+          "sessionId": "pilot-preflight-consumer",
+          "stopReason": {
+            "kind": "error",
+            "error": {
+              "message": "Pilot foreground dispatch limit reached",
+              "code": "UNKNOWN"
+            }
+          },
+          "requests": 4
+        }
+      ],
+      "usage": {
+        "source": {
+          "requests": 6,
+          "unknownUsage": 0,
+          "inputTokens": 30329,
+          "outputTokens": 497,
+          "totalTokens": 30826
+        },
+        "consumer": {
+          "requests": 4,
+          "unknownUsage": 0,
+          "inputTokens": 19315,
+          "outputTokens": 368,
+          "totalTokens": 19683
+        },
+        "learning": {
+          "requests": 0,
+          "unknownUsage": 0,
+          "inputTokens": 0,
+          "outputTokens": 0,
+          "totalTokens": 0
+        }
+      },
+      "learningJobs": [
+        {
+          "sourceSessionId": "pilot-preflight-source",
+          "status": "failed",
+          "error": "记忆提炼失败，请查看后台会话日志"
+        },
+        {
+          "sourceSessionId": "pilot-preflight-consumer",
+          "status": "failed",
+          "error": "记忆提炼失败，请查看后台会话日志"
+        }
+      ]
+    },
+    {
+      "run": "retry",
+      "phases": [
+        {
+          "phase": "source",
+          "sessionId": "pilot-preflight-source",
+          "stopReason": {
+            "kind": "completed"
+          },
+          "requests": 3
+        },
+        {
+          "phase": "consumer",
+          "sessionId": "pilot-preflight-consumer",
+          "stopReason": {
+            "kind": "error",
+            "error": {
+              "message": "Pilot foreground dispatch limit reached",
+              "code": "UNKNOWN"
+            }
+          },
+          "requests": 2
+        }
+      ],
+      "usage": {
+        "source": {
+          "requests": 3,
+          "unknownUsage": 0,
+          "inputTokens": 14172,
+          "outputTokens": 426,
+          "totalTokens": 14598
+        },
+        "consumer": {
+          "requests": 2,
+          "unknownUsage": 0,
+          "inputTokens": 11261,
+          "outputTokens": 134,
+          "totalTokens": 11395
+        },
+        "learning": {
+          "requests": 9,
+          "unknownUsage": 0,
+          "inputTokens": 27132,
+          "outputTokens": 3202,
+          "totalTokens": 30334
+        }
+      },
+      "learningJobs": [
+        {
+          "sourceSessionId": "pilot-preflight-source",
+          "status": "completed",
+          "error": null
+        },
+        {
+          "sourceSessionId": "pilot-preflight-consumer",
+          "status": "paused",
+          "error": "今日学习调用预算已用完"
+        }
+      ]
+    }
+  ],
+  "totalForwardedRequests": 24,
+  "knownTotalTokens": 106836,
+  "unknownUsage": 0,
+  "reconstructedRequests": 24,
+  "auditModelCalls": 0,
+  "limitations": [
+    "Consumer was cut off after two requests; natural Skill delivery passed but final response did not complete.",
+    "L2/L3 creation observed; full-body consumption for these layers is not separately proven.",
+    "Generated environmental prose retains inaccuracies; no manual correction or selection.",
+    "No official issue-repair score or effectiveness claim for these maintenance tasks."
+  ]
+}

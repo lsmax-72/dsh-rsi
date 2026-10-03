@@ -29,6 +29,8 @@ python3 scripts/probe-runner.py --arm baseline --fixture --settle-seconds 0 --ou
 python3 scripts/probe-runner.py --arm baseline --fixture --interrupt-checkpoint --settle-seconds 0 --output /tmp/rsi-interruption-control
 ```
 
+真实预演还需 `--baseline-date` 固定评分镜像的实际 HEAD 时间，且先验证代码树与版本；基础提交时间可能与评分镜像新增提交不同。
+
 真实预演需要将已授权模型地址放入 `RSI_MODEL_UPSTREAM` 环境变量，不写进代码或仓库。运行参数必须先固定；输出目录必须为空，避免覆盖失败材料。入口只执行一次少量预演，不自动扩量为正式 benchmark。
 
 ## 剩余范围
