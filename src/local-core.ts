@@ -2,7 +2,7 @@ import { DatabaseSync } from 'node:sqlite';
 import { mkdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import {
-  SkillCore, SqliteSkillStore, SkillResourceStore, SkillVersioning, SkillExtractor,
+  SkillCore, SqliteSkillStore, SkillResourceStore, SkillVersioning, SkillExtractor, SKILL_REVIEW_PROMPT,
   StorageAdapter, LocalStorageBackend, extractL1Memories, VectorStore,
   queryMemoryRecords, readAllMemoryRecords, recordConversation, SceneExtractor, PersonaGenerator,
   performAutoRecall, parseConfig, writeMemory, buildFtsQuery, readSceneIndex, parseSceneBlock,
@@ -43,7 +43,7 @@ export async function openLocalCore(dataDir: string, runner: any, logger: any) {
       },
       createSkillExtractor(language = 'zh-CN') {
         return new SkillExtractor({ core: skills, runner, logger, prefixSkillsLimit: 20,
-          systemPrompt: `You are a Skill Review Agent. Use tools to inspect and improve reusable skills based on the conversation. Persist changes with skill_create / skill_update / skill_patch / skill_files_write. Write asset prose in ${language}; preserve code, commands, paths and API identifiers. Do not store credentials or fabricate task outcomes.` });
+          systemPrompt: `${SKILL_REVIEW_PROMPT}\nWrite asset prose in ${language}; preserve code, commands, paths and API identifiers.` });
       },
       record: (input: any) => recordConversation({ ...input, baseDir:join(dataDir,'history'), storage:history, logger }),
       async extractMemories(input: any) {

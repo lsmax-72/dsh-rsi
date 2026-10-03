@@ -130,6 +130,10 @@
       "sha256": "78b6b0075f23d622badfc94aa017f74d4cf7667b6f15430c08cf5d0de54b0983"
     },
     {
+      "path": "core/skill/prompts/skill-review-prompt.ts",
+      "sha256": "91c2adaf6fb7a4139a31982e0470ec7e1ecdbb5826765168a025239f51d8f3de"
+    },
+    {
       "path": "core/skill/skill-core.ts",
       "sha256": "5de6360c46ca84d8292e2972bbd5930dd790f29b89b102b2ffb273460b1d0b04"
     },

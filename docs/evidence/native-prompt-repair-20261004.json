@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-03T22:31:30.119Z",
+  "sourceRevision": "e09899c2136fb6bc27ecc68505e32bdb637cdfa8",
+  "sourceFileSha256": "91c2adaf6fb7a4139a31982e0470ec7e1ecdbb5826765168a025239f51d8f3de",
+  "configuredNativePromptSha256": "0ed83c6534e4688d72cc45fc6844b6e2fddf4e892adba9f7c08db654fb425938",
+  "nativePromptChars": 13129,
+  "nativeProductionPromptDelivered": true,
+  "transcriptRolesPreserved": true,
+  "noChangeContract": true,
+  "fixtureRunnerCalls": 1,
+  "realModelRequests": 0,
+  "testedWorktreeFiles": {
+    "src/local-core.ts": "4398907db2354f07d1f79d61173d98e0d7356ba97d4b2f5dbd8097d814e10b0d",
+    "src/core-entry.ts": "6d1ef2072873c137e44ba552ad0db98144a8e24b2f7f64dafdd51ea5a0e5babe",
+    "vendor/core/src/core/skill/prompts/skill-review-prompt.ts": "91c2adaf6fb7a4139a31982e0470ec7e1ecdbb5826765168a025239f51d8f3de"
+  }
+}

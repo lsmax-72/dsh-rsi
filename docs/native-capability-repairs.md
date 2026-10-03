@@ -5,7 +5,7 @@
 | 项目 | 状态 | 验收 |
 | --- | --- | --- |
 | 向量全链路 | 待修复 | 原生 EmbeddingService 与 sqlite-vec 运行条件检查中 |
-| Skill 生产提示词 | 待修复 | 原生固定提示词接入 |
+| Skill 生产提示词 | 已修复，隔离验证通过 | 原生固定提示词逐字进入提炼 runner；角色标记、无变更约定与语言要求通过 |
 | 画像触发/计数 | 待修复 | 原生 Trigger 与检查点 |
 | Skill/版本分页 | 已修复，隔离验证通过 | 51 个 Skill 全部进入候选/管理/导出；51 个版本含 v1 全部进入版本列表及导出，最早 Skill 正文仍可加载 |
 | 上下文与来源一致 | 待修复 | 长通用画像场景仍可复现旧缺陷 |
@@ -13,3 +13,5 @@
 | 结构化诊断 | 待修复 | 本地原生事件及来源关联 |
 
 分页修复通过原生 SkillCore 的 limit/offset 完整遍历，未改原生 Store、搜索或版本算法。回执：[分页修复](evidence/pagination-repair-20261004.json)。脚本使用临时数据库，模型请求和任务命令均为 0；这是资产边界验收，不是效果实验。
+
+提示词修复原样纳入固定修订的生产 SKILL_REVIEW_PROMPT，仅追加资产语言要求。实际原生 SkillExtractor 调用收到完整原生提示词和带 user/assistant/tool_result 角色的历史数据；无变更返回 Nothing to save.。回执：[原生生产提示词](evidence/native-prompt-repair-20261004.json)，使用夹具 runner，未调用真实模型。
