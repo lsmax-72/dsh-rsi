@@ -8,6 +8,7 @@ import { copyResources,versionResources } from './resources.js';
 import { State, workspace, type Settings } from './state.js';
 import { listAllSkills, listAllVersions } from './asset-pages.js';
 import { fitRecallScope, recallToolGuide } from './recall-context.js';
+import { FileLogger, withLocalDiagnostics, diagnosticEvent } from '../adapters/local-observability.js';
 
 const ids = (scope: string) => ({ user_id:'local-user', team_id:scope, agent_id:'local-agent' });
 const text = (message: any) => (message?.content ?? []).map((block: any) => block.type === 'text' ? block.text : JSON.stringify(block)).join('\n');
@@ -22,6 +23,7 @@ export class Runtime {
   readonly abort = new AbortController();
   readonly context = new AsyncLocalStorage<any>();
   readonly cores = new Map<string,Promise<any>>();
+  readonly diagnosticSinks = new Map<string,FileLogger>();
   readonly pipelines = new Map<string,any>();
   readonly active = new Set<Promise<any>>();
   readonly notified = new Set<string>();
@@ -73,7 +75,8 @@ export class Runtime {
     return entry;
   }
   async within<T>(scope: string, operation: () => Promise<T>, origin: any = {}) {
-    return this.context.run({ route:this.state.get(`route:${scope}`),...origin },operation);
+    if(!this.diagnosticSinks.has(scope))this.diagnosticSinks.set(scope,new FileLogger({path:join(this.directory,'scopes',scope,'diagnostics'),filename:'observability.log',rotateSizeBytes:100*1024*1024,rotateBackupLimit:10}));
+    return withLocalDiagnostics(this.diagnosticSinks.get(scope)!,{scope,source_session_id:origin.sessionId,job_id:origin.jobId},()=>this.context.run({route:this.state.get(`route:${scope}`),...origin},operation));
   }
   async createPipeline(scope: string) {
     const settings = this.state.settings();
@@ -178,7 +181,7 @@ export class Runtime {
         if(!(job.payload.route ?? this.route(scope)))throw Object.assign(new Error('尚无会话模型配置'),{code:'MISSING_ROUTE'});
         stages.failure={...stages.failure,attempts:(stages.failure?.attempts ?? 0)+1};
         this.state.updateJob(job.id,'running',stages);
-        await this.context.run({route:job.payload.route ?? this.route(scope),sessionId,jobId:job.id},async () => {
+        await this.within(scope,async () => {
           if (!stages.recorded) {
             const rawMessages = job.payload.messages.filter((m:any) => ['user','assistant'].includes(m.role)).map((m:any) => ({...m,timestamp:Date.parse(m.timestamp)}));
             await core.record({sessionKey:sessionId,sessionId,rawMessages});
@@ -198,13 +201,15 @@ export class Runtime {
             const result = await core.createSkillExtractor(this.state.settings().language).extract({...ids(scope),session_id:sessionId,task_id:job.id,messages:job.payload.messages,reason:`记录的轮次结果：${JSON.stringify(job.payload.reason)}`});
             stages.skills={candidates:result.candidates}; this.state.updateJob(job.id,'running',stages);
           }
-        });
+          diagnosticEvent('INFO','rsi.learning.completed',{memory_stored:stages.memory?.stored,skill_candidates:stages.skills?.candidates?.length});
+        },{route:job.payload.route ?? this.route(scope),sessionId,jobId:job.id});
         delete stages.failure;
         this.state.updateJob(job.id,'completed',stages); this.invalidate();
       } catch (error:any) {
         const paused = ['LEARNING_PAUSED','BUDGET_EXHAUSTED','MISSING_ROUTE'].includes(error.code) || !this.state.settings().learningEnabled || !this.state.settings().enabled || Number(this.state.usage().calls) >= this.state.settings().dailyCallBudget;
         stages.failure={...stages.failure,code:error.code ?? 'EXTRACTION_FAILED',retryable:!paused && !this.stopping && !['INVALID_LIMIT','UNSUPPORTED_TOOL','INVALID_CONFIG'].includes(error.code)};
         this.state.updateJob(job.id,this.stopping ? 'interrupted' : paused ? 'paused' : 'failed',stages,error.message);
+        await this.within(scope,async()=>diagnosticEvent('ERROR','rsi.learning.failed',{status:this.stopping?'interrupted':paused?'paused':'failed',code:stages.failure.code,retryable:stages.failure.retryable,attempts:stages.failure.attempts},error),{sessionId,jobId:job.id});
         if (!paused && !this.stopping) this.ctx.logger.error('后台学习失败：%s',error.message);
         // Reject so the native manager restores its buffer and does not advance L2.
         throw error;
@@ -225,7 +230,7 @@ export class Runtime {
     const recalled:any[]=[];
     // Native L1 budgeting leaves room for stable profiles, scope labels and tool guidance.
     for (const scope of [entry.id,'global']) {
-      const core=await this.core(scope),result=await core.recall(query,Math.max(1,Math.floor(settings.recallMaxChars/4)));
+      const core=await this.core(scope),result=await this.within(scope,()=>core.recall(query,Math.max(1,Math.floor(settings.recallMaxChars/4))));
       if(result)recalled.push({scope,core,result});
     }
     if(!recalled.length)return {text:'',refs:[]};
@@ -404,6 +409,7 @@ export class Runtime {
     await Promise.allSettled([...this.pipelines.values()].map(pipeline => pipeline.destroy()));
     await Promise.allSettled([...this.active]);
     for (const core of await Promise.allSettled([...this.cores.values()])) if (core.status === 'fulfilled') core.value.close();
+    for(const sink of this.diagnosticSinks.values())sink.close();this.diagnosticSinks.clear();
     this.state.close();
   }
 }

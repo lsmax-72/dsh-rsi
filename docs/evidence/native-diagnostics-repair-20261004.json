@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-03T22:51:12.408Z",
+  "realModelRequests": 0,
+  "fixtureRunnerCalls": 6,
+  "cases": [
+    {
+      "scope": "workspace-a",
+      "eventCount": 5,
+      "levels": [
+        "METRIC",
+        "INFO",
+        "TRACE",
+        "WARN"
+      ]
+    },
+    {
+      "scope": "workspace-b",
+      "eventCount": 5,
+      "levels": [
+        "METRIC",
+        "INFO",
+        "TRACE",
+        "WARN"
+      ]
+    }
+  ],
+  "checks": [
+    "native-extractor-info-and-warning-persisted",
+    "native-trace-success-and-failure-persisted",
+    "native-metric-persisted",
+    "concurrent-scope-job-session-isolation",
+    "L1-native-failure-restores-model-error-code"
+  ],
+  "distributedSpanExport": false
+}

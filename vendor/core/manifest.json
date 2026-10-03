@@ -86,6 +86,10 @@
       "sha256": "616cc7102efc9e3ab2165e5314ac5255314a01e29fcdf2e5e3935b52d926d944"
     },
     {
+      "path": "core/report/file-logger.ts",
+      "sha256": "6afa6d52625518c5c550de9909412bc406fcb0fbe6f1f29f473e3f8e575269b2"
+    },
+    {
       "path": "core/report/kafka-metric-producer.ts",
       "sha256": "7351d4e108671b6f828715d0df64d79efb5d69ad18e852f49c66238812b5345c"
     },

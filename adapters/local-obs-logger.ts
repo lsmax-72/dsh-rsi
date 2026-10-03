@@ -1,6 +1,6 @@
-// Local extraction diagnostics use the caller's logger; no /data/log side effect.
-export const obsLogger = {
-  info(_event: string, _attrs?: unknown) {},
-  warn(_event: string, _attrs?: unknown) {},
-  error(_event: string, _attrs?: unknown, _error?: unknown) {},
+import { getObservabilityBackend } from './local-observability.js';
+export const obsLogger={
+  info:(event:string,attrs?:any)=>getObservabilityBackend().log.info(event,attrs),
+  warn:(event:string,attrs?:any)=>getObservabilityBackend().log.warn(event,attrs),
+  error:(event:string,attrs?:any,error?:any)=>getObservabilityBackend().log.error(event,attrs,error),
 };
