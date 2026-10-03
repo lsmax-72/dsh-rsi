@@ -8,6 +8,7 @@ from pathlib import Path
 import shutil
 import subprocess
 import tempfile
+from fixture_embedding_server import EmbeddingFixtureServer
 
 
 def main():
@@ -19,7 +20,7 @@ def main():
     project = Path(__file__).resolve().parent.parent
     if not (project / 'lib/index.js').is_file():
         parser.error('Run npm run build first.')
-    with tempfile.TemporaryDirectory(prefix='dsh-rsi-bridge-') as temp:
+    with tempfile.TemporaryDirectory(prefix='dsh-rsi-bridge-') as temp, EmbeddingFixtureServer() as embedding:
         root = Path(temp).resolve()
         env = dict(os.environ, DSH_HOME=str(root / 'home'), DSH_AGENTS_HOME=str(root / 'agents'))
         version = subprocess.run([str(cli), '--version'], env=env, cwd=root, capture_output=True, text=True, check=True, timeout=15)
@@ -33,7 +34,7 @@ def main():
                     {'id': 'rsi-host-skills', 'name': '@deepseek-ai/dsh-skill'},
                     {'id': 'rsi-host-tool-skill', 'name': '@deepseek-ai/dsh-tool-skill'},
                     {'id': 'rsi-integration', 'name': str(project / 'lib/index.js'), 'config': {
-                        'dataDir': str(root / 'assets'), 'cwd': str(root), 'provider': 'rsi-probe', 'model': 'fixture',
+                        'embedding': embedding.config, 'dataDir': str(root / 'assets'), 'cwd': str(root), 'provider': 'rsi-probe', 'model': 'fixture',
                     }},
                     {'id': 'rsi-bridge-probe', 'name': str(project / 'scripts/bridge-probe.mjs'), 'config': {'root': str(root), 'phase': phase}},
                 ]},

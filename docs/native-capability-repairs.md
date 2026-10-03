@@ -4,7 +4,7 @@
 
 | 项目 | 状态 | 验收 |
 | --- | --- | --- |
-| 向量全链路 | 待修复 | 原生 EmbeddingService 与 sqlite-vec 运行条件检查中 |
+| 向量全链路 | 已修复；真实本地模型及本机生产包验收通过 | 原生 L0/L1 写入、更新、冲突候选、hybrid/RRF、历史 reindexAll 和失败完整性 |
 | Skill 生产提示词 | 已修复，隔离验证通过 | 原生固定提示词逐字进入提炼 runner；角色标记、无变更约定与语言要求通过 |
 | 画像触发/计数 | 已修复，隔离验证通过 | 原生冷启动/阈值/主动请求/恢复；L0/L1/L2 计数、上一场景和无变化跳过 |
 | Skill/版本分页 | 已修复，隔离验证通过 | 51 个 Skill 全部进入候选/管理/导出；51 个版本含 v1 全部进入版本列表及导出，最早 Skill 正文仍可加载 |
@@ -25,3 +25,13 @@ L0 捕获补充验证：索引成功写入后才推进原生捕获检查点；�
 错误修复由原生 MemoryPipelineManager 继续负责 30 秒延迟与最多 5 次重试。宿主持久保存失败类型、阶段及尝试次数，跨重启保留初次加 5 次的上限；不会另起重试循环。成功阶段不重跑，L1 失败不会推进 L2；永久错误保留失败，预算/缺路由保留暂停状态，用户手动重试才重置上限。原生 L1 返回失败时还原 runner 异常代码，避免预算被误报为普通错误。回执：[真实调度器重试](evidence/native-retry-repair-20261004.json)，测试仅将原生定时器延迟缩至 5ms，真实模型请求为 0。
 
 诊断原样复用固定修订 FileLogger，按物理范围写入 diagnostics/observability.log 并保留其轮转机制。原生 obsLogger、trace.report、metric.send 经宿主 AsyncLocalStorage 附带 scope/job/source_session，后台错误也单独记结构化状态；没有接外部遥测服务。分布式 span 处理器继续为空实现，不声称恢复云端链路追踪。回执：[原生诊断](evidence/native-diagnostics-repair-20261004.json)，实际原生 SkillExtractor 成功/失败与指标均落地，两个并发范围无串写，原生 L1 失败保留模型错误代码。
+
+## 向量链路验收
+
+原样复用固定修订的 EmbeddingService，启用原生 sqlite-vec、L0/L1 向量写入与更新、L1 冲突候选及 hybrid/RRF。旧的无向量库通过原生 reindexAll 重建；宿主核对覆盖率和更新一致性。原生组件会容忍部分编码错误，宿主完整性边界将其还原为失败，防止静默退回关键词后误报成功。SkillStore 的原生检索本来就是 BM25，保持其实现。
+
+默认使用原生本地 embeddinggemma-300m-qat Q8_0（768 维），与聊天模型 qwen 分开。首次需要约 329 MB 模型；离线环境应显式配置已下载文件的绝对 modelPath。模型不随插件发布。原生 512 字符输入限制保持不变；编码调用记录次数、输入字符与耗时，token 未提供时保持未知。
+
+回执：[原生装配及故障边界](evidence/native-vector-repair-20261004.json)、[真实本地模型](evidence/real-native-vector-20261004.json)。真实模型测试中，中文查询对英文资产的 FTS 命中为 0，向量搜索及原生 RRF 成功召回相关资产；这是小型接入验收，不是效果成绩。
+
+[本机生产包安装](evidence/package-native-binaries-20261004.json)实际加载了 sqlite-vec 与 node-llama-cpp 原生二进制；[安装版宿主回归](evidence/runtime-native-vectors-20261004.json)及[模型桥回归](evidence/bridge-native-vectors-20261004.json)通过，后两项使用明确的测试编码服务，没有真实语义质量结论。新依赖的远程多平台 CI 尚待推送后验证，旧版 CI 不能替代本轮。核心清单现在为 60 个文件，逐文件哈希检查通过。

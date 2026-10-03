@@ -1,3 +1,4 @@
+import {fixtureEmbedding} from './fixture-embedding.mjs';
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {mkdtemp,readFile,writeFile,mkdir,rm} from 'node:fs/promises';
@@ -15,7 +16,7 @@ const instrumented=original.replace(/from "([^"]+)"/g,(_,id)=>`from ${JSON.strin
 await writeFile(join(root,'runtime.mjs'),instrumented);
 const {Runtime}=await import(pathToFileURL(join(root,'runtime.mjs')));
 const cwd=join(root,'workspace');await mkdir(cwd);
-const runtime=new Runtime({logger,llm:{prepareCall(){throw Error('Network dispatch forbidden in this audit');}}},{cwd,settings:{learningEnabled:false},l2DelaySeconds:86400},join(root,'assets'));
+const runtime=new Runtime({logger,llm:{prepareCall(){throw Error('Network dispatch forbidden in this audit');}}},{cwd,settings:{learningEnabled:false},l2DelaySeconds:86400},join(root,'assets'),fixtureEmbedding());
 const entry=await runtime.scope(cwd),core=await runtime.core(entry.id),global=await runtime.core('global');
 const ids={team_id:entry.id,user_id:'local-user',agent_id:'local-agent'};
 const content=name=>`---\nname: ${name}\ndescription: 离线审计技能\n---\n\n运行离线审计并保留记录。`;

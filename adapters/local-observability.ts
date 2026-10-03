@@ -3,6 +3,7 @@ import { FileLogger } from '../vendor/core/src/core/report/file-logger.js';
 import { NoopObservabilityBackend } from '../vendor/core/src/core/report/noop-backend.js';
 const context=new AsyncLocalStorage<{sink:FileLogger,attrs:Record<string,unknown>}>();
 export { FileLogger };
+export function diagnosticProvenance(){return {...context.getStore()?.attrs};}
 /** Keep native event fields and attach host provenance without a global data directory. */
 export function withLocalDiagnostics<T>(sink:FileLogger,attrs:Record<string,unknown>,operation:()=>T):T {
   return context.run({sink,attrs:{...context.getStore()?.attrs,...attrs}},operation);

@@ -190,6 +190,10 @@
       "sha256": "7d5ed74f07d17cd88174d4ef82a887f0e9f811088925d21f65bd357ea67ef12d"
     },
     {
+      "path": "core/store/embedding.ts",
+      "sha256": "ff544a6b51c8fc274847c1176f0b48138dbf17ad6bf89d869fa7bf5edfa1af3f"
+    },
+    {
       "path": "core/store/isolation.ts",
       "sha256": "e9426032b390c37a340cec13207a1447bbdcc017d704421179ae7b26be9d43f3"
     },

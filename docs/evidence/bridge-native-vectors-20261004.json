@@ -1,0 +1,72 @@
+{
+  "status": "PASS",
+  "realProviderRequests": 0,
+  "taskCommandsExecuted": 0,
+  "fixtureModelDispatches": 11,
+  "memoryRecords": 1,
+  "skillVersions": 2,
+  "logs": [
+    {
+      "id": "rsi-4d65ffad-28ca-4e3a-aa9b-44934e545203",
+      "sha256": "35e5406e528be46e12abe147e0aa27f14381d5c5e1264518cab6ab1186d5d6b0",
+      "requests": 1
+    },
+    {
+      "id": "rsi-45a57d45-0f13-4ca1-a321-214eac24c0a0",
+      "sha256": "c4a745e3a777f3c648a8113387fe8d8f5ed935f13631bba755d92713a75d2bfc",
+      "requests": 1
+    },
+    {
+      "id": "rsi-bb41848b-3af7-4afe-b316-5f693c56aa1a",
+      "sha256": "17c7237731c2289d701ac17a2df363207823f37ec730b17b9d06931343831eb2",
+      "requests": 2
+    },
+    {
+      "id": "rsi-692e41e3-dd88-46f4-8c6c-58dbb83e773e",
+      "sha256": "e82489bb6461bba39c4e0b66d4944908dbcb84a3efbb93e7afadae90f36f7db2",
+      "requests": 2
+    },
+    {
+      "id": "rsi-be87f5b8-3e9d-49ea-90fa-e93884ee4348",
+      "sha256": "028d50ad42903ad37dbbd10fa8d0f335214a5b5bb938b157c32972a3ab90ea70",
+      "requests": 2
+    },
+    {
+      "id": "rsi-44b43a19-a2c2-4e3f-a159-d38c94c9fae7",
+      "sha256": "c5270eacb6475c2fb47812431c1686efec868955327823d98f69129020d05699",
+      "requests": 1
+    },
+    {
+      "id": "rsi-73df3df6-3f0d-4092-be45-91c305e4b96a",
+      "sha256": "6ee49a4f7c057fb1a9beb826d8b743ddc4cc39402c11d5788fb26d1a30fdc8ca",
+      "requests": 1
+    },
+    {
+      "id": "rsi-5cf8786d-c10b-423f-9cdf-51731faf670d",
+      "sha256": "0551ca51c4f9674e997008a770a7be979f2082922ee55ae72b41ee93943348ed",
+      "requests": 1
+    }
+  ],
+  "checks": [
+    "native-memory-extraction-and-write",
+    "native-skill-tool-create-update",
+    "historical-skill-version",
+    "request-reconstruction",
+    "reported-usage-persistence",
+    "invalid-tool-arguments",
+    "iteration-limit-no-mutation",
+    "model-error",
+    "pre-abort-no-dispatch",
+    "timeout"
+  ],
+  "limitation": "Deterministic adapter fixtures validate integration and persistence, not model quality, automatic learning, foreground consumption, UI or sandbox isolation.",
+  "restart": {
+    "status": "PASS",
+    "logsRestored": 8,
+    "modelDispatches": 0
+  },
+  "hostVersion": "0.2.0-rc.2",
+  "checkedAt": "2026-10-03T23:12:20.583616+00:00",
+  "isolatedHome": true,
+  "diagnostics": []
+}

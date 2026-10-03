@@ -1,3 +1,4 @@
+import {fixtureEmbedding} from './fixture-embedding.mjs';
 import assert from 'node:assert/strict';
 import {mkdtemp,rm,readFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
@@ -10,7 +11,7 @@ const root=await mkdtemp('/private/tmp/dsh-rsi-native-extraction-');
 const calls=[];
 const runner={async run(params){calls.push(params);return 'Nothing to save.';}};
 const logger={info(){},warn(){},error(){},debug(){}};
-const core=await openLocalCore(join(root,'assets'),runner,logger);
+const core=await openLocalCore(join(root,'assets'),runner,logger,fixtureEmbedding());
 try {
   const result=await core.createSkillExtractor('zh-CN').extract({user_id:'local-user',team_id:'fixture',agent_id:'local-agent',task_id:'fixture-review',session_id:'fixture-source',messages:[{role:'user',content:'请检查本次失败的测试，保留执行日志，不要把计划描述为已经成功。'},{role:'assistant',content:'本次目标检查仍然失败，应继续排查环境和代码。'},{role:'tool_result',content:'exit_code=1; test failed'}]});
   const review=calls.find(p=>p.taskId==='skill-extract-fixture-review');assert.ok(review);

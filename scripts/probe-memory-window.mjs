@@ -1,3 +1,4 @@
+import {fixtureEmbedding} from './fixture-embedding.mjs';
 import assert from 'node:assert/strict';
 import {mkdtemp,rm} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
@@ -18,7 +19,7 @@ const runner={async run(params){
 }};
 let core;
 try{
- core=await openLocalCore(directory,runner,{debug(){},info(){},warn(){},error(){}});
+ core=await openLocalCore(directory,runner,{debug(){},info(){},warn(){},error(){}},fixtureEmbedding());
  await core.record({sessionKey:'window-regression',sessionId:'window-regression',rawMessages:messages});
  const result=await core.extractMemories({sessionKey:'window-regression',sessionId:'window-regression',messages});
  assert.equal(result.storedCount,1);const saved=await core.readMemories();assert.equal(saved[0].content,content);assert.deepEqual(saved[0].source_message_ids,['user-requirement']);assert.equal(calls,1);

@@ -25,3 +25,4 @@ export { PersonaTrigger } from '../vendor/core/src/core/persona/persona-trigger.
 export { CheckpointManager } from '../vendor/core/src/utils/checkpoint.js';
 export { stripSceneNavigation } from '../vendor/core/src/core/scene/scene-navigation.js';
 export { FileLogger, withLocalDiagnostics, diagnosticEvent } from '../adapters/local-observability.js';
+export { createEmbeddingService, LocalEmbeddingService } from '../vendor/core/src/core/store/embedding.js';

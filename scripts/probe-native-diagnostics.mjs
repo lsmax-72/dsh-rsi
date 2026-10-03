@@ -1,3 +1,4 @@
+import {fixtureEmbedding} from './fixture-embedding.mjs';
 import assert from 'node:assert/strict';
 import {mkdtemp,readFile,rm} from 'node:fs/promises';
 import {dirname,join} from 'node:path';
@@ -10,10 +11,10 @@ try {
   const cases=await Promise.all(['workspace-a','workspace-b'].map(async scope=>{
     const dir=join(root,scope),sink=new FileLogger({path:join(dir,'diagnostics'),filename:'observability.log',rotateSizeBytes:100*1024*1024,rotateBackupLimit:10});
     const runner={run:async()=>{fixtureRunnerCalls++;await new Promise(r=>setTimeout(r,scope==='workspace-a'?8:2));return 'Nothing to save.';}};
-    const core=await openLocalCore(dir,runner,logger);cores.push(core);
+    const core=await openLocalCore(dir,runner,logger,fixtureEmbedding());cores.push(core);
     const input={user_id:'local-user',team_id:scope,agent_id:'local-agent',session_id:`session-${scope}`,task_id:`job-${scope}`,messages:[{role:'user',content:'验证一次原生结构化事件，不生成资产。'},{role:'assistant',content:'Nothing to save.'}]};
     await withLocalDiagnostics(sink,{scope,source_session_id:input.session_id,job_id:input.task_id},()=>core.createSkillExtractor().extract(input));
-    const failCore=await openLocalCore(join(dir,'failure'),{run:async()=>{fixtureRunnerCalls++;throw Object.assign(new Error('DIAGNOSTIC_FIXTURE_FAILURE'),{code:'BUDGET_EXHAUSTED'});}},logger);cores.push(failCore);
+    const failCore=await openLocalCore(join(dir,'failure'),{run:async()=>{fixtureRunnerCalls++;throw Object.assign(new Error('DIAGNOSTIC_FIXTURE_FAILURE'),{code:'BUDGET_EXHAUSTED'});}},logger,fixtureEmbedding());cores.push(failCore);
     await withLocalDiagnostics(sink,{scope,source_session_id:input.session_id,job_id:input.task_id},async()=>{
       await assert.rejects(failCore.createSkillExtractor().extract(input),/DIAGNOSTIC_FIXTURE_FAILURE/);
       await assert.rejects(failCore.extractMemories({sessionKey:input.session_id,sessionId:input.session_id,messages:[{id:'fixture',role:'user',content:'需要保留错误代码。',timestamp:Date.now()}]}),e=>e.code==='BUDGET_EXHAUSTED');

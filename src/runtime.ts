@@ -8,6 +8,7 @@ import { copyResources,versionResources } from './resources.js';
 import { State, workspace, type Settings } from './state.js';
 import { listAllSkills, listAllVersions } from './asset-pages.js';
 import { fitRecallScope, recallToolGuide } from './recall-context.js';
+import { createReadyEmbedding } from './native-embedding.js';
 import { FileLogger, withLocalDiagnostics, diagnosticEvent } from '../adapters/local-observability.js';
 
 const ids = (scope: string) => ({ user_id:'local-user', team_id:scope, agent_id:'local-agent' });
@@ -28,10 +29,11 @@ export class Runtime {
   readonly active = new Set<Promise<any>>();
   readonly notified = new Set<string>();
   readonly blockedScopes = new Set<string>();
+  embeddingPromise?:Promise<any>;
   stopping = false;
   invalidate = () => {};
   captureQueue: Promise<any> = Promise.resolve();
-  constructor(readonly ctx: any, readonly config: any, readonly directory: string) {
+  constructor(readonly ctx: any, readonly config: any, readonly directory: string, readonly suppliedEmbedding?:any) {
     this.state = new State(directory, config.settings);
   }
   tracked<T>(promise: Promise<T>): Promise<T> { this.active.add(promise); void promise.finally(() => this.active.delete(promise)).catch(() => {}); return promise; }
@@ -61,7 +63,8 @@ export class Runtime {
             maxTokens:Math.min(params.maxTokens ?? settings.maxTokens,settings.maxTokens), maxIterations:Math.min(params.maxIterations ?? settings.maxIterations,settings.maxIterations),timeoutMs:Math.min(params.timeoutMs ?? settings.timeoutMs,settings.timeoutMs) }));
         },
       };
-      const promise = openLocalCore(directory,runner,this.ctx.logger).then(core => ({ ...core,runner,scope,directory }));
+      this.embeddingPromise ??= this.suppliedEmbedding?Promise.resolve(this.suppliedEmbedding):createReadyEmbedding(this.config.embedding,this.directory,this.ctx.logger);
+      const promise = this.embeddingPromise.then(embedding=>openLocalCore(directory,runner,this.ctx.logger,embedding)).then(core => ({ ...core,runner,scope,directory }));
       this.cores.set(scope,promise);
       void promise.catch(() => this.cores.delete(scope));
     }
@@ -409,6 +412,7 @@ export class Runtime {
     await Promise.allSettled([...this.pipelines.values()].map(pipeline => pipeline.destroy()));
     await Promise.allSettled([...this.active]);
     for (const core of await Promise.allSettled([...this.cores.values()])) if (core.status === 'fulfilled') core.value.close();
+    if(this.embeddingPromise){const result=await Promise.allSettled([this.embeddingPromise]);if(result[0].status==='fulfilled')await result[0].value.close?.();}
     for(const sink of this.diagnosticSinks.values())sink.close();this.diagnosticSinks.clear();
     this.state.close();
   }

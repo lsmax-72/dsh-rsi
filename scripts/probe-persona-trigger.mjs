@@ -1,3 +1,4 @@
+import {fixtureEmbedding} from './fixture-embedding.mjs';
 import assert from 'node:assert/strict';
 import {mkdtemp,rm} from 'node:fs/promises';
 import {join} from 'node:path';
@@ -18,7 +19,7 @@ const runner={async run(params){
   if(params.taskId==='persona-generation'){await tools.write.execute({path:'persona.md',content:'用户在工作区测试时重视目标测试和完整失败日志。'});return '已保存画像。';}
   throw Error('Unexpected fixture task '+params.taskId);
 }};
-const core=await openLocalCore(join(root,'assets'),runner,logger);
+const core=await openLocalCore(join(root,'assets'),runner,logger,fixtureEmbedding());
 try {
   assert.equal(await core.generatePersona(),false);assert.equal(calls.length,0);
   const rawMessages=[{id:'source-user',role:'user',content:'在这个工作区先运行目标测试，失败时保留完整日志用于排查。',timestamp:Date.now()},{id:'source-assistant',role:'assistant',content:'会记录目标测试的执行结果，失败时不将任务描述为已经成功。',timestamp:Date.now()+1}];

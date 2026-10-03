@@ -36,18 +36,24 @@ try{
   await assert.rejects(access(join(consumer,'node_modules/esbuild')));
   const smoke=String.raw`
     import assert from 'node:assert/strict';
-    import {readFile} from 'node:fs/promises';
+    import {readFile,mkdtemp,rm} from 'node:fs/promises';
+    import {join} from 'node:path';
+    import {tmpdir} from 'node:os';
     import {createRequire} from 'node:module';
     const require=createRequire(import.meta.url);
     const core=await import('dsh-rsi/core');
     const query=core.buildFtsQuery('中文测试环境');
     const binaries=Object.keys(require.cache).filter(path=>path.endsWith('.node')&&path.includes('jieba'));
     assert.ok(binaries.length,'Native tokenizer was not loaded through the core');
+    const nativeRoot=await mkdtemp(join(tmpdir(),'rsi-package-vector-'));
+    const store=new core.VectorStore(join(nativeRoot,'memory.sqlite'),768,{info(){},warn(){},error(){},debug(){}});
+    store.init({provider:'fixture',model:'package-smoke'});assert.equal(store.isDegraded(),false);assert.equal(store.getCapabilities().vectorSearch,true);store.close();await rm(nativeRoot,{recursive:true,force:true});
+    const {getLlama}=await import('node-llama-cpp');const llama=await getLlama({build:'never',progressLogs:false});assert.ok(llama);await llama.dispose();
     for(const path of ['dsh-rsi','dsh-rsi/model-bridge'])await import(path);
     const source=await readFile(require.resolve('dsh-rsi/client'),'utf8');
     const externals=[...new Set([...source.matchAll(/require\("([^"\n]+)"\)/g)].map(match=>match[1]))].sort();
     assert.deepEqual(externals,['react','react/jsx-runtime']);
-    console.log(JSON.stringify({platform:process.platform,arch:process.arch,nativeBinaries:binaries.map(path=>path.replaceAll('\\','/').split('node_modules/').at(-1)),ftsQuery:query,clientExternalSpecifiers:externals,serverExportsLoaded:true}));
+    console.log(JSON.stringify({platform:process.platform,arch:process.arch,nativeBinaries:binaries.map(path=>path.replaceAll('\\','/').split('node_modules/').at(-1)),ftsQuery:query,clientExternalSpecifiers:externals,serverExportsLoaded:true,sqliteVecLoaded:true,llamaNativeBinaryLoaded:true}));
   `;
   await writeFile(join(consumer,'smoke.mjs'),smoke);
   const checked=spawnSync(process.execPath,['smoke.mjs'],{cwd:consumer,encoding:'utf8',timeout:30000});

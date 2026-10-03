@@ -1,3 +1,4 @@
+import {fixtureEmbedding} from './fixture-embedding.mjs';
 import assert from 'node:assert/strict';
 import {mkdtemp,readFile,writeFile,mkdir,rm} from 'node:fs/promises';
 import {createRequire} from 'node:module';
@@ -9,7 +10,7 @@ await writeFile(join(root,'runtime.mjs'),original.replace(/from "([^"]+)"/g,(_,i
 const {Runtime}=await import(pathToFileURL(join(root,'runtime.mjs')));
 let capWarnings=0;const logger={info(){},warn(message){if(message.includes('max retries reached'))capWarnings++;},error(){},debug(){}};
 const cwd=join(root,'workspace');await mkdir(cwd);
-const runtime=new Runtime({logger,llm:{prepareCall(){throw Error('Network dispatch forbidden');}}},{cwd,settings:{learningEnabled:true},l2DelaySeconds:86400},join(root,'assets'));
+const runtime=new Runtime({logger,llm:{prepareCall(){throw Error('Network dispatch forbidden');}}},{cwd,settings:{learningEnabled:true},l2DelaySeconds:86400},join(root,'assets'),fixtureEmbedding());
 const entry=await runtime.scope(cwd),core=await runtime.core(entry.id),pipeline=runtime.pipelines.get(entry.id);
 // Test-only acceleration exercises the unchanged native timer and retry count.
 pipeline.L1_RETRY_DELAY_MS=5;

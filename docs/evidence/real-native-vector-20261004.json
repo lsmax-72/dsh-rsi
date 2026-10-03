@@ -1,0 +1,37 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-03T23:15:52.903Z",
+  "method": "Native LocalEmbeddingService + native sqlite-vec + native hybrid/RRF in temporary assets; no chat calls or task execution.",
+  "chatModelRequests": 0,
+  "embeddingProvider": "local",
+  "modelRepoRevision": "66f974f8cd48cc3b9c41c516b95508e75b4bee64",
+  "modelSha256": "6fa0c02a9c302be6f977521d399b4de3a46310a4f2621ee0063747881b673f67",
+  "dimensions": 768,
+  "norm": 0.9999999943682567,
+  "keywordHits": 0,
+  "vectorRanking": [
+    {
+      "id": "python-environment",
+      "score": 0.6604360938072205
+    },
+    {
+      "id": "npm-release",
+      "score": 0.5799843668937683
+    }
+  ],
+  "recallStrategy": "hybrid",
+  "embeddingCalls": 7,
+  "embeddingInputChars": 400,
+  "tokenUsage": null,
+  "durationMs": 1447,
+  "coreBundleSha256": "27914f972e7cabd9d88b9707d8f73b69c01ac74b3321cc17ce4d8bf1d7861f91",
+  "checks": [
+    "real-native-model-loaded",
+    "real-768-dimensional-normalized-embedding",
+    "native-L0-and-L1-vector-writes",
+    "real-vector-query-with-zero-FTS-hits",
+    "native-hybrid-RRF-recall",
+    "native-edit-updates-vector"
+  ],
+  "limitation": "Small integration probe only; not an effect benchmark. Local native input cap remains 512 characters and token usage is unavailable."
+}
