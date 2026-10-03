@@ -21,3 +21,6 @@ export { parseSkillFile } from '../vendor/core/src/core/skill/skill-format.js';
 export { readSceneIndex } from '../vendor/core/src/core/scene/scene-index.js';
 export { parseSceneBlock } from '../vendor/core/src/core/scene/scene-format.js';
 export { SKILL_REVIEW_PROMPT } from '../vendor/core/src/core/skill/prompts/skill-review-prompt.js';
+export { PersonaTrigger } from '../vendor/core/src/core/persona/persona-trigger.js';
+export { CheckpointManager } from '../vendor/core/src/utils/checkpoint.js';
+export { stripSceneNavigation } from '../vendor/core/src/core/scene/scene-navigation.js';

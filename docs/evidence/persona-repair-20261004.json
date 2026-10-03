@@ -1,0 +1,27 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-03T22:37:13.095Z",
+  "realModelRequests": 0,
+  "fixtureRunnerCalls": 5,
+  "checks": [
+    "empty-profile-no-dispatch",
+    "native-L0-capture-cursor-and-count",
+    "native-L1-count",
+    "previous-scene-continuity",
+    "native-L2-count",
+    "navigation-only-is-not-L3",
+    "native-cold-start",
+    "native-no-trigger-no-dispatch",
+    "native-no-change-no-dispatch",
+    "native-threshold-50",
+    "native-explicit-request",
+    "native-missing-persona-recovery"
+  ],
+  "testedWorktreeFiles": {
+    "src/local-core.ts": "7fd8093edeadd7e6595374d9faa04c2d3afc6ccdbcd280f9896ea1864a9e54ac",
+    "src/core-entry.ts": "eaa21a78cdc8c4a91513cf40a9717bf636a04da7ec0653a0fe675f6db553921d",
+    "src/runtime.ts": "f187cb7689b57a6378ae4e82b3a41d7064637fd9f8b80fd1f0d81e8f54eaa52d",
+    "vendor/core/src/core/persona/persona-trigger.ts": "ad603432eec86c5f1c7903d522fd6ca7cb6d44a76676256fe03e18746ab10da8",
+    "scripts/probe-persona-trigger.mjs": "a98761812a0a90e50788009a32d3fb6e3533620db0f617ce6564f9b0b0ce96a0"
+  }
+}

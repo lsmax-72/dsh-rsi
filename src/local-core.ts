@@ -4,7 +4,7 @@ import { join } from 'node:path';
 import {
   SkillCore, SqliteSkillStore, SkillResourceStore, SkillVersioning, SkillExtractor, SKILL_REVIEW_PROMPT,
   StorageAdapter, LocalStorageBackend, extractL1Memories, VectorStore,
-  queryMemoryRecords, readAllMemoryRecords, recordConversation, SceneExtractor, PersonaGenerator,
+  queryMemoryRecords, readAllMemoryRecords, recordConversation, SceneExtractor, PersonaGenerator, PersonaTrigger, CheckpointManager, stripSceneNavigation,
   performAutoRecall, parseConfig, writeMemory, buildFtsQuery, readSceneIndex, parseSceneBlock,
 } from './core-entry.js';
 
@@ -31,9 +31,11 @@ export async function openLocalCore(dataDir: string, runner: any, logger: any) {
     const skills = new SkillCore({ store, resources, versioning });
     const scene = new SceneExtractor({ dataDir: profileDir, config: {}, storage: profile, llmRunner: runner, logger });
     const persona = new PersonaGenerator({ dataDir: profileDir, config: {}, storage: profile, llmRunner: runner, logger });
+    const checkpoint = new CheckpointManager(profileDir,logger,profile);
+    const personaTrigger = new PersonaTrigger({dataDir:profileDir,interval:parseConfig({}).persona.triggerEveryN,logger,storage:profile});
     return {
-      skills, resources, versioning, memory, resourceDir, profile,profileDir,
-      async layerCounts(){return {L0:memory.countL0(),L1:(await queryMemoryRecords(memory)).length,L2:(await readSceneIndex(profileDir,profile)).length,L3:await profile.readFile('persona.md')?1:0};},
+      skills, resources, versioning, memory, resourceDir, profile,profileDir,checkpoint,personaTrigger,
+      async layerCounts(){return {L0:memory.countL0(),L1:(await queryMemoryRecords(memory)).length,L2:(await readSceneIndex(profileDir,profile)).length,L3:stripSceneNavigation(await profile.readFile('persona.md') ?? '').trim()?1:0};},
       async readLayer(layer:string,offset=0){
         if(layer==='L0'){const result=memory.queryL0Paginated({limit:50,offset});return {items:result.rows,total:result.total};}
         if(layer==='L1'){const items=await this.readMemories();return {items,total:items.length};}
@@ -45,18 +47,27 @@ export async function openLocalCore(dataDir: string, runner: any, logger: any) {
         return new SkillExtractor({ core: skills, runner, logger, prefixSkillsLimit: 20,
           systemPrompt: `${SKILL_REVIEW_PROMPT}\nWrite asset prose in ${language}; preserve code, commands, paths and API identifiers.` });
       },
-      record: (input: any) => recordConversation({ ...input, baseDir:join(dataDir,'history'), storage:history, logger }),
+      async record(input:any) {
+        let captured:any[]=[];
+        await checkpoint.captureAtomically(input.sessionKey,undefined,async afterTimestamp=>{
+          captured=await recordConversation({...input,afterTimestamp,baseDir:join(dataDir,'history'),storage:history,logger});
+          return captured.length?{maxTimestamp:Math.max(...captured.map(message=>message.timestamp)),messageCount:captured.length}:null;
+        });
+        return captured;
+      },
       async extractMemories(input: any) {
+        const previous=checkpoint.getRunnerState(await checkpoint.read(),input.sessionKey).last_scene_name;
         const result = await extractL1Memories({ ...input, baseDir:join(dataDir,'history'), config:{}, storage:history, logger,
           // dsh emits many assistant messages inside one turn; the native ten-message default can drop its user input.
-          options:{ llmRunner:runner, enableDedup:true, vectorStore:memory,
+          options:{ llmRunner:runner, enableDedup:true, vectorStore:memory, previousSceneName:previous || undefined,
             maxMessagesPerExtraction:Math.max(10,input.messages.length) } });
         if (!result.success) throw new Error('记忆提炼失败，请查看后台会话日志');
+        await checkpoint.markL1ExtractionComplete(input.sessionKey,result.storedCount,undefined,result.lastSceneName);
         return result;
       },
       async readMemories(){const rows=await queryMemoryRecords(memory),historyRows=await readAllMemoryRecords(join(dataDir,'history'),logger,history),byId=new Map(historyRows.map(row=>[row.id,row]));return rows.map(row=>({...row,source_message_ids:byId.get(row.id)?.source_message_ids??[]}));},
       readMemoryHistory:()=>readAllMemoryRecords(join(dataDir,'history'),logger,history),
-      async storeMemory(record:any){return writeMemory({memory:record,decision:{record_id:record.id,action:'store',target_ids:[]},baseDir:join(dataDir,'history'),sessionKey:record.sessionKey,sessionId:record.sessionId,taskId:record.taskId,vectorStore:memory,storage:history,logger});},
+      async storeMemory(record:any){const saved=await writeMemory({memory:record,decision:{record_id:record.id,action:'store',target_ids:[]},baseDir:join(dataDir,'history'),sessionKey:record.sessionKey,sessionId:record.sessionId,taskId:record.taskId,vectorStore:memory,storage:history,logger});if(saved)await checkpoint.markL1ExtractionComplete(record.sessionKey,1,undefined,record.scene_name);return saved;},
       async recall(query: string, maxChars = 6000) {
         const result = await performAutoRecall({ userText:query, pluginDataDir:profileBaseDir,
           cfg:parseConfig({ recall:{ strategy:'keyword', maxResults:8, maxTotalRecallChars:maxChars } }),
@@ -69,9 +80,17 @@ export async function openLocalCore(dataDir: string, runner: any, logger: any) {
         if (!rows.length) return { skipped:true, latestCursor:after };
         const result = await scene.extract(rows.map(row => ({ id:row.id, content:row.content, created_at:row.createdAt })));
         if (!result.success) throw new Error(result.error ?? '场景提炼失败');
+        if(!result.emptyExtraction && result.memoriesProcessed>0)await checkpoint.incrementScenesProcessed();
         return { latestCursor:rows.map(row => row.updatedAt).sort().at(-1), skipped:!!result.emptyExtraction };
       },
-      async generatePersona() { const changed=await persona.generate(); if (!changed && !await profile.readFile('persona.md')) throw new Error('画像生成失败');return changed; },
+      async generatePersona(force=false) {
+        const trigger=await personaTrigger.shouldGenerate();
+        if(!force && !trigger.should)return false;
+        if(!(await readSceneIndex(profileDir,profile)).length)return false;
+        const changed=await persona.generate(force?'用户手动重建':trigger.reason);
+        if(!changed && !stripSceneNavigation(await profile.readFile('persona.md') ?? '').trim())throw new Error('画像生成失败');
+        return changed;
+      },
       async editMemory(id: string, content: string) {
         const existing = (await queryMemoryRecords(memory, { recordIds:[id] }))[0];
         if(existing){const historyRows=await readAllMemoryRecords(join(dataDir,'history'),logger,history);existing.source_message_ids=historyRows.findLast(row=>row.id===id)?.source_message_ids??[];}

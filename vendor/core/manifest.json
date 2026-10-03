@@ -46,6 +46,10 @@
       "sha256": "d9d95b9d120d21abc788f0a19b954195094b072f1ddd8bd206a992cc671d362c"
     },
     {
+      "path": "core/persona/persona-trigger.ts",
+      "sha256": "ad603432eec86c5f1c7903d522fd6ca7cb6d44a76676256fe03e18746ab10da8"
+    },
+    {
       "path": "core/profile/profile-sync.ts",
       "sha256": "80433ae88358e2f928c0a73edd84a20730cc042560eecd05c769f552d6fec185"
     },

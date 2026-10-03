@@ -348,7 +348,7 @@ export class Runtime {
       if(this.state.settings().learningEnabled || this.active.size || this.state.jobs().some(job => job.status === 'running'))throw new Error('请暂停学习并等待当前任务结束后重建');
       if(!this.route(scope))throw new Error('尚无会话模型配置');
       await rm(join(core.directory,'profile'),{recursive:true,force:true});this.state.set(`profile-invalid:${scope}`,Date.now());
-      await this.within(scope,async()=>{const result=await core.extractScenes('');if(!result.skipped)await core.generatePersona();},{manual:true});this.state.set(`profile-invalid:${scope}`,0);
+      await this.within(scope,async()=>{const result=await core.extractScenes('');if(!result.skipped)await core.generatePersona(true);},{manual:true});this.state.set(`profile-invalid:${scope}`,0);
       return this.snapshot(cwd);
     }
     if (operation === 'convertSkill' || operation === 'convertMemory') {
