@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run one isolated preflight arm. This entry never starts a formal benchmark."""
+"""Run one isolated arm; formal mode requires explicit fixed environment inputs."""
 import argparse
 import importlib.util
 import hashlib
@@ -46,6 +46,9 @@ def main():
     parser.add_argument('--instance',default='preflight',help='Unique public task ID; reused across its two arms only')
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--fixture', action='store_true')
+    parser.add_argument('--formal',action='store_true')
+    parser.add_argument('--expected-tree',help='Verified source Git tree for this task')
+    parser.add_argument('--expected-version',help='Verified Django version in its scorer image')
     parser.add_argument('--fixture-learning',action='store_true',help='Fixture-only native learning for quota controls; no real API calls')
     parser.add_argument('--learning-dispatch-limit',type=int,help='New background streams for this run, independent of historical daily usage')
     parser.add_argument('--learning-pool',type=Path,help='Explicitly initialized host experiment pool, never mounted into task containers')
@@ -60,6 +63,8 @@ def main():
     parser.add_argument('--wall-seconds', type=int, default=1200)
     parser.add_argument('--settle-seconds', type=int, default=90)
     args = parser.parse_args()
+    if args.formal and (args.fixture or args.instance=='preflight' or not args.expected_tree or not args.expected_version): parser.error('Formal runs require real task ID and frozen environment checks')
+    if args.formal and args.arm=='rsi' and not args.learning_pool: parser.error('Formal RSI requires a durable learning pool')
     if not re.fullmatch(r'[a-zA-Z0-9_-]+',args.instance): parser.error('Invalid task ID')
     if args.seed_sessions and not args.seed_assets: parser.error('Source sessions require matching asset snapshot')
     if args.seed_assets and not args.seed_sessions: parser.error('Asset snapshots require matching official source sessions')
@@ -87,7 +92,7 @@ def main():
     driver['config'] = {'arm':args.arm, 'instanceId':args.instance, 'fixture':args.fixture,
         'interruptCheckpoint':args.interrupt_checkpoint, 'baselineDate':args.baseline_date, 'dispatchLimit':args.dispatch_limit,
         'learningCallBudget':args.learning_call_budget, 'learningDispatchLimit':learning_limit, 'fixtureLearning':args.fixture_learning, 'wallTimeMs':args.wall_seconds*1000,
-        'settleMs':args.settle_seconds*1000}
+        'settleMs':args.settle_seconds*1000,'formal':args.formal,'expectedTree':args.expected_tree,'expectedVersion':args.expected_version}
     if args.phases: driver['config']['phases']=json.loads(args.phases.read_text())
     if args.arm == 'baseline': services[:] = [s for s in services if s['id']!='rsi']
     else:
@@ -159,7 +164,7 @@ def main():
             'experimentOwnedVolume':True,'fixture':args.fixture,'requestLimit':relay_limit,
             'dispatchLimit':args.dispatch_limit,'learningCallBudget':args.learning_call_budget,'learningDispatchLimit':learning_limit, 'fixtureLearning':args.fixture_learning,
             'wallSecondsPerPhase':args.wall_seconds,'settleSecondsPerPhase':args.settle_seconds,
-            'instanceId':args.instance, 'sourceSessionsRestored':bool(args.seed_sessions), 'effectivePatch':patch},indent=2))
+            'formalBenchmark':args.formal,'instanceId':args.instance, 'sourceSessionsRestored':bool(args.seed_sessions), 'effectivePatch':patch},indent=2))
         phase_count = len(driver['config'].get('phases',[{}]))
         until = time.monotonic() + phase_count*(args.wall_seconds+args.settle_seconds)+90
         killed = False
@@ -182,7 +187,7 @@ def main():
         if args.interrupt_checkpoint: assert killed and state['ExitCode']==137
         else: assert state['ExitCode']==0 and receipt.exists(), (output/'run.log').read_text()[-6000:]
         print(json.dumps({'status':'INTERRUPTION_CAPTURED' if killed else 'PASS','arm':args.arm,'fixture':args.fixture,
-            'output':str(output),'formalBenchmarkStarted':False}))
+            'output':str(output),'formalBenchmarkStarted':args.formal}))
     finally:
         # Export on host timeout or exception too, before removing the only durable state volume.
         if started and not exported:

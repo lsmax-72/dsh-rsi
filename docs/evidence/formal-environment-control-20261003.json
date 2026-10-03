@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "fixture": true,
+  "formalBenchmarkStarted": false,
+  "realProviderRequests": 0,
+  "instanceId": "django__django-10554",
+  "sourceTree": "b3f2ad248aec2b040a5860e6ddc4c27db4329b5b",
+  "djangoVersion": "3.0.dev20260813005639",
+  "requestsReconstructed": 2,
+  "scorerImage": "sha256:3e799bbbf2aa8ad8201cf7fa1302d3a8c2d0885bcd8141dbfcf67ae9d68ab2d1",
+  "taskImage": "sha256:43e9781eb555515aaf22fd45cf62d877a0346bbfcf0dddf9869a64b9ab9e46d4",
+  "receiptSha256": "3a7775aa68c1f957b6e01c74b63562a30ff4d641897e2b186949c84e41656527",
+  "fixes": [
+    "amd64-explicit",
+    "python36-inspection",
+    "content-scoped-local-image-tags",
+    "verbatim-symlinks",
+    "force-initial-tracked-tree"
+  ],
+  "limitation": "Environment control only; not a formal task attempt."
+}

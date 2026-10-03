@@ -115,10 +115,13 @@ export function apply(ctx, config) {
     const timer = setTimeout(async()=>{
       let rsi;
       try {
-        await cp('/opt/task-source', '/workspace', {recursive:true});
+        await cp('/opt/task-source', '/workspace', {recursive:true,verbatimSymlinks:true});
         git('init'); git('config','user.name','lsmax'); git('config','user.email','liushuai072002@163.com');
-        git('add','-A'); git('commit','-m','Pilot task baseline'); initialized = true;
+        git('add','-f','-A'); git('commit','-m','Pilot task baseline'); initialized = true;
         const baselineTree = git('write-tree').trim();
+        if (config.expectedTree) assert.equal(baselineTree,config.expectedTree,'Task source tree mismatch');
+        const djangoVersion = execFileSync('python',['-c','import django; print(django.get_version())'],{cwd:'/workspace',encoding:'utf8'}).trim();
+        if (config.expectedVersion) assert.equal(djangoVersion,config.expectedVersion,'Task/scorer Django version mismatch');
         // get() is the official optional-service lookup; no hidden plugin dependency in baseline.
         rsi = ctx.get('rsi');
         if (config.arm === 'rsi') {assert.ok(rsi); await rsi.ready;}
@@ -129,7 +132,7 @@ export function apply(ctx, config) {
         const exportedBefore = rsi ? await rsi.request('export',{cwd:'/workspace'}) : null;
         durable(dir + '/initial.json', {arm:config.arm, baselineTree, settings:before?.settings??null,
           baselineCommitTime:git('show','-s','--format=%ct','HEAD').trim(),
-          djangoVersion:execFileSync('python',['-c','import django; print(django.get_version())'],{cwd:'/workspace',encoding:'utf8'}).trim(),
+          djangoVersion,
           assets:exportedBefore, toolSchemas:ctx.tools.schemas().map(t=>t.name),
           skillCandidates:await ctx.skills.list({cwd:'/workspace'})});
         const task = JSON.parse(await readFile('/opt/rsi/task.json','utf8'));
@@ -140,6 +143,7 @@ export function apply(ctx, config) {
           assert.match(phase.name,/^[a-zA-Z0-9_-]+$/);
           currentPhase = phase.name; phaseCalls = 0; phaseLimit = phase.dispatchLimit ?? dispatchLimit;
           if (phase.resetWorkspace) {git('reset','--hard','HEAD');git('clean','-fdx');}
+          const phaseStartedAt=Date.now();
           const id = 'pilot-' + config.instanceId + '-' + phase.name;
           const handle = await ctx.agents.create({sessionId:id, meta:{cwd:'/workspace'},
             agentOptions:{provider:config.fixture?'pilot-fixture':'qwen', model:config.fixture?'fixture':'qwen3.8-27b', maxTokens:8192}});
@@ -150,7 +154,7 @@ export function apply(ctx, config) {
           const stored = await ctx.sessionPersistence.open(id,'read');
           const outcome = await stored.read(); await stored.close();
           const stopReason = outcome.events.filter(e=>e.type==='turn/end').at(-1)?.data.reason;
-          phaseResults.push({phase:phase.name, sessionId:id, stopReason, requests:requests.filter(r=>r.sessionId===id).length});
+          phaseResults.push({phase:phase.name, sessionId:id, stopReason, startedAt:phaseStartedAt, finishedAt:Date.now(), wallMs:Date.now()-phaseStartedAt, requests:requests.filter(r=>r.sessionId===id).length});
           durable(dir + '/phases.json', phaseResults);
           // Observe the default scheduler; never invoke learn/captureStored or inject a named Skill.
           const until = Date.now() + (config.settleMs ?? 90000);
@@ -164,13 +168,13 @@ export function apply(ctx, config) {
         // Shutdown first: aborted background calls must settle before final usage and request audit.
         await ctx.root.fiber.dispose();
         const audit = await auditRequests(dir + '/model-requests.json', process.env.DSH_HOME + '/sessions', dir + '/reconstruction.json');
-        const receipt = {runnerStatus:'COMPLETED', arm:config.arm, fixture:!!config.fixture,
+        const receipt = {runnerStatus:'COMPLETED', formalBenchmark:!!config.formal, arm:config.arm, fixture:!!config.fixture,
           instanceId:config.instanceId, officialResolved:null, taskDispatches:foreground,
           backgroundDispatches:requests.length-foreground, phases:phaseResults,
           before, after, blockedDispatches:blocked, learningDispatchLimit:config.learningDispatchLimit, toolResults:results, logReconstructionMatches:true,
           knownTokens:requests.reduce((n,r)=>n+(r.usage?.totalTokens??0),0),
           unknownUsage:requests.filter(r=>!r.usage).length,
-          limitation:config.fixture?'Fixed responses validate runner plumbing; no effectiveness result.':'Default-flow pilot; not a formal paired benchmark.'};
+          limitation:config.fixture?'Fixed responses validate runner plumbing; no effectiveness result.':config.formal?'One fixed formal arm; use paired official reports to interpret effect.':'Default-flow pilot; not a formal paired benchmark.'};
         durable(dir + '/receipt.json', receipt);
         console.log(JSON.stringify(receipt)); process.exit(0);
       } catch (error) {
