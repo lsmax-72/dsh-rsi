@@ -1,7 +1,33 @@
 name: Package installation
 on:
   push:
+    paths:
+      - .github/workflows/package.yml
+      - .gitattributes
+      - package.json
+      - package-lock.json
+      - cordis.patch.yml
+      - src/**
+      - adapters/**
+      - vendor/**
+      - scripts/build.mjs
+      - scripts/verify-core.mjs
+      - scripts/verify-panel.mjs
+      - scripts/probe-package.mjs
   pull_request:
+    paths:
+      - .github/workflows/package.yml
+      - .gitattributes
+      - package.json
+      - package-lock.json
+      - cordis.patch.yml
+      - src/**
+      - adapters/**
+      - vendor/**
+      - scripts/build.mjs
+      - scripts/verify-core.mjs
+      - scripts/verify-panel.mjs
+      - scripts/probe-package.mjs
   workflow_dispatch:
 permissions:
   contents: read

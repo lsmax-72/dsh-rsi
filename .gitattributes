@@ -1,0 +1,2 @@
+# Frozen source hashes must be stable across Windows and Unix checkouts.
+vendor/** text eol=lf
