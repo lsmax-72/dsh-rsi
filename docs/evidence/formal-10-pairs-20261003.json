@@ -1,0 +1,1761 @@
+{
+  "status": "PARTIAL_FIXED_PROTOCOL_10_OF_20",
+  "completePairs": 10,
+  "plannedPairs": 20,
+  "resolvedInCompletePairs": {
+    "baseline": 6,
+    "rsi": 6
+  },
+  "gain": 1,
+  "loss": 1,
+  "costScope": "All prefix and exactly these first N complete pairs; not partial future arms.",
+  "cost": {
+    "baseline": {
+      "requests": 469,
+      "usageUnavailableRuns": 0,
+      "inputTokens": 6275439,
+      "knownInputTokens": 6275439,
+      "missingInputTokens": 0,
+      "outputTokens": 54100,
+      "knownOutputTokens": 54100,
+      "missingOutputTokens": 0,
+      "totalTokens": 6329539,
+      "knownTotalTokens": 6329539,
+      "missingTotalTokens": 0
+    },
+    "rsi": {
+      "requests": 559,
+      "usageUnavailableRuns": 0,
+      "inputTokens": null,
+      "knownInputTokens": 9984378,
+      "missingInputTokens": 1,
+      "outputTokens": null,
+      "knownOutputTokens": 115604,
+      "missingOutputTokens": 1,
+      "totalTokens": null,
+      "knownTotalTokens": 10099982,
+      "missingTotalTokens": 1
+    }
+  },
+  "delivery": {
+    "memoryBodyFromPrefix": 10,
+    "skillBodyFromPrefix": 10,
+    "bothBodiesFromPrefix": 10,
+    "baselineIsolationPass": 10
+  },
+  "sourceInventorySha256": "028b42b5705219eadc3fbf3ea1f5dceacd92c1c61c24811c613634dc7955a6bf",
+  "frozenImplementationPass": true,
+  "modelCallsInAudit": 0,
+  "pairs": [
+    {
+      "foregroundTokens": {
+        "baseline": 96558,
+        "rsi": 854216
+      },
+      "foregroundTokenDelta": 757658,
+      "instanceId": "django__django-11066",
+      "baseline": true,
+      "rsi": false,
+      "complete": true,
+      "protocolDeviation": null,
+      "baselineUsage": {
+        "phases": {
+          "foreground": {
+            "requests": 14,
+            "usageUnavailableRuns": false,
+            "inputTokens": 95110,
+            "knownInputTokens": 95110,
+            "missingInputTokens": 0,
+            "outputTokens": 1448,
+            "knownOutputTokens": 1448,
+            "missingOutputTokens": 0,
+            "totalTokens": 96558,
+            "knownTotalTokens": 96558,
+            "missingTotalTokens": 0
+          },
+          "learning": {
+            "requests": 0,
+            "usageUnavailableRuns": false,
+            "inputTokens": 0,
+            "knownInputTokens": 0,
+            "missingInputTokens": 0,
+            "outputTokens": 0,
+            "knownOutputTokens": 0,
+            "missingOutputTokens": 0,
+            "totalTokens": 0,
+            "knownTotalTokens": 0,
+            "missingTotalTokens": 0
+          }
+        },
+        "total": {
+          "requests": 14,
+          "usageUnavailableRuns": false,
+          "inputTokens": 95110,
+          "knownInputTokens": 95110,
+          "missingInputTokens": 0,
+          "outputTokens": 1448,
+          "knownOutputTokens": 1448,
+          "missingOutputTokens": 0,
+          "totalTokens": 96558,
+          "knownTotalTokens": 96558,
+          "missingTotalTokens": 0
+        }
+      },
+      "baselineMechanism": {
+        "memoryDelivered": false,
+        "skillBodyDelivered": false,
+        "beforeLayers": null,
+        "afterLayers": null,
+        "beforeSkills": 0,
+        "afterSkills": 0,
+        "phases": [
+          {
+            "phase": "task",
+            "sessionId": "pilot-django__django-11066-task",
+            "stopReason": {
+              "kind": "completed"
+            },
+            "startedAt": 1791034121895,
+            "finishedAt": 1791034180587,
+            "wallMs": 58692,
+            "requests": 14
+          }
+        ]
+      },
+      "rsiUsage": {
+        "phases": {
+          "foreground": {
+            "requests": 40,
+            "usageUnavailableRuns": false,
+            "inputTokens": 849113,
+            "knownInputTokens": 849113,
+            "missingInputTokens": 0,
+            "outputTokens": 5103,
+            "knownOutputTokens": 5103,
+            "missingOutputTokens": 0,
+            "totalTokens": 854216,
+            "knownTotalTokens": 854216,
+            "missingTotalTokens": 0
+          },
+          "learning": {
+            "requests": 5,
+            "usageUnavailableRuns": false,
+            "inputTokens": 69830,
+            "knownInputTokens": 69830,
+            "missingInputTokens": 0,
+            "outputTokens": 3445,
+            "knownOutputTokens": 3445,
+            "missingOutputTokens": 0,
+            "totalTokens": 73275,
+            "knownTotalTokens": 73275,
+            "missingTotalTokens": 0
+          }
+        },
+        "total": {
+          "requests": 45,
+          "usageUnavailableRuns": false,
+          "inputTokens": 918943,
+          "knownInputTokens": 918943,
+          "missingInputTokens": 0,
+          "outputTokens": 8548,
+          "knownOutputTokens": 8548,
+          "missingOutputTokens": 0,
+          "totalTokens": 927491,
+          "knownTotalTokens": 927491,
+          "missingTotalTokens": 0
+        }
+      },
+      "rsiMechanism": {
+        "memoryDelivered": true,
+        "skillBodyDelivered": true,
+        "beforeLayers": {
+          "c52ddf65534b7b4603508435": {
+            "L0": 127,
+            "L1": 3,
+            "L2": 1,
+            "L3": 1
+          },
+          "global": {
+            "L0": 0,
+            "L1": 0,
+            "L2": 0,
+            "L3": 0
+          }
+        },
+        "afterLayers": {
+          "c52ddf65534b7b4603508435": {
+            "L0": 168,
+            "L1": 3,
+            "L2": 1,
+            "L3": 1
+          },
+          "global": {
+            "L0": 0,
+            "L1": 0,
+            "L2": 0,
+            "L3": 0
+          }
+        },
+        "beforeSkills": 5,
+        "afterSkills": 5,
+        "phases": [
+          {
+            "phase": "task",
+            "sessionId": "pilot-django__django-11066-task",
+            "stopReason": {
+              "kind": "error",
+              "error": {
+                "message": "Pilot foreground dispatch limit reached",
+                "code": "UNKNOWN"
+              }
+            },
+            "startedAt": 1791034231723,
+            "finishedAt": 1791034421031,
+            "wallMs": 189308,
+            "requests": 40
+          }
+        ]
+      }
+    },
+    {
+      "foregroundTokens": {
+        "baseline": 842139,
+        "rsi": null
+      },
+      "foregroundTokenDelta": null,
+      "instanceId": "django__django-11087",
+      "baseline": false,
+      "rsi": false,
+      "complete": true,
+      "protocolDeviation": "USER_INTERRUPTION_NATIVE_CONTINUATION",
+      "baselineUsage": {
+        "phases": {
+          "foreground": {
+            "requests": 40,
+            "usageUnavailableRuns": false,
+            "inputTokens": 836457,
+            "knownInputTokens": 836457,
+            "missingInputTokens": 0,
+            "outputTokens": 5682,
+            "knownOutputTokens": 5682,
+            "missingOutputTokens": 0,
+            "totalTokens": 842139,
+            "knownTotalTokens": 842139,
+            "missingTotalTokens": 0
+          },
+          "learning": {
+            "requests": 0,
+            "usageUnavailableRuns": false,
+            "inputTokens": 0,
+            "knownInputTokens": 0,
+            "missingInputTokens": 0,
+            "outputTokens": 0,
+            "knownOutputTokens": 0,
+            "missingOutputTokens": 0,
+            "totalTokens": 0,
+            "knownTotalTokens": 0,
+            "missingTotalTokens": 0
+          }
+        },
+        "total": {
+          "requests": 40,
+          "usageUnavailableRuns": false,
+          "inputTokens": 836457,
+          "knownInputTokens": 836457,
+          "missingInputTokens": 0,
+          "outputTokens": 5682,
+          "knownOutputTokens": 5682,
+          "missingOutputTokens": 0,
+          "totalTokens": 842139,
+          "knownTotalTokens": 842139,
+          "missingTotalTokens": 0
+        }
+      },
+      "baselineMechanism": {
+        "memoryDelivered": false,
+        "skillBodyDelivered": false,
+        "beforeLayers": null,
+        "afterLayers": null,
+        "beforeSkills": 0,
+        "afterSkills": 0,
+        "phases": [
+          {
+            "phase": "task",
+            "sessionId": "pilot-django__django-11087-task",
+            "stopReason": {
+              "kind": "error",
+              "error": {
+                "message": "Pilot foreground dispatch limit reached",
+                "code": "UNKNOWN"
+              }
+            },
+            "startedAt": 1791037675832,
+            "finishedAt": 1791037881791,
+            "wallMs": 205959,
+            "requests": 40
+          }
+        ]
+      },
+      "rsiUsage": {
+        "phases": {
+          "foreground": {
+            "requests": 40,
+            "usageUnavailableRuns": false,
+            "inputTokens": null,
+            "knownInputTokens": 1113383,
+            "missingInputTokens": 1,
+            "outputTokens": null,
+            "knownOutputTokens": 5288,
+            "missingOutputTokens": 1,
+            "totalTokens": null,
+            "knownTotalTokens": 1118671,
+            "missingTotalTokens": 1
+          },
+          "learning": {
+            "requests": 10,
+            "usageUnavailableRuns": false,
+            "inputTokens": 168069,
+            "knownInputTokens": 168069,
+            "missingInputTokens": 0,
+            "outputTokens": 4560,
+            "knownOutputTokens": 4560,
+            "missingOutputTokens": 0,
+            "totalTokens": 172629,
+            "knownTotalTokens": 172629,
+            "missingTotalTokens": 0
+          }
+        },
+        "total": {
+          "requests": 50,
+          "usageUnavailableRuns": false,
+          "inputTokens": null,
+          "knownInputTokens": 1281452,
+          "missingInputTokens": 1,
+          "outputTokens": null,
+          "knownOutputTokens": 9848,
+          "missingOutputTokens": 1,
+          "totalTokens": null,
+          "knownTotalTokens": 1291300,
+          "missingTotalTokens": 1
+        }
+      },
+      "rsiMechanism": {
+        "memoryDelivered": true,
+        "skillBodyDelivered": true,
+        "beforeLayers": {
+          "c52ddf65534b7b4603508435": {
+            "L0": 127,
+            "L1": 3,
+            "L2": 1,
+            "L3": 1
+          },
+          "global": {
+            "L0": 0,
+            "L1": 0,
+            "L2": 0,
+            "L3": 0
+          }
+        },
+        "afterLayers": {
+          "c52ddf65534b7b4603508435": {
+            "L0": 148,
+            "L1": 3,
+            "L2": 1,
+            "L3": 1
+          },
+          "global": {
+            "L0": 0,
+            "L1": 0,
+            "L2": 0,
+            "L3": 0
+          }
+        },
+        "beforeSkills": 5,
+        "afterSkills": 6,
+        "phases": [
+          {
+            "phase": "task-user-interrupted",
+            "sessionId": "pilot-django__django-11087-task",
+            "stopReason": {
+              "kind": "USER_INTERRUPTION"
+            },
+            "requests": 20,
+            "wallMsConservativelyCharged": 257000
+          },
+          {
+            "phase": "task",
+            "sessionId": "pilot-django__django-11087-task",
+            "stopReason": {
+              "kind": "error",
+              "error": {
+                "message": "Pilot foreground dispatch limit reached",
+                "code": "UNKNOWN"
+              }
+            },
+            "startedAt": 1791037019423,
+            "finishedAt": 1791037137612,
+            "wallMs": 118189,
+            "requests": 20
+          }
+        ]
+      }
+    },
+    {
+      "foregroundTokens": {
+        "baseline": 516768,
+        "rsi": 513681
+      },
+      "foregroundTokenDelta": -3087,
+      "instanceId": "django__django-11095",
+      "baseline": false,
+      "rsi": true,
+      "complete": true,
+      "protocolDeviation": null,
+      "baselineUsage": {
+        "phases": {
+          "foreground": {
+            "requests": 40,
+            "usageUnavailableRuns": false,
+            "inputTokens": 511328,
+            "knownInputTokens": 511328,
+            "missingInputTokens": 0,
+            "outputTokens": 5440,
+            "knownOutputTokens": 5440,
+            "missingOutputTokens": 0,
+            "totalTokens": 516768,
+            "knownTotalTokens": 516768,
+            "missingTotalTokens": 0
+          },
+          "learning": {
+            "requests": 0,
+            "usageUnavailableRuns": false,
+            "inputTokens": 0,
+            "knownInputTokens": 0,
+            "missingInputTokens": 0,
+            "outputTokens": 0,
+            "knownOutputTokens": 0,
+            "missingOutputTokens": 0,
+            "totalTokens": 0,
+            "knownTotalTokens": 0,
+            "missingTotalTokens": 0
+          }
+        },
+        "total": {
+          "requests": 40,
+          "usageUnavailableRuns": false,
+          "inputTokens": 511328,
+          "knownInputTokens": 511328,
+          "missingInputTokens": 0,
+          "outputTokens": 5440,
+          "knownOutputTokens": 5440,
+          "missingOutputTokens": 0,
+          "totalTokens": 516768,
+          "knownTotalTokens": 516768,
+          "missingTotalTokens": 0
+        }
+      },
+      "baselineMechanism": {
+        "memoryDelivered": false,
+        "skillBodyDelivered": false,
+        "beforeLayers": null,
+        "afterLayers": null,
+        "beforeSkills": 0,
+        "afterSkills": 0,
+        "phases": [
+          {
+            "phase": "task",
+            "sessionId": "pilot-django__django-11095-task",
+            "stopReason": {
+              "kind": "error",
+              "error": {
+                "message": "Pilot foreground dispatch limit reached",
+                "code": "UNKNOWN"
+              }
+            },
+            "startedAt": 1791039238090,
+            "finishedAt": 1791039424077,
+            "wallMs": 185987,
+            "requests": 40
+          }
+        ]
+      },
+      "rsiUsage": {
+        "phases": {
+          "foreground": {
+            "requests": 40,
+            "usageUnavailableRuns": false,
+            "inputTokens": 509835,
+            "knownInputTokens": 509835,
+            "missingInputTokens": 0,
+            "outputTokens": 3846,
+            "knownOutputTokens": 3846,
+            "missingOutputTokens": 0,
+            "totalTokens": 513681,
+            "knownTotalTokens": 513681,
+            "missingTotalTokens": 0
+          },
+          "learning": {
+            "requests": 9,
+            "usageUnavailableRuns": false,
+            "inputTokens": 86008,
+            "knownInputTokens": 86008,
+            "missingInputTokens": 0,
+            "outputTokens": 4818,
+            "knownOutputTokens": 4818,
+            "missingOutputTokens": 0,
+            "totalTokens": 90826,
+            "knownTotalTokens": 90826,
+            "missingTotalTokens": 0
+          }
+        },
+        "total": {
+          "requests": 49,
+          "usageUnavailableRuns": false,
+          "inputTokens": 595843,
+          "knownInputTokens": 595843,
+          "missingInputTokens": 0,
+          "outputTokens": 8664,
+          "knownOutputTokens": 8664,
+          "missingOutputTokens": 0,
+          "totalTokens": 604507,
+          "knownTotalTokens": 604507,
+          "missingTotalTokens": 0
+        }
+      },
+      "rsiMechanism": {
+        "memoryDelivered": true,
+        "skillBodyDelivered": true,
+        "beforeLayers": {
+          "c52ddf65534b7b4603508435": {
+            "L0": 127,
+            "L1": 3,
+            "L2": 1,
+            "L3": 1
+          },
+          "global": {
+            "L0": 0,
+            "L1": 0,
+            "L2": 0,
+            "L3": 0
+          }
+        },
+        "afterLayers": {
+          "c52ddf65534b7b4603508435": {
+            "L0": 168,
+            "L1": 5,
+            "L2": 1,
+            "L3": 1
+          },
+          "global": {
+            "L0": 0,
+            "L1": 0,
+            "L2": 0,
+            "L3": 0
+          }
+        },
+        "beforeSkills": 5,
+        "afterSkills": 5,
+        "phases": [
+          {
+            "phase": "task",
+            "sessionId": "pilot-django__django-11095-task",
+            "stopReason": {
+              "kind": "error",
+              "error": {
+                "message": "Pilot foreground dispatch limit reached",
+                "code": "UNKNOWN"
+              }
+            },
+            "startedAt": 1791039469186,
+            "finishedAt": 1791039645979,
+            "wallMs": 176793,
+            "requests": 40
+          }
+        ]
+      }
+    },
+    {
+      "foregroundTokens": {
+        "baseline": 113101,
+        "rsi": 215319
+      },
+      "foregroundTokenDelta": 102218,
+      "instanceId": "django__django-11099",
+      "baseline": true,
+      "rsi": true,
+      "complete": true,
+      "protocolDeviation": null,
+      "baselineUsage": {
+        "phases": {
+          "foreground": {
+            "requests": 17,
+            "usageUnavailableRuns": false,
+            "inputTokens": 110776,
+            "knownInputTokens": 110776,
+            "missingInputTokens": 0,
+            "outputTokens": 2325,
+            "knownOutputTokens": 2325,
+            "missingOutputTokens": 0,
+            "totalTokens": 113101,
+            "knownTotalTokens": 113101,
+            "missingTotalTokens": 0
+          },
+          "learning": {
+            "requests": 0,
+            "usageUnavailableRuns": false,
+            "inputTokens": 0,
+            "knownInputTokens": 0,
+            "missingInputTokens": 0,
+            "outputTokens": 0,
+            "knownOutputTokens": 0,
+            "missingOutputTokens": 0,
+            "totalTokens": 0,
+            "knownTotalTokens": 0,
+            "missingTotalTokens": 0
+          }
+        },
+        "total": {
+          "requests": 17,
+          "usageUnavailableRuns": false,
+          "inputTokens": 110776,
+          "knownInputTokens": 110776,
+          "missingInputTokens": 0,
+          "outputTokens": 2325,
+          "knownOutputTokens": 2325,
+          "missingOutputTokens": 0,
+          "totalTokens": 113101,
+          "knownTotalTokens": 113101,
+          "missingTotalTokens": 0
+        }
+      },
+      "baselineMechanism": {
+        "memoryDelivered": false,
+        "skillBodyDelivered": false,
+        "beforeLayers": null,
+        "afterLayers": null,
+        "beforeSkills": 0,
+        "afterSkills": 0,
+        "phases": [
+          {
+            "phase": "task",
+            "sessionId": "pilot-django__django-11099-task",
+            "stopReason": {
+              "kind": "completed"
+            },
+            "startedAt": 1791040972036,
+            "finishedAt": 1791041059407,
+            "wallMs": 87371,
+            "requests": 17
+          }
+        ]
+      },
+      "rsiUsage": {
+        "phases": {
+          "foreground": {
+            "requests": 17,
+            "usageUnavailableRuns": false,
+            "inputTokens": 212617,
+            "knownInputTokens": 212617,
+            "missingInputTokens": 0,
+            "outputTokens": 2702,
+            "knownOutputTokens": 2702,
+            "missingOutputTokens": 0,
+            "totalTokens": 215319,
+            "knownTotalTokens": 215319,
+            "missingTotalTokens": 0
+          },
+          "learning": {
+            "requests": 10,
+            "usageUnavailableRuns": false,
+            "inputTokens": 174254,
+            "knownInputTokens": 174254,
+            "missingInputTokens": 0,
+            "outputTokens": 4109,
+            "knownOutputTokens": 4109,
+            "missingOutputTokens": 0,
+            "totalTokens": 178363,
+            "knownTotalTokens": 178363,
+            "missingTotalTokens": 0
+          }
+        },
+        "total": {
+          "requests": 27,
+          "usageUnavailableRuns": false,
+          "inputTokens": 386871,
+          "knownInputTokens": 386871,
+          "missingInputTokens": 0,
+          "outputTokens": 6811,
+          "knownOutputTokens": 6811,
+          "missingOutputTokens": 0,
+          "totalTokens": 393682,
+          "knownTotalTokens": 393682,
+          "missingTotalTokens": 0
+        }
+      },
+      "rsiMechanism": {
+        "memoryDelivered": true,
+        "skillBodyDelivered": true,
+        "beforeLayers": {
+          "c52ddf65534b7b4603508435": {
+            "L0": 127,
+            "L1": 3,
+            "L2": 1,
+            "L3": 1
+          },
+          "global": {
+            "L0": 0,
+            "L1": 0,
+            "L2": 0,
+            "L3": 0
+          }
+        },
+        "afterLayers": {
+          "c52ddf65534b7b4603508435": {
+            "L0": 145,
+            "L1": 5,
+            "L2": 1,
+            "L3": 1
+          },
+          "global": {
+            "L0": 0,
+            "L1": 0,
+            "L2": 0,
+            "L3": 0
+          }
+        },
+        "beforeSkills": 5,
+        "afterSkills": 6,
+        "phases": [
+          {
+            "phase": "task",
+            "sessionId": "pilot-django__django-11099-task",
+            "stopReason": {
+              "kind": "completed"
+            },
+            "startedAt": 1791040616674,
+            "finishedAt": 1791040733578,
+            "wallMs": 116904,
+            "requests": 17
+          }
+        ]
+      }
+    },
+    {
+      "foregroundTokens": {
+        "baseline": 219880,
+        "rsi": 381127
+      },
+      "foregroundTokenDelta": 161247,
+      "instanceId": "django__django-11119",
+      "baseline": true,
+      "rsi": true,
+      "complete": true,
+      "protocolDeviation": null,
+      "baselineUsage": {
+        "phases": {
+          "foreground": {
+            "requests": 21,
+            "usageUnavailableRuns": false,
+            "inputTokens": 217564,
+            "knownInputTokens": 217564,
+            "missingInputTokens": 0,
+            "outputTokens": 2316,
+            "knownOutputTokens": 2316,
+            "missingOutputTokens": 0,
+            "totalTokens": 219880,
+            "knownTotalTokens": 219880,
+            "missingTotalTokens": 0
+          },
+          "learning": {
+            "requests": 0,
+            "usageUnavailableRuns": false,
+            "inputTokens": 0,
+            "knownInputTokens": 0,
+            "missingInputTokens": 0,
+            "outputTokens": 0,
+            "knownOutputTokens": 0,
+            "missingOutputTokens": 0,
+            "totalTokens": 0,
+            "knownTotalTokens": 0,
+            "missingTotalTokens": 0
+          }
+        },
+        "total": {
+          "requests": 21,
+          "usageUnavailableRuns": false,
+          "inputTokens": 217564,
+          "knownInputTokens": 217564,
+          "missingInputTokens": 0,
+          "outputTokens": 2316,
+          "knownOutputTokens": 2316,
+          "missingOutputTokens": 0,
+          "totalTokens": 219880,
+          "knownTotalTokens": 219880,
+          "missingTotalTokens": 0
+        }
+      },
+      "baselineMechanism": {
+        "memoryDelivered": false,
+        "skillBodyDelivered": false,
+        "beforeLayers": null,
+        "afterLayers": null,
+        "beforeSkills": 0,
+        "afterSkills": 0,
+        "phases": [
+          {
+            "phase": "task",
+            "sessionId": "pilot-django__django-11119-task",
+            "stopReason": {
+              "kind": "completed"
+            },
+            "startedAt": 1791041114098,
+            "finishedAt": 1791041208236,
+            "wallMs": 94138,
+            "requests": 21
+          }
+        ]
+      },
+      "rsiUsage": {
+        "phases": {
+          "foreground": {
+            "requests": 24,
+            "usageUnavailableRuns": false,
+            "inputTokens": 378012,
+            "knownInputTokens": 378012,
+            "missingInputTokens": 0,
+            "outputTokens": 3115,
+            "knownOutputTokens": 3115,
+            "missingOutputTokens": 0,
+            "totalTokens": 381127,
+            "knownTotalTokens": 381127,
+            "missingTotalTokens": 0
+          },
+          "learning": {
+            "requests": 10,
+            "usageUnavailableRuns": false,
+            "inputTokens": 147619,
+            "knownInputTokens": 147619,
+            "missingInputTokens": 0,
+            "outputTokens": 3846,
+            "knownOutputTokens": 3846,
+            "missingOutputTokens": 0,
+            "totalTokens": 151465,
+            "knownTotalTokens": 151465,
+            "missingTotalTokens": 0
+          }
+        },
+        "total": {
+          "requests": 34,
+          "usageUnavailableRuns": false,
+          "inputTokens": 525631,
+          "knownInputTokens": 525631,
+          "missingInputTokens": 0,
+          "outputTokens": 6961,
+          "knownOutputTokens": 6961,
+          "missingOutputTokens": 0,
+          "totalTokens": 532592,
+          "knownTotalTokens": 532592,
+          "missingTotalTokens": 0
+        }
+      },
+      "rsiMechanism": {
+        "memoryDelivered": true,
+        "skillBodyDelivered": true,
+        "beforeLayers": {
+          "c52ddf65534b7b4603508435": {
+            "L0": 127,
+            "L1": 3,
+            "L2": 1,
+            "L3": 1
+          },
+          "global": {
+            "L0": 0,
+            "L1": 0,
+            "L2": 0,
+            "L3": 0
+          }
+        },
+        "afterLayers": {
+          "c52ddf65534b7b4603508435": {
+            "L0": 152,
+            "L1": 5,
+            "L2": 1,
+            "L3": 1
+          },
+          "global": {
+            "L0": 0,
+            "L1": 0,
+            "L2": 0,
+            "L3": 0
+          }
+        },
+        "beforeSkills": 5,
+        "afterSkills": 6,
+        "phases": [
+          {
+            "phase": "task",
+            "sessionId": "pilot-django__django-11119-task",
+            "stopReason": {
+              "kind": "completed"
+            },
+            "startedAt": 1791041257178,
+            "finishedAt": 1791041374284,
+            "wallMs": 117106,
+            "requests": 24
+          }
+        ]
+      }
+    },
+    {
+      "foregroundTokens": {
+        "baseline": 330516,
+        "rsi": 406221
+      },
+      "foregroundTokenDelta": 75705,
+      "instanceId": "django__django-11133",
+      "baseline": true,
+      "rsi": true,
+      "complete": true,
+      "protocolDeviation": null,
+      "baselineUsage": {
+        "phases": {
+          "foreground": {
+            "requests": 32,
+            "usageUnavailableRuns": false,
+            "inputTokens": 327391,
+            "knownInputTokens": 327391,
+            "missingInputTokens": 0,
+            "outputTokens": 3125,
+            "knownOutputTokens": 3125,
+            "missingOutputTokens": 0,
+            "totalTokens": 330516,
+            "knownTotalTokens": 330516,
+            "missingTotalTokens": 0
+          },
+          "learning": {
+            "requests": 0,
+            "usageUnavailableRuns": false,
+            "inputTokens": 0,
+            "knownInputTokens": 0,
+            "missingInputTokens": 0,
+            "outputTokens": 0,
+            "knownOutputTokens": 0,
+            "missingOutputTokens": 0,
+            "totalTokens": 0,
+            "knownTotalTokens": 0,
+            "missingTotalTokens": 0
+          }
+        },
+        "total": {
+          "requests": 32,
+          "usageUnavailableRuns": false,
+          "inputTokens": 327391,
+          "knownInputTokens": 327391,
+          "missingInputTokens": 0,
+          "outputTokens": 3125,
+          "knownOutputTokens": 3125,
+          "missingOutputTokens": 0,
+          "totalTokens": 330516,
+          "knownTotalTokens": 330516,
+          "missingTotalTokens": 0
+        }
+      },
+      "baselineMechanism": {
+        "memoryDelivered": false,
+        "skillBodyDelivered": false,
+        "beforeLayers": null,
+        "afterLayers": null,
+        "beforeSkills": 0,
+        "afterSkills": 0,
+        "phases": [
+          {
+            "phase": "task",
+            "sessionId": "pilot-django__django-11133-task",
+            "stopReason": {
+              "kind": "completed"
+            },
+            "startedAt": 1791041975235,
+            "finishedAt": 1791042094966,
+            "wallMs": 119731,
+            "requests": 32
+          }
+        ]
+      },
+      "rsiUsage": {
+        "phases": {
+          "foreground": {
+            "requests": 28,
+            "usageUnavailableRuns": false,
+            "inputTokens": 402345,
+            "knownInputTokens": 402345,
+            "missingInputTokens": 0,
+            "outputTokens": 3876,
+            "knownOutputTokens": 3876,
+            "missingOutputTokens": 0,
+            "totalTokens": 406221,
+            "knownTotalTokens": 406221,
+            "missingTotalTokens": 0
+          },
+          "learning": {
+            "requests": 8,
+            "usageUnavailableRuns": false,
+            "inputTokens": 139042,
+            "knownInputTokens": 139042,
+            "missingInputTokens": 0,
+            "outputTokens": 4119,
+            "knownOutputTokens": 4119,
+            "missingOutputTokens": 0,
+            "totalTokens": 143161,
+            "knownTotalTokens": 143161,
+            "missingTotalTokens": 0
+          }
+        },
+        "total": {
+          "requests": 36,
+          "usageUnavailableRuns": false,
+          "inputTokens": 541387,
+          "knownInputTokens": 541387,
+          "missingInputTokens": 0,
+          "outputTokens": 7995,
+          "knownOutputTokens": 7995,
+          "missingOutputTokens": 0,
+          "totalTokens": 549382,
+          "knownTotalTokens": 549382,
+          "missingTotalTokens": 0
+        }
+      },
+      "rsiMechanism": {
+        "memoryDelivered": true,
+        "skillBodyDelivered": true,
+        "beforeLayers": {
+          "c52ddf65534b7b4603508435": {
+            "L0": 127,
+            "L1": 3,
+            "L2": 1,
+            "L3": 1
+          },
+          "global": {
+            "L0": 0,
+            "L1": 0,
+            "L2": 0,
+            "L3": 0
+          }
+        },
+        "afterLayers": {
+          "c52ddf65534b7b4603508435": {
+            "L0": 156,
+            "L1": 3,
+            "L2": 1,
+            "L3": 1
+          },
+          "global": {
+            "L0": 0,
+            "L1": 0,
+            "L2": 0,
+            "L3": 0
+          }
+        },
+        "beforeSkills": 5,
+        "afterSkills": 6,
+        "phases": [
+          {
+            "phase": "task",
+            "sessionId": "pilot-django__django-11133-task",
+            "stopReason": {
+              "kind": "completed"
+            },
+            "startedAt": 1791041610338,
+            "finishedAt": 1791041747818,
+            "wallMs": 137480,
+            "requests": 28
+          }
+        ]
+      }
+    },
+    {
+      "foregroundTokens": {
+        "baseline": 638468,
+        "rsi": 977495
+      },
+      "foregroundTokenDelta": 339027,
+      "instanceId": "django__django-11138",
+      "baseline": false,
+      "rsi": false,
+      "complete": true,
+      "protocolDeviation": null,
+      "baselineUsage": {
+        "phases": {
+          "foreground": {
+            "requests": 40,
+            "usageUnavailableRuns": false,
+            "inputTokens": 635265,
+            "knownInputTokens": 635265,
+            "missingInputTokens": 0,
+            "outputTokens": 3203,
+            "knownOutputTokens": 3203,
+            "missingOutputTokens": 0,
+            "totalTokens": 638468,
+            "knownTotalTokens": 638468,
+            "missingTotalTokens": 0
+          },
+          "learning": {
+            "requests": 0,
+            "usageUnavailableRuns": false,
+            "inputTokens": 0,
+            "knownInputTokens": 0,
+            "missingInputTokens": 0,
+            "outputTokens": 0,
+            "knownOutputTokens": 0,
+            "missingOutputTokens": 0,
+            "totalTokens": 0,
+            "knownTotalTokens": 0,
+            "missingTotalTokens": 0
+          }
+        },
+        "total": {
+          "requests": 40,
+          "usageUnavailableRuns": false,
+          "inputTokens": 635265,
+          "knownInputTokens": 635265,
+          "missingInputTokens": 0,
+          "outputTokens": 3203,
+          "knownOutputTokens": 3203,
+          "missingOutputTokens": 0,
+          "totalTokens": 638468,
+          "knownTotalTokens": 638468,
+          "missingTotalTokens": 0
+        }
+      },
+      "baselineMechanism": {
+        "memoryDelivered": false,
+        "skillBodyDelivered": false,
+        "beforeLayers": null,
+        "afterLayers": null,
+        "beforeSkills": 0,
+        "afterSkills": 0,
+        "phases": [
+          {
+            "phase": "task",
+            "sessionId": "pilot-django__django-11138-task",
+            "stopReason": {
+              "kind": "error",
+              "error": {
+                "message": "Pilot foreground dispatch limit reached",
+                "code": "UNKNOWN"
+              }
+            },
+            "startedAt": 1791042140741,
+            "finishedAt": 1791042264933,
+            "wallMs": 124192,
+            "requests": 40
+          }
+        ]
+      },
+      "rsiUsage": {
+        "phases": {
+          "foreground": {
+            "requests": 40,
+            "usageUnavailableRuns": false,
+            "inputTokens": 970714,
+            "knownInputTokens": 970714,
+            "missingInputTokens": 0,
+            "outputTokens": 6781,
+            "knownOutputTokens": 6781,
+            "missingOutputTokens": 0,
+            "totalTokens": 977495,
+            "knownTotalTokens": 977495,
+            "missingTotalTokens": 0
+          },
+          "learning": {
+            "requests": 10,
+            "usageUnavailableRuns": false,
+            "inputTokens": 207679,
+            "knownInputTokens": 207679,
+            "missingInputTokens": 0,
+            "outputTokens": 4595,
+            "knownOutputTokens": 4595,
+            "missingOutputTokens": 0,
+            "totalTokens": 212274,
+            "knownTotalTokens": 212274,
+            "missingTotalTokens": 0
+          }
+        },
+        "total": {
+          "requests": 50,
+          "usageUnavailableRuns": false,
+          "inputTokens": 1178393,
+          "knownInputTokens": 1178393,
+          "missingInputTokens": 0,
+          "outputTokens": 11376,
+          "knownOutputTokens": 11376,
+          "missingOutputTokens": 0,
+          "totalTokens": 1189769,
+          "knownTotalTokens": 1189769,
+          "missingTotalTokens": 0
+        }
+      },
+      "rsiMechanism": {
+        "memoryDelivered": true,
+        "skillBodyDelivered": true,
+        "beforeLayers": {
+          "c52ddf65534b7b4603508435": {
+            "L0": 127,
+            "L1": 3,
+            "L2": 1,
+            "L3": 1
+          },
+          "global": {
+            "L0": 0,
+            "L1": 0,
+            "L2": 0,
+            "L3": 0
+          }
+        },
+        "afterLayers": {
+          "c52ddf65534b7b4603508435": {
+            "L0": 168,
+            "L1": 3,
+            "L2": 1,
+            "L3": 1
+          },
+          "global": {
+            "L0": 0,
+            "L1": 0,
+            "L2": 0,
+            "L3": 0
+          }
+        },
+        "beforeSkills": 5,
+        "afterSkills": 5,
+        "phases": [
+          {
+            "phase": "task",
+            "sessionId": "pilot-django__django-11138-task",
+            "stopReason": {
+              "kind": "error",
+              "error": {
+                "message": "Pilot foreground dispatch limit reached",
+                "code": "UNKNOWN"
+              }
+            },
+            "startedAt": 1791042282238,
+            "finishedAt": 1791042526613,
+            "wallMs": 244375,
+            "requests": 40
+          }
+        ]
+      }
+    },
+    {
+      "foregroundTokens": {
+        "baseline": 602268,
+        "rsi": 1298041
+      },
+      "foregroundTokenDelta": 695773,
+      "instanceId": "django__django-11149",
+      "baseline": false,
+      "rsi": false,
+      "complete": true,
+      "protocolDeviation": null,
+      "baselineUsage": {
+        "phases": {
+          "foreground": {
+            "requests": 40,
+            "usageUnavailableRuns": false,
+            "inputTokens": 599043,
+            "knownInputTokens": 599043,
+            "missingInputTokens": 0,
+            "outputTokens": 3225,
+            "knownOutputTokens": 3225,
+            "missingOutputTokens": 0,
+            "totalTokens": 602268,
+            "knownTotalTokens": 602268,
+            "missingTotalTokens": 0
+          },
+          "learning": {
+            "requests": 0,
+            "usageUnavailableRuns": false,
+            "inputTokens": 0,
+            "knownInputTokens": 0,
+            "missingInputTokens": 0,
+            "outputTokens": 0,
+            "knownOutputTokens": 0,
+            "missingOutputTokens": 0,
+            "totalTokens": 0,
+            "knownTotalTokens": 0,
+            "missingTotalTokens": 0
+          }
+        },
+        "total": {
+          "requests": 40,
+          "usageUnavailableRuns": false,
+          "inputTokens": 599043,
+          "knownInputTokens": 599043,
+          "missingInputTokens": 0,
+          "outputTokens": 3225,
+          "knownOutputTokens": 3225,
+          "missingOutputTokens": 0,
+          "totalTokens": 602268,
+          "knownTotalTokens": 602268,
+          "missingTotalTokens": 0
+        }
+      },
+      "baselineMechanism": {
+        "memoryDelivered": false,
+        "skillBodyDelivered": false,
+        "beforeLayers": null,
+        "afterLayers": null,
+        "beforeSkills": 0,
+        "afterSkills": 0,
+        "phases": [
+          {
+            "phase": "task",
+            "sessionId": "pilot-django__django-11149-task",
+            "stopReason": {
+              "kind": "error",
+              "error": {
+                "message": "Pilot foreground dispatch limit reached",
+                "code": "UNKNOWN"
+              }
+            },
+            "startedAt": 1791043104593,
+            "finishedAt": 1791043238912,
+            "wallMs": 134319,
+            "requests": 40
+          }
+        ]
+      },
+      "rsiUsage": {
+        "phases": {
+          "foreground": {
+            "requests": 40,
+            "usageUnavailableRuns": false,
+            "inputTokens": 1294639,
+            "knownInputTokens": 1294639,
+            "missingInputTokens": 0,
+            "outputTokens": 3402,
+            "knownOutputTokens": 3402,
+            "missingOutputTokens": 0,
+            "totalTokens": 1298041,
+            "knownTotalTokens": 1298041,
+            "missingTotalTokens": 0
+          },
+          "learning": {
+            "requests": 6,
+            "usageUnavailableRuns": false,
+            "inputTokens": 71912,
+            "knownInputTokens": 71912,
+            "missingInputTokens": 0,
+            "outputTokens": 2253,
+            "knownOutputTokens": 2253,
+            "missingOutputTokens": 0,
+            "totalTokens": 74165,
+            "knownTotalTokens": 74165,
+            "missingTotalTokens": 0
+          }
+        },
+        "total": {
+          "requests": 46,
+          "usageUnavailableRuns": false,
+          "inputTokens": 1366551,
+          "knownInputTokens": 1366551,
+          "missingInputTokens": 0,
+          "outputTokens": 5655,
+          "knownOutputTokens": 5655,
+          "missingOutputTokens": 0,
+          "totalTokens": 1372206,
+          "knownTotalTokens": 1372206,
+          "missingTotalTokens": 0
+        }
+      },
+      "rsiMechanism": {
+        "memoryDelivered": true,
+        "skillBodyDelivered": true,
+        "beforeLayers": {
+          "c52ddf65534b7b4603508435": {
+            "L0": 127,
+            "L1": 3,
+            "L2": 1,
+            "L3": 1
+          },
+          "global": {
+            "L0": 0,
+            "L1": 0,
+            "L2": 0,
+            "L3": 0
+          }
+        },
+        "afterLayers": {
+          "c52ddf65534b7b4603508435": {
+            "L0": 168,
+            "L1": 4,
+            "L2": 1,
+            "L3": 1
+          },
+          "global": {
+            "L0": 0,
+            "L1": 0,
+            "L2": 0,
+            "L3": 0
+          }
+        },
+        "beforeSkills": 5,
+        "afterSkills": 5,
+        "phases": [
+          {
+            "phase": "task",
+            "sessionId": "pilot-django__django-11149-task",
+            "stopReason": {
+              "kind": "error",
+              "error": {
+                "message": "Pilot foreground dispatch limit reached",
+                "code": "UNKNOWN"
+              }
+            },
+            "startedAt": 1791042756341,
+            "finishedAt": 1791042905405,
+            "wallMs": 149064,
+            "requests": 40
+          }
+        ]
+      }
+    },
+    {
+      "foregroundTokens": {
+        "baseline": 332183,
+        "rsi": 260751
+      },
+      "foregroundTokenDelta": -71432,
+      "instanceId": "django__django-11163",
+      "baseline": true,
+      "rsi": true,
+      "complete": true,
+      "protocolDeviation": null,
+      "baselineUsage": {
+        "phases": {
+          "foreground": {
+            "requests": 37,
+            "usageUnavailableRuns": false,
+            "inputTokens": 327332,
+            "knownInputTokens": 327332,
+            "missingInputTokens": 0,
+            "outputTokens": 4851,
+            "knownOutputTokens": 4851,
+            "missingOutputTokens": 0,
+            "totalTokens": 332183,
+            "knownTotalTokens": 332183,
+            "missingTotalTokens": 0
+          },
+          "learning": {
+            "requests": 0,
+            "usageUnavailableRuns": false,
+            "inputTokens": 0,
+            "knownInputTokens": 0,
+            "missingInputTokens": 0,
+            "outputTokens": 0,
+            "knownOutputTokens": 0,
+            "missingOutputTokens": 0,
+            "totalTokens": 0,
+            "knownTotalTokens": 0,
+            "missingTotalTokens": 0
+          }
+        },
+        "total": {
+          "requests": 37,
+          "usageUnavailableRuns": false,
+          "inputTokens": 327332,
+          "knownInputTokens": 327332,
+          "missingInputTokens": 0,
+          "outputTokens": 4851,
+          "knownOutputTokens": 4851,
+          "missingOutputTokens": 0,
+          "totalTokens": 332183,
+          "knownTotalTokens": 332183,
+          "missingTotalTokens": 0
+        }
+      },
+      "baselineMechanism": {
+        "memoryDelivered": false,
+        "skillBodyDelivered": false,
+        "beforeLayers": null,
+        "afterLayers": null,
+        "beforeSkills": 0,
+        "afterSkills": 0,
+        "phases": [
+          {
+            "phase": "task",
+            "sessionId": "pilot-django__django-11163-task",
+            "stopReason": {
+              "kind": "completed"
+            },
+            "startedAt": 1791043256908,
+            "finishedAt": 1791043431942,
+            "wallMs": 175034,
+            "requests": 37
+          }
+        ]
+      },
+      "rsiUsage": {
+        "phases": {
+          "foreground": {
+            "requests": 21,
+            "usageUnavailableRuns": false,
+            "inputTokens": 257919,
+            "knownInputTokens": 257919,
+            "missingInputTokens": 0,
+            "outputTokens": 2832,
+            "knownOutputTokens": 2832,
+            "missingOutputTokens": 0,
+            "totalTokens": 260751,
+            "knownTotalTokens": 260751,
+            "missingTotalTokens": 0
+          },
+          "learning": {
+            "requests": 10,
+            "usageUnavailableRuns": false,
+            "inputTokens": 127099,
+            "knownInputTokens": 127099,
+            "missingInputTokens": 0,
+            "outputTokens": 4488,
+            "knownOutputTokens": 4488,
+            "missingOutputTokens": 0,
+            "totalTokens": 131587,
+            "knownTotalTokens": 131587,
+            "missingTotalTokens": 0
+          }
+        },
+        "total": {
+          "requests": 31,
+          "usageUnavailableRuns": false,
+          "inputTokens": 385018,
+          "knownInputTokens": 385018,
+          "missingInputTokens": 0,
+          "outputTokens": 7320,
+          "knownOutputTokens": 7320,
+          "missingOutputTokens": 0,
+          "totalTokens": 392338,
+          "knownTotalTokens": 392338,
+          "missingTotalTokens": 0
+        }
+      },
+      "rsiMechanism": {
+        "memoryDelivered": true,
+        "skillBodyDelivered": true,
+        "beforeLayers": {
+          "c52ddf65534b7b4603508435": {
+            "L0": 127,
+            "L1": 3,
+            "L2": 1,
+            "L3": 1
+          },
+          "global": {
+            "L0": 0,
+            "L1": 0,
+            "L2": 0,
+            "L3": 0
+          }
+        },
+        "afterLayers": {
+          "c52ddf65534b7b4603508435": {
+            "L0": 149,
+            "L1": 4,
+            "L2": 1,
+            "L3": 1
+          },
+          "global": {
+            "L0": 0,
+            "L1": 0,
+            "L2": 0,
+            "L3": 0
+          }
+        },
+        "beforeSkills": 5,
+        "afterSkills": 6,
+        "phases": [
+          {
+            "phase": "task",
+            "sessionId": "pilot-django__django-11163-task",
+            "stopReason": {
+              "kind": "completed"
+            },
+            "startedAt": 1791043481561,
+            "finishedAt": 1791043585033,
+            "wallMs": 103472,
+            "requests": 21
+          }
+        ]
+      }
+    },
+    {
+      "foregroundTokens": {
+        "baseline": 480142,
+        "rsi": 278537
+      },
+      "foregroundTokenDelta": -201605,
+      "instanceId": "django__django-11179",
+      "baseline": true,
+      "rsi": true,
+      "complete": true,
+      "protocolDeviation": null,
+      "baselineUsage": {
+        "phases": {
+          "foreground": {
+            "requests": 40,
+            "usageUnavailableRuns": false,
+            "inputTokens": 476318,
+            "knownInputTokens": 476318,
+            "missingInputTokens": 0,
+            "outputTokens": 3824,
+            "knownOutputTokens": 3824,
+            "missingOutputTokens": 0,
+            "totalTokens": 480142,
+            "knownTotalTokens": 480142,
+            "missingTotalTokens": 0
+          },
+          "learning": {
+            "requests": 0,
+            "usageUnavailableRuns": false,
+            "inputTokens": 0,
+            "knownInputTokens": 0,
+            "missingInputTokens": 0,
+            "outputTokens": 0,
+            "knownOutputTokens": 0,
+            "missingOutputTokens": 0,
+            "totalTokens": 0,
+            "knownTotalTokens": 0,
+            "missingTotalTokens": 0
+          }
+        },
+        "total": {
+          "requests": 40,
+          "usageUnavailableRuns": false,
+          "inputTokens": 476318,
+          "knownInputTokens": 476318,
+          "missingInputTokens": 0,
+          "outputTokens": 3824,
+          "knownOutputTokens": 3824,
+          "missingOutputTokens": 0,
+          "totalTokens": 480142,
+          "knownTotalTokens": 480142,
+          "missingTotalTokens": 0
+        }
+      },
+      "baselineMechanism": {
+        "memoryDelivered": false,
+        "skillBodyDelivered": false,
+        "beforeLayers": null,
+        "afterLayers": null,
+        "beforeSkills": 0,
+        "afterSkills": 0,
+        "phases": [
+          {
+            "phase": "task",
+            "sessionId": "pilot-django__django-11179-task",
+            "stopReason": {
+              "kind": "error",
+              "error": {
+                "message": "Pilot foreground dispatch limit reached",
+                "code": "UNKNOWN"
+              }
+            },
+            "startedAt": 1791044144822,
+            "finishedAt": 1791044291982,
+            "wallMs": 147160,
+            "requests": 40
+          }
+        ]
+      },
+      "rsiUsage": {
+        "phases": {
+          "foreground": {
+            "requests": 21,
+            "usageUnavailableRuns": false,
+            "inputTokens": 275959,
+            "knownInputTokens": 275959,
+            "missingInputTokens": 0,
+            "outputTokens": 2578,
+            "knownOutputTokens": 2578,
+            "missingOutputTokens": 0,
+            "totalTokens": 278537,
+            "knownTotalTokens": 278537,
+            "missingTotalTokens": 0
+          },
+          "learning": {
+            "requests": 7,
+            "usageUnavailableRuns": false,
+            "inputTokens": 105047,
+            "knownInputTokens": 105047,
+            "missingInputTokens": 0,
+            "outputTokens": 2333,
+            "knownOutputTokens": 2333,
+            "missingOutputTokens": 0,
+            "totalTokens": 107380,
+            "knownTotalTokens": 107380,
+            "missingTotalTokens": 0
+          }
+        },
+        "total": {
+          "requests": 28,
+          "usageUnavailableRuns": false,
+          "inputTokens": 381006,
+          "knownInputTokens": 381006,
+          "missingInputTokens": 0,
+          "outputTokens": 4911,
+          "knownOutputTokens": 4911,
+          "missingOutputTokens": 0,
+          "totalTokens": 385917,
+          "knownTotalTokens": 385917,
+          "missingTotalTokens": 0
+        }
+      },
+      "rsiMechanism": {
+        "memoryDelivered": true,
+        "skillBodyDelivered": true,
+        "beforeLayers": {
+          "c52ddf65534b7b4603508435": {
+            "L0": 127,
+            "L1": 3,
+            "L2": 1,
+            "L3": 1
+          },
+          "global": {
+            "L0": 0,
+            "L1": 0,
+            "L2": 0,
+            "L3": 0
+          }
+        },
+        "afterLayers": {
+          "c52ddf65534b7b4603508435": {
+            "L0": 149,
+            "L1": 3,
+            "L2": 1,
+            "L3": 1
+          },
+          "global": {
+            "L0": 0,
+            "L1": 0,
+            "L2": 0,
+            "L3": 0
+          }
+        },
+        "beforeSkills": 5,
+        "afterSkills": 5,
+        "phases": [
+          {
+            "phase": "task",
+            "sessionId": "pilot-django__django-11179-task",
+            "stopReason": {
+              "kind": "completed"
+            },
+            "startedAt": 1791043813889,
+            "finishedAt": 1791043913605,
+            "wallMs": 99716,
+            "requests": 21
+          }
+        ]
+      }
+    }
+  ],
+  "analysisSha256": "c195265cc7decdb9047a317d220c4bb3e536c52d84a0c602abff9cf672ea49fe"
+}
