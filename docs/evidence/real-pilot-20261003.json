@@ -141,6 +141,22 @@
         "model-requests.json": "11c2824f0599b5a1ddfccda769794aaca00c7576bd2ef517f0036c701e7574ac",
         "prediction.patch": "1cb7294126f57cc61184e3fbd6a269d99cf857a3759b1c73ec89621e77cb937f",
         "assets.json": "0128e4c8ff6dc59bf7c7e0509b75751439e649a798d1b63b1722e69beca823ea"
+      },
+      "usageByPhase": {
+        "foreground": {
+          "requests": 21,
+          "missingUsageRequests": 0,
+          "inputTokens": 564271,
+          "outputTokens": 37158,
+          "totalTokens": 601429
+        },
+        "learning": {
+          "requests": 0,
+          "missingUsageRequests": 0,
+          "inputTokens": 0,
+          "outputTokens": 0,
+          "totalTokens": 0
+        }
       }
     },
     {
@@ -322,6 +338,22 @@
         "model-requests.json": "8ac3a88af642984cfed11d5c5f5d2fd681781367495623c3b3a49c539be3c620",
         "prediction.patch": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "assets.json": "b69ed4ece7623041996121b0f35180682d9c655a95ecf52197f9d5646fb1dc12"
+      },
+      "usageByPhase": {
+        "foreground": {
+          "requests": 4,
+          "missingUsageRequests": 0,
+          "inputTokens": 28791,
+          "outputTokens": 8845,
+          "totalTokens": 37636
+        },
+        "learning": {
+          "requests": 5,
+          "missingUsageRequests": 0,
+          "inputTokens": 74981,
+          "outputTokens": 7366,
+          "totalTokens": 82347
+        }
       }
     }
   ],
@@ -337,5 +369,21 @@
     "effectiveDailyLearningCallBudget": 100,
     "actualLearningCalls": 5,
     "cause": "Pilot supplied dailyCallBudget outside config.settings. Fixed future overlay and added startup assertion; historical results preserved."
+  },
+  "usageByPhase": {
+    "foreground": {
+      "requests": 25,
+      "missingUsageRequests": 0,
+      "inputTokens": 593062,
+      "outputTokens": 46003,
+      "totalTokens": 639065
+    },
+    "learning": {
+      "requests": 5,
+      "missingUsageRequests": 0,
+      "inputTokens": 74981,
+      "outputTokens": 7366,
+      "totalTokens": 82347
+    }
   }
 }

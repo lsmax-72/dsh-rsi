@@ -15,6 +15,15 @@ def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def summarize_usage(requests):
+    return {
+        'requests': len(requests),
+        'missingUsageRequests': sum('usage' not in r for r in requests),
+        **{key: sum(r.get('usage', {}).get(key, 0) for r in requests)
+           for key in ['inputTokens', 'outputTokens', 'totalTokens']},
+    }
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--results', type=Path, required=True)
@@ -38,6 +47,10 @@ def main():
         calls = [e['data'] for e in events if e['type'] == 'tool/call']
         usage = {key: sum(r.get('usage', {}).get(key, 0) for r in requests)
                  for key in ['inputTokens', 'outputTokens', 'totalTokens']}
+        usage_by_phase = {
+            'foreground': summarize_usage([r for r in requests if not r['sessionId'].startswith('rsi-')]),
+            'learning': summarize_usage([r for r in requests if r['sessionId'].startswith('rsi-')]),
+        }
         probes = [c for c in calls if 'golden' in c.get('arguments', '') or 'reflog' in c.get('arguments', '')]
         cases.append({
             'instanceId': grade['instanceId'], 'status': status,
@@ -46,7 +59,7 @@ def main():
             'patchBytes': receipt['patchBytes'], 'before': receipt['before'], 'after': receipt['after'],
             'memoryInjections': receipt['memoryInjections'], 'skillLoads': receipt['skillLoads'],
             'toolCalls': dict(Counter(c['name'] for c in calls)), 'artifactSearchAttempts': len(probes),
-            'usage': usage, 'missingUsageRequests': sum('usage' not in r for r in requests),
+            'usage': usage, 'usageByPhase': usage_by_phase, 'missingUsageRequests': sum('usage' not in r for r in requests),
             'logReconstructionMatches': receipt['logReconstructionMatches'], 'grading': grade,
             'generatedSkills': [{'name': s['head']['name'], 'version': s['head']['version'],
                                  'contentSha256': hashlib.sha256(s['head']['content'].encode()).hexdigest()}
@@ -57,11 +70,15 @@ def main():
     gateway = [json.loads(line) for line in (args.results / 'gateway.log').read_text().splitlines() if line.strip()]
     dispatches = sum(c['taskDispatches'] + c['backgroundDispatches'] for c in cases)
     assert len(gateway) == dispatches and [g['request'] for g in gateway] == list(range(1, dispatches + 1))
+    phase_totals = {phase: {key: sum(c['usageByPhase'][phase][key] for c in cases)
+                          for key in ['requests', 'missingUsageRequests', 'inputTokens', 'outputTokens', 'totalTokens']}
+                    for phase in ['foreground', 'learning']}
     output = {
         'status': 'INTEGRATION_INCOMPLETE', 'provider': 'qwen', 'model': 'qwen3.8-27b',
         'pairedBenchmarkStarted': False, 'resolved': sum(c['grading']['resolved'] for c in cases),
         'tasks': len(cases), 'gatewayRequests': len(gateway), 'loggedDispatches': dispatches,
         'usage': {k: sum(c['usage'][k] for c in cases) for k in ['inputTokens', 'outputTokens', 'totalTokens']},
+        'usageByPhase': phase_totals,
         'assetConsumptionInRealFollowup': 'UNPROVEN', 'cases': cases,
         'limitation': 'Two integration attempts only. No baseline, no paired comparison, no product-effect claim. ERROR tests are preserved in the official report; the pinned official parser omits their entries.',
     }
