@@ -17,6 +17,26 @@ from swebench.harness.run_evaluation import run_instance
 from swebench.harness.test_spec.test_spec import make_test_spec
 
 
+def verify_distribution():
+    distribution=importlib.metadata.distribution('swebench')
+    assert distribution.version=='3.0.0','Use the pinned clean official swebench==3.0.0 environment.'
+    files=[f for f in distribution.files if str(f).endswith('.py') and f.hash]
+    for file in files:
+        digest=base64.urlsafe_b64encode(hashlib.sha256(distribution.locate_file(file).read_bytes()).digest()).decode().rstrip('=')
+        assert digest==file.hash.value,'Modified scorer source: '+str(file)
+    return distribution,files
+
+
+def isolated_client():
+    client=docker.from_env();create=client.containers.create
+    def isolated_create(*a,**kwargs):
+        # Only runtime resource/network setup changes; official test generation and grading stay intact.
+        kwargs.update(network_mode='none',mem_limit='2g',pids_limit=256,cap_drop=['ALL'],security_opt=['no-new-privileges'])
+        return create(*a,**kwargs)
+    client.containers.create=isolated_create
+    return client
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--dataset',type=Path,required=True,help='Official SWE-bench Verified parquet; grader-only data')
@@ -24,20 +44,10 @@ def main():
     parser.add_argument('--output',type=Path,required=True)
     args=parser.parse_args()
     dataset=args.dataset.resolve();output=args.output.resolve();work=args.work_dir.resolve()
-    distribution=importlib.metadata.distribution('swebench')
-    assert distribution.version=='3.0.0','Use the pinned clean official swebench==3.0.0 environment.'
-    files=[f for f in distribution.files if str(f).endswith('.py') and f.hash]
-    for file in files:
-        digest=base64.urlsafe_b64encode(hashlib.sha256(distribution.locate_file(file).read_bytes()).digest()).decode().rstrip('=')
-        assert digest==file.hash.value,'Modified scorer source: '+str(file)
+    distribution,files=verify_distribution()
     rows={r['instance_id']:r for r in pq.read_table(dataset).to_pylist()}
     work.mkdir(parents=True,exist_ok=True);os.chdir(work)
-    client=docker.from_env();create=client.containers.create
-    def isolated_create(*a,**kwargs):
-        # Only runtime resource/network setup changes; official test generation and grading stay intact.
-        kwargs.update(network_mode='none',mem_limit='2g',pids_limit=256,cap_drop=['ALL'],security_opt=['no-new-privileges'])
-        return create(*a,**kwargs)
-    client.containers.create=isolated_create
+    client=isolated_client()
     cases=[]
     for instance in ['django__django-10973','django__django-11292']:
         row=rows[instance];spec=make_test_spec(row,namespace='swebench');spec.arch='x86_64'

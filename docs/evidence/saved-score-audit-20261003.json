@@ -1,0 +1,44 @@
+{
+  "status": "PASS",
+  "scope": "Audit one preserved successful repair; not a formal pair",
+  "instanceId": "django__django-11292",
+  "officialResolved": true,
+  "stopReason": {
+    "kind": "error",
+    "error": {
+      "message": "Pilot total foreground call cap reached",
+      "code": "UNKNOWN"
+    }
+  },
+  "usage": {
+    "foreground": {
+      "requests": 24,
+      "usageUnavailableRuns": 0,
+      "inputTokens": 495319,
+      "knownInputTokens": 495319,
+      "missingInputTokens": 0,
+      "outputTokens": 13418,
+      "knownOutputTokens": 13418,
+      "missingOutputTokens": 0,
+      "totalTokens": 508737,
+      "knownTotalTokens": 508737,
+      "missingTotalTokens": 0
+    },
+    "learning": {
+      "requests": 4,
+      "usageUnavailableRuns": 0,
+      "inputTokens": 53652,
+      "knownInputTokens": 53652,
+      "missingInputTokens": 0,
+      "outputTokens": 6093,
+      "knownOutputTokens": 6093,
+      "missingOutputTokens": 0,
+      "totalTokens": 59745,
+      "knownTotalTokens": 59745,
+      "missingTotalTokens": 0
+    }
+  },
+  "realProviderRequestsThisAudit": 0,
+  "officialScorerExecutionsThisAudit": 0,
+  "formalBenchmarkStarted": false
+}

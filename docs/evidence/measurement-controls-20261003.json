@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "syntheticData": true,
+  "realProviderRequests": 0,
+  "officialScorerExecutions": 0,
+  "formalBenchmarkStarted": false,
+  "checks": [
+    "concurrent-pool-cap",
+    "abandoned-reservation-survives-reopen",
+    "verified-refund-only",
+    "pool-cap-immutable",
+    "no-overcharge",
+    "budget-stop-does-not-overwrite-official-success",
+    "fixed-denominator-missing-outcomes",
+    "unknown-usage-not-zero",
+    "missing-stage-runs-not-zero-cost",
+    "all-retry-costs-counted",
+    "only-confirmed-INFRA-retried",
+    "grade-patch-hash-match"
+  ]
+}
