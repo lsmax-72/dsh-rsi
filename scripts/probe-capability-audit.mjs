@@ -36,11 +36,21 @@ try {
   assert.equal(versions.total,51);assert.equal(versions.items.length,51);assert.equal(exportedVersions.length,51);assert.ok(exportedVersions.some(v=>v.version===oldest.version));
   evidence.versionPagination={stored:versions.total,management:versions.items.length,export:exportedVersions.length,oldestVersion:oldest.version,oldestVersionExported:exportedVersions.some(v=>v.version===oldest.version)};
   const marker='WORKSPACE_AUDIT_MEMORY';
-  await core.storeMemory({id:'audit-memory',sessionKey:'audit-source',sessionId:'audit-source',taskId:'audit-source-task',content:`${marker} 这个工作区需要先检查测试环境并保留完整失败日志。`,type:'instruction',priority:90,scene_name:'审计',source_message_ids:['fixture-source'],metadata:{}});
+  await core.storeMemory({id:'audit-memory',sessionKey:'audit-source',sessionId:'audit-source',taskId:'audit-source-task',content:`${marker} 这个工作区需要先检查测试环境并保留完整失败日志；read_file 和 tdai_memory_search 是历史中的字面名称。`,type:'instruction',priority:90,scene_name:'审计',source_message_ids:['fixture-source'],metadata:{}});
   const nativeWorkspace=await core.recall(marker,3000);assert.ok(nativeWorkspace.prependContext.includes(marker));
   await global.profile.writeFile('persona.md','GLOBAL_PERSONA_AUDIT '+ '通用画像正文。'.repeat(1200));
-  const merged=await runtime.recall(cwd,marker);assert.equal(merged.text.length,6000);assert.ok(!merged.text.includes(marker));assert.ok(merged.refs.some(r=>r.scope===entry.id&&r.memories.some(m=>m.content.includes(marker))));
-  evidence.contextTruncation={nativeWorkspaceContainsMemory:true,deliveredTextContainsWorkspaceMemory:false,provenanceStillContainsWorkspaceMemory:true,deliveredChars:merged.text.length,personaClosingTagPresent:merged.text.includes('</user-persona>'),profileReadGuidePresent:merged.text.includes('参数 query 为上述完整路径')};
+  const index=JSON.stringify(Array.from({length:40},(_,i)=>({filename:`审计场景${i}.md`,summary:'独立场景的完整执行记录',created:'2000-01-01T00:00:00Z',updated:'2000-01-01T00:00:00Z',heat:1})));
+  await global.profile.writeFile('.metadata/scene_index.json',index);
+  const merged=await runtime.recall(cwd,marker);assert.ok(merged.text.length<=6000);assert.ok(merged.text.includes(marker));assert.ok(merged.refs.some(r=>r.scope===entry.id&&r.memories.some(m=>m.content.includes(marker))));
+  for(const ref of merged.refs)for(const memory of ref.memories)assert.ok(merged.text.includes(memory.content));
+  assert.ok(merged.text.includes('</user-persona>'));assert.ok(merged.text.includes('<memory-tools-guide>'));
+  assert.equal(await runtime.readProfile(cwd,join(global.profileDir,'persona.md')),await global.profile.readFile('persona.md'));
+  assert.ok(merged.text.includes(join(global.profileDir,'persona.md')));
+  assert.ok(merged.text.includes(join(global.profileDir,'.metadata/scene_index.json')));
+  assert.equal(await runtime.readProfile(cwd,join(global.profileDir,'.metadata/scene_index.json')),index);
+  assert.ok(merged.text.includes('read_file 和 tdai_memory_search 是历史中的字面名称。'));
+  runtime.state.configure({recallMaxChars:100});const tiny=await runtime.recall(cwd,marker);assert.ok(tiny.text.length<=100);assert.deepEqual(tiny.refs,[]);runtime.state.configure({recallMaxChars:6000});
+  evidence.contextTruncation={nativeWorkspaceContainsMemory:true,deliveredTextContainsWorkspaceMemory:true,provenanceStillContainsWorkspaceMemory:true,deliveredChars:merged.text.length,personaClosingTagPresent:merged.text.includes('</user-persona>'),profileReadGuidePresent:merged.text.includes('query 为给出的完整文件路径')};
   const job=runtime.state.enqueue({scope:entry.id,cwd,sessionId:'audit-failure',turn:1,endSeq:1,reason:{kind:'completed'},route:{provider:'fixture',model:'fixture'},messages:[{role:'user',content:'检查一次可恢复的离线提炼错误。',timestamp:new Date().toISOString()}],events:[]});
   assert.ok(job);
   const queued=runtime.state.jobs(entry.id).find(j=>j.session==='audit-failure');runtime.state.updateJob(queued.id,'pending',{recorded:true});
@@ -50,6 +60,6 @@ try {
   runtime.state.configure({learningEnabled:false});
   const failed=runtime.state.jobs(entry.id).find(j=>j.id===queued.id);assert.equal(failed.status,'failed');
   evidence.pipelineFailure={jobStatus:failed.status,runnerRejected:false,runnerReturned:result,error:failed.error,explanation:'A non-budget extraction error is caught by process(), which fulfills the native pipeline runner rather than invoking its rejection retry path.'};
-  evidence.status='PAGINATION_REPAIR_VERIFIED_OTHER_DEFECTS_REPRODUCED';
+  evidence.status='PAGINATION_AND_CONTEXT_REPAIRS_VERIFIED_FAILURE_DEFECT_REPRODUCED';
   console.log(JSON.stringify(evidence,null,2));
 } finally {await runtime.stop();await rm(root,{recursive:true,force:true});}

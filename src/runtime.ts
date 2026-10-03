@@ -7,6 +7,7 @@ import { MemoryPipelineManager, parseSkillFile, buildFtsQuery } from './core-ent
 import { copyResources,versionResources } from './resources.js';
 import { State, workspace, type Settings } from './state.js';
 import { listAllSkills, listAllVersions } from './asset-pages.js';
+import { fitRecallScope, recallToolGuide } from './recall-context.js';
 
 const ids = (scope: string) => ({ user_id:'local-user', team_id:scope, agent_id:'local-agent' });
 const text = (message: any) => (message?.content ?? []).map((block: any) => block.type === 'text' ? block.text : JSON.stringify(block)).join('\n');
@@ -202,30 +203,37 @@ export class Runtime {
   async recall(cwd:string,query:string) {
     const entry=await this.scope(cwd),settings=this.state.settings();
     if (!settings.enabled) return {text:'',refs:[]};
+    const recalled:any[]=[];
+    // Native L1 budgeting leaves room for stable profiles, scope labels and tool guidance.
+    for (const scope of [entry.id,'global']) {
+      const core=await this.core(scope),result=await core.recall(query,Math.max(1,Math.floor(settings.recallMaxChars/4)));
+      if(result)recalled.push({scope,core,result});
+    }
+    if(!recalled.length)return {text:'',refs:[]};
+    const guide=recallToolGuide(recalled[0].result),guideText=guide.length<settings.recallMaxChars?guide:'';
+    const available=settings.recallMaxChars-guideText.length-2;
     const parts:string[]=[],refs:any[]=[];
-    for (const scope of ['global',entry.id]) {
-      const core=await this.core(scope),result=await core.recall(query,Math.floor(settings.recallMaxChars/2));
-      if (result?.prependContext) parts.push(result.prependContext);
-      if (!this.state.get(`profile-invalid:${scope}`) && result?.appendSystemContext) parts.push(result.appendSystemContext);
-      if (result?.recalledL1Memories?.length) {
-        // Native recall returns content without identity. Attach provenance only for a unique stored match.
-        const stored = await core.readMemories();
-        const memories = result.recalledL1Memories.map((memory:any) => {
-          const matches = stored.filter((row:any) => row.content === memory.content && row.type === memory.type);
-          return matches.length === 1 ? {...memory,id:matches[0].id,version:matches[0].version} : memory;
+    for(const {scope,core,result} of recalled){
+      const fitted=fitRecallScope(result,scope,core.profileDir,Math.floor(available/recalled.length),!this.state.get(`profile-invalid:${scope}`));
+      if(fitted.text)parts.push(fitted.text);
+      if(fitted.memories.length){
+        const stored=await core.readMemories();
+        const memories=fitted.memories.map((memory:any)=>{
+          const matches=stored.filter((row:any)=>row.content===memory.content && row.type===memory.type);
+          return matches.length===1?{...memory,id:matches[0].id,version:matches[0].version}:memory;
         });
         refs.push({scope,memories});
       }
     }
-    if(parts.length)parts.push('场景路径请调用 rsi_profile_read，参数 query 为上述完整路径；不要使用其他文件工具。');
-    return {text:parts.join('\n').replaceAll('tdai_memory_search','rsi_memory_search').replaceAll('tdai_conversation_search','rsi_conversation_search').replaceAll('read_file','rsi_profile_read').slice(0,settings.recallMaxChars),refs};
+    if(parts.length && guideText)parts.push(guideText);
+    return {text:parts.join('\n'),refs};
   }
   async readProfile(cwd:string,path:string) {
     if(typeof path!=='string')throw new Error('场景路径无效');
     const entry=await this.scope(cwd);
     for(const scope of [entry.id,'global']){
       const core=await this.core(scope),key=isAbsolute(path)?relative(core.profileDir,resolve(path)):path;
-      if(/^(?:scene_blocks\/[^/]+\.md|persona\.md)$/.test(key)){
+      if(/^(?:scene_blocks\/[^/]+\.md|persona\.md|\.metadata\/scene_index\.json)$/.test(key)){
         const content=await core.profile.readFile(key);if(content!==null)return content;
       }
     }

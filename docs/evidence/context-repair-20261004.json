@@ -1,0 +1,52 @@
+{
+  "checkedAt": "2026-10-03T22:40:20.040Z",
+  "head": "a95ccab",
+  "method": "Existing build, Runtime export instrumentation only; temporary databases and fixtures; no model or task commands.",
+  "buildIndexSha256": "65a4e8038c2face136dcc1c0f8be6410482523adab7696b9afe8042611616a6e",
+  "modelRequests": 0,
+  "skillPagination": {
+    "stored": 51,
+    "candidates": 51,
+    "management": 51,
+    "export": 51,
+    "omittedSkillIds": []
+  },
+  "versionPagination": {
+    "stored": 51,
+    "management": 51,
+    "export": 51,
+    "oldestVersion": 1,
+    "oldestVersionExported": true
+  },
+  "contextTruncation": {
+    "nativeWorkspaceContainsMemory": true,
+    "deliveredTextContainsWorkspaceMemory": true,
+    "provenanceStillContainsWorkspaceMemory": true,
+    "deliveredChars": 1273,
+    "personaClosingTagPresent": true,
+    "profileReadGuidePresent": true
+  },
+  "pipelineFailure": {
+    "jobStatus": "failed",
+    "runnerRejected": false,
+    "runnerReturned": {
+      "processedCount": 1,
+      "profileScopes": [
+        "5a1e8a5d1a7256c4bdb6bcaa"
+      ]
+    },
+    "error": "AUDIT_FIXTURE_EXTRACTION_FAILURE",
+    "explanation": "A non-budget extraction error is caught by process(), which fulfills the native pipeline runner rather than invoking its rejection retry path."
+  },
+  "status": "PAGINATION_AND_CONTEXT_REPAIRS_VERIFIED_FAILURE_DEFECT_REPRODUCED",
+  "additionalChecks": [
+    "long-scene-navigation-complete-path-read",
+    "native-memory-body-tool-names-preserved",
+    "tiny-budget-no-false-refs"
+  ],
+  "testedWorktreeFiles": {
+    "src/runtime.ts": "45cf52dfe165c0cd0c24b1d91b09305d205ebce42fb4d0d6e16633b99fa942f2",
+    "src/recall-context.ts": "5b0adf8061d06be8e8d6785fbb351e052218528db0e21714f1e254f9934b4676",
+    "scripts/probe-capability-audit.mjs": "78d560e7a70641f797178c7ee117e434964bf7dba0e58a51500e5326c4294afe"
+  }
+}
