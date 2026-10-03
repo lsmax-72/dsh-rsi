@@ -56,7 +56,7 @@ export async function openLocalCore(dataDir: string, runner: any, logger: any, s
       },
       createSkillExtractor(language = 'zh-CN') {
         return new SkillExtractor({ core: skills, runner, logger, prefixSkillsLimit: 20,
-          systemPrompt: `${SKILL_REVIEW_PROMPT}\nWrite asset prose in ${language}; preserve code, commands, paths and API identifiers.` });
+          systemPrompt: `${SKILL_REVIEW_PROMPT}\nWrite asset prose in ${language}; preserve code, commands, paths and API identifiers.\nKeep a general SOP concise (target about 1500 characters); retain its trigger, decisions and failure branches. Put long scripts, examples and fixtures in native skill_files_write resources and reference them in the body; do not truncate essential task-specific knowledge. State success only when supported by observed tool results in this transcript, with the command/check and result. Assistant plans, claims and a completed turn alone are not execution evidence. Label failures, partial checks and unverified claims explicitly; they can still yield reusable skills. Do not copy the harness execution protocol as learned user preferences.` });
       },
       async record(input:any) {
         let captured:any[]=[];
@@ -72,7 +72,7 @@ export async function openLocalCore(dataDir: string, runner: any, logger: any, s
         await ensureVectors();
         const previous=checkpoint.getRunnerState(await checkpoint.read(),input.sessionKey).last_scene_name;
         let runnerError:any;
-        const extractionRunner={run:async (params:any)=>{try{return await runner.run(params);}catch(error){runnerError=error;throw error;}}};
+        const extractionRunner={run:async (params:any)=>{try{return await runner.run(params.taskId==='l1-extraction'?{...params,systemPrompt:`${params.systemPrompt}\nThese memory inputs contain user/assistant prose, without tool execution results. Do not convert assistant claims or plans into verified success. Attribute such outcomes as assistant-reported/unverified, retain the source message IDs, and never invent successful tests. Preserve durable user facts and preferences.`}:params);}catch(error){runnerError=error;throw error;}}};
         const result = await withEmbeddingIntegrity(()=>extractL1Memories({ ...input, baseDir:join(dataDir,'history'), config:{}, storage:history, logger,
           // dsh emits many assistant messages inside one turn; the native ten-message default can drop its user input.
           options:{ llmRunner:extractionRunner, enableDedup:true, vectorStore:memory, embeddingService, previousSceneName:previous || undefined,
