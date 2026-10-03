@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-03T22:49:25.101Z",
+  "realModelRequests": 0,
+  "nativeRetryDelayProductionMs": 30000,
+  "testTimerMs": 5,
+  "nativeMaxRetries": 5,
+  "attempts": {
+    "transient": 2,
+    "persistent": 6,
+    "permanent": 1
+  },
+  "checks": [
+    "transient-failure-recovered-by-native-timer",
+    "persistent-failure-six-attempt-ceiling",
+    "failed-L1-does-not-advance-L2",
+    "persisted-ceiling-survives-new-callback",
+    "permanent-error-no-model-retry",
+    "budget-pauses-without-dispatch",
+    "missing-route-pauses-without-dispatch"
+  ]
+}

@@ -59,11 +59,13 @@ export async function openLocalCore(dataDir: string, runner: any, logger: any) {
       },
       async extractMemories(input: any) {
         const previous=checkpoint.getRunnerState(await checkpoint.read(),input.sessionKey).last_scene_name;
+        let runnerError:any;
+        const extractionRunner={run:async (params:any)=>{try{return await runner.run(params);}catch(error){runnerError=error;throw error;}}};
         const result = await extractL1Memories({ ...input, baseDir:join(dataDir,'history'), config:{}, storage:history, logger,
           // dsh emits many assistant messages inside one turn; the native ten-message default can drop its user input.
-          options:{ llmRunner:runner, enableDedup:true, vectorStore:memory, previousSceneName:previous || undefined,
+          options:{ llmRunner:extractionRunner, enableDedup:true, vectorStore:memory, previousSceneName:previous || undefined,
             maxMessagesPerExtraction:Math.max(10,input.messages.length) } });
-        if (!result.success) throw new Error('记忆提炼失败，请查看后台会话日志');
+        if (!result.success) throw runnerError ?? new Error('记忆提炼失败，请查看后台会话日志');
         await checkpoint.markL1ExtractionComplete(input.sessionKey,result.storedCount,undefined,result.lastSceneName);
         return result;
       },

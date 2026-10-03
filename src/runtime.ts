@@ -12,6 +12,9 @@ import { fitRecallScope, recallToolGuide } from './recall-context.js';
 const ids = (scope: string) => ({ user_id:'local-user', team_id:scope, agent_id:'local-agent' });
 const text = (message: any) => (message?.content ?? []).map((block: any) => block.type === 'text' ? block.text : JSON.stringify(block)).join('\n');
 const visibleName = (name: string) => `rsi-${name}`;
+// The pinned native manager owns five retries; persist its six-attempt ceiling across restarts.
+const MAX_JOB_ATTEMPTS = 6;
+const retryableJob = (job:any) => job.status === 'failed' && job.stages.failure?.retryable && job.stages.failure.attempts < MAX_JOB_ATTEMPTS;
 
 /** Host adaptation: durable work, physical scopes, budgets and official consumers. */
 export class Runtime {
@@ -99,14 +102,14 @@ export class Runtime {
   async start() {
     await this.core('global');
     for (const source of this.state.sources()) await this.captureStored(source.id,source.cwd).catch(error => this.ctx.logger.warn('会话恢复暂不可用：%s',error.message));
-    await this.resume();
+    await this.resume(true);
   }
-  async resume() {
+  async resume(recoverFailures = false) {
     const settings = this.state.settings();
     if (!settings.enabled || !settings.learningEnabled || this.stopping || Number(this.state.usage().calls) >= settings.dailyCallBudget) return;
-    for (const job of this.state.jobs().filter(job => ['pending','paused','interrupted'].includes(job.status))) {
+    for (const job of this.state.jobs().filter(job => ['pending','paused','interrupted'].includes(job.status) || (recoverFailures && retryableJob(job)))) {
       const entry = await this.scope(job.payload.cwd);
-      if (this.notified.has(job.id)) continue;
+      if (this.notified.has(job.id) || !(job.payload.route ?? this.route(entry.id))) continue;
       this.notified.add(job.id);this.state.updateJob(job.id,'pending');
       this.pipelines.get(entry.id).notifyConversation(job.session,job.payload.messages.filter((m:any) => ['user','assistant'].includes(m.role)));
     }
@@ -157,11 +160,24 @@ export class Runtime {
   }
   async process(scope: string,sessionId: string) {
     const core = await this.core(scope);
-    const jobs = this.state.jobs(scope).filter(job => job.session === sessionId && ['pending','paused','interrupted'].includes(job.status));
+    const sessionJobs = this.state.jobs(scope).filter(job => job.session === sessionId);
+    const jobs = sessionJobs.filter(job => ['pending','paused','interrupted'].includes(job.status) || retryableJob(job));
+    if (!jobs.length) {
+      const blocked = sessionJobs.find(job => job.status !== 'completed');
+      if (blocked) throw Object.assign(new Error(blocked.error ?? '学习任务等待手动重试'),{code:blocked.stages.failure?.code ?? 'RETRY_LIMIT'});
+      return {processedCount:0,profileScopes:[]};
+    }
     for (const job of jobs) {
       this.state.updateJob(job.id,'running');
       this.notified.delete(job.id);const stages = job.stages;
       try {
+        const settings=this.state.settings();
+        if(this.stopping)throw Object.assign(new Error('插件正在关闭'),{code:'INTERRUPTED'});
+        if(!settings.enabled || !settings.learningEnabled)throw Object.assign(new Error('自动学习已暂停'),{code:'LEARNING_PAUSED'});
+        if(Number(this.state.usage().calls)>=settings.dailyCallBudget)throw Object.assign(new Error('今日学习调用预算已用完'),{code:'BUDGET_EXHAUSTED'});
+        if(!(job.payload.route ?? this.route(scope)))throw Object.assign(new Error('尚无会话模型配置'),{code:'MISSING_ROUTE'});
+        stages.failure={...stages.failure,attempts:(stages.failure?.attempts ?? 0)+1};
+        this.state.updateJob(job.id,'running',stages);
         await this.context.run({route:job.payload.route ?? this.route(scope),sessionId,jobId:job.id},async () => {
           if (!stages.recorded) {
             const rawMessages = job.payload.messages.filter((m:any) => ['user','assistant'].includes(m.role)).map((m:any) => ({...m,timestamp:Date.parse(m.timestamp)}));
@@ -183,11 +199,15 @@ export class Runtime {
             stages.skills={candidates:result.candidates}; this.state.updateJob(job.id,'running',stages);
           }
         });
+        delete stages.failure;
         this.state.updateJob(job.id,'completed',stages); this.invalidate();
       } catch (error:any) {
         const paused = ['LEARNING_PAUSED','BUDGET_EXHAUSTED','MISSING_ROUTE'].includes(error.code) || !this.state.settings().learningEnabled || !this.state.settings().enabled || Number(this.state.usage().calls) >= this.state.settings().dailyCallBudget;
+        stages.failure={...stages.failure,code:error.code ?? 'EXTRACTION_FAILED',retryable:!paused && !this.stopping && !['INVALID_LIMIT','UNSUPPORTED_TOOL','INVALID_CONFIG'].includes(error.code)};
         this.state.updateJob(job.id,this.stopping ? 'interrupted' : paused ? 'paused' : 'failed',stages,error.message);
         if (!paused && !this.stopping) this.ctx.logger.error('后台学习失败：%s',error.message);
+        // Reject so the native manager restores its buffer and does not advance L2.
+        throw error;
       }
     }
     return {processedCount:jobs.length,profileScopes:[scope]};
@@ -195,7 +215,7 @@ export class Runtime {
   async learnNow(cwd: string) {
     const entry = await this.scope(cwd);
     const jobs = this.state.jobs(entry.id).filter(job => job.status !== 'completed');
-    for (const job of jobs) { this.state.updateJob(job.id,'pending'); await this.pipelines.get(entry.id).notifyConversation(job.session,job.payload.messages.filter((m:any) => ['user','assistant'].includes(m.role))); }
+    for (const job of jobs) { delete job.stages.failure; this.state.updateJob(job.id,'pending',job.stages); await this.pipelines.get(entry.id).notifyConversation(job.session,job.payload.messages.filter((m:any) => ['user','assistant'].includes(m.role))); }
     for (const session of new Set(jobs.map(job => job.session))) await this.pipelines.get(entry.id).flushSession(session);
     return this.snapshot(cwd);
   }

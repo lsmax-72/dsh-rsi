@@ -56,10 +56,10 @@ try {
   const queued=runtime.state.jobs(entry.id).find(j=>j.session==='audit-failure');runtime.state.updateJob(queued.id,'pending',{recorded:true});
   const extract=core.extractMemories;core.extractMemories=async()=>{throw new Error('AUDIT_FIXTURE_EXTRACTION_FAILURE');};
   runtime.state.configure({learningEnabled:true});
-  const result=await runtime.process(entry.id,'audit-failure');core.extractMemories=extract;
+  await assert.rejects(runtime.process(entry.id,'audit-failure'),/AUDIT_FIXTURE_EXTRACTION_FAILURE/);core.extractMemories=extract;
   runtime.state.configure({learningEnabled:false});
   const failed=runtime.state.jobs(entry.id).find(j=>j.id===queued.id);assert.equal(failed.status,'failed');
-  evidence.pipelineFailure={jobStatus:failed.status,runnerRejected:false,runnerReturned:result,error:failed.error,explanation:'A non-budget extraction error is caught by process(), which fulfills the native pipeline runner rather than invoking its rejection retry path.'};
-  evidence.status='PAGINATION_AND_CONTEXT_REPAIRS_VERIFIED_FAILURE_DEFECT_REPRODUCED';
+  evidence.pipelineFailure={jobStatus:failed.status,runnerRejected:true,retryable:failed.stages.failure.retryable,error:failed.error,explanation:'Extraction failure is persisted and rejected to the unchanged native pipeline retry path.'};
+  evidence.status='PAGINATION_CONTEXT_AND_FAILURE_PROPAGATION_REPAIRS_VERIFIED';
   console.log(JSON.stringify(evidence,null,2));
 } finally {await runtime.stop();await rm(root,{recursive:true,force:true});}
