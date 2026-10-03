@@ -1,0 +1,26 @@
+{
+  "githubRevision": "d07e6ade22e85e0e5d562247323a9c3e07553226",
+  "datasetRevision": "a8076d5608c93ba2a28983cd78aa99b01a163ae7",
+  "files": {
+    "questions_32k.csv": {
+      "url": "https://huggingface.co/datasets/bowen-upenn/PersonaMem-v1/resolve/a8076d5608c93ba2a28983cd78aa99b01a163ae7/questions_32k.csv",
+      "sha256": "cccd34cf53e0bc4d9536c04cff5ca045156d9a4e227e83327112482840bbc93c",
+      "bytes": 1305366
+    },
+    "shared_contexts_32k.jsonl": {
+      "url": "https://huggingface.co/datasets/bowen-upenn/PersonaMem-v1/resolve/a8076d5608c93ba2a28983cd78aa99b01a163ae7/shared_contexts_32k.jsonl",
+      "sha256": "217247ebfec9e8442fc53570c795ab69f21aad08745f7de78d9beab51b122d4a",
+      "bytes": 5613210
+    },
+    "inference_standalone_openai.py": {
+      "url": "https://raw.githubusercontent.com/bowen-upenn/PersonaMem/d07e6ade22e85e0e5d562247323a9c3e07553226/inference_standalone_openai.py",
+      "sha256": "7ef9efca3bed32052a014efceb4daffad181ea4c3bad4bbbcb8ffbe386a9a472",
+      "bytes": 11791
+    },
+    "LICENSE": {
+      "url": "https://raw.githubusercontent.com/bowen-upenn/PersonaMem/d07e6ade22e85e0e5d562247323a9c3e07553226/LICENSE",
+      "sha256": "5cad9808b882c275f91578fbd742e007830123dad1f532b7c48f260d53bb6a20",
+      "bytes": 1068
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "status": "PREPARED_NOT_RUN",
+  "datasetRevision": "a8076d5608c93ba2a28983cd78aa99b01a163ae7",
+  "githubRevision": "d07e6ade22e85e0e5d562247323a9c3e07553226",
+  "datasetRows": 589,
+  "datasetUsers": 20,
+  "personaId": "0",
+  "questionIds": [
+    "acd74206-37dc-4756-94a8-b99a395d9a21",
+    "f546a74f-54de-40d0-9d88-8b0e30467d7b"
+  ],
+  "historyCutoffExclusive": 182,
+  "historyMessages": 182,
+  "historyChars": 152394,
+  "publicInputSha256": "67a14ad9d7ceab4adce9befe2f9767f386193d2320c613dbe64a1a78eb5a412f",
+  "scorerFunctionSha256": "a619e9665cc3d12e82de4876843c979cbd3e6e6781a8fe1c184fd697583935ae",
+  "scorerControlsPassed": 3,
+  "roleCounts": {
+    "system": 5,
+    "user": 102,
+    "assistant": 75
+  },
+  "answerFileOutsidePublicInput": true,
+  "realModelRequests": 0,
+  "formalEvaluationStarted": false
+}

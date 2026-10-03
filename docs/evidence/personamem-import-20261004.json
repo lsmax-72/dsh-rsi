@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-03T23:35:23.697Z",
+  "importedMessages": 182,
+  "rawMemoryMessages": 177,
+  "historyCutoffExclusive": 182,
+  "historySha256": "eeb336ef1029bdd8818a0a503b589dcb51bb249be5511729b6645f779ebddb37",
+  "durableHistoryExactlyReconstructed": true,
+  "nativeTurnEndCapture": true,
+  "nativeL0Record": true,
+  "fixtureChatCalls": 2,
+  "realModelRequests": 0,
+  "answersProvided": false,
+  "limitation": "Native import fixture only; model capacity and answering requests with unchanged history still require verification."
+}
