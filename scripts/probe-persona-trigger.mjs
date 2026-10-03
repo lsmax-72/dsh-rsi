@@ -23,7 +23,10 @@ try {
   assert.equal(await core.generatePersona(),false);assert.equal(calls.length,0);
   const rawMessages=[{id:'source-user',role:'user',content:'在这个工作区先运行目标测试，失败时保留完整日志用于排查。',timestamp:Date.now()},{id:'source-assistant',role:'assistant',content:'会记录目标测试的执行结果，失败时不将任务描述为已经成功。',timestamp:Date.now()+1}];
   const source={sessionKey:'fixture-source',sessionId:'fixture-source',rawMessages};
-  const captured=await core.record(source);assert.equal(captured.length,2);assert.equal((await core.record(source)).length,0);assert.equal((await core.checkpoint.read()).total_processed,2);
+  const upsert=core.memory.upsertL0.bind(core.memory);core.memory.upsertL0=()=>false;
+  await assert.rejects(core.record(source),/索引写入失败/);assert.equal((await core.checkpoint.read()).total_processed,0);
+  core.memory.upsertL0=upsert;
+  const captured=await core.record(source);assert.equal(captured.length,2);assert.equal((await core.record(source)).length,0);assert.equal((await core.checkpoint.read()).total_processed,2);assert.equal(core.memory.countL0(),2);
   const first=await core.extractMemories({messages:captured,sessionKey:'fixture-source',sessionId:'fixture-source'});assert.equal(first.storedCount,1);assert.equal((await core.checkpoint.read()).memories_since_last_persona,1);
   await core.extractMemories({messages:captured,sessionKey:'fixture-source',sessionId:'fixture-source'});
   assert.ok(calls.filter(p=>p.taskId==='l1-extraction')[1].prompt.includes('【上一个情境】：工作区测试'));
@@ -36,5 +39,5 @@ try {
   await core.checkpoint.markL1ExtractionComplete('fixture-source',1);assert.ok((await core.personaTrigger.shouldGenerate()).reason.includes('阈值'));
   await core.checkpoint.setPersonaUpdateRequest('明确请求更新');assert.ok((await core.personaTrigger.shouldGenerate()).reason.includes('主动请求'));await core.checkpoint.clearPersonaRequest();
   await core.profile.unlink('persona.md');assert.ok((await core.personaTrigger.shouldGenerate()).reason.includes('恢复'));assert.equal(await core.generatePersona(),true);
-  console.log(JSON.stringify({status:'PASS',checkedAt:new Date().toISOString(),realModelRequests:0,fixtureRunnerCalls:calls.length,checks:['empty-profile-no-dispatch','native-L0-capture-cursor-and-count','native-L1-count','previous-scene-continuity','native-L2-count','navigation-only-is-not-L3','native-cold-start','native-no-trigger-no-dispatch','native-no-change-no-dispatch','native-threshold-50','native-explicit-request','native-missing-persona-recovery']},null,2));
+  console.log(JSON.stringify({status:'PASS',checkedAt:new Date().toISOString(),realModelRequests:0,fixtureRunnerCalls:calls.length,checks:['empty-profile-no-dispatch','L0-index-failure-does-not-advance-checkpoint','native-L0-capture-cursor-and-count','native-L1-count','previous-scene-continuity','native-L2-count','navigation-only-is-not-L3','native-cold-start','native-no-trigger-no-dispatch','native-no-change-no-dispatch','native-threshold-50','native-explicit-request','native-missing-persona-recovery']},null,2));
 }finally{core.close();await rm(root,{recursive:true,force:true});}

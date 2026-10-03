@@ -51,6 +51,8 @@ export async function openLocalCore(dataDir: string, runner: any, logger: any) {
         let captured:any[]=[];
         await checkpoint.captureAtomically(input.sessionKey,undefined,async afterTimestamp=>{
           captured=await recordConversation({...input,afterTimestamp,baseDir:join(dataDir,'history'),storage:history,logger});
+          // Index before advancing the native capture cursor; a failed write must remain retryable.
+          for(const message of captured)if(!await memory.upsertL0({id:message.id,sessionKey:input.sessionKey,sessionId:input.sessionId,role:message.role,messageText:message.content,recordedAt:new Date().toISOString(),timestamp:message.timestamp},undefined))throw new Error('原始会话索引写入失败');
           return captured.length?{maxTimestamp:Math.max(...captured.map(message=>message.timestamp)),messageCount:captured.length}:null;
         });
         return captured;

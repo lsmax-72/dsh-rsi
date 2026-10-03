@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-03T22:45:18.539Z",
+  "realModelRequests": 0,
+  "fixtureRunnerCalls": 5,
+  "checks": [
+    "empty-profile-no-dispatch",
+    "L0-index-failure-does-not-advance-checkpoint",
+    "native-L0-capture-cursor-and-count",
+    "native-L1-count",
+    "previous-scene-continuity",
+    "native-L2-count",
+    "navigation-only-is-not-L3",
+    "native-cold-start",
+    "native-no-trigger-no-dispatch",
+    "native-no-change-no-dispatch",
+    "native-threshold-50",
+    "native-explicit-request",
+    "native-missing-persona-recovery"
+  ]
+}

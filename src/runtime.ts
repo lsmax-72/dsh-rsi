@@ -165,8 +165,7 @@ export class Runtime {
         await this.context.run({route:job.payload.route ?? this.route(scope),sessionId,jobId:job.id},async () => {
           if (!stages.recorded) {
             const rawMessages = job.payload.messages.filter((m:any) => ['user','assistant'].includes(m.role)).map((m:any) => ({...m,timestamp:Date.parse(m.timestamp)}));
-            const captured = await core.record({sessionKey:sessionId,sessionId,rawMessages});
-            for (const message of captured) core.memory.upsertL0({id:message.id,sessionKey:sessionId,sessionId,role:message.role,messageText:message.content,recordedAt:new Date().toISOString(),timestamp:message.timestamp},undefined);
+            await core.record({sessionKey:sessionId,sessionId,rawMessages});
             stages.recorded=true; this.state.updateJob(job.id,'running',stages);
           }
           if (!stages.memory) {
