@@ -1,0 +1,22 @@
+{
+  "status": "NATIVE_USER_CONTINUATION_CONTROL_PASS",
+  "instanceId": "django__django-11087",
+  "implementationRevision": "99af6ba2d10250d2950dc08983211feac5cdf69b",
+  "originalForegroundCalls": 20,
+  "originalInputReconstructionMatches": true,
+  "originalMissingResponses": 1,
+  "controlFixtureCalls": 2,
+  "realModelCallsInControl": 0,
+  "continuedInputsReconstructable": true,
+  "nativeApi": "ctx.agents.resume({resumeSessionId}) then agent.followup(createUserMessage)",
+  "userFollowup": "继续。",
+  "remainingForegroundCalls": 20,
+  "retainedBackgroundLease": "rsi-preflight-260bf207fb",
+  "remainingBackgroundCap": 10,
+  "remainingWallSeconds": 943,
+  "newRetryAllocated": false,
+  "protocolDeviation": "One user-interrupted arm resumes in another native turn. Report this case separately and sensitivity excluding this pair; missing original gateway log/final usage remains missing.",
+  "policySha256": "597f84523b2d0f2285a737f2e91f3bedde2994615f3fbf542ad96ddc50f46115",
+  "controlReceiptSha256": "385ed34d24772d6cbfc60e624e8df6e25998cf6bf8a7b26454e3dd1522c086dc",
+  "originalReconstructionSha256": "9a384638f4c5b19471e4878e20015ee87b4929a951eeb1d017602a56ec8710bd"
+}
