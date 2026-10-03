@@ -235,7 +235,7 @@ docs/          需求、实现边界、评测协议与运行证据
 
 核心固定为修订 `e09899c2136fb6bc27ecc68505e32bdb637cdfa8` 的源码文件，数量以核心清单为准；界面固定复用 10 个文件，其中文件树和对应样式从原详情页提取。构建前核对逐文件 SHA-256。必要适配留在 `adapters/` 与 `src/`，没有平行重写提炼、召回或版本系统。
 
-当前 Chat Memory 使用原生 SQLite FTS5、向量检索与 RRF；Skill 保留原生 BM25。默认本地向量模型为 embeddinggemma-300m-qat Q8_0（768 维），首次需下载约 329 MB；离线使用时通过插件配置 `embedding: {provider: "local", modelPath: "/绝对路径/embeddinggemma-300m-qat-Q8_0.gguf"}` 指定已下载文件。编码失败显式报错，首次模型加载及历史索引重建可能延长插件启动时间。2026-10-04 装配审计还确认了 Skill 生产提示词替换、画像触发缺失、资产分页遗漏、上下文截断和错误重试接线问题，见 [能力装配审计与隔离复现](docs/native-capability-audit-20261004.md)，最新修复状态见 [修复进度](docs/native-capability-repairs.md)。七类装配问题已逐项修复并保存接入回执；新依赖的远程多平台安装检查尚待验证。接入验收不等于效果改善；首轮实验结果对应此前适配版。构建成功也不代表通过了整个复用库的类型检查。来源、固定文件及许可见 [核心清单](vendor/core/manifest.json)、[界面清单](vendor/panel/manifest.json)、[核心许可](vendor/core/LICENSE)和[界面许可](vendor/panel/LICENSE)。
+当前 Chat Memory 使用原生 SQLite FTS5、向量检索与 RRF；Skill 保留原生 BM25。默认本地向量模型为 embeddinggemma-300m-qat Q8_0（768 维），首次需下载约 329 MB；离线使用时通过插件配置 `embedding: {provider: "local", modelPath: "/绝对路径/embeddinggemma-300m-qat-Q8_0.gguf"}` 指定已下载文件。编码失败显式报错，首次模型加载及历史索引重建可能延长插件启动时间。2026-10-04 装配审计还确认了 Skill 生产提示词替换、画像触发缺失、资产分页遗漏、上下文截断和错误重试接线问题，见 [能力装配审计与隔离复现](docs/native-capability-audit-20261004.md)，最新修复状态见 [修复进度](docs/native-capability-repairs.md)。七类装配问题已逐项修复并保存接入回执；新增原生依赖的 Linux/macOS/Windows 安装检查全部通过。接入验收不等于效果改善；首轮实验结果对应此前适配版。构建成功也不代表通过了整个复用库的类型检查。来源、固定文件及许可见 [核心清单](vendor/core/manifest.json)、[界面清单](vendor/panel/manifest.json)、[核心许可](vendor/core/LICENSE)和[界面许可](vendor/panel/LICENSE)。
 
 ### 开发检查
 

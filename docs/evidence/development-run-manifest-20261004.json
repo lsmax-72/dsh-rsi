@@ -1,0 +1,33 @@
+{
+  "status": "DEVELOPMENT_ONLY_FIXED_BEFORE_RUN",
+  "model": "qwen3.8-27b",
+  "taskOrder": [
+    {
+      "instanceId": "django__django-11095",
+      "taskImage": "dsh-rsi-formal:django__django-11095",
+      "expectedTree": "a56dc49e01592a8519cb1753452acf4fbf77637e",
+      "expectedVersion": "3.0.dev20260813005902",
+      "baselineDate": "@1786582742 +0000"
+    },
+    {
+      "instanceId": "django__django-11119",
+      "taskImage": "dsh-rsi-formal:django__django-11119",
+      "expectedTree": "213b13802a232ed76b909f2605824a429b66babb",
+      "expectedVersion": "3.0.dev20260813005919",
+      "baselineDate": "@1786582759 +0000"
+    }
+  ],
+  "foregroundCallsPerTask": 30,
+  "learningCallsPerTask": 10,
+  "wallSecondsPerTask": 900,
+  "settleSeconds": 90,
+  "initialAssets": "empty",
+  "assetTransfer": "Natural outputs and durable source sessions from first task copied to second; no scorer data",
+  "formalBenchmark": false,
+  "limitations": [
+    "These old20 tasks have been inspected and are not independent blind samples.",
+    "RSI-only development checks cannot establish relative effectiveness.",
+    "All attempts retained; no task-failure rerun to improve score."
+  ],
+  "persistentDailyLearningBudget": 20
+}

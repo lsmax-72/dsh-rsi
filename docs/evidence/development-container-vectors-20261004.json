@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "fixture": true,
+  "realChatRequests": 0,
+  "nativeLocalEmbedding": true,
+  "embeddingModelSha256": "6fa0c02a9c302be6f977521d399b4de3a46310a4f2621ee0063747881b673f67",
+  "taskDispatches": 2,
+  "logReconstructionMatches": true,
+  "policy": {
+    "imageId": "sha256:04bf3f21aaf3006155baac1435667bae10187a38018ca469afaa39fda568abc3",
+    "user": "1000:1000",
+    "networkInternal": true,
+    "rootfsReadOnly": true,
+    "hostBinds": [],
+    "experimentOwnedVolume": true
+  },
+  "limitations": [
+    "Container wiring only; fixed chat responses cannot prove semantic task success.",
+    "Patch snapshot diagnostics were added after this fixture and are checked in the subsequent real runs."
+  ]
+}

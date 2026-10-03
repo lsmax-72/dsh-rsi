@@ -34,4 +34,4 @@ L0 捕获补充验证：索引成功写入后才推进原生捕获检查点；�
 
 回执：[原生装配及故障边界](evidence/native-vector-repair-20261004.json)、[真实本地模型](evidence/real-native-vector-20261004.json)。真实模型测试中，中文查询对英文资产的 FTS 命中为 0，向量搜索及原生 RRF 成功召回相关资产；这是小型接入验收，不是效果成绩。
 
-[本机生产包安装](evidence/package-native-binaries-20261004.json)实际加载了 sqlite-vec 与 node-llama-cpp 原生二进制；[安装版宿主回归](evidence/runtime-native-vectors-20261004.json)及[模型桥回归](evidence/bridge-native-vectors-20261004.json)通过，后两项使用明确的测试编码服务，没有真实语义质量结论。新依赖的远程多平台 CI 尚待推送后验证，旧版 CI 不能替代本轮。核心清单现在为 60 个文件，逐文件哈希检查通过。
+[本机生产包安装](evidence/package-native-binaries-20261004.json)实际加载了 sqlite-vec 与 node-llama-cpp 原生二进制；[安装版宿主回归](evidence/runtime-native-vectors-20261004.json)及[模型桥回归](evidence/bridge-native-vectors-20261004.json)通过，后两项使用明确的测试编码服务，没有真实语义质量结论。新增原生依赖的 [远程多平台 CI](evidence/native-package-ci-20261004.json) 已在 Linux/macOS/Windows 全部通过，修订 c962e78。核心清单现在为 60 个文件，逐文件哈希检查通过。

@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import {cp, readFile} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
 import {mkdirSync, openSync, closeSync, fsyncSync, writeFileSync, renameSync, appendFileSync} from 'node:fs';
 import {execFileSync} from 'node:child_process';
 import {LlmAdapter, createUserMessage} from '@deepseek-ai/dsh-llm';
@@ -31,10 +32,19 @@ export function apply(ctx, config) {
     const parent = openSync(dir, 'r'); try {fsyncSync(parent);} finally {closeSync(parent);}
   };
   const ledger = () => durable(dir + '/model-requests.json', requests);
+  const patchSnapshots=[];let previousPatch;
+  mkdirSync(dir+'/patch-snapshots',{recursive:true});
   const patch = () => {
     if (!initialized) return;
     git('add', '-A');
-    durable(dir + '/prediction.patch', git('diff', '--cached', '--binary', 'HEAD'));
+    const body=git('diff', '--cached', '--binary', 'HEAD'),sha256=createHash('sha256').update(body).digest('hex');
+    durable(dir + '/prediction.patch',body);
+    if(sha256!==previousPatch){
+      durable(dir+'/patch-snapshots/'+sha256+'.patch',body);
+      patchSnapshots.push({sha256,phase:currentPhase,requestOrdinal:foreground,observedAt:Date.now(),nonempty:body.length>0});
+      durable(dir+'/patch-snapshots.json',patchSnapshots);previousPatch=sha256;
+    }
+    return sha256;
   };
   ctx.on('session/event', (session, event) => {
     if (!sessions.has(session.id)) {
@@ -81,7 +91,7 @@ export function apply(ctx, config) {
     finally {request.finishedAt = Date.now(); ledger();}
   });
   ctx.on('tools/result', (execution, result) => {
-    results.push({name:execution.name, callId:execution.callId, args:execution.arguments, isError:result.isError===true});
+    results.push({name:execution.name,callId:execution.callId,args:execution.arguments,isError:result.isError===true,phase:currentPhase,requestOrdinal:foreground,observedAt:Date.now(),patchSha256:patch()});
     durable(dir + '/tool-results.json', results); patch();
   });
   if (config.fixture) {

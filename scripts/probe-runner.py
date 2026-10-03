@@ -42,6 +42,7 @@ def verify_seed(assets, sessions):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--image', default='dsh-rsi-pilot2:django-11292', help='Prepared task image; source is /opt/task-source')
+    parser.add_argument('--embedding-model',type=Path,help='Pinned native local GGUF copied read-only into the experiment image; no host bind')
     parser.add_argument('--arm', choices=['baseline', 'rsi'], required=True)
     parser.add_argument('--instance',default='preflight',help='Unique public task ID; reused across its two arms only')
     parser.add_argument('--output', type=Path, required=True)
@@ -101,6 +102,13 @@ def main():
         if args.fixture:
             service['config']['settings']['learningEnabled']=args.fixture_learning
             if args.fixture_learning: service['config'].update(provider='pilot-fixture',model='fixture')
+    embedding_model=None
+    if args.arm=='rsi':
+        embedding_model=(args.embedding_model or project/'.artifacts/models/embeddinggemma-300m-qat-Q8_0.gguf').resolve()
+        if not embedding_model.is_file(): parser.error('RSI requires a preloaded local GGUF; isolated tasks cannot download models')
+        model_sha=hashlib.sha256(embedding_model.read_bytes()).hexdigest()
+        if model_sha!='6fa0c02a9c302be6f977521d399b4de3a46310a4f2621ee0063747881b673f67': parser.error('Use the pinned native local model')
+        service['config']['embedding']={'provider':'local','modelPath':'/opt/rsi/embedding.gguf'}
     if args.fixture: services[:] = [s for s in services if s['id'] not in ['rsi-qwen','rsi-credentials']]
     prefix = 'rsi-preflight-' + uuid.uuid4().hex[:10]
     network, volume, image = prefix+'-net',prefix+'-state',prefix+':local'
@@ -129,7 +137,13 @@ def main():
             shutil.copy2(project/'scripts/task-input.mjs',root/'task-input.mjs')
             # Only public problem metadata already present in the prepared task image is reused.
             (root/'pilot.json').write_text(json.dumps(patch,ensure_ascii=False))
-            dockerfile = f'FROM {args.image}\nCOPY lib /opt/rsi/lib\nCOPY pilot-task.mjs audit-session-requests.mjs task-input.mjs pilot.json /opt/rsi/scripts/\n'
+            shutil.copy2(project/'package.json',root/'package.json')
+            shutil.copy2(project/'package-lock.json',root/'package-lock.json')
+            dockerfile = f'FROM {args.image}\nUSER root\nCOPY package.json package-lock.json /opt/rsi/\nRUN cd /opt/rsi && npm ci --ignore-scripts\nCOPY lib /opt/rsi/lib\nCOPY pilot-task.mjs audit-session-requests.mjs task-input.mjs pilot.json /opt/rsi/scripts/\nENV NODE_LLAMA_CPP_GPU=false\n'
+            if embedding_model:
+                shutil.copy2(embedding_model,root/'embedding.gguf')
+                dockerfile += 'COPY embedding.gguf /opt/rsi/embedding.gguf\n'
+            dockerfile += 'USER 1000:1000\n'
             if args.seed_assets:
                 shutil.copytree(args.seed_assets.resolve(),root/'seed-assets')
                 dockerfile += 'COPY --chown=1000:1000 seed-assets /opt/seed-assets\n'
@@ -165,6 +179,7 @@ def main():
             'experimentOwnedVolume':True,'fixture':args.fixture,'requestLimit':relay_limit,
             'dispatchLimit':args.dispatch_limit,'learningCallBudget':args.learning_call_budget,'learningDispatchLimit':learning_limit, 'fixtureLearning':args.fixture_learning,
             'wallSecondsPerPhase':args.wall_seconds,'settleSecondsPerPhase':args.settle_seconds,
+            'embeddingModelSha256':model_sha if embedding_model else None,'embeddingProvider':'native-local' if embedding_model else None,
             'formalBenchmark':args.formal,'instanceId':args.instance, 'sourceSessionsRestored':bool(args.seed_sessions), 'effectivePatch':patch},indent=2))
         phase_count = len(driver['config'].get('phases',[{}]))
         until = time.monotonic() + phase_count*(args.wall_seconds+args.settle_seconds)+90
