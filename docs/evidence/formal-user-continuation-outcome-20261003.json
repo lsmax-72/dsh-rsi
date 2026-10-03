@@ -1,0 +1,23 @@
+{
+  "status": "USER_CONTINUATION_OFFICIALLY_GRADED_WITH_DISCLOSED_DEVIATION",
+  "instanceId": "django__django-11087",
+  "baselineResolved": false,
+  "rsiResolved": false,
+  "totalForegroundCalls": 40,
+  "totalBackgroundCalls": 10,
+  "knownReportedTokens": 1291300,
+  "unknownUsage": 1,
+  "memoryBodyDelivered": true,
+  "skillBodyDelivered": true,
+  "protocolDeviation": "USER_INTERRUPTION_NATIVE_CONTINUATION",
+  "originalGatewayLogMissing": true,
+  "continuationRequestDeliveryVerified": true,
+  "freshRetry": false,
+  "completeHeldOutPairs": 2,
+  "newlyResolvedKnownPairs": 0,
+  "newlyFailedKnownPairs": 1,
+  "mergedLedgerSha256": "2d09c9c9f85c5ec31b81382c74d4d8654c420f23e928a83136d824f8d18289bc",
+  "segmentsReceiptSha256": "e810805501467b870d006df3b659e17f3a50c7b49aff3a06656a4de3896aba28",
+  "officialGradeSha256": "ea9c39a0f9a4d7e7fe86a430d85aabf5fe4dd7c7d266df677eac775feef422d2",
+  "auditModelCalls": 0
+}
