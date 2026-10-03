@@ -1,0 +1,26 @@
+{
+  "headCommit": "74cb72320235dc8efe51a21e64e113942f8500fc",
+  "headTime": "1786773634",
+  "headTree": "51fdefd96ba482a04fc5492e30cd123252d1e658",
+  "baseTree": "7960b600c1fec82ce32532778f23bb2fb8924cde",
+  "baseCommit": "e7fd69d051eaa67cb17f172a39b57253e9cb831a",
+  "djangoVersion": "3.0.dev20260815060034",
+  "status": "PERMISSION_ONLY_VERIFIED_AND_RUNTIME_CONTROL_PASS",
+  "changedPaths": 6042,
+  "blobChanges": 0,
+  "modeTransitions": {
+    "100644->100755": 6042
+  },
+  "instanceId": "django__django-10914",
+  "imageId": "sha256:f26f0db931c6c1e785ab8287e1ea4f5f948846267db159deaf90b3fe7adea4e9",
+  "formalImplementationRevision": "99af6ba2d10250d2950dc08983211feac5cdf69b",
+  "runtimeBaseTree": "7960b600c1fec82ce32532778f23bb2fb8924cde",
+  "runtimeDjangoVersion": "3.0.dev20260815060034",
+  "fixtureModelCalls": 2,
+  "realModelCalls": 0,
+  "formalTaskAttemptsBeforeRecovery": 0,
+  "rawAuditSha256": "a469ba2cb147ed9bde0b8e5d8df588db0eaf7f3e258c957d355b8c7fdeaf4fc5",
+  "operatorExceptionSha256": "cd45334943b9e64bb9b05194ee03fb29993abfaa57abf8aa7906afc2e8982f1e",
+  "controlReceiptSha256": "4cc813e46f69fbc830480e18c05ce6e617c06b1f8d0c26b9f4066ce6669ee23d",
+  "limitation": "Preparation exception for this fixed official image only; no task replacement, implementation change or model-effect claim."
+}
