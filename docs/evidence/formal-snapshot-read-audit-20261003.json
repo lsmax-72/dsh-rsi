@@ -1,0 +1,21 @@
+{
+  "status": "FIRST_HELDOUT_SOURCE_BYTES_FROZEN_AND_PERSISTENT_INPUTS_UNCHANGED",
+  "inputInventorySha256": "028b42b5705219eadc3fbf3ea1f5dceacd92c1c61c24811c613634dc7955a6bf",
+  "originalPrefixInventorySha256": "31ad4eb963f77ab71f3673efc897486227a0d824edd115d688ccdcfb9e632355",
+  "persistentFilesChanged": 0,
+  "addedTransientFiles": [
+    {
+      "path": "rsi-state.sqlite-shm",
+      "bytes": 32768,
+      "sha256": "fd4c9fda9cd3f9ae7c962b0ddf37232294d55580e1aa165aa06129b8549389eb"
+    },
+    {
+      "path": "rsi-state.sqlite-wal",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "firstCopyReceiptSha256": "c9b4b943ba7de7c44a740a81c34ba548a2a906c03ae10318d77d99d445efe18a",
+  "reason": "Existing read-only SQLite provenance query created empty WAL plus shared-memory cache after inventory collection; no payload changes. All held-out copies must match this actual first-copy inventory. Later source audits hash files without opening SQLite.",
+  "modelCallsInAudit": 0
+}
