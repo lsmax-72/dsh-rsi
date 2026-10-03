@@ -126,9 +126,10 @@ def main():
             shutil.copytree(project/'lib',root/'lib')
             shutil.copy2(project/'scripts/pilot-task.mjs',root/'pilot-task.mjs')
             shutil.copy2(project/'scripts/audit-session-requests.mjs',root/'audit-session-requests.mjs')
+            shutil.copy2(project/'scripts/task-input.mjs',root/'task-input.mjs')
             # Only public problem metadata already present in the prepared task image is reused.
             (root/'pilot.json').write_text(json.dumps(patch,ensure_ascii=False))
-            dockerfile = f'FROM {args.image}\nCOPY lib /opt/rsi/lib\nCOPY pilot-task.mjs audit-session-requests.mjs pilot.json /opt/rsi/scripts/\n'
+            dockerfile = f'FROM {args.image}\nCOPY lib /opt/rsi/lib\nCOPY pilot-task.mjs audit-session-requests.mjs task-input.mjs pilot.json /opt/rsi/scripts/\n'
             if args.seed_assets:
                 shutil.copytree(args.seed_assets.resolve(),root/'seed-assets')
                 dockerfile += 'COPY --chown=1000:1000 seed-assets /opt/seed-assets\n'

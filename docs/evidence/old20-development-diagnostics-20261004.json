@@ -1,0 +1,984 @@
+{
+  "status": "DEVELOPMENT_DIAGNOSTICS_ONLY",
+  "method": "Read the original initial request ledgers for the old20 tasks; no model calls, grading or asset edits. Interrupted continuation is not merged into cost diagnostics here.",
+  "sourceFreeze": "99af6ba2d10250d2950dc08983211feac5cdf69b",
+  "tasks": [
+    {
+      "instanceId": "django__django-11066",
+      "resolved": false,
+      "originalInitialRequests": 40,
+      "protocolDeviation": null,
+      "queryChars": 1982,
+      "fixedHeaderChars": 113,
+      "problemChars": 1867,
+      "fixedHeaderInRecallQuery": true,
+      "first512QueryCharsThatWouldReachNativeLocalEmbedding": "修复以下 Django 仓库问题。工作区为 /workspace，测试环境已离线准备，python 来自官方 testbed 环境。先验证环境，再运行聚焦测试，保留失败原因。禁止联网检索答案。完成后用中文说明修改、测试及局限。\n\nRenameContentType._rename() doesn't save the content type on the correct database\nDescription\n\t\nThe commit in question:\n​https://github.com/django/django/commit/f179113e6cbc8ba0a8d4e87e1d4410fb61d63e75\nThe specific lines in question:\n​https://github.com/django/django/blob/586a9dc4295357de1f5ad0590ad34bf2bc008f79/django/contrib/contenttypes/management/__init__.py#L27\nwith transaction.atomic(usin",
+      "deliveredMemoryChars": 3380,
+      "memoryRefs": [
+        {
+          "id": "m_1791033643539_059a3402",
+          "type": "instruction",
+          "bodyChars": 53,
+          "body": "用户要求 AI 在处理代码修复任务时，严禁联网检索答案，且完成后必须用中文说明修改内容、测试结果及局限性。"
+        },
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214,
+          "body": "用户（开发者）在 2026-10-03 于 /workspace 修复了 Django 仓库中 parse_duration() 无法解析部分负数时长（如 -1:15:30）的 Bug，通过修改 django/utils/dateparse.py 中 standard_duration_re 正则的前瞻匹配部分以支持负号，并验证了 utils_tests、model_fields 和 forms_tests 测试套件均通过。"
+        },
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30,
+          "body": "用户要求在修复 Django 仓库问题时，禁止联网检索答案。"
+        }
+      ],
+      "distinctSkillLoads": [
+        {
+          "name": "rsi-django-offline-bug-repro",
+          "bodyChars": 7127,
+          "bodySha256": "ea839c3170caa54f9635949fdb1939cf00afc5e0f6c36650941c2e3991bfcf91"
+        },
+        {
+          "name": "rsi-offline-task-baseline-discipline",
+          "bodyChars": 1414,
+          "bodySha256": "1179f4dc7cb94fb3cb3c00ca21ef785d6b63eb60dc515db3617a265301262d61"
+        }
+      ],
+      "repeatedSkillBodyCharsAcrossRequests": 331685,
+      "sourceRequestSha256": "84d613c3608f24e22eadcce2f9f0dcd0666aefa66850ce1330b86cbcdc3c7344"
+    },
+    {
+      "instanceId": "django__django-11087",
+      "resolved": false,
+      "originalInitialRequests": 20,
+      "protocolDeviation": "USER_INTERRUPTION_NATIVE_CONTINUATION",
+      "queryChars": 9367,
+      "fixedHeaderChars": 113,
+      "problemChars": 9252,
+      "fixedHeaderInRecallQuery": true,
+      "first512QueryCharsThatWouldReachNativeLocalEmbedding": "修复以下 Django 仓库问题。工作区为 /workspace，测试环境已离线准备，python 来自官方 testbed 环境。先验证环境，再运行聚焦测试，保留失败原因。禁止联网检索答案。完成后用中文说明修改、测试及局限。\n\nOptimize .delete() to use only required fields.\nDescription\n\t\nHi!\nWe're in the process of upgrading our Django 1.11 installation from Python 2.7 to Python 3.6, however are hitting an unexpected UnicodeDecodeError during a .delete() run by our daily data purging management command.\nSTR:\nHave an existing Django 1.11 project running under Python 2.7.15 that uses mysqlclient-python v1.3.13 to conne",
+      "deliveredMemoryChars": 3380,
+      "memoryRefs": [
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214,
+          "body": "用户（开发者）在 2026-10-03 于 /workspace 修复了 Django 仓库中 parse_duration() 无法解析部分负数时长（如 -1:15:30）的 Bug，通过修改 django/utils/dateparse.py 中 standard_duration_re 正则的前瞻匹配部分以支持负号，并验证了 utils_tests、model_fields 和 forms_tests 测试套件均通过。"
+        },
+        {
+          "id": "m_1791033643539_059a3402",
+          "type": "instruction",
+          "bodyChars": 53,
+          "body": "用户要求 AI 在处理代码修复任务时，严禁联网检索答案，且完成后必须用中文说明修改内容、测试结果及局限性。"
+        },
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30,
+          "body": "用户要求在修复 Django 仓库问题时，禁止联网检索答案。"
+        }
+      ],
+      "distinctSkillLoads": [
+        {
+          "name": "rsi-offline-task-baseline-discipline",
+          "bodyChars": 1414,
+          "bodySha256": "1179f4dc7cb94fb3cb3c00ca21ef785d6b63eb60dc515db3617a265301262d61"
+        },
+        {
+          "name": "rsi-django-offline-bug-repro",
+          "bodyChars": 7127,
+          "bodySha256": "ea839c3170caa54f9635949fdb1939cf00afc5e0f6c36650941c2e3991bfcf91"
+        }
+      ],
+      "repeatedSkillBodyCharsAcrossRequests": 162279,
+      "sourceRequestSha256": "0673b92af11b46e23000c6c4b3403f743100ce52552f60e6ce580b0c3441be6f"
+    },
+    {
+      "instanceId": "django__django-11095",
+      "resolved": true,
+      "originalInitialRequests": 40,
+      "protocolDeviation": null,
+      "queryChars": 496,
+      "fixedHeaderChars": 113,
+      "problemChars": 381,
+      "fixedHeaderInRecallQuery": true,
+      "first512QueryCharsThatWouldReachNativeLocalEmbedding": "修复以下 Django 仓库问题。工作区为 /workspace，测试环境已离线准备，python 来自官方 testbed 环境。先验证环境，再运行聚焦测试，保留失败原因。禁止联网检索答案。完成后用中文说明修改、测试及局限。\n\nadd ModelAdmin.get_inlines() hook to allow set inlines based on the request or model instance.\nDescription\n\t\nadd ModelAdmin.get_inlines() hook to allow set inlines based on the request or model instance.\nCurrently, We can override the method get_inline_instances to do such a thing, but a for loop should be copied to my code. So I wished add a hook get_inlines(request, obj=None)\n",
+      "deliveredMemoryChars": 3380,
+      "memoryRefs": [
+        {
+          "id": "m_1791033643539_059a3402",
+          "type": "instruction",
+          "bodyChars": 53,
+          "body": "用户要求 AI 在处理代码修复任务时，严禁联网检索答案，且完成后必须用中文说明修改内容、测试结果及局限性。"
+        },
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30,
+          "body": "用户要求在修复 Django 仓库问题时，禁止联网检索答案。"
+        },
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214,
+          "body": "用户（开发者）在 2026-10-03 于 /workspace 修复了 Django 仓库中 parse_duration() 无法解析部分负数时长（如 -1:15:30）的 Bug，通过修改 django/utils/dateparse.py 中 standard_duration_re 正则的前瞻匹配部分以支持负号，并验证了 utils_tests、model_fields 和 forms_tests 测试套件均通过。"
+        }
+      ],
+      "distinctSkillLoads": [
+        {
+          "name": "rsi-offline-task-baseline-discipline",
+          "bodyChars": 1414,
+          "bodySha256": "1179f4dc7cb94fb3cb3c00ca21ef785d6b63eb60dc515db3617a265301262d61"
+        }
+      ],
+      "repeatedSkillBodyCharsAcrossRequests": 55146,
+      "sourceRequestSha256": "d5ba2b12c24f542e7cef7198baab27e3272c67f2bd2fea5b3612626120cdb391"
+    },
+    {
+      "instanceId": "django__django-11099",
+      "resolved": true,
+      "originalInitialRequests": 17,
+      "protocolDeviation": null,
+      "queryChars": 879,
+      "fixedHeaderChars": 113,
+      "problemChars": 764,
+      "fixedHeaderInRecallQuery": true,
+      "first512QueryCharsThatWouldReachNativeLocalEmbedding": "修复以下 Django 仓库问题。工作区为 /workspace，测试环境已离线准备，python 来自官方 testbed 环境。先验证环境，再运行聚焦测试，保留失败原因。禁止联网检索答案。完成后用中文说明修改、测试及局限。\n\nUsernameValidator allows trailing newline in usernames\nDescription\n\t\nASCIIUsernameValidator and UnicodeUsernameValidator use the regex \nr'^[\\w.@+-]+$'\nThe intent is to only allow alphanumeric characters as well as ., @, +, and -. However, a little known quirk of Python regexes is that $ will also match a trailing newline. Therefore, the user name validators will accept usernames which end with ",
+      "deliveredMemoryChars": 3380,
+      "memoryRefs": [
+        {
+          "id": "m_1791033643539_059a3402",
+          "type": "instruction",
+          "bodyChars": 53,
+          "body": "用户要求 AI 在处理代码修复任务时，严禁联网检索答案，且完成后必须用中文说明修改内容、测试结果及局限性。"
+        },
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30,
+          "body": "用户要求在修复 Django 仓库问题时，禁止联网检索答案。"
+        },
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214,
+          "body": "用户（开发者）在 2026-10-03 于 /workspace 修复了 Django 仓库中 parse_duration() 无法解析部分负数时长（如 -1:15:30）的 Bug，通过修改 django/utils/dateparse.py 中 standard_duration_re 正则的前瞻匹配部分以支持负号，并验证了 utils_tests、model_fields 和 forms_tests 测试套件均通过。"
+        }
+      ],
+      "distinctSkillLoads": [
+        {
+          "name": "rsi-django-offline-bug-repro",
+          "bodyChars": 7127,
+          "bodySha256": "ea839c3170caa54f9635949fdb1939cf00afc5e0f6c36650941c2e3991bfcf91"
+        },
+        {
+          "name": "rsi-offline-task-baseline-discipline",
+          "bodyChars": 1414,
+          "bodySha256": "1179f4dc7cb94fb3cb3c00ca21ef785d6b63eb60dc515db3617a265301262d61"
+        }
+      ],
+      "repeatedSkillBodyCharsAcrossRequests": 136656,
+      "sourceRequestSha256": "2bdc33c7e8018233539c03ef1d0f11b570e88c3b4c011ae8ddadea991b307b79"
+    },
+    {
+      "instanceId": "django__django-11119",
+      "resolved": true,
+      "originalInitialRequests": 24,
+      "protocolDeviation": null,
+      "queryChars": 484,
+      "fixedHeaderChars": 113,
+      "problemChars": 369,
+      "fixedHeaderInRecallQuery": true,
+      "first512QueryCharsThatWouldReachNativeLocalEmbedding": "修复以下 Django 仓库问题。工作区为 /workspace，测试环境已离线准备，python 来自官方 testbed 环境。先验证环境，再运行聚焦测试，保留失败原因。禁止联网检索答案。完成后用中文说明修改、测试及局限。\n\nEngine.render_to_string() should honor the autoescape attribute\nDescription\n\t\nIn Engine.render_to_string, a Context is created without specifying the engine autoescape attribute. So if you create en engine with autoescape=False and then call its render_to_string() method, the result will always be autoescaped. It was probably overlooked in [19a5f6da329d58653bcda85].\n",
+      "deliveredMemoryChars": 3380,
+      "memoryRefs": [
+        {
+          "id": "m_1791033643539_059a3402",
+          "type": "instruction",
+          "bodyChars": 53,
+          "body": "用户要求 AI 在处理代码修复任务时，严禁联网检索答案，且完成后必须用中文说明修改内容、测试结果及局限性。"
+        },
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30,
+          "body": "用户要求在修复 Django 仓库问题时，禁止联网检索答案。"
+        },
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214,
+          "body": "用户（开发者）在 2026-10-03 于 /workspace 修复了 Django 仓库中 parse_duration() 无法解析部分负数时长（如 -1:15:30）的 Bug，通过修改 django/utils/dateparse.py 中 standard_duration_re 正则的前瞻匹配部分以支持负号，并验证了 utils_tests、model_fields 和 forms_tests 测试套件均通过。"
+        }
+      ],
+      "distinctSkillLoads": [
+        {
+          "name": "rsi-offline-task-baseline-discipline",
+          "bodyChars": 1414,
+          "bodySha256": "1179f4dc7cb94fb3cb3c00ca21ef785d6b63eb60dc515db3617a265301262d61"
+        },
+        {
+          "name": "rsi-django-offline-bug-repro",
+          "bodyChars": 7127,
+          "bodySha256": "ea839c3170caa54f9635949fdb1939cf00afc5e0f6c36650941c2e3991bfcf91"
+        }
+      ],
+      "repeatedSkillBodyCharsAcrossRequests": 196443,
+      "sourceRequestSha256": "0e0cbe8c219fa06fc4c2cd6ba7c5af4919df253cf3f97a87f48d8fe44f5c9737"
+    },
+    {
+      "instanceId": "django__django-11133",
+      "resolved": true,
+      "originalInitialRequests": 28,
+      "protocolDeviation": null,
+      "queryChars": 1010,
+      "fixedHeaderChars": 113,
+      "problemChars": 895,
+      "fixedHeaderInRecallQuery": true,
+      "first512QueryCharsThatWouldReachNativeLocalEmbedding": "修复以下 Django 仓库问题。工作区为 /workspace，测试环境已离线准备，python 来自官方 testbed 环境。先验证环境，再运行聚焦测试，保留失败原因。禁止联网检索答案。完成后用中文说明修改、测试及局限。\n\nHttpResponse doesn't handle memoryview objects\nDescription\n\t\nI am trying to write a BinaryField retrieved from the database into a HttpResponse. When the database is Sqlite this works correctly, but Postgresql returns the contents of the field as a memoryview object and it seems like current Django doesn't like this combination:\nfrom django.http import HttpResponse\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t \n# String co",
+      "deliveredMemoryChars": 3380,
+      "memoryRefs": [
+        {
+          "id": "m_1791033643539_059a3402",
+          "type": "instruction",
+          "bodyChars": 53,
+          "body": "用户要求 AI 在处理代码修复任务时，严禁联网检索答案，且完成后必须用中文说明修改内容、测试结果及局限性。"
+        },
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30,
+          "body": "用户要求在修复 Django 仓库问题时，禁止联网检索答案。"
+        },
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214,
+          "body": "用户（开发者）在 2026-10-03 于 /workspace 修复了 Django 仓库中 parse_duration() 无法解析部分负数时长（如 -1:15:30）的 Bug，通过修改 django/utils/dateparse.py 中 standard_duration_re 正则的前瞻匹配部分以支持负号，并验证了 utils_tests、model_fields 和 forms_tests 测试套件均通过。"
+        }
+      ],
+      "distinctSkillLoads": [
+        {
+          "name": "rsi-offline-task-baseline-discipline",
+          "bodyChars": 1414,
+          "bodySha256": "1179f4dc7cb94fb3cb3c00ca21ef785d6b63eb60dc515db3617a265301262d61"
+        },
+        {
+          "name": "rsi-django-offline-bug-repro",
+          "bodyChars": 7127,
+          "bodySha256": "ea839c3170caa54f9635949fdb1939cf00afc5e0f6c36650941c2e3991bfcf91"
+        }
+      ],
+      "repeatedSkillBodyCharsAcrossRequests": 230607,
+      "sourceRequestSha256": "43b79f04acb2e852b67fe0eb8f07868b21f3302d7de256cf4adc77fc05057794"
+    },
+    {
+      "instanceId": "django__django-11138",
+      "resolved": false,
+      "originalInitialRequests": 40,
+      "protocolDeviation": null,
+      "queryChars": 3250,
+      "fixedHeaderChars": 113,
+      "problemChars": 3135,
+      "fixedHeaderInRecallQuery": true,
+      "first512QueryCharsThatWouldReachNativeLocalEmbedding": "修复以下 Django 仓库问题。工作区为 /workspace，测试环境已离线准备，python 来自官方 testbed 环境。先验证环境，再运行聚焦测试，保留失败原因。禁止联网检索答案。完成后用中文说明修改、测试及局限。\n\nTIME_ZONE value in DATABASES settings is not used when making dates timezone-aware on MySQL, SQLite, and Oracle.\nDescription\n\t \n\t\t(last modified by Victor Talpaert)\n\t \n(We assume the mysql backends)\nI can set TIME_ZONE several times in settings.py, one for the global django app, and one for each database (see ​https://docs.djangoproject.com/en/1.11/ref/settings/#time-zone (ref1))\nTypical usage ",
+      "deliveredMemoryChars": 3380,
+      "memoryRefs": [
+        {
+          "id": "m_1791033643539_059a3402",
+          "type": "instruction",
+          "bodyChars": 53,
+          "body": "用户要求 AI 在处理代码修复任务时，严禁联网检索答案，且完成后必须用中文说明修改内容、测试结果及局限性。"
+        },
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214,
+          "body": "用户（开发者）在 2026-10-03 于 /workspace 修复了 Django 仓库中 parse_duration() 无法解析部分负数时长（如 -1:15:30）的 Bug，通过修改 django/utils/dateparse.py 中 standard_duration_re 正则的前瞻匹配部分以支持负号，并验证了 utils_tests、model_fields 和 forms_tests 测试套件均通过。"
+        },
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30,
+          "body": "用户要求在修复 Django 仓库问题时，禁止联网检索答案。"
+        }
+      ],
+      "distinctSkillLoads": [
+        {
+          "name": "rsi-offline-task-baseline-discipline",
+          "bodyChars": 1414,
+          "bodySha256": "1179f4dc7cb94fb3cb3c00ca21ef785d6b63eb60dc515db3617a265301262d61"
+        },
+        {
+          "name": "rsi-django-offline-bug-repro",
+          "bodyChars": 7127,
+          "bodySha256": "ea839c3170caa54f9635949fdb1939cf00afc5e0f6c36650941c2e3991bfcf91"
+        }
+      ],
+      "repeatedSkillBodyCharsAcrossRequests": 333099,
+      "sourceRequestSha256": "22a56e8994ac5ed9f4ebfe1837a62e926b1d382ab2e1698a1a0ab197091851fb"
+    },
+    {
+      "instanceId": "django__django-11149",
+      "resolved": false,
+      "originalInitialRequests": 40,
+      "protocolDeviation": null,
+      "queryChars": 898,
+      "fixedHeaderChars": 113,
+      "problemChars": 783,
+      "fixedHeaderInRecallQuery": true,
+      "first512QueryCharsThatWouldReachNativeLocalEmbedding": "修复以下 Django 仓库问题。工作区为 /workspace，测试环境已离线准备，python 来自官方 testbed 环境。先验证环境，再运行聚焦测试，保留失败原因。禁止联网检索答案。完成后用中文说明修改、测试及局限。\n\nAdmin inlines for auto-created ManyToManyFields are editable if the user only has the view permission\nDescription\n\t\nFrom https://code.djangoproject.com/ticket/8060#comment:34\nReplying to Will Gordon:\nThis seems to have regressed in (at least) 2.1. I have 2 view only permissions. I have a ManyToManyField represented in my main model as a TabularInline. But, my user with view only permissions can",
+      "deliveredMemoryChars": 3380,
+      "memoryRefs": [
+        {
+          "id": "m_1791033643539_059a3402",
+          "type": "instruction",
+          "bodyChars": 53,
+          "body": "用户要求 AI 在处理代码修复任务时，严禁联网检索答案，且完成后必须用中文说明修改内容、测试结果及局限性。"
+        },
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214,
+          "body": "用户（开发者）在 2026-10-03 于 /workspace 修复了 Django 仓库中 parse_duration() 无法解析部分负数时长（如 -1:15:30）的 Bug，通过修改 django/utils/dateparse.py 中 standard_duration_re 正则的前瞻匹配部分以支持负号，并验证了 utils_tests、model_fields 和 forms_tests 测试套件均通过。"
+        },
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30,
+          "body": "用户要求在修复 Django 仓库问题时，禁止联网检索答案。"
+        }
+      ],
+      "distinctSkillLoads": [
+        {
+          "name": "rsi-offline-task-baseline-discipline",
+          "bodyChars": 1414,
+          "bodySha256": "1179f4dc7cb94fb3cb3c00ca21ef785d6b63eb60dc515db3617a265301262d61"
+        },
+        {
+          "name": "rsi-django-offline-bug-repro",
+          "bodyChars": 7127,
+          "bodySha256": "ea839c3170caa54f9635949fdb1939cf00afc5e0f6c36650941c2e3991bfcf91"
+        }
+      ],
+      "repeatedSkillBodyCharsAcrossRequests": 333099,
+      "sourceRequestSha256": "a09c563775197228960d567803c74d665b73f1961146899e04b3aab7bdf0523a"
+    },
+    {
+      "instanceId": "django__django-11163",
+      "resolved": true,
+      "originalInitialRequests": 21,
+      "protocolDeviation": null,
+      "queryChars": 523,
+      "fixedHeaderChars": 113,
+      "problemChars": 408,
+      "fixedHeaderInRecallQuery": true,
+      "first512QueryCharsThatWouldReachNativeLocalEmbedding": "修复以下 Django 仓库问题。工作区为 /workspace，测试环境已离线准备，python 来自官方 testbed 环境。先验证环境，再运行聚焦测试，保留失败原因。禁止联网检索答案。完成后用中文说明修改、测试及局限。\n\nmodel_to_dict() should return an empty dict for an empty list of fields.\nDescription\n\t\nBeen called as model_to_dict(instance, fields=[]) function should return empty dict, because no fields were requested. But it returns all fields\nThe problem point is\nif fields and f.name not in fields:\nwhich should be\nif fields is not None and f.name not in fields:\nPR: ​https://github.com/django/django/pull/1",
+      "deliveredMemoryChars": 3380,
+      "memoryRefs": [
+        {
+          "id": "m_1791033643539_059a3402",
+          "type": "instruction",
+          "bodyChars": 53,
+          "body": "用户要求 AI 在处理代码修复任务时，严禁联网检索答案，且完成后必须用中文说明修改内容、测试结果及局限性。"
+        },
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214,
+          "body": "用户（开发者）在 2026-10-03 于 /workspace 修复了 Django 仓库中 parse_duration() 无法解析部分负数时长（如 -1:15:30）的 Bug，通过修改 django/utils/dateparse.py 中 standard_duration_re 正则的前瞻匹配部分以支持负号，并验证了 utils_tests、model_fields 和 forms_tests 测试套件均通过。"
+        },
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30,
+          "body": "用户要求在修复 Django 仓库问题时，禁止联网检索答案。"
+        }
+      ],
+      "distinctSkillLoads": [
+        {
+          "name": "rsi-offline-task-baseline-discipline",
+          "bodyChars": 1414,
+          "bodySha256": "1179f4dc7cb94fb3cb3c00ca21ef785d6b63eb60dc515db3617a265301262d61"
+        },
+        {
+          "name": "rsi-django-offline-bug-repro",
+          "bodyChars": 7127,
+          "bodySha256": "ea839c3170caa54f9635949fdb1939cf00afc5e0f6c36650941c2e3991bfcf91"
+        }
+      ],
+      "repeatedSkillBodyCharsAcrossRequests": 170820,
+      "sourceRequestSha256": "8850a098417f4f56401f043aa127fbae0b46beac6bc71f186b4fe16190c98760"
+    },
+    {
+      "instanceId": "django__django-11179",
+      "resolved": true,
+      "originalInitialRequests": 21,
+      "protocolDeviation": null,
+      "queryChars": 398,
+      "fixedHeaderChars": 113,
+      "problemChars": 283,
+      "fixedHeaderInRecallQuery": true,
+      "first512QueryCharsThatWouldReachNativeLocalEmbedding": "修复以下 Django 仓库问题。工作区为 /workspace，测试环境已离线准备，python 来自官方 testbed 环境。先验证环境，再运行聚焦测试，保留失败原因。禁止联网检索答案。完成后用中文说明修改、测试及局限。\n\ndelete() on instances of models without any dependencies doesn't clear PKs.\nDescription\n\t\nDeleting any model with no dependencies not updates the PK on the model. It should be set to None after .delete() call.\nSee Django.db.models.deletion:276-281. Should update the model line 280.\n",
+      "deliveredMemoryChars": 3380,
+      "memoryRefs": [
+        {
+          "id": "m_1791033643539_059a3402",
+          "type": "instruction",
+          "bodyChars": 53,
+          "body": "用户要求 AI 在处理代码修复任务时，严禁联网检索答案，且完成后必须用中文说明修改内容、测试结果及局限性。"
+        },
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30,
+          "body": "用户要求在修复 Django 仓库问题时，禁止联网检索答案。"
+        },
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214,
+          "body": "用户（开发者）在 2026-10-03 于 /workspace 修复了 Django 仓库中 parse_duration() 无法解析部分负数时长（如 -1:15:30）的 Bug，通过修改 django/utils/dateparse.py 中 standard_duration_re 正则的前瞻匹配部分以支持负号，并验证了 utils_tests、model_fields 和 forms_tests 测试套件均通过。"
+        }
+      ],
+      "distinctSkillLoads": [
+        {
+          "name": "rsi-offline-task-baseline-discipline",
+          "bodyChars": 1414,
+          "bodySha256": "1179f4dc7cb94fb3cb3c00ca21ef785d6b63eb60dc515db3617a265301262d61"
+        },
+        {
+          "name": "rsi-django-offline-bug-repro",
+          "bodyChars": 7127,
+          "bodySha256": "ea839c3170caa54f9635949fdb1939cf00afc5e0f6c36650941c2e3991bfcf91"
+        }
+      ],
+      "repeatedSkillBodyCharsAcrossRequests": 170820,
+      "sourceRequestSha256": "c0f46b132f326d432ff83e69c36872dda89149e00445a38d55b5f9625935ae44"
+    },
+    {
+      "instanceId": "django__django-11206",
+      "resolved": false,
+      "originalInitialRequests": 31,
+      "protocolDeviation": null,
+      "queryChars": 813,
+      "fixedHeaderChars": 113,
+      "problemChars": 698,
+      "fixedHeaderInRecallQuery": true,
+      "first512QueryCharsThatWouldReachNativeLocalEmbedding": "修复以下 Django 仓库问题。工作区为 /workspace，测试环境已离线准备，python 来自官方 testbed 环境。先验证环境，再运行聚焦测试，保留失败原因。禁止联网检索答案。完成后用中文说明修改、测试及局限。\n\nutils.numberformat.format renders small decimals in exponential notation.\nDescription\n\t\nWhen using utils.number_format with decimal_pos, extremely small numbers get displayed using exponential notation.\n>>> from django.utils.numberformat import format as nformat\n>>> nformat(Decimal('1e-199'), '.', decimal_pos=2)\n'0.00'\n>>> nformat(Decimal('1e-200'), '.', decimal_pos=2)\n'1.00e-200'\nThis is cause",
+      "deliveredMemoryChars": 3380,
+      "memoryRefs": [
+        {
+          "id": "m_1791033643539_059a3402",
+          "type": "instruction",
+          "bodyChars": 53,
+          "body": "用户要求 AI 在处理代码修复任务时，严禁联网检索答案，且完成后必须用中文说明修改内容、测试结果及局限性。"
+        },
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30,
+          "body": "用户要求在修复 Django 仓库问题时，禁止联网检索答案。"
+        },
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214,
+          "body": "用户（开发者）在 2026-10-03 于 /workspace 修复了 Django 仓库中 parse_duration() 无法解析部分负数时长（如 -1:15:30）的 Bug，通过修改 django/utils/dateparse.py 中 standard_duration_re 正则的前瞻匹配部分以支持负号，并验证了 utils_tests、model_fields 和 forms_tests 测试套件均通过。"
+        }
+      ],
+      "distinctSkillLoads": [
+        {
+          "name": "rsi-offline-task-baseline-discipline",
+          "bodyChars": 1414,
+          "bodySha256": "1179f4dc7cb94fb3cb3c00ca21ef785d6b63eb60dc515db3617a265301262d61"
+        },
+        {
+          "name": "rsi-django-offline-bug-repro",
+          "bodyChars": 7127,
+          "bodySha256": "ea839c3170caa54f9635949fdb1939cf00afc5e0f6c36650941c2e3991bfcf91"
+        }
+      ],
+      "repeatedSkillBodyCharsAcrossRequests": 249103,
+      "sourceRequestSha256": "d02f0d6ad64cd53ce9c077937956f484ea6bcb3d1d36b730892d8e0c6a4cece1"
+    },
+    {
+      "instanceId": "django__django-11211",
+      "resolved": true,
+      "originalInitialRequests": 40,
+      "protocolDeviation": null,
+      "queryChars": 1074,
+      "fixedHeaderChars": 113,
+      "problemChars": 959,
+      "fixedHeaderInRecallQuery": true,
+      "first512QueryCharsThatWouldReachNativeLocalEmbedding": "修复以下 Django 仓库问题。工作区为 /workspace，测试环境已离线准备，python 来自官方 testbed 环境。先验证环境，再运行聚焦测试，保留失败原因。禁止联网检索答案。完成后用中文说明修改、测试及局限。\n\nPrefetch related is not working when used GFK for model that uses UUID field as PK.\nDescription\n\t\nHow to reproduce:\ncreate model with UUID as primary key\nclass Foo(models.Model):\n\tid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)\n\t...\ncreate another model with GFK to model Foo\nclass Bar(models.Model):\n\tfoo_content_type = models.ForeignKey(\n\t\tContentType, related_name='",
+      "deliveredMemoryChars": 3380,
+      "memoryRefs": [
+        {
+          "id": "m_1791033643539_059a3402",
+          "type": "instruction",
+          "bodyChars": 53,
+          "body": "用户要求 AI 在处理代码修复任务时，严禁联网检索答案，且完成后必须用中文说明修改内容、测试结果及局限性。"
+        },
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214,
+          "body": "用户（开发者）在 2026-10-03 于 /workspace 修复了 Django 仓库中 parse_duration() 无法解析部分负数时长（如 -1:15:30）的 Bug，通过修改 django/utils/dateparse.py 中 standard_duration_re 正则的前瞻匹配部分以支持负号，并验证了 utils_tests、model_fields 和 forms_tests 测试套件均通过。"
+        },
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30,
+          "body": "用户要求在修复 Django 仓库问题时，禁止联网检索答案。"
+        }
+      ],
+      "distinctSkillLoads": [
+        {
+          "name": "rsi-django-offline-bug-repro",
+          "bodyChars": 7127,
+          "bodySha256": "ea839c3170caa54f9635949fdb1939cf00afc5e0f6c36650941c2e3991bfcf91"
+        },
+        {
+          "name": "rsi-offline-task-baseline-discipline",
+          "bodyChars": 1414,
+          "bodySha256": "1179f4dc7cb94fb3cb3c00ca21ef785d6b63eb60dc515db3617a265301262d61"
+        }
+      ],
+      "repeatedSkillBodyCharsAcrossRequests": 333099,
+      "sourceRequestSha256": "7f680a1db5d0aae7a152edcc02c7294539c462ce19412462d46936182f3be36e"
+    },
+    {
+      "instanceId": "django__django-11239",
+      "resolved": false,
+      "originalInitialRequests": 26,
+      "protocolDeviation": null,
+      "queryChars": 1171,
+      "fixedHeaderChars": 113,
+      "problemChars": 1056,
+      "fixedHeaderInRecallQuery": true,
+      "first512QueryCharsThatWouldReachNativeLocalEmbedding": "修复以下 Django 仓库问题。工作区为 /workspace，测试环境已离线准备，python 来自官方 testbed 环境。先验证环境，再运行聚焦测试，保留失败原因。禁止联网检索答案。完成后用中文说明修改、测试及局限。\n\nAdd support for postgresql client certificates and key to dbshell.\nDescription\n\t\nThis bug is very similar to the #28322\nA common security procedure for DB access is to require mutual TLS for the DB connection.\nThis involves specifying a server certificate, client certificate, and client key when connecting.\nDjango already supports this configuration, it looks like this:\nDATABASES = {\n\t'default'",
+      "deliveredMemoryChars": 3380,
+      "memoryRefs": [
+        {
+          "id": "m_1791033643539_059a3402",
+          "type": "instruction",
+          "bodyChars": 53,
+          "body": "用户要求 AI 在处理代码修复任务时，严禁联网检索答案，且完成后必须用中文说明修改内容、测试结果及局限性。"
+        },
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30,
+          "body": "用户要求在修复 Django 仓库问题时，禁止联网检索答案。"
+        },
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214,
+          "body": "用户（开发者）在 2026-10-03 于 /workspace 修复了 Django 仓库中 parse_duration() 无法解析部分负数时长（如 -1:15:30）的 Bug，通过修改 django/utils/dateparse.py 中 standard_duration_re 正则的前瞻匹配部分以支持负号，并验证了 utils_tests、model_fields 和 forms_tests 测试套件均通过。"
+        }
+      ],
+      "distinctSkillLoads": [
+        {
+          "name": "rsi-django-offline-bug-repro",
+          "bodyChars": 7127,
+          "bodySha256": "ea839c3170caa54f9635949fdb1939cf00afc5e0f6c36650941c2e3991bfcf91"
+        },
+        {
+          "name": "rsi-offline-task-baseline-discipline",
+          "bodyChars": 1414,
+          "bodySha256": "1179f4dc7cb94fb3cb3c00ca21ef785d6b63eb60dc515db3617a265301262d61"
+        }
+      ],
+      "repeatedSkillBodyCharsAcrossRequests": 213525,
+      "sourceRequestSha256": "61950955ea18e0ab8166f8162b560679e27400f9e2a46115e942800c873aaeae"
+    },
+    {
+      "instanceId": "django__django-11265",
+      "resolved": false,
+      "originalInitialRequests": 26,
+      "protocolDeviation": null,
+      "queryChars": 3925,
+      "fixedHeaderChars": 113,
+      "problemChars": 3810,
+      "fixedHeaderInRecallQuery": true,
+      "first512QueryCharsThatWouldReachNativeLocalEmbedding": "修复以下 Django 仓库问题。工作区为 /workspace，测试环境已离线准备，python 来自官方 testbed 环境。先验证环境，再运行聚焦测试，保留失败原因。禁止联网检索答案。完成后用中文说明修改、测试及局限。\n\nUsing exclude on annotated FilteredRelation doesn't work\nDescription\n\t\nIt looks like using exclude on queryset with annotated FilteredRelation give a FieldError on the annotation name.\nFor exemple, in Django tests (django/tests/filtered_relation/tests.py) if we change this :\ndef test_with_join(self):\n\tself.assertSequenceEqual(\n\t\tAuthor.objects.annotate(\n\t\t\tbook_alice=FilteredRelation('book', co",
+      "deliveredMemoryChars": 3380,
+      "memoryRefs": [
+        {
+          "id": "m_1791033643539_059a3402",
+          "type": "instruction",
+          "bodyChars": 53,
+          "body": "用户要求 AI 在处理代码修复任务时，严禁联网检索答案，且完成后必须用中文说明修改内容、测试结果及局限性。"
+        },
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214,
+          "body": "用户（开发者）在 2026-10-03 于 /workspace 修复了 Django 仓库中 parse_duration() 无法解析部分负数时长（如 -1:15:30）的 Bug，通过修改 django/utils/dateparse.py 中 standard_duration_re 正则的前瞻匹配部分以支持负号，并验证了 utils_tests、model_fields 和 forms_tests 测试套件均通过。"
+        },
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30,
+          "body": "用户要求在修复 Django 仓库问题时，禁止联网检索答案。"
+        }
+      ],
+      "distinctSkillLoads": [
+        {
+          "name": "rsi-django-offline-bug-repro",
+          "bodyChars": 7127,
+          "bodySha256": "ea839c3170caa54f9635949fdb1939cf00afc5e0f6c36650941c2e3991bfcf91"
+        },
+        {
+          "name": "rsi-offline-task-baseline-discipline",
+          "bodyChars": 1414,
+          "bodySha256": "1179f4dc7cb94fb3cb3c00ca21ef785d6b63eb60dc515db3617a265301262d61"
+        }
+      ],
+      "repeatedSkillBodyCharsAcrossRequests": 213525,
+      "sourceRequestSha256": "b2fc2b289641affb2ebc3523cc8ef9679f2880fe570b999da3bd2e61cda88025"
+    },
+    {
+      "instanceId": "django__django-11276",
+      "resolved": true,
+      "originalInitialRequests": 40,
+      "protocolDeviation": null,
+      "queryChars": 1235,
+      "fixedHeaderChars": 113,
+      "problemChars": 1120,
+      "fixedHeaderInRecallQuery": true,
+      "first512QueryCharsThatWouldReachNativeLocalEmbedding": "修复以下 Django 仓库问题。工作区为 /workspace，测试环境已离线准备，python 来自官方 testbed 环境。先验证环境，再运行聚焦测试，保留失败原因。禁止联网检索答案。完成后用中文说明修改、测试及局限。\n\nUse Python stdlib html.escape() to in django.utils.html.escape()\nDescription\n\t\nThe function django.utils.html.escape() partially duplicates the Python stdlib function html.escape(). We can replace this duplication with wider community developed version.\nhtml.escape() has been available since Python 3.2:\n​https://docs.python.org/3/library/html.html#html.escape\nThis function is also faster than D",
+      "deliveredMemoryChars": 3380,
+      "memoryRefs": [
+        {
+          "id": "m_1791033643539_059a3402",
+          "type": "instruction",
+          "bodyChars": 53,
+          "body": "用户要求 AI 在处理代码修复任务时，严禁联网检索答案，且完成后必须用中文说明修改内容、测试结果及局限性。"
+        },
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214,
+          "body": "用户（开发者）在 2026-10-03 于 /workspace 修复了 Django 仓库中 parse_duration() 无法解析部分负数时长（如 -1:15:30）的 Bug，通过修改 django/utils/dateparse.py 中 standard_duration_re 正则的前瞻匹配部分以支持负号，并验证了 utils_tests、model_fields 和 forms_tests 测试套件均通过。"
+        },
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30,
+          "body": "用户要求在修复 Django 仓库问题时，禁止联网检索答案。"
+        }
+      ],
+      "distinctSkillLoads": [
+        {
+          "name": "rsi-offline-task-baseline-discipline",
+          "bodyChars": 1414,
+          "bodySha256": "1179f4dc7cb94fb3cb3c00ca21ef785d6b63eb60dc515db3617a265301262d61"
+        },
+        {
+          "name": "rsi-django-offline-bug-repro",
+          "bodyChars": 7127,
+          "bodySha256": "ea839c3170caa54f9635949fdb1939cf00afc5e0f6c36650941c2e3991bfcf91"
+        }
+      ],
+      "repeatedSkillBodyCharsAcrossRequests": 333099,
+      "sourceRequestSha256": "0d8fc0edf654b732358e193f456745b37ee602f0047d44cb934ccb53886823a9"
+    },
+    {
+      "instanceId": "django__django-11299",
+      "resolved": true,
+      "originalInitialRequests": 40,
+      "protocolDeviation": null,
+      "queryChars": 3155,
+      "fixedHeaderChars": 113,
+      "problemChars": 3040,
+      "fixedHeaderInRecallQuery": true,
+      "first512QueryCharsThatWouldReachNativeLocalEmbedding": "修复以下 Django 仓库问题。工作区为 /workspace，测试环境已离线准备，python 来自官方 testbed 环境。先验证环境，再运行聚焦测试，保留失败原因。禁止联网检索答案。完成后用中文说明修改、测试及局限。\n\nCheckConstraint with OR operator generates incorrect SQL on SQLite and Oracle.\nDescription\n\t \n\t\t(last modified by Michael Spallino)\n\t \nDjango is incorrectly including the fully qualified field name(e.g. “my_table”.”my_field”) in part of the check constraint. This only appears to happen when there is a combination of OR and AND clauses in the CheckConstraint.\nIncluding the fully qualified field ",
+      "deliveredMemoryChars": 3380,
+      "memoryRefs": [
+        {
+          "id": "m_1791033643539_059a3402",
+          "type": "instruction",
+          "bodyChars": 53,
+          "body": "用户要求 AI 在处理代码修复任务时，严禁联网检索答案，且完成后必须用中文说明修改内容、测试结果及局限性。"
+        },
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214,
+          "body": "用户（开发者）在 2026-10-03 于 /workspace 修复了 Django 仓库中 parse_duration() 无法解析部分负数时长（如 -1:15:30）的 Bug，通过修改 django/utils/dateparse.py 中 standard_duration_re 正则的前瞻匹配部分以支持负号，并验证了 utils_tests、model_fields 和 forms_tests 测试套件均通过。"
+        },
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30,
+          "body": "用户要求在修复 Django 仓库问题时，禁止联网检索答案。"
+        }
+      ],
+      "distinctSkillLoads": [
+        {
+          "name": "rsi-offline-task-baseline-discipline",
+          "bodyChars": 1414,
+          "bodySha256": "1179f4dc7cb94fb3cb3c00ca21ef785d6b63eb60dc515db3617a265301262d61"
+        },
+        {
+          "name": "rsi-django-offline-bug-repro",
+          "bodyChars": 7127,
+          "bodySha256": "ea839c3170caa54f9635949fdb1939cf00afc5e0f6c36650941c2e3991bfcf91"
+        }
+      ],
+      "repeatedSkillBodyCharsAcrossRequests": 333099,
+      "sourceRequestSha256": "63c385c19b8f01fab04f25345ea9491c671f75eaf83fa197e61bea1e2f52e40f"
+    },
+    {
+      "instanceId": "django__django-11333",
+      "resolved": false,
+      "originalInitialRequests": 40,
+      "protocolDeviation": null,
+      "queryChars": 1608,
+      "fixedHeaderChars": 113,
+      "problemChars": 1493,
+      "fixedHeaderInRecallQuery": true,
+      "first512QueryCharsThatWouldReachNativeLocalEmbedding": "修复以下 Django 仓库问题。工作区为 /workspace，测试环境已离线准备，python 来自官方 testbed 环境。先验证环境，再运行聚焦测试，保留失败原因。禁止联网检索答案。完成后用中文说明修改、测试及局限。\n\nOptimization: Multiple URLResolvers may be unintentionally be constructed by calls to `django.urls.resolvers.get_resolver`\nDescription\n\t\nMultiple URLResolvers may be constructed by django.urls.resolvers.get_resolver if django.urls.base.set_urlconf has not yet been called, resulting in multiple expensive calls to URLResolver._populate.\n​`get_resolver` constructs a new URLResolver, and caches it ",
+      "deliveredMemoryChars": 3380,
+      "memoryRefs": [
+        {
+          "id": "m_1791033643539_059a3402",
+          "type": "instruction",
+          "bodyChars": 53,
+          "body": "用户要求 AI 在处理代码修复任务时，严禁联网检索答案，且完成后必须用中文说明修改内容、测试结果及局限性。"
+        },
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30,
+          "body": "用户要求在修复 Django 仓库问题时，禁止联网检索答案。"
+        },
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214,
+          "body": "用户（开发者）在 2026-10-03 于 /workspace 修复了 Django 仓库中 parse_duration() 无法解析部分负数时长（如 -1:15:30）的 Bug，通过修改 django/utils/dateparse.py 中 standard_duration_re 正则的前瞻匹配部分以支持负号，并验证了 utils_tests、model_fields 和 forms_tests 测试套件均通过。"
+        }
+      ],
+      "distinctSkillLoads": [
+        {
+          "name": "rsi-offline-task-baseline-discipline",
+          "bodyChars": 1414,
+          "bodySha256": "1179f4dc7cb94fb3cb3c00ca21ef785d6b63eb60dc515db3617a265301262d61"
+        },
+        {
+          "name": "rsi-django-offline-bug-repro",
+          "bodyChars": 7127,
+          "bodySha256": "ea839c3170caa54f9635949fdb1939cf00afc5e0f6c36650941c2e3991bfcf91"
+        }
+      ],
+      "repeatedSkillBodyCharsAcrossRequests": 333099,
+      "sourceRequestSha256": "664d560eb949cb72056cdd501984e6eadda8dd7249880525f31d893e3fb20bb1"
+    },
+    {
+      "instanceId": "django__django-11400",
+      "resolved": false,
+      "originalInitialRequests": 40,
+      "protocolDeviation": null,
+      "queryChars": 914,
+      "fixedHeaderChars": 113,
+      "problemChars": 799,
+      "fixedHeaderInRecallQuery": true,
+      "first512QueryCharsThatWouldReachNativeLocalEmbedding": "修复以下 Django 仓库问题。工作区为 /workspace，测试环境已离线准备，python 来自官方 testbed 环境。先验证环境，再运行聚焦测试，保留失败原因。禁止联网检索答案。完成后用中文说明修改、测试及局限。\n\nOrdering problem in admin.RelatedFieldListFilter and admin.RelatedOnlyFieldListFilter\nDescription\n\t\nRelatedFieldListFilter doesn't fall back to the ordering defined in Model._meta.ordering. \nOrdering gets set to an empty tuple in ​https://github.com/django/django/blob/2.2.1/django/contrib/admin/filters.py#L196 and unless ordering is defined on the related model's ModelAdmin class it stays an em",
+      "deliveredMemoryChars": 3380,
+      "memoryRefs": [
+        {
+          "id": "m_1791033643539_059a3402",
+          "type": "instruction",
+          "bodyChars": 53,
+          "body": "用户要求 AI 在处理代码修复任务时，严禁联网检索答案，且完成后必须用中文说明修改内容、测试结果及局限性。"
+        },
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214,
+          "body": "用户（开发者）在 2026-10-03 于 /workspace 修复了 Django 仓库中 parse_duration() 无法解析部分负数时长（如 -1:15:30）的 Bug，通过修改 django/utils/dateparse.py 中 standard_duration_re 正则的前瞻匹配部分以支持负号，并验证了 utils_tests、model_fields 和 forms_tests 测试套件均通过。"
+        },
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30,
+          "body": "用户要求在修复 Django 仓库问题时，禁止联网检索答案。"
+        }
+      ],
+      "distinctSkillLoads": [
+        {
+          "name": "rsi-offline-task-baseline-discipline",
+          "bodyChars": 1414,
+          "bodySha256": "1179f4dc7cb94fb3cb3c00ca21ef785d6b63eb60dc515db3617a265301262d61"
+        },
+        {
+          "name": "rsi-django-offline-bug-repro",
+          "bodyChars": 7127,
+          "bodySha256": "ea839c3170caa54f9635949fdb1939cf00afc5e0f6c36650941c2e3991bfcf91"
+        }
+      ],
+      "repeatedSkillBodyCharsAcrossRequests": 333099,
+      "sourceRequestSha256": "a2785fae31aebb21a1eabb05b3824e37e9b11e7fb7651ee50fe78b7e381bbd8a"
+    },
+    {
+      "instanceId": "django__django-11433",
+      "resolved": false,
+      "originalInitialRequests": 40,
+      "protocolDeviation": null,
+      "queryChars": 701,
+      "fixedHeaderChars": 113,
+      "problemChars": 586,
+      "fixedHeaderInRecallQuery": true,
+      "first512QueryCharsThatWouldReachNativeLocalEmbedding": "修复以下 Django 仓库问题。工作区为 /workspace，测试环境已离线准备，python 来自官方 testbed 环境。先验证环境，再运行聚焦测试，保留失败原因。禁止联网检索答案。完成后用中文说明修改、测试及局限。\n\nAllow `cleaned_data` to overwrite fields' default values.\nDescription\n\t\nSee comments here: ​https://github.com/django/django/pull/7068/files#r289432409\nCurrently, when submitting a form, if 'some_field' isn't in the data payload (e.g. it wasn't included in the form, perhaps because its value is derived from another field), and 'some_field' has a default value on the model, it cannot be overwrit",
+      "deliveredMemoryChars": 3380,
+      "memoryRefs": [
+        {
+          "id": "m_1791033643539_059a3402",
+          "type": "instruction",
+          "bodyChars": 53,
+          "body": "用户要求 AI 在处理代码修复任务时，严禁联网检索答案，且完成后必须用中文说明修改内容、测试结果及局限性。"
+        },
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214,
+          "body": "用户（开发者）在 2026-10-03 于 /workspace 修复了 Django 仓库中 parse_duration() 无法解析部分负数时长（如 -1:15:30）的 Bug，通过修改 django/utils/dateparse.py 中 standard_duration_re 正则的前瞻匹配部分以支持负号，并验证了 utils_tests、model_fields 和 forms_tests 测试套件均通过。"
+        },
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30,
+          "body": "用户要求在修复 Django 仓库问题时，禁止联网检索答案。"
+        }
+      ],
+      "distinctSkillLoads": [
+        {
+          "name": "rsi-offline-task-baseline-discipline",
+          "bodyChars": 1414,
+          "bodySha256": "1179f4dc7cb94fb3cb3c00ca21ef785d6b63eb60dc515db3617a265301262d61"
+        },
+        {
+          "name": "rsi-django-offline-bug-repro",
+          "bodyChars": 7127,
+          "bodySha256": "ea839c3170caa54f9635949fdb1939cf00afc5e0f6c36650941c2e3991bfcf91"
+        }
+      ],
+      "repeatedSkillBodyCharsAcrossRequests": 333099,
+      "sourceRequestSha256": "b6688c6bb2457275b06b1b65987a7954bca12dcd8ee36b86457ab01c1c2eb6fe"
+    },
+    {
+      "instanceId": "django__django-11451",
+      "resolved": true,
+      "originalInitialRequests": 18,
+      "protocolDeviation": null,
+      "queryChars": 2182,
+      "fixedHeaderChars": 113,
+      "problemChars": 2067,
+      "fixedHeaderInRecallQuery": true,
+      "first512QueryCharsThatWouldReachNativeLocalEmbedding": "修复以下 Django 仓库问题。工作区为 /workspace，测试环境已离线准备，python 来自官方 testbed 环境。先验证环境，再运行聚焦测试，保留失败原因。禁止联网检索答案。完成后用中文说明修改、测试及局限。\n\nModelBackend.authenticate() shouldn't make a database query when username is None\nDescription\n\t\nIt's easier to explain my issue by adding a comment in the current implementation of ModelBackend.authenticate():\n\tdef authenticate(self, request, username=None, password=None, **kwargs):\n\t\tif username is None:\n\t\t\tusername = kwargs.get(UserModel.USERNAME_FIELD)\n\t\t# At this point, username and passwor",
+      "deliveredMemoryChars": 3380,
+      "memoryRefs": [
+        {
+          "id": "m_1791033643539_059a3402",
+          "type": "instruction",
+          "bodyChars": 53,
+          "body": "用户要求 AI 在处理代码修复任务时，严禁联网检索答案，且完成后必须用中文说明修改内容、测试结果及局限性。"
+        },
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214,
+          "body": "用户（开发者）在 2026-10-03 于 /workspace 修复了 Django 仓库中 parse_duration() 无法解析部分负数时长（如 -1:15:30）的 Bug，通过修改 django/utils/dateparse.py 中 standard_duration_re 正则的前瞻匹配部分以支持负号，并验证了 utils_tests、model_fields 和 forms_tests 测试套件均通过。"
+        },
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30,
+          "body": "用户要求在修复 Django 仓库问题时，禁止联网检索答案。"
+        }
+      ],
+      "distinctSkillLoads": [
+        {
+          "name": "rsi-django-offline-bug-repro",
+          "bodyChars": 7127,
+          "bodySha256": "ea839c3170caa54f9635949fdb1939cf00afc5e0f6c36650941c2e3991bfcf91"
+        },
+        {
+          "name": "rsi-offline-task-baseline-discipline",
+          "bodyChars": 1414,
+          "bodySha256": "1179f4dc7cb94fb3cb3c00ca21ef785d6b63eb60dc515db3617a265301262d61"
+        }
+      ],
+      "repeatedSkillBodyCharsAcrossRequests": 145197,
+      "sourceRequestSha256": "e0622683cd14b7b5ef1254a82a77a6028fe704e07868d2d2ad1638373bc5cfe3"
+    }
+  ],
+  "skillBodies": {
+    "rsi-django-offline-bug-repro": [
+      {
+        "bodyChars": 7127,
+        "firstObservedTask": "django__django-11451"
+      }
+    ],
+    "rsi-offline-task-baseline-discipline": [
+      {
+        "bodyChars": 1414,
+        "firstObservedTask": "django__django-11451"
+      }
+    ]
+  },
+  "summary": {
+    "tasks": 20,
+    "fixedHeaderInRecallQuery": 20,
+    "memoryOccurrenceAcrossTasks": {
+      "m_1791033643539_059a3402": 20,
+      "m_1791033643538_5df97d4e": 20,
+      "m_1791033046044_db6343b0": 20
+    },
+    "skillBodyChars": {
+      "rsi-django-offline-bug-repro": [
+        7127
+      ],
+      "rsi-offline-task-baseline-discipline": [
+        1414
+      ]
+    },
+    "taskQueryCharsMedian": 1042.0
+  },
+  "inputSha256": {
+    "heldOut-django__django-11066-rsi-0/state/pilot/django__django-11066/model-requests.json": "84d613c3608f24e22eadcce2f9f0dcd0666aefa66850ce1330b86cbcdc3c7344",
+    "heldOut-django__django-11087-rsi-0/state/pilot/django__django-11087/model-requests.json": "0673b92af11b46e23000c6c4b3403f743100ce52552f60e6ce580b0c3441be6f",
+    "heldOut-django__django-11095-rsi-0/state/pilot/django__django-11095/model-requests.json": "d5ba2b12c24f542e7cef7198baab27e3272c67f2bd2fea5b3612626120cdb391",
+    "heldOut-django__django-11099-rsi-0/state/pilot/django__django-11099/model-requests.json": "2bdc33c7e8018233539c03ef1d0f11b570e88c3b4c011ae8ddadea991b307b79",
+    "heldOut-django__django-11119-rsi-0/state/pilot/django__django-11119/model-requests.json": "0e0cbe8c219fa06fc4c2cd6ba7c5af4919df253cf3f97a87f48d8fe44f5c9737",
+    "heldOut-django__django-11133-rsi-0/state/pilot/django__django-11133/model-requests.json": "43b79f04acb2e852b67fe0eb8f07868b21f3302d7de256cf4adc77fc05057794",
+    "heldOut-django__django-11138-rsi-0/state/pilot/django__django-11138/model-requests.json": "22a56e8994ac5ed9f4ebfe1837a62e926b1d382ab2e1698a1a0ab197091851fb",
+    "heldOut-django__django-11149-rsi-0/state/pilot/django__django-11149/model-requests.json": "a09c563775197228960d567803c74d665b73f1961146899e04b3aab7bdf0523a",
+    "heldOut-django__django-11163-rsi-0/state/pilot/django__django-11163/model-requests.json": "8850a098417f4f56401f043aa127fbae0b46beac6bc71f186b4fe16190c98760",
+    "heldOut-django__django-11179-rsi-0/state/pilot/django__django-11179/model-requests.json": "c0f46b132f326d432ff83e69c36872dda89149e00445a38d55b5f9625935ae44",
+    "heldOut-django__django-11206-rsi-0/state/pilot/django__django-11206/model-requests.json": "d02f0d6ad64cd53ce9c077937956f484ea6bcb3d1d36b730892d8e0c6a4cece1",
+    "heldOut-django__django-11211-rsi-0/state/pilot/django__django-11211/model-requests.json": "7f680a1db5d0aae7a152edcc02c7294539c462ce19412462d46936182f3be36e",
+    "heldOut-django__django-11239-rsi-0/state/pilot/django__django-11239/model-requests.json": "61950955ea18e0ab8166f8162b560679e27400f9e2a46115e942800c873aaeae",
+    "heldOut-django__django-11265-rsi-0/state/pilot/django__django-11265/model-requests.json": "b2fc2b289641affb2ebc3523cc8ef9679f2880fe570b999da3bd2e61cda88025",
+    "heldOut-django__django-11276-rsi-0/state/pilot/django__django-11276/model-requests.json": "0d8fc0edf654b732358e193f456745b37ee602f0047d44cb934ccb53886823a9",
+    "heldOut-django__django-11299-rsi-0/state/pilot/django__django-11299/model-requests.json": "63c385c19b8f01fab04f25345ea9491c671f75eaf83fa197e61bea1e2f52e40f",
+    "heldOut-django__django-11333-rsi-0/state/pilot/django__django-11333/model-requests.json": "664d560eb949cb72056cdd501984e6eadda8dd7249880525f31d893e3fb20bb1",
+    "heldOut-django__django-11400-rsi-0/state/pilot/django__django-11400/model-requests.json": "a2785fae31aebb21a1eabb05b3824e37e9b11e7fb7651ee50fe78b7e381bbd8a",
+    "heldOut-django__django-11433-rsi-0/state/pilot/django__django-11433/model-requests.json": "b6688c6bb2457275b06b1b65987a7954bca12dcd8ee36b86457ab01c1c2eb6fe",
+    "heldOut-django__django-11451-rsi-0/state/pilot/django__django-11451/model-requests.json": "e0622683cd14b7b5ef1254a82a77a6028fe704e07868d2d2ad1638373bc5cfe3"
+  },
+  "realModelCalls": 0,
+  "limitations": [
+    "Old20 is development evidence and cannot become a new blind evaluation.",
+    "Body delivery does not prove decision influence.",
+    "Character totals are not token estimates.",
+    "Relevance and success-evidence support require trace review.",
+    "Local 512-character query projection is diagnostic only; the old implementation had no embedding service."
+  ]
+}

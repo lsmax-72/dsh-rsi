@@ -227,13 +227,13 @@ export class Runtime {
     for (const session of new Set(jobs.map(job => job.session))) await this.pipelines.get(entry.id).flushSession(session);
     return this.snapshot(cwd);
   }
-  async recall(cwd:string,query:string) {
+  async recall(cwd:string,query:string,origin:any={}) {
     const entry=await this.scope(cwd),settings=this.state.settings();
     if (!settings.enabled) return {text:'',refs:[]};
     const recalled:any[]=[];
     // Native L1 budgeting leaves room for stable profiles, scope labels and tool guidance.
     for (const scope of [entry.id,'global']) {
-      const core=await this.core(scope),result=await this.within(scope,()=>core.recall(query,Math.max(1,Math.floor(settings.recallMaxChars/4))));
+      const core=await this.core(scope),result=await this.within(scope,()=>core.recall(query,Math.max(1,Math.floor(settings.recallMaxChars/4))),origin);
       if(result)recalled.push({scope,core,result});
     }
     if(!recalled.length)return {text:'',refs:[]};
@@ -253,7 +253,9 @@ export class Runtime {
       }
     }
     if(parts.length && guideText)parts.push(guideText);
-    return {text:parts.join('\n'),refs};
+    const delivered=parts.join('\n');
+    await this.within(entry.id,async()=>diagnosticEvent('INFO','rsi.recall.delivery',{query,query_message_ids:origin.queryMessageIds ?? [],delivered_chars:delivered.length,refs}),origin);
+    return {text:delivered,refs};
   }
   async readProfile(cwd:string,path:string) {
     if(typeof path!=='string')throw new Error('场景路径无效');

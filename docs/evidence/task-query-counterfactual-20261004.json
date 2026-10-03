@@ -1,0 +1,607 @@
+{
+  "status": "DEVELOPMENT_COUNTERFACTUAL_ONLY",
+  "checkedAt": "2026-10-03T23:06:41.275Z",
+  "method": "Unchanged native keyword recall on a copied old frozen store. No model, scoring, edits to original assets, or effect claim.",
+  "sourceMemorySha256": "715872f636efab58cc4968c45b33d9c587dcc61838597b5d92212b6cb7965416",
+  "rows": [
+    {
+      "instanceId": "django__django-11066",
+      "mixedQuery": [
+        {
+          "id": "m_1791033643539_059a3402",
+          "type": "instruction",
+          "bodyChars": 53
+        },
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214
+        },
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30
+        }
+      ],
+      "taskOnlyQuery": [
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214
+        }
+      ],
+      "mixedQueryChars": 1982,
+      "taskOnlyQueryChars": 1867
+    },
+    {
+      "instanceId": "django__django-11087",
+      "mixedQuery": [
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214
+        },
+        {
+          "id": "m_1791033643539_059a3402",
+          "type": "instruction",
+          "bodyChars": 53
+        },
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30
+        }
+      ],
+      "taskOnlyQuery": [
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214
+        }
+      ],
+      "mixedQueryChars": 9367,
+      "taskOnlyQueryChars": 9252
+    },
+    {
+      "instanceId": "django__django-11095",
+      "mixedQuery": [
+        {
+          "id": "m_1791033643539_059a3402",
+          "type": "instruction",
+          "bodyChars": 53
+        },
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30
+        },
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214
+        }
+      ],
+      "taskOnlyQuery": [
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214
+        }
+      ],
+      "mixedQueryChars": 496,
+      "taskOnlyQueryChars": 381
+    },
+    {
+      "instanceId": "django__django-11099",
+      "mixedQuery": [
+        {
+          "id": "m_1791033643539_059a3402",
+          "type": "instruction",
+          "bodyChars": 53
+        },
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30
+        },
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214
+        }
+      ],
+      "taskOnlyQuery": [],
+      "mixedQueryChars": 879,
+      "taskOnlyQueryChars": 764
+    },
+    {
+      "instanceId": "django__django-11119",
+      "mixedQuery": [
+        {
+          "id": "m_1791033643539_059a3402",
+          "type": "instruction",
+          "bodyChars": 53
+        },
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30
+        },
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214
+        }
+      ],
+      "taskOnlyQuery": [],
+      "mixedQueryChars": 484,
+      "taskOnlyQueryChars": 369
+    },
+    {
+      "instanceId": "django__django-11133",
+      "mixedQuery": [
+        {
+          "id": "m_1791033643539_059a3402",
+          "type": "instruction",
+          "bodyChars": 53
+        },
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30
+        },
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214
+        }
+      ],
+      "taskOnlyQuery": [
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30
+        },
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214
+        }
+      ],
+      "mixedQueryChars": 1010,
+      "taskOnlyQueryChars": 895
+    },
+    {
+      "instanceId": "django__django-11138",
+      "mixedQuery": [
+        {
+          "id": "m_1791033643539_059a3402",
+          "type": "instruction",
+          "bodyChars": 53
+        },
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214
+        },
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30
+        }
+      ],
+      "taskOnlyQuery": [
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214
+        }
+      ],
+      "mixedQueryChars": 3250,
+      "taskOnlyQueryChars": 3135
+    },
+    {
+      "instanceId": "django__django-11149",
+      "mixedQuery": [
+        {
+          "id": "m_1791033643539_059a3402",
+          "type": "instruction",
+          "bodyChars": 53
+        },
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214
+        },
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30
+        }
+      ],
+      "taskOnlyQuery": [
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214
+        }
+      ],
+      "mixedQueryChars": 898,
+      "taskOnlyQueryChars": 783
+    },
+    {
+      "instanceId": "django__django-11163",
+      "mixedQuery": [
+        {
+          "id": "m_1791033643539_059a3402",
+          "type": "instruction",
+          "bodyChars": 53
+        },
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214
+        },
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30
+        }
+      ],
+      "taskOnlyQuery": [
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214
+        }
+      ],
+      "mixedQueryChars": 523,
+      "taskOnlyQueryChars": 408
+    },
+    {
+      "instanceId": "django__django-11179",
+      "mixedQuery": [
+        {
+          "id": "m_1791033643539_059a3402",
+          "type": "instruction",
+          "bodyChars": 53
+        },
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30
+        },
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214
+        }
+      ],
+      "taskOnlyQuery": [
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214
+        },
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30
+        }
+      ],
+      "mixedQueryChars": 398,
+      "taskOnlyQueryChars": 283
+    },
+    {
+      "instanceId": "django__django-11206",
+      "mixedQuery": [
+        {
+          "id": "m_1791033643539_059a3402",
+          "type": "instruction",
+          "bodyChars": 53
+        },
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30
+        },
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214
+        }
+      ],
+      "taskOnlyQuery": [
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214
+        }
+      ],
+      "mixedQueryChars": 813,
+      "taskOnlyQueryChars": 698
+    },
+    {
+      "instanceId": "django__django-11211",
+      "mixedQuery": [
+        {
+          "id": "m_1791033643539_059a3402",
+          "type": "instruction",
+          "bodyChars": 53
+        },
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214
+        },
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30
+        }
+      ],
+      "taskOnlyQuery": [
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214
+        }
+      ],
+      "mixedQueryChars": 1074,
+      "taskOnlyQueryChars": 959
+    },
+    {
+      "instanceId": "django__django-11239",
+      "mixedQuery": [
+        {
+          "id": "m_1791033643539_059a3402",
+          "type": "instruction",
+          "bodyChars": 53
+        },
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30
+        },
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214
+        }
+      ],
+      "taskOnlyQuery": [
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214
+        },
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30
+        }
+      ],
+      "mixedQueryChars": 1171,
+      "taskOnlyQueryChars": 1056
+    },
+    {
+      "instanceId": "django__django-11265",
+      "mixedQuery": [
+        {
+          "id": "m_1791033643539_059a3402",
+          "type": "instruction",
+          "bodyChars": 53
+        },
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214
+        },
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30
+        }
+      ],
+      "taskOnlyQuery": [
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214
+        }
+      ],
+      "mixedQueryChars": 3925,
+      "taskOnlyQueryChars": 3810
+    },
+    {
+      "instanceId": "django__django-11276",
+      "mixedQuery": [
+        {
+          "id": "m_1791033643539_059a3402",
+          "type": "instruction",
+          "bodyChars": 53
+        },
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214
+        },
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30
+        }
+      ],
+      "taskOnlyQuery": [
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214
+        }
+      ],
+      "mixedQueryChars": 1235,
+      "taskOnlyQueryChars": 1120
+    },
+    {
+      "instanceId": "django__django-11299",
+      "mixedQuery": [
+        {
+          "id": "m_1791033643539_059a3402",
+          "type": "instruction",
+          "bodyChars": 53
+        },
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214
+        },
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30
+        }
+      ],
+      "taskOnlyQuery": [
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214
+        }
+      ],
+      "mixedQueryChars": 3155,
+      "taskOnlyQueryChars": 3040
+    },
+    {
+      "instanceId": "django__django-11333",
+      "mixedQuery": [
+        {
+          "id": "m_1791033643539_059a3402",
+          "type": "instruction",
+          "bodyChars": 53
+        },
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30
+        },
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214
+        }
+      ],
+      "taskOnlyQuery": [
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30
+        },
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214
+        }
+      ],
+      "mixedQueryChars": 1608,
+      "taskOnlyQueryChars": 1493
+    },
+    {
+      "instanceId": "django__django-11400",
+      "mixedQuery": [
+        {
+          "id": "m_1791033643539_059a3402",
+          "type": "instruction",
+          "bodyChars": 53
+        },
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214
+        },
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30
+        }
+      ],
+      "taskOnlyQuery": [
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214
+        }
+      ],
+      "mixedQueryChars": 914,
+      "taskOnlyQueryChars": 799
+    },
+    {
+      "instanceId": "django__django-11433",
+      "mixedQuery": [
+        {
+          "id": "m_1791033643539_059a3402",
+          "type": "instruction",
+          "bodyChars": 53
+        },
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214
+        },
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30
+        }
+      ],
+      "taskOnlyQuery": [
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214
+        }
+      ],
+      "mixedQueryChars": 701,
+      "taskOnlyQueryChars": 586
+    },
+    {
+      "instanceId": "django__django-11451",
+      "mixedQuery": [
+        {
+          "id": "m_1791033643539_059a3402",
+          "type": "instruction",
+          "bodyChars": 53
+        },
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214
+        },
+        {
+          "id": "m_1791033046044_db6343b0",
+          "type": "instruction",
+          "bodyChars": 30
+        }
+      ],
+      "taskOnlyQuery": [
+        {
+          "id": "m_1791033643538_5df97d4e",
+          "type": "episodic",
+          "bodyChars": 214
+        }
+      ],
+      "mixedQueryChars": 2182,
+      "taskOnlyQueryChars": 2067
+    }
+  ],
+  "summary": {
+    "mixedTotalHits": 60,
+    "taskOnlyTotalHits": 22,
+    "changedTasks": 20
+  },
+  "limitations": [
+    "Keyword-only isolates the query defect in the old implementation; this does not validate restored vector quality.",
+    "Fewer recalled items do not automatically mean higher relevance.",
+    "Production task boundaries must come from durable host message metadata, never a benchmark-specific text regex."
+  ],
+  "realModelRequests": 0
+}

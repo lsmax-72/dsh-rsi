@@ -5,6 +5,7 @@ import {execFileSync} from 'node:child_process';
 import {LlmAdapter, createUserMessage} from '@deepseek-ai/dsh-llm';
 import {auditRequests} from './audit-session-requests.mjs';
 import {Session} from '@deepseek-ai/dsh-session';
+import {taskProtocol} from './task-input.mjs';
 
 export const name = 'rsi-pilot-task';
 export const inject = ['llm', 'agents', 'sessions', 'sessionPersistence', 'skills', 'tools'];
@@ -137,8 +138,7 @@ export function apply(ctx, config) {
           skillCandidates:await ctx.skills.list({cwd:'/workspace'})});
         const task = JSON.parse(await readFile('/opt/rsi/task.json','utf8'));
         if (!config.fixture && config.instanceId !== 'preflight') assert.equal(task.instance_id,config.instanceId,'Task image/public ID mismatch');
-        const defaultPrompt = `修复以下 Django 仓库问题。工作区为 /workspace，测试环境已离线准备，python 来自官方 testbed 环境。先验证环境，再运行聚焦测试，保留失败原因。禁止联网检索答案。完成后用中文说明修改、测试及局限。\n\n${task.problem_statement}`;
-        const phases = config.phases ?? [{name:'task', prompt:defaultPrompt}];
+        const phases = config.phases ?? [{name:'task',prompt:task.problem_statement,protocol:taskProtocol}];
         for (const phase of phases) {
           assert.match(phase.name,/^[a-zA-Z0-9_-]+$/);
           currentPhase = phase.name; phaseCalls = 0; phaseLimit = phase.dispatchLimit ?? dispatchLimit;
@@ -148,6 +148,7 @@ export function apply(ctx, config) {
           const handle = await ctx.agents.create({sessionId:id, meta:{cwd:'/workspace'},
             agentOptions:{provider:config.fixture?'pilot-fixture':'qwen', model:config.fixture?'fixture':'qwen3.8-27b', maxTokens:8192}});
           deadline = setTimeout(()=>handle.agent.cancel({kind:'hook',reason:'Pilot wall time limit reached'}),wallTimeMs);
+          if(phase.protocol)handle.agent.inject(createUserMessage({source:{kind:'benchmark-protocol',form:'instructions'},content:[{type:'text',text:phase.protocol}]}));
           handle.agent.followup(createUserMessage({source:{kind:'user'},content:[{type:'text',text:phase.prompt}]}));
           await handle.agent.whenIdle(); await ctx.sessions.flush(handle.agent.session); clearTimeout(deadline); patch();
           durable(dir + '/prediction-' + phase.name + '.patch',git('diff','--cached','--binary','HEAD'));

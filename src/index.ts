@@ -35,8 +35,10 @@ export function apply(ctx:any,config:any={}) {
     await ready; signal.throwIfAborted();
     const cwd=agent.session.header.cwd;
     runtime.state.set('lastCwd',cwd);
-    const query=messages.filter((m:any) => m.source?.kind === 'user').map((m:any) => m.content.filter((b:any) => b.type==='text').map((b:any) => b.text).join('\n')).join('\n');
-    const recalled=await runtime.recall(cwd,query);signal.throwIfAborted();
+    // Retrieve for the latest human input; producer context stays in the durable request.
+    const current=messages.findLast((m:any) => m.source?.kind === 'user');
+    const query=(current?.content ?? []).filter((b:any) => b.type==='text').map((b:any) => b.text).join('\n');
+    const recalled=await runtime.recall(cwd,query,{sessionId:agent.session.id,queryMessageIds:current?[current.id]:[]});signal.throwIfAborted();
     if (!recalled.text) return decision;
     // The host persists these native messages before dispatch, making every injection replayable.
     return {...decision,messages:[...decision.messages,createUserMessage({content:[{type:'text',text:recalled.text}],source:{kind:'dsh-rsi',form:'memory',refs:recalled.refs}})]};
