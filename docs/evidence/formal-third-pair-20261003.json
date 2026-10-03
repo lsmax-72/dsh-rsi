@@ -1,0 +1,592 @@
+{
+  "status": "GRADED_PAIR_OFFLINE_AUDIT",
+  "records": [
+    {
+      "stage": "heldOut",
+      "instanceId": "django__django-11095",
+      "arm": "baseline",
+      "attempt": 0,
+      "resolved": false,
+      "usage": {
+        "foreground": {
+          "requests": 40,
+          "unknownUsage": 0,
+          "inputTokens": 511328,
+          "outputTokens": 5440,
+          "totalTokens": 516768
+        },
+        "learning": {
+          "requests": 0,
+          "unknownUsage": 0,
+          "inputTokens": 0,
+          "outputTokens": 0,
+          "totalTokens": 0
+        }
+      },
+      "reconstructedRequests": 40,
+      "baselineIsolation": "PASS",
+      "beforeLayers": null,
+      "afterLayers": null,
+      "beforeMemory": 0,
+      "afterMemory": 0,
+      "beforeSkills": 0,
+      "afterSkills": 0,
+      "memoryDelivered": false,
+      "skillBodyDelivered": false,
+      "memory": [],
+      "skills": [],
+      "jobs": [],
+      "phases": [
+        {
+          "phase": "task",
+          "sessionId": "pilot-django__django-11095-task",
+          "stopReason": {
+            "kind": "error",
+            "error": {
+              "message": "Pilot foreground dispatch limit reached",
+              "code": "UNKNOWN"
+            }
+          },
+          "startedAt": 1791039238090,
+          "finishedAt": 1791039424077,
+          "wallMs": 185987,
+          "requests": 40
+        }
+      ],
+      "inputsNamedGeneratedSkill": false,
+      "evidenceSha256": {
+        "model-requests.json": "699b708310e6f1e03884c01e39f6ee30a57778e3cbe1538cf7333fe28cdb9ceb",
+        "receipt.json": "1a0d4133e460baff0ad54e512d8e801c77fd375c1570a55f9b60545eee9baa05",
+        "initial.json": "28abeb5959bca8fd4b77433ac4fc421218697243fc2842b1d42b7133166a3f67",
+        "reconstruction.json": "a3d36b342c65bf759856995a84433915a11daa1d8d867fc96080c9811cae1996",
+        "tool-results.json": "32577ba6ea5351223b7206284261f047ab1d36056d76465827cd76aa740d7581"
+      }
+    },
+    {
+      "stage": "heldOut",
+      "instanceId": "django__django-11095",
+      "arm": "rsi",
+      "attempt": 0,
+      "resolved": true,
+      "usage": {
+        "foreground": {
+          "requests": 40,
+          "unknownUsage": 0,
+          "inputTokens": 509835,
+          "outputTokens": 3846,
+          "totalTokens": 513681
+        },
+        "learning": {
+          "requests": 9,
+          "unknownUsage": 0,
+          "inputTokens": 86008,
+          "outputTokens": 4818,
+          "totalTokens": 90826
+        }
+      },
+      "reconstructedRequests": 49,
+      "baselineIsolation": null,
+      "beforeLayers": {
+        "c52ddf65534b7b4603508435": {
+          "L0": 127,
+          "L1": 3,
+          "L2": 1,
+          "L3": 1
+        },
+        "global": {
+          "L0": 0,
+          "L1": 0,
+          "L2": 0,
+          "L3": 0
+        }
+      },
+      "afterLayers": {
+        "c52ddf65534b7b4603508435": {
+          "L0": 168,
+          "L1": 5,
+          "L2": 1,
+          "L3": 1
+        },
+        "global": {
+          "L0": 0,
+          "L1": 0,
+          "L2": 0,
+          "L3": 0
+        }
+      },
+      "beforeMemory": 3,
+      "afterMemory": 5,
+      "beforeSkills": 5,
+      "afterSkills": 5,
+      "memoryDelivered": true,
+      "skillBodyDelivered": true,
+      "memory": [
+        {
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791033046044_db6343b0",
+          "version": 0,
+          "bodySha256": "bb611405d725809182b1c586a4c037252aed74ca1a70f2548265d13673ae8960",
+          "foregroundRequestOrdinals": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40
+          ]
+        },
+        {
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791033643538_5df97d4e",
+          "version": 0,
+          "bodySha256": "a43577949ce9163675f2a56ebba66c2895fa128dc011c5f21e676be74a4e25f5",
+          "foregroundRequestOrdinals": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40
+          ]
+        },
+        {
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791033643539_059a3402",
+          "version": 0,
+          "bodySha256": "a3ebd46a44448f5f00fc13ea88571436ea31261e496314d4670aaf349eff03ca",
+          "foregroundRequestOrdinals": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "skl-KJEv4VAr8mZJ",
+          "version": 1,
+          "name": "rsi-django-parse-duration-negative",
+          "sourceTaskId": "pilot-django__django-10999-task:1",
+          "bodySha256": "c261095b1309b9878ca59dc71b5771ca2fe33d7be3ac4bd6e9006a547df430fc",
+          "callIds": [],
+          "foregroundRequestOrdinals": []
+        },
+        {
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "skl-EuO0mMXi5MuU",
+          "version": 5,
+          "name": "rsi-django-offline-bug-repro",
+          "sourceTaskId": "pilot-django__django-10999-task:1",
+          "bodySha256": "c552b8d2543300a1aef6a4a8432693580ca5b8fe4b22fb8d74012948e331760d",
+          "callIds": [],
+          "foregroundRequestOrdinals": []
+        },
+        {
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "skl-Q21zyVyQe9At",
+          "version": 1,
+          "name": "rsi-django-aggregate-filter-distinct-sql",
+          "sourceTaskId": "pilot-django__django-10880-task:1",
+          "bodySha256": "cb955be2d6dbb1752285fe7159e7f2c7a74852c9121dcb1e73c2e02844126c0a",
+          "callIds": [],
+          "foregroundRequestOrdinals": []
+        },
+        {
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "skl-L2KYzIgzaGvd",
+          "version": 1,
+          "name": "rsi-offline-task-baseline-discipline",
+          "sourceTaskId": "pilot-django__django-10554-task:1",
+          "bodySha256": "0062c048bf0af8cc7037e1e366ebff8d40aeeebc0bf90b420f38a90ba61fd9fb",
+          "callIds": [
+            "call_b4643441d3f84778907a4db3"
+          ],
+          "foregroundRequestOrdinals": [
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40
+          ]
+        },
+        {
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "skl-ssNSKqYqGPKS",
+          "version": 1,
+          "name": "rsi-django-combinator-ordering-bug",
+          "sourceTaskId": "pilot-django__django-10554-task:1",
+          "bodySha256": "5a300f8fdfdca6fde7344ede1b3bf060b20784763689eeda58e3720ff6934c98",
+          "callIds": [],
+          "foregroundRequestOrdinals": []
+        }
+      ],
+      "jobs": [
+        {
+          "id": "pilot-django__django-10554-task:1",
+          "scope": "c52ddf65534b7b4603508435",
+          "session": "pilot-django__django-10554-task",
+          "turn": 1,
+          "status": "completed",
+          "stages": {
+            "recorded": true,
+            "memory": {
+              "stored": 0
+            },
+            "skills": {
+              "candidates": [
+                {
+                  "action": "create",
+                  "name": "django-offline-bug-repro",
+                  "skill_id": "skl-EuO0mMXi5MuU",
+                  "version": 1,
+                  "description": "在离线 Django testbed 中验证环境、用 tests/ 目录模型快速复现 queryset/SQL 相关 bug 的最小脚本模板。"
+                },
+                {
+                  "action": "create",
+                  "name": "django-combinator-ordering-bug",
+                  "skill_id": "skl-ssNSKqYqGPKS",
+                  "version": 1,
+                  "description": "排查 Django queryset 组合查询（union/intersection/difference）与 order_by/values 交互导致 SQL \"ORDER BY position N is not in select list\" 类问题的定位路径。"
+                },
+                {
+                  "action": "create",
+                  "name": "offline-task-baseline-discipline",
+                  "skill_id": "skl-L2KYzIgzaGvd",
+                  "version": 1,
+                  "description": "在离线 testbed 中执行\"修复仓库问题\"类任务时的基线纪律：环境验证、聚焦测试、失败原因保留、中文交付。"
+                }
+              ]
+            }
+          },
+          "error": null,
+          "created": 1791030502993,
+          "updated": 1791030666413,
+          "sourceSessionId": "pilot-django__django-10554-task",
+          "reason": {
+            "kind": "error",
+            "error": {
+              "message": "Pilot foreground dispatch limit reached",
+              "code": "UNKNOWN"
+            }
+          }
+        },
+        {
+          "id": "pilot-django__django-10880-task:1",
+          "scope": "c52ddf65534b7b4603508435",
+          "session": "pilot-django__django-10880-task",
+          "turn": 1,
+          "status": "completed",
+          "stages": {
+            "recorded": true,
+            "memory": {
+              "stored": 0
+            },
+            "skills": {
+              "candidates": [
+                {
+                  "action": "patch",
+                  "name": "django-offline-bug-repro",
+                  "skill_id": "skl-EuO0mMXi5MuU",
+                  "version": 2
+                },
+                {
+                  "action": "create",
+                  "name": "django-aggregate-filter-distinct-sql",
+                  "skill_id": "skl-Q21zyVyQe9At",
+                  "version": 1,
+                  "description": "排查 Django 聚合注解（Count/Sum 等）同时使用 distinct=True 与 filter 参数时，在不支持 FILTER 子句的后端（如 SQLite）生成非法 SQL \"COUNT(DISTINCTCASE WHEN ...)\" 的定位与最小修复路径。"
+                }
+              ]
+            }
+          },
+          "error": null,
+          "created": 1791031196470,
+          "updated": 1791031322629,
+          "sourceSessionId": "pilot-django__django-10880-task",
+          "reason": {
+            "kind": "completed"
+          }
+        },
+        {
+          "id": "pilot-django__django-10914-task:1",
+          "scope": "c52ddf65534b7b4603508435",
+          "session": "pilot-django__django-10914-task",
+          "turn": 1,
+          "status": "completed",
+          "stages": {
+            "recorded": true,
+            "memory": {
+              "stored": 1
+            },
+            "skills": {
+              "candidates": [
+                {
+                  "action": "update",
+                  "name": "django-offline-bug-repro",
+                  "skill_id": "skl-EuO0mMXi5MuU",
+                  "version": 3
+                }
+              ]
+            }
+          },
+          "error": null,
+          "created": 1791032998524,
+          "updated": 1791033134801,
+          "sourceSessionId": "pilot-django__django-10914-task",
+          "reason": {
+            "kind": "error",
+            "error": {
+              "message": "Pilot foreground dispatch limit reached",
+              "code": "UNKNOWN"
+            }
+          }
+        },
+        {
+          "id": "pilot-django__django-10999-task:1",
+          "scope": "c52ddf65534b7b4603508435",
+          "session": "pilot-django__django-10999-task",
+          "turn": 1,
+          "status": "completed",
+          "stages": {
+            "recorded": true,
+            "memory": {
+              "stored": 2
+            },
+            "skills": {
+              "candidates": [
+                {
+                  "action": "patch",
+                  "name": "django-offline-bug-repro",
+                  "skill_id": "skl-EuO0mMXi5MuU",
+                  "version": 4
+                },
+                {
+                  "action": "patch",
+                  "name": "django-offline-bug-repro",
+                  "skill_id": "skl-EuO0mMXi5MuU",
+                  "version": 5
+                },
+                {
+                  "action": "create",
+                  "name": "django-parse-duration-negative",
+                  "skill_id": "skl-KJEv4VAr8mZJ",
+                  "version": 1,
+                  "description": "排查 Django parse_duration() 的 standard_duration_re 前瞻 (?=\\d+:\\d+) 不允负号，导致含小时分量的负时长（如 -1:15:30）被错误退化为负 minutes 的定位与最小修复路径。"
+                }
+              ]
+            }
+          },
+          "error": null,
+          "created": 1791033610296,
+          "updated": 1791033733974,
+          "sourceSessionId": "pilot-django__django-10999-task",
+          "reason": {
+            "kind": "completed"
+          }
+        },
+        {
+          "id": "pilot-django__django-11095-task:1",
+          "scope": "c52ddf65534b7b4603508435",
+          "session": "pilot-django__django-11095-task",
+          "turn": 1,
+          "status": "completed",
+          "stages": {
+            "recorded": true,
+            "memory": {
+              "stored": 2
+            },
+            "skills": {
+              "candidates": [
+                {
+                  "action": "update",
+                  "name": "offline-task-baseline-discipline",
+                  "skill_id": "skl-L2KYzIgzaGvd",
+                  "version": 2
+                }
+              ]
+            }
+          },
+          "error": null,
+          "created": 1791039645983,
+          "updated": 1791039751872,
+          "sourceSessionId": "pilot-django__django-11095-task",
+          "reason": {
+            "kind": "error",
+            "error": {
+              "message": "Pilot foreground dispatch limit reached",
+              "code": "UNKNOWN"
+            }
+          }
+        }
+      ],
+      "phases": [
+        {
+          "phase": "task",
+          "sessionId": "pilot-django__django-11095-task",
+          "stopReason": {
+            "kind": "error",
+            "error": {
+              "message": "Pilot foreground dispatch limit reached",
+              "code": "UNKNOWN"
+            }
+          },
+          "startedAt": 1791039469186,
+          "finishedAt": 1791039645979,
+          "wallMs": 176793,
+          "requests": 40
+        }
+      ],
+      "inputsNamedGeneratedSkill": false,
+      "evidenceSha256": {
+        "model-requests.json": "d5ba2b12c24f542e7cef7198baab27e3272c67f2bd2fea5b3612626120cdb391",
+        "receipt.json": "230f627bdb1a6080e15c46e5fa6a31b9300ba0b5610588af3a7ad58901f3c74f",
+        "initial.json": "53051df54fe38645302961b1f17f4ef5a539b1c19067f132cbcff7c8942f076a",
+        "reconstruction.json": "7ac1e841064bff65db5cbf539df1ad8b2de037679c2eb4435ac50dc191e89cf7",
+        "tool-results.json": "8a340545b8239cd79c961d2a1213acc201b73d5eac3b45c47347d3bd84969083"
+      }
+    }
+  ],
+  "sourceInventorySha256": "028b42b5705219eadc3fbf3ea1f5dceacd92c1c61c24811c613634dc7955a6bf",
+  "seedCopyMatches": true,
+  "realModelCallsInAudit": 0
+}
