@@ -1,0 +1,160 @@
+{
+  "status": "PROPOSED_NOT_STARTED",
+  "source": "SWE-bench Verified local parquet",
+  "datasetSha256": "a45b1fe4e2f0c8390b2b2938ac83e92ed5979000856808f3679c07812e9e6dcd",
+  "selection": "django/django version 3.0; exclude known integration debug instances; sort created_at then instance_id; first 4 prefix, next 20 held-out",
+  "excludedDebugInstances": [
+    "django__django-10973",
+    "django__django-11292"
+  ],
+  "prefix": [
+    {
+      "instanceId": "django__django-10554",
+      "createdAt": "2018-10-24T14:24:45Z",
+      "baseCommit": "14d026cccb144c6877294ba4cd4e03ebf0842498",
+      "title": "Union queryset with ordering breaks on ordering with derived querysets"
+    },
+    {
+      "instanceId": "django__django-10880",
+      "createdAt": "2019-01-21T00:22:36Z",
+      "baseCommit": "838e432e3e5519c5383d12018e6c78f8ec7833c1",
+      "title": "Query syntax error with condition and distinct combination"
+    },
+    {
+      "instanceId": "django__django-10914",
+      "createdAt": "2019-01-30T13:13:20Z",
+      "baseCommit": "e7fd69d051eaa67cb17f172a39b57253e9cb831a",
+      "title": "Set default FILE_UPLOAD_PERMISSION to 0o644."
+    },
+    {
+      "instanceId": "django__django-10999",
+      "createdAt": "2019-02-16T07:44:50Z",
+      "baseCommit": "36300ef336e3f130a0dadc1143163ff3d23dc843",
+      "title": "Fix parse_duration() for some negative durations"
+    }
+  ],
+  "heldOut": [
+    {
+      "instanceId": "django__django-11066",
+      "createdAt": "2019-03-09T13:03:14Z",
+      "baseCommit": "4b45b6c8e4d7c9701a332e80d3b1c84209dc36e2",
+      "title": "RenameContentType._rename() doesn't save the content type on the correct database"
+    },
+    {
+      "instanceId": "django__django-11087",
+      "createdAt": "2019-03-16T22:59:57Z",
+      "baseCommit": "8180ffba21bf10f4be905cb0d4890dc2bcff2788",
+      "title": "Optimize .delete() to use only required fields."
+    },
+    {
+      "instanceId": "django__django-11095",
+      "createdAt": "2019-03-19T15:17:28Z",
+      "baseCommit": "7d49ad76562e8c0597a0eb66046ab423b12888d8",
+      "title": "add ModelAdmin.get_inlines() hook to allow set inlines based on the request or model instance."
+    },
+    {
+      "instanceId": "django__django-11099",
+      "createdAt": "2019-03-20T03:46:18Z",
+      "baseCommit": "d26b2424437dabeeca94d7900b37d2df4410da0c",
+      "title": "UsernameValidator allows trailing newline in usernames"
+    },
+    {
+      "instanceId": "django__django-11119",
+      "createdAt": "2019-03-24T21:17:05Z",
+      "baseCommit": "d4df5e1b0b1c643fe0fc521add0236764ec8e92a",
+      "title": "Engine.render_to_string() should honor the autoescape attribute"
+    },
+    {
+      "instanceId": "django__django-11133",
+      "createdAt": "2019-03-27T06:48:09Z",
+      "baseCommit": "879cc3da6249e920b8d54518a0ae06de835d7373",
+      "title": "HttpResponse doesn't handle memoryview objects"
+    },
+    {
+      "instanceId": "django__django-11138",
+      "createdAt": "2019-03-28T13:11:56Z",
+      "baseCommit": "c84b91b7603e488f7171fdff8f08368ef3d6b856",
+      "title": "TIME_ZONE value in DATABASES settings is not used when making dates timezone-aware on MySQL, SQLite, and Oracle."
+    },
+    {
+      "instanceId": "django__django-11149",
+      "createdAt": "2019-03-30T18:14:35Z",
+      "baseCommit": "e245046bb6e8b32360aa48b8a41fb7050f0fc730",
+      "title": "Admin inlines for auto-created ManyToManyFields are editable if the user only has the view permission"
+    },
+    {
+      "instanceId": "django__django-11163",
+      "createdAt": "2019-04-02T21:46:42Z",
+      "baseCommit": "e6588aa4e793b7f56f4cadbfa155b581e0efc59a",
+      "title": "model_to_dict() should return an empty dict for an empty list of fields."
+    },
+    {
+      "instanceId": "django__django-11179",
+      "createdAt": "2019-04-05T15:54:39Z",
+      "baseCommit": "19fc6376ce67d01ca37a91ef2f55ef769f50513a",
+      "title": "delete() on instances of models without any dependencies doesn't clear PKs."
+    },
+    {
+      "instanceId": "django__django-11206",
+      "createdAt": "2019-04-13T10:19:38Z",
+      "baseCommit": "571ab44e8a8936014c22e7eebe4948d9611fd7ce",
+      "title": "utils.numberformat.format renders small decimals in exponential notation."
+    },
+    {
+      "instanceId": "django__django-11211",
+      "createdAt": "2019-04-13T12:01:14Z",
+      "baseCommit": "ba726067604ce5a8ca3919edf653496722b433ab",
+      "title": "Prefetch related is not working when used GFK for model that uses UUID field as PK."
+    },
+    {
+      "instanceId": "django__django-11239",
+      "createdAt": "2019-04-16T09:44:54Z",
+      "baseCommit": "d87bd29c4f8dfcdf3f4a4eb8340e6770a2416fe3",
+      "title": "Add support for postgresql client certificates and key to dbshell."
+    },
+    {
+      "instanceId": "django__django-11265",
+      "createdAt": "2019-04-21T12:57:28Z",
+      "baseCommit": "21aa2a5e785eef1f47beb1c3760fdd7d8915ae09",
+      "title": "Using exclude on annotated FilteredRelation doesn't work"
+    },
+    {
+      "instanceId": "django__django-11276",
+      "createdAt": "2019-04-24T12:35:05Z",
+      "baseCommit": "28d5262fa3315690395f04e3619ed554dbaf725b",
+      "title": "Use Python stdlib html.escape() to in django.utils.html.escape()"
+    },
+    {
+      "instanceId": "django__django-11299",
+      "createdAt": "2019-04-28T11:15:08Z",
+      "baseCommit": "6866c91b638de5368c18713fa851bfe56253ea55",
+      "title": "CheckConstraint with OR operator generates incorrect SQL on SQLite and Oracle."
+    },
+    {
+      "instanceId": "django__django-11333",
+      "createdAt": "2019-05-06T21:00:53Z",
+      "baseCommit": "55b68de643b5c2d5f0a8ea7587ab3b2966021ccc",
+      "title": "Optimization: Multiple URLResolvers may be unintentionally be constructed by calls to `django.urls.resolvers.get_resolver`"
+    },
+    {
+      "instanceId": "django__django-11400",
+      "createdAt": "2019-05-22T11:30:39Z",
+      "baseCommit": "1f8382d34d54061eddc41df6994e20ee38c60907",
+      "title": "Ordering problem in admin.RelatedFieldListFilter and admin.RelatedOnlyFieldListFilter"
+    },
+    {
+      "instanceId": "django__django-11433",
+      "createdAt": "2019-05-31T17:06:20Z",
+      "baseCommit": "21b1d239125f1228e579b1ce8d94d4d5feadd2a6",
+      "title": "Allow `cleaned_data` to overwrite fields' default values."
+    },
+    {
+      "instanceId": "django__django-11451",
+      "createdAt": "2019-06-08T19:11:42Z",
+      "baseCommit": "e065b293878b1e3ea56655aa9d33e87576cd77ff",
+      "title": "ModelBackend.authenticate() shouldn't make a database query when username is None"
+    }
+  ],
+  "repetitions": 1,
+  "formalBenchmarkStarted": false
+}
