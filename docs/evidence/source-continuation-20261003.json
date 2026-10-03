@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "formalBenchmarkStarted": false,
+  "realProviderRequests": 0,
+  "fixedResponseForegroundRequests": 2,
+  "backgroundProviderRequests": 0,
+  "continuedTaskId": "quota-continuation",
+  "distinctJobs": [
+    "pilot-preflight-task:1",
+    "pilot-quota-continuation-task:1"
+  ],
+  "sourceSessionsPreserved": true,
+  "requestReconstructionMatches": true,
+  "missingSourceSnapshotRejected": true,
+  "sourceInputSha256": {
+    "assets": {
+      "learning-runs/rsi-4278c2c2-6701-46bf-8442-1900491561fb.json": "1a157e14e1b2416057a0ae83bbc1c1c644409946e20d0bed25a090f47d16ab20",
+      "learning-runs/rsi-8bf4f8ed-ef32-4658-9749-0b7fb465c5b8.json": "a6863f68ae538e18175e7150f695c6be9bcce08d5e27a7ae64507d00fb0e2580",
+      "rsi-state.sqlite": "ff621fe47c0a6e44a67b3532b11346117b435bd16bd3739e479e211b266550aa",
+      "scopes/c52ddf65534b7b4603508435/history/conversations/2026-10-03.jsonl": "05e1cca9ba121a30ef98c643d616ae138e7ef59ac05dd40fb3a1dfc1b264f4e4",
+      "scopes/c52ddf65534b7b4603508435/memory.sqlite": "55b4e70de4a30f3745459b616483ee0a1bddcd60da863c941fa115a8576e0163",
+      "scopes/c52ddf65534b7b4603508435/skills.sqlite": "8d72c00de54f7708222b0feffbdfb144ced6df0d412b9f727e6484f14958a56f",
+      "scopes/global/memory.sqlite": "051372ce189187cbfd621ade7b236836e818e647d1177db48ab6e61752349718",
+      "scopes/global/skills.sqlite": "8d72c00de54f7708222b0feffbdfb144ced6df0d412b9f727e6484f14958a56f"
+    },
+    "sessions": {
+      "--workspace--/pilot-preflight-task/session.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "--workspace--/pilot-preflight-task/session.v4.jsonl": "bc80ca6ed634266ae1419c19da0dc069a3efab3624ddf69fa70e4a8dc3f0ff6a",
+      "--workspace--/rsi-4278c2c2-6701-46bf-8442-1900491561fb/session.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "--workspace--/rsi-4278c2c2-6701-46bf-8442-1900491561fb/session.v4.jsonl": "b812c475ed315a913da96f3428e5291554f44d2b0bdedc83b4e776201a845858",
+      "--workspace--/rsi-8bf4f8ed-ef32-4658-9749-0b7fb465c5b8/session.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "--workspace--/rsi-8bf4f8ed-ef32-4658-9749-0b7fb465c5b8/session.v4.jsonl": "e831654f42228922eb05d9fb70d085e4ccbb6db6c9a93cd6650bb8452c0e636e"
+    }
+  },
+  "limitation": "One offline native-flow fixture continuation plus offline provenance checks; no formal task or effectiveness result."
+}

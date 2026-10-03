@@ -133,6 +133,7 @@ export function apply(ctx, config) {
           assets:exportedBefore, toolSchemas:ctx.tools.schemas().map(t=>t.name),
           skillCandidates:await ctx.skills.list({cwd:'/workspace'})});
         const task = JSON.parse(await readFile('/opt/rsi/task.json','utf8'));
+        if (!config.fixture && config.instanceId !== 'preflight') assert.equal(task.instance_id,config.instanceId,'Task image/public ID mismatch');
         const defaultPrompt = `修复以下 Django 仓库问题。工作区为 /workspace，测试环境已离线准备，python 来自官方 testbed 环境。先验证环境，再运行聚焦测试，保留失败原因。禁止联网检索答案。完成后用中文说明修改、测试及局限。\n\n${task.problem_statement}`;
         const phases = config.phases ?? [{name:'task', prompt:defaultPrompt}];
         for (const phase of phases) {

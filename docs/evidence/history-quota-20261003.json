@@ -1,0 +1,29 @@
+{
+  "status": "PASS",
+  "syntheticHistoricalUsage": true,
+  "realProviderRequests": 0,
+  "formalBenchmarkStarted": false,
+  "nativeDayCeiling": 100000,
+  "nativeUsageBefore": 100,
+  "nativeReservationsAfter": 101,
+  "grantedNewLearningCalls": 0,
+  "observedBackgroundDispatches": 0,
+  "blockedByExperimentCap": 1,
+  "poolSettlement": {
+    "cap": 0,
+    "chargedOrReserved": 0,
+    "remaining": 0,
+    "leases": [
+      {
+        "id": "rsi-preflight-9c8cd2393f",
+        "quota": 0,
+        "used": 0,
+        "evidence": "bd825ea07da6a59960e5a474997ca49bbe1604975427df5f6cad566af7260419"
+      }
+    ]
+  },
+  "sourceSnapshotValidated": true,
+  "requestReconstructionMatches": true,
+  "receiptSha256": "177f9818dd87797a59b1ce502c5b11599c40f08788c4122d4db5195d1d8fbc96",
+  "limitation": "Synthetic usage added only to an independent fixture copy; the additional native reservation was blocked before dispatch and is not API token cost."
+}

@@ -5,6 +5,7 @@ import importlib.util
 import hashlib
 import json
 import os
+import re
 from pathlib import Path
 import shutil
 import sqlite3
@@ -18,10 +19,31 @@ def command(*args, **kwargs):
     return subprocess.run(args, check=True, text=True, **kwargs)
 
 
+
+def verify_seed(assets, sessions):
+    # Validate only provenance and frozen input bytes; learning stays in the native core.
+    hashes={kind:{str(file.relative_to(directory)):hashlib.sha256(file.read_bytes()).hexdigest()
+        for file in sorted(directory.rglob('*')) if file.is_file()}
+        for kind,directory in [('assets',assets),('sessions',sessions)]}
+    stored={}
+    for file in sessions.rglob('session.v4.jsonl'):
+        with file.open() as handle: header=json.loads(handle.readline())
+        if header.get('type')!='session' or header.get('version')!=4 or header['id'] in stored:
+            raise ValueError('Invalid or duplicate source session')
+        stored[header['id']]=str(file.relative_to(sessions))
+    db=sqlite3.connect((assets/'rsi-state.sqlite').as_uri()+'?mode=ro',uri=True)
+    try: sources={row[0] for row in db.execute('SELECT id FROM sources')}
+    finally: db.close()
+    required=sources|{json.loads(file.read_text())['sessionId'] for file in (assets/'learning-runs').glob('*.json')}
+    if required-set(stored): raise ValueError('Asset snapshot is missing official source/learning sessions')
+    return {'sourceSessionIds':sorted(sources),'requiredSessionIds':sorted(required),'inputSha256':hashes}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--image', default='dsh-rsi-pilot2:django-11292', help='Prepared task image; source is /opt/task-source')
     parser.add_argument('--arm', choices=['baseline', 'rsi'], required=True)
+    parser.add_argument('--instance',default='preflight',help='Unique public task ID; reused across its two arms only')
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--fixture', action='store_true')
     parser.add_argument('--fixture-learning',action='store_true',help='Fixture-only native learning for quota controls; no real API calls')
@@ -29,6 +51,7 @@ def main():
     parser.add_argument('--learning-pool',type=Path,help='Explicitly initialized host experiment pool, never mounted into task containers')
     parser.add_argument('--interrupt-checkpoint', action='store_true', help='Fixture-only SIGKILL after tool edit and durable request ledger')
     parser.add_argument('--seed-assets', type=Path, help='Copy an experiment-owned frozen asset store; never a personal profile')
+    parser.add_argument('--seed-sessions',type=Path,help='Matching experiment-owned official session directory for source reconstruction')
     parser.add_argument('--phases', type=Path, help='JSON list of named prompts for a small preflight only')
     parser.add_argument('--baseline-date', help='Verified scorer image HEAD date at the base source tree; required for real runs')
     parser.add_argument('--dispatch-limit', type=int, default=25)
@@ -37,6 +60,9 @@ def main():
     parser.add_argument('--wall-seconds', type=int, default=1200)
     parser.add_argument('--settle-seconds', type=int, default=90)
     args = parser.parse_args()
+    if not re.fullmatch(r'[a-zA-Z0-9_-]+',args.instance): parser.error('Invalid task ID')
+    if args.seed_sessions and not args.seed_assets: parser.error('Source sessions require matching asset snapshot')
+    if args.seed_assets and not args.seed_sessions: parser.error('Asset snapshots require matching official source sessions')
     if args.fixture_learning and (not args.fixture or args.arm!='rsi'): parser.error('Fixture learning requires --fixture --arm rsi')
     if args.learning_pool and args.arm!='rsi': parser.error('Baseline cannot reserve a learning pool')
     learning_limit=args.learning_dispatch_limit if args.learning_dispatch_limit is not None else args.learning_call_budget
@@ -58,7 +84,7 @@ def main():
     patch = json.loads((project/'scripts/container/pilot.patch.json').read_text())
     services = patch[-1]['insert']
     driver = next(s for s in services if s['id']=='rsi-pilot-task')
-    driver['config'] = {'arm':args.arm, 'instanceId':'preflight', 'fixture':args.fixture,
+    driver['config'] = {'arm':args.arm, 'instanceId':args.instance, 'fixture':args.fixture,
         'interruptCheckpoint':args.interrupt_checkpoint, 'baselineDate':args.baseline_date, 'dispatchLimit':args.dispatch_limit,
         'learningCallBudget':args.learning_call_budget, 'learningDispatchLimit':learning_limit, 'fixtureLearning':args.fixture_learning, 'wallTimeMs':args.wall_seconds*1000,
         'settleMs':args.settle_seconds*1000}
@@ -101,6 +127,10 @@ def main():
             if args.seed_assets:
                 shutil.copytree(args.seed_assets.resolve(),root/'seed-assets')
                 dockerfile += 'COPY --chown=1000:1000 seed-assets /opt/seed-assets\n'
+                shutil.copytree(args.seed_sessions.resolve(),root/'seed-sessions')
+                dockerfile += 'COPY --chown=1000:1000 seed-sessions /opt/seed-sessions\n'
+                seed=verify_seed(root/'seed-assets',root/'seed-sessions')
+                (output/'source-snapshot.json').write_text(json.dumps(seed,indent=2))
             (root/'Dockerfile').write_text(dockerfile)
             with (output/'build.log').open('w') as log:
                 command('docker','build','--platform','linux/amd64','-t',image,str(root),stdout=log,stderr=subprocess.STDOUT)
@@ -115,7 +145,7 @@ def main():
                 'dsh-rsi-pilot2:gateway','python3','/opt/rsi/scripts/model-gateway.py'],text=True).strip()
             containers.append(gateway)
             command('docker','network','connect','bridge',gateway)
-        startup = ('cp -a /opt/seed-assets /state/assets && ' if args.seed_assets else '')
+        startup = ('cp -a /opt/seed-assets /state/assets && mkdir -p /state/home && cp -a /opt/seed-sessions /state/home/sessions && ' if args.seed_assets else '')
         startup += 'exec dsh --profile sdk-minimal --patch /opt/rsi/scripts/pilot.json'
         cid = subprocess.check_output(['docker','create','--platform','linux/amd64','--init','--network',network,*policy,
             '--mount',f'type=volume,source={volume},target=/state','-e','QWEN_API_KEY=EMPTY',image,'sh','-c',startup],text=True).strip()
@@ -129,7 +159,7 @@ def main():
             'experimentOwnedVolume':True,'fixture':args.fixture,'requestLimit':relay_limit,
             'dispatchLimit':args.dispatch_limit,'learningCallBudget':args.learning_call_budget,'learningDispatchLimit':learning_limit, 'fixtureLearning':args.fixture_learning,
             'wallSecondsPerPhase':args.wall_seconds,'settleSecondsPerPhase':args.settle_seconds,
-            'effectivePatch':patch},indent=2))
+            'instanceId':args.instance, 'sourceSessionsRestored':bool(args.seed_sessions), 'effectivePatch':patch},indent=2))
         phase_count = len(driver['config'].get('phases',[{}]))
         until = time.monotonic() + phase_count*(args.wall_seconds+args.settle_seconds)+90
         killed = False
@@ -148,7 +178,7 @@ def main():
         copied=command('docker','cp',cid+':/state/.',str(output/'state'),capture_output=True)
         exported=True
         if gateway: (output/'gateway.log').write_text(subprocess.check_output(['docker','logs',gateway],text=True))
-        receipt=output/'state/pilot/preflight/receipt.json'
+        receipt=output/'state/pilot'/args.instance/'receipt.json'
         if args.interrupt_checkpoint: assert killed and state['ExitCode']==137
         else: assert state['ExitCode']==0 and receipt.exists(), (output/'run.log').read_text()[-6000:]
         print(json.dumps({'status':'INTERRUPTION_CAPTURED' if killed else 'PASS','arm':args.arm,'fixture':args.fixture,
@@ -170,7 +200,7 @@ def main():
                 if not started:
                     pool.settle(prefix,0,'NO_TASK_STARTED')
                 elif exported:
-                    file=output/'state/pilot/preflight/model-requests.json'
+                    file=output/'state/pilot'/args.instance/'model-requests.json'
                     requests=json.loads(file.read_text())
                     if not args.fixture:
                         wire=[json.loads(line) for line in (output/'gateway.log').read_text().splitlines() if line.strip()]
