@@ -1,0 +1,234 @@
+{
+  "conclusion": "success",
+  "databaseId": 37090163386,
+  "headSha": "5c51a7e3b1d3d10e5abf78ec6e01a3a9ac04d590",
+  "jobs": [
+    {
+      "completedAt": "2026-10-03T02:32:52Z",
+      "conclusion": "success",
+      "databaseId": 111108613064,
+      "name": "install (ubuntu-latest)",
+      "startedAt": "2026-10-03T02:32:36Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-03T02:32:37Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-03T02:32:36Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-03T02:32:38Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@v7",
+          "number": 2,
+          "startedAt": "2026-10-03T02:32:37Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-03T02:32:40Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-node@v7",
+          "number": 3,
+          "startedAt": "2026-10-03T02:32:38Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-03T02:32:42Z",
+          "conclusion": "success",
+          "name": "Run npm ci",
+          "number": 4,
+          "startedAt": "2026-10-03T02:32:40Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-03T02:32:51Z",
+          "conclusion": "success",
+          "name": "Run npm run test:package",
+          "number": 5,
+          "startedAt": "2026-10-03T02:32:42Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-03T02:32:51Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-node@v7",
+          "number": 9,
+          "startedAt": "2026-10-03T02:32:51Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-03T02:32:51Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@v7",
+          "number": 10,
+          "startedAt": "2026-10-03T02:32:51Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-03T02:32:51Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 11,
+          "startedAt": "2026-10-03T02:32:51Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/lsmax-72/dsh-rsi/actions/runs/37090163386/job/111108613064"
+    },
+    {
+      "completedAt": "2026-10-03T02:33:10Z",
+      "conclusion": "success",
+      "databaseId": 111108613181,
+      "name": "install (macos-latest)",
+      "startedAt": "2026-10-03T02:32:44Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-03T02:32:46Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-03T02:32:45Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-03T02:32:50Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@v7",
+          "number": 2,
+          "startedAt": "2026-10-03T02:32:46Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-03T02:32:52Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-node@v7",
+          "number": 3,
+          "startedAt": "2026-10-03T02:32:50Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-03T02:32:54Z",
+          "conclusion": "success",
+          "name": "Run npm ci",
+          "number": 4,
+          "startedAt": "2026-10-03T02:32:52Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-03T02:33:07Z",
+          "conclusion": "success",
+          "name": "Run npm run test:package",
+          "number": 5,
+          "startedAt": "2026-10-03T02:32:54Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-03T02:33:07Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-node@v7",
+          "number": 9,
+          "startedAt": "2026-10-03T02:33:07Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-03T02:33:08Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@v7",
+          "number": 10,
+          "startedAt": "2026-10-03T02:33:07Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-03T02:33:09Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 11,
+          "startedAt": "2026-10-03T02:33:08Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/lsmax-72/dsh-rsi/actions/runs/37090163386/job/111108613181"
+    },
+    {
+      "completedAt": "2026-10-03T02:34:51Z",
+      "conclusion": "success",
+      "databaseId": 111108613188,
+      "name": "install (windows-latest)",
+      "startedAt": "2026-10-03T02:32:36Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-03T02:32:37Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-03T02:32:37Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-03T02:32:43Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@v7",
+          "number": 2,
+          "startedAt": "2026-10-03T02:32:37Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-03T02:32:49Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-node@v7",
+          "number": 3,
+          "startedAt": "2026-10-03T02:32:43Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-03T02:33:01Z",
+          "conclusion": "success",
+          "name": "Run npm ci",
+          "number": 4,
+          "startedAt": "2026-10-03T02:32:49Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-03T02:34:46Z",
+          "conclusion": "success",
+          "name": "Run npm run test:package",
+          "number": 5,
+          "startedAt": "2026-10-03T02:33:01Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-03T02:34:48Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-node@v7",
+          "number": 9,
+          "startedAt": "2026-10-03T02:34:46Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-03T02:34:50Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@v7",
+          "number": 10,
+          "startedAt": "2026-10-03T02:34:48Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-03T02:34:50Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 11,
+          "startedAt": "2026-10-03T02:34:50Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/lsmax-72/dsh-rsi/actions/runs/37090163386/job/111108613188"
+    }
+  ],
+  "status": "completed",
+  "url": "https://github.com/lsmax-72/dsh-rsi/actions/runs/37090163386"
+}

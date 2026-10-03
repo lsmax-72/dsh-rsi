@@ -42,3 +42,5 @@ npm run test:package -- --output docs/evidence/package-20261002.json
 运行 37089752776 中 Linux/macOS 安装检查成功，Windows 的 npm ci → prepare → verify-core 在首个冻结文件的哈希校验处失败。Windows checkout 自动转换 CRLF，改变了文件字节；不是推送失败，也不是 benchmark 判分失败。新增 .gitattributes 固定 vendor/** 为 LF，保持原有哈希校验严格，不改核心源码或 manifest。
 
 安装工作流仅在构建、安装相关输入发生变化时自动运行；文档提交不再触发三平台安装检查，仍可手动 workflow_dispatch。GitHub 邮件由账户 Actions 通知设置决定，仓库不替用户修改个人通知偏好。修复后以新的远程 Windows 结果为准，不能把本地换行检查当成 Windows 完整安装通过。
+
+远程验收：修复提交 5c51a7e 的运行 [37090163386](https://github.com/lsmax-72/dsh-rsi/actions/runs/37090163386) 已成功。Linux/macOS/Windows 三个 job 的 npm ci 和 test:package 全部通过，Windows 用时 2m15s；本地 core.autocrlf=true 全新 checkout 的 56 个核心、10 个页面文件哈希也全部匹配。此结果覆盖该 CI 的安装和包烟测，不代表个人桌面、其他 CPU 架构或真实任务效果已验收。回执见 evidence/package-ci-20261003.json。
