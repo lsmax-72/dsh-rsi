@@ -235,7 +235,7 @@ docs/          需求、实现边界、评测协议与运行证据
 
 核心固定为修订 `e09899c2136fb6bc27ecc68505e32bdb637cdfa8` 的 56 个源码文件；界面固定复用 10 个文件，其中文件树和对应样式从原详情页提取。构建前核对逐文件 SHA-256。必要适配留在 `adapters/` 与 `src/`，没有平行重写提炼、召回或版本系统。
 
-当前检索使用原有 SQLite FTS5 与中文分词，没有启用嵌入服务。构建成功也不代表通过了整个复用库的类型检查。来源、固定文件及许可见 [核心清单](vendor/core/manifest.json)、[界面清单](vendor/panel/manifest.json)、[核心许可](vendor/core/LICENSE)和[界面许可](vendor/panel/LICENSE)。
+当前检索使用原有 SQLite FTS5 与中文分词，没有启用嵌入服务。2026-10-04 装配审计还确认了 Skill 生产提示词替换、画像触发缺失、资产分页遗漏、上下文截断和错误重试接线问题，见 [能力装配审计与隔离复现](docs/native-capability-audit-20261004.md)。源码校验通过不代表完整原生生产策略已接入；首轮实验结果对应此前适配版。构建成功也不代表通过了整个复用库的类型检查。来源、固定文件及许可见 [核心清单](vendor/core/manifest.json)、[界面清单](vendor/panel/manifest.json)、[核心许可](vendor/core/LICENSE)和[界面许可](vendor/panel/LICENSE)。
 
 ### 开发检查
 
