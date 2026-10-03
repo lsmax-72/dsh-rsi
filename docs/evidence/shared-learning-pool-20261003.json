@@ -1,0 +1,41 @@
+{
+  "status": "PASS",
+  "realProviderRequests": 0,
+  "formalBenchmarkStarted": false,
+  "fixtureData": true,
+  "sharedCap": 1,
+  "totalLearningFixtureDispatches": 1,
+  "runs": [
+    {
+      "run": "first",
+      "foregroundFixtureDispatches": 2,
+      "learningFixtureDispatches": 1,
+      "grantedLimit": 1,
+      "blockedRequests": 1,
+      "receiptSha256": "5beb0bff0f3a2a63dfe88e46994c4af55052f487f1c4fb660e1aff91aa7e898d",
+      "ledgerSha256": "38086e30c3545f00162d797689bdf0617fe28998e9ab846f051f5558bf1db539",
+      "nativeJobs": [
+        [
+          "paused",
+          "Experiment learning dispatch limit reached"
+        ]
+      ]
+    },
+    {
+      "run": "second",
+      "foregroundFixtureDispatches": 2,
+      "learningFixtureDispatches": 0,
+      "grantedLimit": 0,
+      "blockedRequests": 1,
+      "receiptSha256": "e3958a9677a806c0243d6b9178a489c2e77c76461bc7ff1508b6b39c7e3bc582",
+      "ledgerSha256": "6adf4c015e4730e13c59d779f6045f28ba79bbb35107578f34761f9a062ebbd4",
+      "nativeJobs": [
+        [
+          "failed",
+          "记忆提炼失败，请查看后台会话日志"
+        ]
+      ]
+    }
+  ],
+  "limitation": "Two isolated native-flow fixture runs validate shared quota enforcement, not real model effectiveness."
+}

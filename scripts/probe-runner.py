@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 """Run one isolated preflight arm. This entry never starts a formal benchmark."""
 import argparse
+import importlib.util
+import hashlib
 import json
 import os
 from pathlib import Path
 import shutil
+import sqlite3
 import subprocess
 import tempfile
 import time
@@ -21,6 +24,9 @@ def main():
     parser.add_argument('--arm', choices=['baseline', 'rsi'], required=True)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--fixture', action='store_true')
+    parser.add_argument('--fixture-learning',action='store_true',help='Fixture-only native learning for quota controls; no real API calls')
+    parser.add_argument('--learning-dispatch-limit',type=int,help='New background streams for this run, independent of historical daily usage')
+    parser.add_argument('--learning-pool',type=Path,help='Explicitly initialized host experiment pool, never mounted into task containers')
     parser.add_argument('--interrupt-checkpoint', action='store_true', help='Fixture-only SIGKILL after tool edit and durable request ledger')
     parser.add_argument('--seed-assets', type=Path, help='Copy an experiment-owned frozen asset store; never a personal profile')
     parser.add_argument('--phases', type=Path, help='JSON list of named prompts for a small preflight only')
@@ -31,6 +37,10 @@ def main():
     parser.add_argument('--wall-seconds', type=int, default=1200)
     parser.add_argument('--settle-seconds', type=int, default=90)
     args = parser.parse_args()
+    if args.fixture_learning and (not args.fixture or args.arm!='rsi'): parser.error('Fixture learning requires --fixture --arm rsi')
+    if args.learning_pool and args.arm!='rsi': parser.error('Baseline cannot reserve a learning pool')
+    learning_limit=args.learning_dispatch_limit if args.learning_dispatch_limit is not None else args.learning_call_budget
+    if learning_limit<0 or args.learning_call_budget<0 or args.settle_seconds<0: parser.error('Invalid background limit or settling window')
     if args.interrupt_checkpoint and not args.fixture:
         parser.error('Interruption control must use a fixture, not a paid model request.')
     if args.arm == 'baseline' and args.seed_assets:
@@ -50,17 +60,28 @@ def main():
     driver = next(s for s in services if s['id']=='rsi-pilot-task')
     driver['config'] = {'arm':args.arm, 'instanceId':'preflight', 'fixture':args.fixture,
         'interruptCheckpoint':args.interrupt_checkpoint, 'baselineDate':args.baseline_date, 'dispatchLimit':args.dispatch_limit,
-        'learningCallBudget':args.learning_call_budget, 'wallTimeMs':args.wall_seconds*1000,
+        'learningCallBudget':args.learning_call_budget, 'learningDispatchLimit':learning_limit, 'fixtureLearning':args.fixture_learning, 'wallTimeMs':args.wall_seconds*1000,
         'settleMs':args.settle_seconds*1000}
     if args.phases: driver['config']['phases']=json.loads(args.phases.read_text())
     if args.arm == 'baseline': services[:] = [s for s in services if s['id']!='rsi']
     else:
         service = next(s for s in services if s['id']=='rsi')
         service['config']['settings']={'dailyCallBudget':args.learning_call_budget}
-        if args.fixture: service['config']['settings']['learningEnabled']=False
+        if args.fixture:
+            service['config']['settings']['learningEnabled']=args.fixture_learning
+            if args.fixture_learning: service['config'].update(provider='pilot-fixture',model='fixture')
     if args.fixture: services[:] = [s for s in services if s['id'] not in ['rsi-qwen','rsi-credentials']]
     prefix = 'rsi-preflight-' + uuid.uuid4().hex[:10]
     network, volume, image = prefix+'-net',prefix+'-state',prefix+':local'
+    pool=None
+    if args.learning_pool:
+        spec=importlib.util.spec_from_file_location('learning_budget',project/'scripts/learning-budget.py')
+        module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+        pool=module.LearningBudget(args.learning_pool.resolve())
+        learning_limit=pool.reserve(prefix,learning_limit)
+        driver['config']['learningDispatchLimit']=learning_limit
+        (output/'budget-reservation.json').write_text(json.dumps({'leaseId':prefix,'quota':learning_limit,'pool':pool.snapshot()},indent=2))
+    relay_limit=min(args.request_limit,args.dispatch_limit+learning_limit)
     containers = []
     started = False
     exported = False
@@ -90,7 +111,7 @@ def main():
             gateway = subprocess.check_output(['docker','run','-d','--network',network,'--network-alias','model',
                 '--read-only','--cap-drop','ALL','--security-opt','no-new-privileges','--memory','256m','--pids-limit','32',
                 '-e','RSI_MODEL_UPSTREAM='+os.environ['RSI_MODEL_UPSTREAM'],
-                '-e','RSI_MODEL_REQUEST_LIMIT='+str(args.request_limit),
+                '-e','RSI_MODEL_REQUEST_LIMIT='+str(relay_limit),
                 'dsh-rsi-pilot2:gateway','python3','/opt/rsi/scripts/model-gateway.py'],text=True).strip()
             containers.append(gateway)
             command('docker','network','connect','bridge',gateway)
@@ -105,8 +126,8 @@ def main():
         assert len(info['NetworkSettings']['Networks'])==1
         (output/'policy.json').write_text(json.dumps({'arm':args.arm,'imageId':info['Image'],
             'user':info['Config']['User'],'networkInternal':True,'rootfsReadOnly':True,'hostBinds':[],
-            'experimentOwnedVolume':True,'fixture':args.fixture,'requestLimit':args.request_limit,
-            'dispatchLimit':args.dispatch_limit,'learningCallBudget':args.learning_call_budget,
+            'experimentOwnedVolume':True,'fixture':args.fixture,'requestLimit':relay_limit,
+            'dispatchLimit':args.dispatch_limit,'learningCallBudget':args.learning_call_budget,'learningDispatchLimit':learning_limit, 'fixtureLearning':args.fixture_learning,
             'wallSecondsPerPhase':args.wall_seconds,'settleSecondsPerPhase':args.settle_seconds,
             'effectivePatch':patch},indent=2))
         phase_count = len(driver['config'].get('phases',[{}]))
@@ -143,6 +164,24 @@ def main():
         # If export failed, retain the experiment volume for recovery instead of destroying evidence.
         if not started or exported: subprocess.run(['docker','volume','rm',volume],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
         else: (output/'retained-volume.json').write_text(json.dumps({'volume':volume}))
+        if pool:
+            # Never refund a lost or ambiguous attempt: its reservation survives interruption.
+            try:
+                if not started:
+                    pool.settle(prefix,0,'NO_TASK_STARTED')
+                elif exported:
+                    file=output/'state/pilot/preflight/model-requests.json'
+                    requests=json.loads(file.read_text())
+                    if not args.fixture:
+                        wire=[json.loads(line) for line in (output/'gateway.log').read_text().splitlines() if line.strip()]
+                        sent=[row for row in wire if row.get('request') and row.get('model')]
+                        if len(sent)!=len(requests): raise ValueError('Gateway/request ledger mismatch; retain entire reservation')
+                    used=sum(r['phase']=='learning' for r in requests)
+                    pool.settle(prefix,used,hashlib.sha256(file.read_bytes()).hexdigest())
+            except (ValueError,OSError,sqlite3.Error) as error:
+                (output/'budget-settlement-error.json').write_text(json.dumps({'error':str(error),'reservationRetained':True}))
+            finally:
+                (output/'budget-settlement.json').write_text(json.dumps(pool.snapshot(),indent=2));pool.close()
         subprocess.run(['docker','network','rm',network],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
         subprocess.run(['docker','image','rm',image],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
 

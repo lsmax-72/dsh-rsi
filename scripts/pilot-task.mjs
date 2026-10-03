@@ -14,7 +14,9 @@ export function apply(ctx, config) {
   assert.ok(['baseline', 'rsi'].includes(config.arm));
   const dir = '/state/pilot/' + config.instanceId;
   mkdirSync(dir, {recursive:true});
+  const blocked = [];
   const requests = [], results = [], sessions = new Map(), phaseResults = [];
+  let learningAttempts = 0;
   let foreground = 0, phaseCalls = 0, phaseLimit, deadline, initialized = false, currentPhase = 'setup';
   const dispatchLimit = config.dispatchLimit ?? 50;
   const wallTimeMs = config.wallTimeMs ?? 1200000;
@@ -45,6 +47,12 @@ export function apply(ctx, config) {
   });
   ctx.on('llm/stream', async function*(options, next) {
     const background = options.sessionId.startsWith('rsi-');
+    if (background && learningAttempts >= (config.learningDispatchLimit ?? config.learningCallBudget ?? 30)) {
+      blocked.push({sessionId:options.sessionId,phase:'learning',reason:'EXPERIMENT_CALL_CAP',time:Date.now()});
+      durable(dir + '/blocked-dispatches.json',blocked);
+      throw Object.assign(new Error('Experiment learning dispatch limit reached'),{code:'BUDGET_EXHAUSTED'});
+    }
+    if (background) learningAttempts++;
     if (!background && (foreground >= dispatchLimit || phaseCalls >= phaseLimit)) throw new Error('Pilot foreground dispatch limit reached');
     if (!background) {foreground++; phaseCalls++;}
     const session = sessions.get(options.sessionId);
@@ -78,7 +86,14 @@ export function apply(ctx, config) {
   if (config.fixture) {
     class Fixture extends LlmAdapter {
       async *stream(options) {
-        assert.ok(!options.sessionId.startsWith('rsi-'), 'Fixture learning must be disabled');
+        if (options.sessionId.startsWith('rsi-')) {
+          assert.ok(config.fixtureLearning);
+          const block={type:'text',text:options.tools?.length?'No reusable skill candidates.':'[]'};
+          yield {type:'block-start',index:0,blockType:'text'};
+          yield {type:'block-end',index:0,block};
+          yield {type:'usage',usage:{inputTokens:13,outputTokens:7,totalTokens:20}};
+          yield {type:'finish',reason:{kind:'stop'}};return;
+        }
         const n = requests.filter(r=>r.sessionId===options.sessionId).length;
         if (config.interruptCheckpoint && n === 2) {
           console.log('RSI_CHECKPOINT_READY');
@@ -151,7 +166,7 @@ export function apply(ctx, config) {
         const receipt = {runnerStatus:'COMPLETED', arm:config.arm, fixture:!!config.fixture,
           instanceId:config.instanceId, officialResolved:null, taskDispatches:foreground,
           backgroundDispatches:requests.length-foreground, phases:phaseResults,
-          before, after, toolResults:results, logReconstructionMatches:true,
+          before, after, blockedDispatches:blocked, learningDispatchLimit:config.learningDispatchLimit, toolResults:results, logReconstructionMatches:true,
           knownTokens:requests.reduce((n,r)=>n+(r.usage?.totalTokens??0),0),
           unknownUsage:requests.filter(r=>!r.usage).length,
           limitation:config.fixture?'Fixed responses validate runner plumbing; no effectiveness result.':'Default-flow pilot; not a formal paired benchmark.'};
