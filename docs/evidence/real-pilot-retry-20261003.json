@@ -1,5 +1,5 @@
 {
-  "status": "REPAIR_PASS_ASSET_DELIVERY_PENDING",
+  "status": "THREE_REQUIRED_GATES_PASS",
   "instanceId": "django__django-11292",
   "model": "qwen3.8-27b",
   "officialGrading": {
@@ -106,12 +106,216 @@
     "matches": true,
     "modelCalls": 0
   },
-  "pending": "Fresh-store extraction from original log and independent consumer; model endpoint authorization confirmation pending. No paired benchmark started.",
   "evidenceSha256": {
     "results/failure.json": "79bc400afe49db5b9abbb93d191aac7da7960ab6d6da462f9251176046230dcd",
     "results/prediction.patch": "d60c5bafb2bfc216bdeda8463cf2dd820ccb1b55be415bcf88113ca40d60c725",
     "original-reconstruction.json": "cbdd4ee98fb9919503ec530f72679e91592e8fa1dceb5d0673628ea00b883940",
     "gateway.log": "9971f874cec4dafe85723cb68af7c09902675b4786f93910e53c3586b07d45fb",
-    "docker-policy.json": "650235b8eac0010ef1402a38672c108e90c8aebe10423716320d52ed46622b4d"
-  }
+    "docker-policy.json": "650235b8eac0010ef1402a38672c108e90c8aebe10423716320d52ed46622b4d",
+    "final-recovery-results/model-requests.json": "baa298b2e424f0fe0ca176b35a620d2b25002db26318485019c49b02f278983f",
+    "final-recovery-results/journals.json": "77fd29df2d94195d042314fbed20431d72c76791f3fabee38bfa0444ba4dfbb4",
+    "final-recovery-results/frozen-assets-before.json": "1ae31496af66723c2bad7d13d7837c201879484dc7b7698cfabc29896bcd63ed",
+    "final-gateway.log": "f9ab09e8e40626aaf7281559d27cbb5e88010c04deb165a4bde504143fa7ad04",
+    "attempt3-gateway.log": "57e3f929b75df3716a362e65ed324fbd565b1f0c0a4c10c0be28668ab79ec984",
+    "attempt2-gateway.log": "f195e42d0726b78de1db91975dcf14922cd0fe54c9fd7151e4fbc8e0bfb3689c",
+    "final-policy.json": "9110bef7667a196458b3c3a793476be3bb05a80268eaaa050d86790a6e11750b",
+    "final-audited-delivery.json": "3e74e49982189787262a907a09d696a57e82af40a9d74df5b1817c83023cd76f"
+  },
+  "gates": {
+    "realRepairResolved": true,
+    "realMemoryDelivered": true,
+    "realSkillBodyDelivered": true,
+    "pairedBenchmarkStarted": false
+  },
+  "delivery": {
+    "status": "ASSET_DELIVERY_PASS",
+    "consumerId": "pilot2-delivery-final",
+    "memoryDelivered": true,
+    "skillDelivered": true,
+    "memoryEvidence": [
+      {
+        "id": "m_1790997313590_b3bc2d46",
+        "scope": "c52ddf65534b7b4603508435",
+        "version": 0,
+        "sourceSessionId": "pilot2-task-11292",
+        "sourceMessageIds": [
+          "2c0c87de-5cde-4475-87ec-101780d3cbb8"
+        ],
+        "contentSha256": "10207efac16eb4e2f63987c125bfd0fac16e7566b6fc46ee3d5e4d58c0802088",
+        "requests": [
+          1,
+          2
+        ]
+      },
+      {
+        "id": "m_1790997313590_62e85f7f",
+        "scope": "c52ddf65534b7b4603508435",
+        "version": 0,
+        "sourceSessionId": "pilot2-task-11292",
+        "sourceMessageIds": [
+          "2c0c87de-5cde-4475-87ec-101780d3cbb8"
+        ],
+        "contentSha256": "5db5277cc6de811a677b39a7c3433f2a294e6d50fbc6a9ba8a8bdfe8eac97a1f",
+        "requests": [
+          1,
+          2
+        ]
+      },
+      {
+        "id": "m_1790997313590_c2b2fa1a",
+        "scope": "c52ddf65534b7b4603508435",
+        "version": 0,
+        "sourceSessionId": "pilot2-task-11292",
+        "sourceMessageIds": [
+          "2c0c87de-5cde-4475-87ec-101780d3cbb8"
+        ],
+        "contentSha256": "768508c14b37a559030e98dfe8e851bca7961a4729442cef07ddbaf31822722e",
+        "requests": [
+          1,
+          2
+        ]
+      },
+      {
+        "id": "m_1790997313590_9e139a23",
+        "scope": "c52ddf65534b7b4603508435",
+        "version": 0,
+        "sourceSessionId": "pilot2-task-11292",
+        "sourceMessageIds": [
+          "2c0c87de-5cde-4475-87ec-101780d3cbb8"
+        ],
+        "contentSha256": "33852065710f0fadeeb9f614734bbd5536c69c79954628090bd8807b54bbe3b1",
+        "requests": [
+          1,
+          2
+        ]
+      },
+      {
+        "id": "m_1790997313590_529d2294",
+        "scope": "c52ddf65534b7b4603508435",
+        "version": 0,
+        "sourceSessionId": "pilot2-task-11292",
+        "sourceMessageIds": [
+          "2c0c87de-5cde-4475-87ec-101780d3cbb8",
+          "d06dfb6d-c597-4cd2-a243-8f8245564a87"
+        ],
+        "contentSha256": "21704a66860e32b658d489150f46d1bdf06acfdb3ba19f38466a04b519676f1f",
+        "requests": [
+          1,
+          2
+        ]
+      },
+      {
+        "id": "m_1790997313590_8a83ecdf",
+        "scope": "c52ddf65534b7b4603508435",
+        "version": 0,
+        "sourceSessionId": "pilot2-task-11292",
+        "sourceMessageIds": [
+          "2c0c87de-5cde-4475-87ec-101780d3cbb8",
+          "582a4f68-2f57-47d5-89f0-f2f8df350c84"
+        ],
+        "contentSha256": "78b6a1a2ba755b3a6eed4ddb80265a9314cdaa876ce66768066c36d4658faf35",
+        "requests": [
+          1,
+          2
+        ]
+      }
+    ],
+    "skillEvidence": [
+      {
+        "id": "skl-Pubw1Aoqj3pQ",
+        "name": "rsi-django-repo-fix",
+        "scope": "c52ddf65534b7b4603508435",
+        "version": 1,
+        "sourceTaskId": "pilot2-task-11292:1",
+        "contentSha256": "527c31bea7c8108b1a8c77e546be9c4d119606c98333b93d387a42081ad1737b",
+        "callIds": [
+          "call_3e0acabebd29425ea820cb61"
+        ],
+        "requests": [
+          2
+        ]
+      }
+    ],
+    "usage": {
+      "task": {
+        "requests": 24,
+        "missingUsage": 0,
+        "inputTokens": 495319,
+        "outputTokens": 13418,
+        "totalTokens": 508737
+      },
+      "learning": {
+        "requests": 9,
+        "missingUsage": 0,
+        "inputTokens": 128427,
+        "outputTokens": 9664,
+        "totalTokens": 138091
+      },
+      "consumer": {
+        "requests": 4,
+        "missingUsage": 0,
+        "inputTokens": 24654,
+        "outputTokens": 749,
+        "totalTokens": 25403
+      }
+    },
+    "knownTotalTokens": 672231,
+    "logReconstructionRequests": 37,
+    "rawProducerConsumerRequestCount": 2,
+    "auditCorrection": "Producer counted only the earlier consumer. Independent audit includes both diagnostic consumers and verifies every request belongs to one phase.",
+    "rawReceiptSha256": "78e8361f8c7a19619d1c340762416bd2f5fc7c9e513e58a7b79e5b022e3302a9",
+    "modelCalls": 0
+  },
+  "modelCompatibility": {
+    "officialAdapter": "dsh-llm-pi-ai",
+    "reasoning": "off",
+    "thinkingFormat": "qwen-chat-template",
+    "supportsDeveloperRole": false,
+    "newReasoningBlocks": 0,
+    "gatewayEnableThinking": false,
+    "gatewayRoles": [
+      "system",
+      "user",
+      "assistant",
+      "tool"
+    ]
+  },
+  "auditLimitations": [
+    {
+      "attempt": "first recovery",
+      "problem": "State in tmpfs vanished after container exit before export; only process failure and policy logs retained.",
+      "upstreamRequestCount": "unknown, conservatively reserved 1 request from total cap",
+      "usage": "unknown; never imputed as zero"
+    },
+    {
+      "attempt": "zero-limit diagnostic",
+      "providerRequests": 0,
+      "blockedAdapterDispatches": 1,
+      "modelCalled": false
+    },
+    {
+      "attempt": "second recovery",
+      "providerRequests": 1,
+      "upstreamStatus": 400,
+      "message": "Unexpected message role.",
+      "sdkReportedTotalTokens": 0,
+      "successfulInference": false
+    }
+  ],
+  "knownReportedTokens": 672231,
+  "priorFailedPilotTokens": 721412,
+  "allDebugKnownReportedTokens": 1393643,
+  "requestBudget": {
+    "totalForwardLimit": 55,
+    "knownForwardRequests": 38,
+    "unknownFirstRecoveryReserved": 1,
+    "conservativeTotalMaximum": 39,
+    "finalConsumerLimit": 4,
+    "finalConsumerActual": 2
+  },
+  "assetQualityLimitations": [
+    "The generated Skill says the original stealth tuple was kept; the actual saved patch removes skip_checks from base_stealth_options. Body delivery passed; factual accuracy is not fully verified.",
+    "Skill contains task-specific paths, version and baseline commit. Explicit loading does not prove automatic selection or cross-task transfer.",
+    "Only real L1 and Skill delivery validated; real L2/L3 delivery not established."
+  ]
 }

@@ -66,7 +66,7 @@ class Relay(BaseHTTPRequestHandler):
                 return
             counter += 1
             count = counter
-        print(json.dumps({'request': count, 'model': model, 'path': self.path}), flush=True)
+        print(json.dumps({'request': count, 'model': model, 'path': self.path, 'enableThinking': request.get('chat_template_kwargs',{}).get('enable_thinking','ABSENT'),'messageRoles': [m.get('role') for m in request['messages']]}), flush=True)
         self.forward(body)
 
     def forward(self, body):
@@ -82,6 +82,13 @@ class Relay(BaseHTTPRequestHandler):
                     self.wfile.write(chunk)
                     self.wfile.flush()
         except urllib.error.HTTPError as exc:
+            try:
+                payload = json.loads(exc.read())
+                detail = payload.get('error', payload)
+                message = detail.get('message','') if isinstance(detail,dict) else str(detail)
+            except (ValueError,OSError):
+                message = 'Non-JSON upstream error'
+            print(json.dumps({'upstreamStatus':exc.code,'errorMessage':message[:1000]}),flush=True)
             self.reject(exc.code, 'Upstream returned an HTTP error.')
         except (BrokenPipeError, ConnectionResetError):
             pass

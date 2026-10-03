@@ -109,12 +109,21 @@
               "models": [
                 {
                   "id": "qwen3.8-27b",
-                  "name": "qwen3.8-27b"
+                  "name": "qwen3.8-27b",
+                  "reasoningEfforts": {
+                    "off": null,
+                    "low": "low"
+                  }
                 }
               ],
               "retryPolicy": {
                 "mode": "normal",
                 "maxRetries": 0
+              },
+              "reasoning": "off",
+              "compat": {
+                "thinkingFormat": "qwen-chat-template",
+                "supportsDeveloperRole": false
               }
             }
           }
