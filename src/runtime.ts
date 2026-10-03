@@ -206,7 +206,15 @@ export class Runtime {
       const core=await this.core(scope),result=await core.recall(query,Math.floor(settings.recallMaxChars/2));
       if (result?.prependContext) parts.push(result.prependContext);
       if (!this.state.get(`profile-invalid:${scope}`) && result?.appendSystemContext) parts.push(result.appendSystemContext);
-      if (result?.recalledL1Memories?.length) refs.push({scope,memories:result.recalledL1Memories});
+      if (result?.recalledL1Memories?.length) {
+        // Native recall returns content without identity. Attach provenance only for a unique stored match.
+        const stored = await core.readMemories();
+        const memories = result.recalledL1Memories.map((memory:any) => {
+          const matches = stored.filter((row:any) => row.content === memory.content && row.type === memory.type);
+          return matches.length === 1 ? {...memory,id:matches[0].id,version:matches[0].version} : memory;
+        });
+        refs.push({scope,memories});
+      }
     }
     if(parts.length)parts.push('场景路径请调用 rsi_profile_read，参数 query 为上述完整路径；不要使用其他文件工具。');
     return {text:parts.join('\n').replaceAll('tdai_memory_search','rsi_memory_search').replaceAll('tdai_conversation_search','rsi_conversation_search').replaceAll('read_file','rsi_profile_read').slice(0,settings.recallMaxChars),refs};
