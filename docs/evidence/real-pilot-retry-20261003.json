@@ -1,0 +1,117 @@
+{
+  "status": "REPAIR_PASS_ASSET_DELIVERY_PENDING",
+  "instanceId": "django__django-11292",
+  "model": "qwen3.8-27b",
+  "officialGrading": {
+    "instanceId": "django__django-11292",
+    "runId": "rsi-pilot2-8a454f53f9",
+    "resolved": true,
+    "officialReport": {
+      "django__django-11292": {
+        "patch_is_None": false,
+        "patch_exists": true,
+        "patch_successfully_applied": true,
+        "resolved": true,
+        "tests_status": {
+          "FAIL_TO_PASS": {
+            "success": [
+              "test_skip_checks (user_commands.tests.CommandRunTests)"
+            ],
+            "failure": []
+          },
+          "PASS_TO_PASS": {
+            "success": [
+              "test_get_random_secret_key (user_commands.tests.UtilsTests)",
+              "test_is_ignored_path_false (user_commands.tests.UtilsTests)",
+              "test_is_ignored_path_true (user_commands.tests.UtilsTests)",
+              "test_no_existent_external_program (user_commands.tests.UtilsTests)",
+              "test_normalize_path_patterns_truncates_wildcard_base (user_commands.tests.UtilsTests)",
+              "test_call_command_no_checks (user_commands.tests.CommandTests)",
+              "test_call_command_option_parsing (user_commands.tests.CommandTests)",
+              "test_call_command_option_parsing_non_string_arg (user_commands.tests.CommandTests)",
+              "test_call_command_unrecognized_option (user_commands.tests.CommandTests)",
+              "test_call_command_with_required_parameters_in_mixed_options (user_commands.tests.CommandTests)",
+              "test_call_command_with_required_parameters_in_options (user_commands.tests.CommandTests)",
+              "test_calling_a_command_with_no_app_labels_and_parameters_should_raise_a_command_error (user_commands.tests.CommandTests)",
+              "test_calling_a_command_with_only_empty_parameter_should_ends_gracefully (user_commands.tests.CommandTests)",
+              "test_calling_command_with_app_labels_and_parameters_should_be_ok (user_commands.tests.CommandTests)",
+              "test_calling_command_with_parameters_and_app_labels_at_the_end_should_be_ok (user_commands.tests.CommandTests)",
+              "test_check_migrations (user_commands.tests.CommandTests)",
+              "test_command (user_commands.tests.CommandTests)",
+              "test_command_add_arguments_after_common_arguments (user_commands.tests.CommandTests)",
+              "test_command_style (user_commands.tests.CommandTests)",
+              "BaseCommand.create_parser() passes kwargs to CommandParser.",
+              "test_discover_commands_in_eggs (user_commands.tests.CommandTests)",
+              "An unknown command raises CommandError",
+              "test_find_command_without_PATH (user_commands.tests.CommandTests)",
+              "test_language_preserved (user_commands.tests.CommandTests)",
+              "test_no_translations_deactivate_translations (user_commands.tests.CommandTests)",
+              "test_output_transaction (user_commands.tests.CommandTests)",
+              "test_subparser (user_commands.tests.CommandTests)",
+              "test_subparser_invalid_option (user_commands.tests.CommandTests)",
+              "Exception raised in a command should raise CommandError with",
+              "test_disallowed_abbreviated_options (user_commands.tests.CommandRunTests)",
+              "test_script_prefix_set_in_commands (user_commands.tests.CommandRunTests)"
+            ],
+            "failure": []
+          },
+          "FAIL_TO_FAIL": {
+            "success": [],
+            "failure": []
+          },
+          "PASS_TO_FAIL": {
+            "success": [],
+            "failure": []
+          }
+        }
+      }
+    },
+    "parsedTests": 32,
+    "patchBytes": 6682,
+    "swebenchVersion": "3.0.0",
+    "verifiedSourceFiles": 50,
+    "patchSha256": "d60c5bafb2bfc216bdeda8463cf2dd820ccb1b55be415bcf88113ca40d60c725",
+    "testOutputSha256": "f8702f16fc0a477af2f5cefbc8fc86a0d7e289aa29338075efdb03ca7126a6ee"
+  },
+  "taskStopReason": {
+    "kind": "error",
+    "error": {
+      "message": "Pilot total foreground call cap reached",
+      "code": "UNKNOWN"
+    }
+  },
+  "initialLearning": {
+    "memories": 0,
+    "skills": 0,
+    "status": "failed"
+  },
+  "usage": {
+    "task": {
+      "requests": 24,
+      "missingUsage": 0,
+      "inputTokens": 495319,
+      "outputTokens": 13418,
+      "totalTokens": 508737
+    },
+    "learning": {
+      "requests": 4,
+      "missingUsage": 0,
+      "inputTokens": 53652,
+      "outputTokens": 6093,
+      "totalTokens": 59745
+    }
+  },
+  "originalLogReconstruction": {
+    "requests": 28,
+    "matches": true,
+    "modelCalls": 0
+  },
+  "pending": "Fresh-store extraction from original log and independent consumer; model endpoint authorization confirmation pending. No paired benchmark started.",
+  "evidenceSha256": {
+    "results/failure.json": "79bc400afe49db5b9abbb93d191aac7da7960ab6d6da462f9251176046230dcd",
+    "results/prediction.patch": "d60c5bafb2bfc216bdeda8463cf2dd820ccb1b55be415bcf88113ca40d60c725",
+    "original-reconstruction.json": "cbdd4ee98fb9919503ec530f72679e91592e8fa1dceb5d0673628ea00b883940",
+    "gateway.log": "9971f874cec4dafe85723cb68af7c09902675b4786f93910e53c3586b07d45fb",
+    "docker-policy.json": "650235b8eac0010ef1402a38672c108e90c8aebe10423716320d52ed46622b4d"
+  }
+}
