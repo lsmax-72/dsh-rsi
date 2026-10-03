@@ -1,0 +1,321 @@
+{
+  "status": "PREFIX_COMPLETE_OFFLINE_AUDIT_PASS",
+  "formalImplementationRevision": "99af6ba2d10250d2950dc08983211feac5cdf69b",
+  "plannedHeldOutPairs": 20,
+  "prefixRuns": 8,
+  "modelCallsInAudit": 0,
+  "prefixSnapshotInventorySha256": "31ad4eb963f77ab71f3673efc897486227a0d824edd115d688ccdcfb9e632355",
+  "prefixFreezeReceiptSha256": "8576ca7e4dbea81b74cceb8cd8c675bcd3588719f417561f588ddab8b58a1b68",
+  "afterLayers": {
+    "c52ddf65534b7b4603508435": {
+      "L0": 127,
+      "L1": 3,
+      "L2": 1,
+      "L3": 1
+    },
+    "global": {
+      "L0": 0,
+      "L1": 0,
+      "L2": 0,
+      "L3": 0
+    }
+  },
+  "afterSkills": 5,
+  "afterMemories": 3,
+  "requiredSourceSessions": 17,
+  "prefixBackgroundCharged": 40,
+  "prefixBackgroundCap": 100,
+  "runs": [
+    {
+      "instanceId": "django__django-10554",
+      "arm": "baseline",
+      "resolved": false,
+      "usage": {
+        "foreground": {
+          "requests": 40,
+          "unknownUsage": 0,
+          "inputTokens": 659735,
+          "outputTokens": 4455,
+          "totalTokens": 664190
+        },
+        "learning": {
+          "requests": 0,
+          "unknownUsage": 0,
+          "inputTokens": 0,
+          "outputTokens": 0,
+          "totalTokens": 0
+        }
+      },
+      "reconstructedRequests": 40,
+      "baselineIsolation": "PASS",
+      "memoryDelivered": false,
+      "skillBodyDelivered": false,
+      "beforeSkills": 0,
+      "afterSkills": 0,
+      "beforeMemory": 0,
+      "afterMemory": 0,
+      "evidenceSha256": {
+        "model-requests.json": "395c0dca46b02228332ae2973f237407606fec92e43892ab4b64f4b6adc99440",
+        "receipt.json": "670ab87aa6e3fc95fbc3e3259d840ac8b18ad5f70651f5711924aadbf90dfcf1",
+        "initial.json": "155ee814d4b63bf14bc6941451de118e8a831a30425f7fe1ab6ca0a3f6720be0",
+        "reconstruction.json": "993b9c4e58953f7ae32b2a38690535478de136ba52089af747c11faa0f8cba00",
+        "tool-results.json": "2a9ac34627eb1b69218b0746d99343b943ba1bc1a9319b0b6586fcc24bdc385f"
+      }
+    },
+    {
+      "instanceId": "django__django-10554",
+      "arm": "rsi",
+      "resolved": false,
+      "usage": {
+        "foreground": {
+          "requests": 40,
+          "unknownUsage": 0,
+          "inputTokens": 623214,
+          "outputTokens": 3526,
+          "totalTokens": 626740
+        },
+        "learning": {
+          "requests": 6,
+          "unknownUsage": 0,
+          "inputTokens": 81812,
+          "outputTokens": 5504,
+          "totalTokens": 87316
+        }
+      },
+      "reconstructedRequests": 46,
+      "baselineIsolation": null,
+      "memoryDelivered": false,
+      "skillBodyDelivered": false,
+      "beforeSkills": 0,
+      "afterSkills": 3,
+      "beforeMemory": 0,
+      "afterMemory": 0,
+      "evidenceSha256": {
+        "model-requests.json": "e802eea51f020cae1946589671aaec4bb878efad95e296c5d7b09a6588a88c28",
+        "receipt.json": "131afaf07513dcf0045b7cf178ffad6ddb6e695afc1c33ffe0a4b616f8b99eb1",
+        "initial.json": "6a9ddfb66ba3f2cd6eaacd03978ec744622647d8a6a0eb6c5352cc2bf75a9285",
+        "reconstruction.json": "16056cb7433c7877bddf27a550dacd7eb5712c40e4de218ec0ab3239a16a7b6c",
+        "tool-results.json": "c9c807b59ceebfbdf9a8e43cb212fbd3544a55d85fbab593adc662c9b625855c"
+      }
+    },
+    {
+      "instanceId": "django__django-10880",
+      "arm": "baseline",
+      "resolved": true,
+      "usage": {
+        "foreground": {
+          "requests": 40,
+          "unknownUsage": 0,
+          "inputTokens": 464314,
+          "outputTokens": 4866,
+          "totalTokens": 469180
+        },
+        "learning": {
+          "requests": 0,
+          "unknownUsage": 0,
+          "inputTokens": 0,
+          "outputTokens": 0,
+          "totalTokens": 0
+        }
+      },
+      "reconstructedRequests": 40,
+      "baselineIsolation": "PASS",
+      "memoryDelivered": false,
+      "skillBodyDelivered": false,
+      "beforeSkills": 0,
+      "afterSkills": 0,
+      "beforeMemory": 0,
+      "afterMemory": 0,
+      "evidenceSha256": {
+        "model-requests.json": "437fd94de562a4d326c10eb20bc0a4a0fa4f6c8297f0d316a945931d7138f131",
+        "receipt.json": "acc06c4e4f6643f8bd25456ce1bf6cef7c4e24d2d8eedc6e832fe057230f2b00",
+        "initial.json": "d9820de56f60b13fc4eba7146039c87aa93a7a2746e10417d953071abb6019d7",
+        "reconstruction.json": "279320125f1f35c1db2dadf446e8e59d42eb704139c7234a8766361cf9f8c942",
+        "tool-results.json": "8c74b5d83014921e01e4914115200701c109d6ac960ca52808739be6b623d224"
+      }
+    },
+    {
+      "instanceId": "django__django-10880",
+      "arm": "rsi",
+      "resolved": false,
+      "usage": {
+        "foreground": {
+          "requests": 30,
+          "unknownUsage": 0,
+          "inputTokens": 428966,
+          "outputTokens": 4724,
+          "totalTokens": 433690
+        },
+        "learning": {
+          "requests": 8,
+          "unknownUsage": 0,
+          "inputTokens": 134701,
+          "outputTokens": 4078,
+          "totalTokens": 138779
+        }
+      },
+      "reconstructedRequests": 38,
+      "baselineIsolation": null,
+      "memoryDelivered": false,
+      "skillBodyDelivered": true,
+      "beforeSkills": 3,
+      "afterSkills": 4,
+      "beforeMemory": 0,
+      "afterMemory": 0,
+      "evidenceSha256": {
+        "model-requests.json": "8c0d85fc534c85915daf944b80050585dc91a34e9d9132e9a37629d736c97414",
+        "receipt.json": "66f85dac04900cc252a6bf0608803db2c17fbc31d9ea4b5f7400d529995c2814",
+        "initial.json": "24d6f82f1189b0cdfea165a361fd0dbf9e0a7511872c531479cc1c6ff98d8904",
+        "reconstruction.json": "4ebb5fe1ef500b033424d83cf60a37cff0a5a196acb489ee957d2be220a8ab6a",
+        "tool-results.json": "8017db6fa4f1c897115a1ba6888e5dad106a563f2e382f5e0bbcbb59b462fbfd"
+      }
+    },
+    {
+      "instanceId": "django__django-10914",
+      "arm": "baseline",
+      "resolved": true,
+      "usage": {
+        "foreground": {
+          "requests": 40,
+          "unknownUsage": 0,
+          "inputTokens": 676385,
+          "outputTokens": 4884,
+          "totalTokens": 681269
+        },
+        "learning": {
+          "requests": 0,
+          "unknownUsage": 0,
+          "inputTokens": 0,
+          "outputTokens": 0,
+          "totalTokens": 0
+        }
+      },
+      "reconstructedRequests": 40,
+      "baselineIsolation": "PASS",
+      "memoryDelivered": false,
+      "skillBodyDelivered": false,
+      "beforeSkills": 0,
+      "afterSkills": 0,
+      "beforeMemory": 0,
+      "afterMemory": 0,
+      "evidenceSha256": {
+        "model-requests.json": "91be658050604bbb2e9d7c74a410af70aeedba9c367cd67975238a5b0b72941e",
+        "receipt.json": "7b08a2b0670e7982e31f9da1b6e497ce34fb87da7b4a665e1161102b899f2717",
+        "initial.json": "18fd19bc14f55c2ff546fb37c923f3359f51214e72b1a30ea205fc9e40aba5b4",
+        "reconstruction.json": "09c8517dd73d447a5658257e6d64b341bcec530fd21d5fe3c0b1d289dcd72dda",
+        "tool-results.json": "8766ab2c3e914bb2974ac0f6863edefb784f7b1183f17e7b6fb16d4b0d92ad51"
+      }
+    },
+    {
+      "instanceId": "django__django-10914",
+      "arm": "rsi",
+      "resolved": true,
+      "usage": {
+        "foreground": {
+          "requests": 40,
+          "unknownUsage": 0,
+          "inputTokens": 664314,
+          "outputTokens": 4635,
+          "totalTokens": 668949
+        },
+        "learning": {
+          "requests": 8,
+          "unknownUsage": 0,
+          "inputTokens": 86845,
+          "outputTokens": 4939,
+          "totalTokens": 91784
+        }
+      },
+      "reconstructedRequests": 48,
+      "baselineIsolation": null,
+      "memoryDelivered": false,
+      "skillBodyDelivered": true,
+      "beforeSkills": 4,
+      "afterSkills": 4,
+      "beforeMemory": 0,
+      "afterMemory": 1,
+      "evidenceSha256": {
+        "model-requests.json": "53d5d0c6590b1faf677cbf0610647ed178eba727912a77baa836dc49c153ddf4",
+        "receipt.json": "a81975ef8dc3f0ccdb7d2fd78a41f84d92e1d98f2075f3a942a4f9b052e622e0",
+        "initial.json": "3e78f355c578c29aaf393bfa72061376f4073419678fb0069cefa27c8f39785d",
+        "reconstruction.json": "67afb1578f68d77f034081a34fa970365f427b1e5f7d4d28a08a4e2867d7279f",
+        "tool-results.json": "b6bcd2ba2030c116e900824343360d3b3490880f9ae89c616f3110d1a3516c65"
+      }
+    },
+    {
+      "instanceId": "django__django-10999",
+      "arm": "baseline",
+      "resolved": false,
+      "usage": {
+        "foreground": {
+          "requests": 28,
+          "unknownUsage": 0,
+          "inputTokens": 338421,
+          "outputTokens": 4456,
+          "totalTokens": 342877
+        },
+        "learning": {
+          "requests": 0,
+          "unknownUsage": 0,
+          "inputTokens": 0,
+          "outputTokens": 0,
+          "totalTokens": 0
+        }
+      },
+      "reconstructedRequests": 28,
+      "baselineIsolation": "PASS",
+      "memoryDelivered": false,
+      "skillBodyDelivered": false,
+      "beforeSkills": 0,
+      "afterSkills": 0,
+      "beforeMemory": 0,
+      "afterMemory": 0,
+      "evidenceSha256": {
+        "model-requests.json": "db2cec419757a48ee2935568cb4b206b56c62a7570a3e515801db2e33cc4d865",
+        "receipt.json": "9aae66af600ead5cea146f7e2a76b4358e32e48612fec56fae90c4122282f729",
+        "initial.json": "43fff645b2de450268f50d9c2ffdb21523d3dd071eed0dab70db1e19527933fb",
+        "reconstruction.json": "bdf2197a89f17733a1062fe0e4876ef4fb5633b40d563388100f540b304ed88d",
+        "tool-results.json": "dc7c8e444b5c6f13f685f2483f6ab1b303b7bd6ca95455de5da7994ec925feb5"
+      }
+    },
+    {
+      "instanceId": "django__django-10999",
+      "arm": "rsi",
+      "resolved": false,
+      "usage": {
+        "foreground": {
+          "requests": 13,
+          "unknownUsage": 0,
+          "inputTokens": 187344,
+          "outputTokens": 2566,
+          "totalTokens": 189910
+        },
+        "learning": {
+          "requests": 18,
+          "unknownUsage": 0,
+          "inputTokens": 216087,
+          "outputTokens": 7543,
+          "totalTokens": 223630
+        }
+      },
+      "reconstructedRequests": 31,
+      "baselineIsolation": null,
+      "memoryDelivered": true,
+      "skillBodyDelivered": true,
+      "beforeSkills": 4,
+      "afterSkills": 5,
+      "beforeMemory": 1,
+      "afterMemory": 3,
+      "evidenceSha256": {
+        "model-requests.json": "61fb0f759828dff5e23bd7e292352acd034849bddf22406d76c0d18e4d794a45",
+        "receipt.json": "b9360ee761a159e29da22c2edf93791935b8cd586df64904c92aee80347329d4",
+        "initial.json": "9a4f7a5acd75caf03f5aa46860109225fd0f6f55c07a04532d11905b26a5a68b",
+        "reconstruction.json": "9f86c2d81c5fc3e5e8c9c866e620133ecf9534cc3cdfc79423f0ae7172c0124b",
+        "tool-results.json": "c1831605e3a0c940f5274b67abc699cf71cc073c0e8f190fbfe05b196cbce265"
+      }
+    }
+  ],
+  "totalRequests": 311,
+  "knownTotalTokens": 4618314,
+  "unknownUsage": 0
+}
