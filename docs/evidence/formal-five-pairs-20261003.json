@@ -1,0 +1,587 @@
+{
+  "status": "PARTIAL_FIXED_PROTOCOL_5_OF_20",
+  "formalImplementationRevision": "99af6ba2d10250d2950dc08983211feac5cdf69b",
+  "completePairs": 5,
+  "plannedPairs": 20,
+  "gain": 1,
+  "loss": 1,
+  "resolvedInCompletePairs": {
+    "baseline": 3,
+    "rsi": 3
+  },
+  "pairs": [
+    {
+      "instanceId": "django__django-11066",
+      "baseline": true,
+      "rsi": false,
+      "protocolDeviation": null,
+      "baselineUsage": {
+        "phases": {
+          "foreground": {
+            "requests": 14,
+            "usageUnavailableRuns": false,
+            "inputTokens": 95110,
+            "knownInputTokens": 95110,
+            "missingInputTokens": 0,
+            "outputTokens": 1448,
+            "knownOutputTokens": 1448,
+            "missingOutputTokens": 0,
+            "totalTokens": 96558,
+            "knownTotalTokens": 96558,
+            "missingTotalTokens": 0
+          },
+          "learning": {
+            "requests": 0,
+            "usageUnavailableRuns": false,
+            "inputTokens": 0,
+            "knownInputTokens": 0,
+            "missingInputTokens": 0,
+            "outputTokens": 0,
+            "knownOutputTokens": 0,
+            "missingOutputTokens": 0,
+            "totalTokens": 0,
+            "knownTotalTokens": 0,
+            "missingTotalTokens": 0
+          }
+        },
+        "total": {
+          "requests": 14,
+          "usageUnavailableRuns": false,
+          "inputTokens": 95110,
+          "knownInputTokens": 95110,
+          "missingInputTokens": 0,
+          "outputTokens": 1448,
+          "knownOutputTokens": 1448,
+          "missingOutputTokens": 0,
+          "totalTokens": 96558,
+          "knownTotalTokens": 96558,
+          "missingTotalTokens": 0
+        }
+      },
+      "baselineMechanism": {
+        "memoryDelivered": false,
+        "skillBodyDelivered": false
+      },
+      "rsiUsage": {
+        "phases": {
+          "foreground": {
+            "requests": 40,
+            "usageUnavailableRuns": false,
+            "inputTokens": 849113,
+            "knownInputTokens": 849113,
+            "missingInputTokens": 0,
+            "outputTokens": 5103,
+            "knownOutputTokens": 5103,
+            "missingOutputTokens": 0,
+            "totalTokens": 854216,
+            "knownTotalTokens": 854216,
+            "missingTotalTokens": 0
+          },
+          "learning": {
+            "requests": 5,
+            "usageUnavailableRuns": false,
+            "inputTokens": 69830,
+            "knownInputTokens": 69830,
+            "missingInputTokens": 0,
+            "outputTokens": 3445,
+            "knownOutputTokens": 3445,
+            "missingOutputTokens": 0,
+            "totalTokens": 73275,
+            "knownTotalTokens": 73275,
+            "missingTotalTokens": 0
+          }
+        },
+        "total": {
+          "requests": 45,
+          "usageUnavailableRuns": false,
+          "inputTokens": 918943,
+          "knownInputTokens": 918943,
+          "missingInputTokens": 0,
+          "outputTokens": 8548,
+          "knownOutputTokens": 8548,
+          "missingOutputTokens": 0,
+          "totalTokens": 927491,
+          "knownTotalTokens": 927491,
+          "missingTotalTokens": 0
+        }
+      },
+      "rsiMechanism": {
+        "memoryDelivered": true,
+        "skillBodyDelivered": true
+      }
+    },
+    {
+      "instanceId": "django__django-11087",
+      "baseline": false,
+      "rsi": false,
+      "protocolDeviation": "USER_INTERRUPTION_NATIVE_CONTINUATION",
+      "baselineUsage": {
+        "phases": {
+          "foreground": {
+            "requests": 40,
+            "usageUnavailableRuns": false,
+            "inputTokens": 836457,
+            "knownInputTokens": 836457,
+            "missingInputTokens": 0,
+            "outputTokens": 5682,
+            "knownOutputTokens": 5682,
+            "missingOutputTokens": 0,
+            "totalTokens": 842139,
+            "knownTotalTokens": 842139,
+            "missingTotalTokens": 0
+          },
+          "learning": {
+            "requests": 0,
+            "usageUnavailableRuns": false,
+            "inputTokens": 0,
+            "knownInputTokens": 0,
+            "missingInputTokens": 0,
+            "outputTokens": 0,
+            "knownOutputTokens": 0,
+            "missingOutputTokens": 0,
+            "totalTokens": 0,
+            "knownTotalTokens": 0,
+            "missingTotalTokens": 0
+          }
+        },
+        "total": {
+          "requests": 40,
+          "usageUnavailableRuns": false,
+          "inputTokens": 836457,
+          "knownInputTokens": 836457,
+          "missingInputTokens": 0,
+          "outputTokens": 5682,
+          "knownOutputTokens": 5682,
+          "missingOutputTokens": 0,
+          "totalTokens": 842139,
+          "knownTotalTokens": 842139,
+          "missingTotalTokens": 0
+        }
+      },
+      "baselineMechanism": {
+        "memoryDelivered": false,
+        "skillBodyDelivered": false
+      },
+      "rsiUsage": {
+        "phases": {
+          "foreground": {
+            "requests": 40,
+            "usageUnavailableRuns": false,
+            "inputTokens": null,
+            "knownInputTokens": 1113383,
+            "missingInputTokens": 1,
+            "outputTokens": null,
+            "knownOutputTokens": 5288,
+            "missingOutputTokens": 1,
+            "totalTokens": null,
+            "knownTotalTokens": 1118671,
+            "missingTotalTokens": 1
+          },
+          "learning": {
+            "requests": 10,
+            "usageUnavailableRuns": false,
+            "inputTokens": 168069,
+            "knownInputTokens": 168069,
+            "missingInputTokens": 0,
+            "outputTokens": 4560,
+            "knownOutputTokens": 4560,
+            "missingOutputTokens": 0,
+            "totalTokens": 172629,
+            "knownTotalTokens": 172629,
+            "missingTotalTokens": 0
+          }
+        },
+        "total": {
+          "requests": 50,
+          "usageUnavailableRuns": false,
+          "inputTokens": null,
+          "knownInputTokens": 1281452,
+          "missingInputTokens": 1,
+          "outputTokens": null,
+          "knownOutputTokens": 9848,
+          "missingOutputTokens": 1,
+          "totalTokens": null,
+          "knownTotalTokens": 1291300,
+          "missingTotalTokens": 1
+        }
+      },
+      "rsiMechanism": {
+        "memoryDelivered": true,
+        "skillBodyDelivered": true
+      }
+    },
+    {
+      "instanceId": "django__django-11095",
+      "baseline": false,
+      "rsi": true,
+      "protocolDeviation": null,
+      "baselineUsage": {
+        "phases": {
+          "foreground": {
+            "requests": 40,
+            "usageUnavailableRuns": false,
+            "inputTokens": 511328,
+            "knownInputTokens": 511328,
+            "missingInputTokens": 0,
+            "outputTokens": 5440,
+            "knownOutputTokens": 5440,
+            "missingOutputTokens": 0,
+            "totalTokens": 516768,
+            "knownTotalTokens": 516768,
+            "missingTotalTokens": 0
+          },
+          "learning": {
+            "requests": 0,
+            "usageUnavailableRuns": false,
+            "inputTokens": 0,
+            "knownInputTokens": 0,
+            "missingInputTokens": 0,
+            "outputTokens": 0,
+            "knownOutputTokens": 0,
+            "missingOutputTokens": 0,
+            "totalTokens": 0,
+            "knownTotalTokens": 0,
+            "missingTotalTokens": 0
+          }
+        },
+        "total": {
+          "requests": 40,
+          "usageUnavailableRuns": false,
+          "inputTokens": 511328,
+          "knownInputTokens": 511328,
+          "missingInputTokens": 0,
+          "outputTokens": 5440,
+          "knownOutputTokens": 5440,
+          "missingOutputTokens": 0,
+          "totalTokens": 516768,
+          "knownTotalTokens": 516768,
+          "missingTotalTokens": 0
+        }
+      },
+      "baselineMechanism": {
+        "memoryDelivered": false,
+        "skillBodyDelivered": false
+      },
+      "rsiUsage": {
+        "phases": {
+          "foreground": {
+            "requests": 40,
+            "usageUnavailableRuns": false,
+            "inputTokens": 509835,
+            "knownInputTokens": 509835,
+            "missingInputTokens": 0,
+            "outputTokens": 3846,
+            "knownOutputTokens": 3846,
+            "missingOutputTokens": 0,
+            "totalTokens": 513681,
+            "knownTotalTokens": 513681,
+            "missingTotalTokens": 0
+          },
+          "learning": {
+            "requests": 9,
+            "usageUnavailableRuns": false,
+            "inputTokens": 86008,
+            "knownInputTokens": 86008,
+            "missingInputTokens": 0,
+            "outputTokens": 4818,
+            "knownOutputTokens": 4818,
+            "missingOutputTokens": 0,
+            "totalTokens": 90826,
+            "knownTotalTokens": 90826,
+            "missingTotalTokens": 0
+          }
+        },
+        "total": {
+          "requests": 49,
+          "usageUnavailableRuns": false,
+          "inputTokens": 595843,
+          "knownInputTokens": 595843,
+          "missingInputTokens": 0,
+          "outputTokens": 8664,
+          "knownOutputTokens": 8664,
+          "missingOutputTokens": 0,
+          "totalTokens": 604507,
+          "knownTotalTokens": 604507,
+          "missingTotalTokens": 0
+        }
+      },
+      "rsiMechanism": {
+        "memoryDelivered": true,
+        "skillBodyDelivered": true
+      }
+    },
+    {
+      "instanceId": "django__django-11099",
+      "baseline": true,
+      "rsi": true,
+      "protocolDeviation": null,
+      "baselineUsage": {
+        "phases": {
+          "foreground": {
+            "requests": 17,
+            "usageUnavailableRuns": false,
+            "inputTokens": 110776,
+            "knownInputTokens": 110776,
+            "missingInputTokens": 0,
+            "outputTokens": 2325,
+            "knownOutputTokens": 2325,
+            "missingOutputTokens": 0,
+            "totalTokens": 113101,
+            "knownTotalTokens": 113101,
+            "missingTotalTokens": 0
+          },
+          "learning": {
+            "requests": 0,
+            "usageUnavailableRuns": false,
+            "inputTokens": 0,
+            "knownInputTokens": 0,
+            "missingInputTokens": 0,
+            "outputTokens": 0,
+            "knownOutputTokens": 0,
+            "missingOutputTokens": 0,
+            "totalTokens": 0,
+            "knownTotalTokens": 0,
+            "missingTotalTokens": 0
+          }
+        },
+        "total": {
+          "requests": 17,
+          "usageUnavailableRuns": false,
+          "inputTokens": 110776,
+          "knownInputTokens": 110776,
+          "missingInputTokens": 0,
+          "outputTokens": 2325,
+          "knownOutputTokens": 2325,
+          "missingOutputTokens": 0,
+          "totalTokens": 113101,
+          "knownTotalTokens": 113101,
+          "missingTotalTokens": 0
+        }
+      },
+      "baselineMechanism": {
+        "memoryDelivered": false,
+        "skillBodyDelivered": false
+      },
+      "rsiUsage": {
+        "phases": {
+          "foreground": {
+            "requests": 17,
+            "usageUnavailableRuns": false,
+            "inputTokens": 212617,
+            "knownInputTokens": 212617,
+            "missingInputTokens": 0,
+            "outputTokens": 2702,
+            "knownOutputTokens": 2702,
+            "missingOutputTokens": 0,
+            "totalTokens": 215319,
+            "knownTotalTokens": 215319,
+            "missingTotalTokens": 0
+          },
+          "learning": {
+            "requests": 10,
+            "usageUnavailableRuns": false,
+            "inputTokens": 174254,
+            "knownInputTokens": 174254,
+            "missingInputTokens": 0,
+            "outputTokens": 4109,
+            "knownOutputTokens": 4109,
+            "missingOutputTokens": 0,
+            "totalTokens": 178363,
+            "knownTotalTokens": 178363,
+            "missingTotalTokens": 0
+          }
+        },
+        "total": {
+          "requests": 27,
+          "usageUnavailableRuns": false,
+          "inputTokens": 386871,
+          "knownInputTokens": 386871,
+          "missingInputTokens": 0,
+          "outputTokens": 6811,
+          "knownOutputTokens": 6811,
+          "missingOutputTokens": 0,
+          "totalTokens": 393682,
+          "knownTotalTokens": 393682,
+          "missingTotalTokens": 0
+        }
+      },
+      "rsiMechanism": {
+        "memoryDelivered": true,
+        "skillBodyDelivered": true
+      }
+    },
+    {
+      "instanceId": "django__django-11119",
+      "baseline": true,
+      "rsi": true,
+      "protocolDeviation": null,
+      "baselineUsage": {
+        "phases": {
+          "foreground": {
+            "requests": 21,
+            "usageUnavailableRuns": false,
+            "inputTokens": 217564,
+            "knownInputTokens": 217564,
+            "missingInputTokens": 0,
+            "outputTokens": 2316,
+            "knownOutputTokens": 2316,
+            "missingOutputTokens": 0,
+            "totalTokens": 219880,
+            "knownTotalTokens": 219880,
+            "missingTotalTokens": 0
+          },
+          "learning": {
+            "requests": 0,
+            "usageUnavailableRuns": false,
+            "inputTokens": 0,
+            "knownInputTokens": 0,
+            "missingInputTokens": 0,
+            "outputTokens": 0,
+            "knownOutputTokens": 0,
+            "missingOutputTokens": 0,
+            "totalTokens": 0,
+            "knownTotalTokens": 0,
+            "missingTotalTokens": 0
+          }
+        },
+        "total": {
+          "requests": 21,
+          "usageUnavailableRuns": false,
+          "inputTokens": 217564,
+          "knownInputTokens": 217564,
+          "missingInputTokens": 0,
+          "outputTokens": 2316,
+          "knownOutputTokens": 2316,
+          "missingOutputTokens": 0,
+          "totalTokens": 219880,
+          "knownTotalTokens": 219880,
+          "missingTotalTokens": 0
+        }
+      },
+      "baselineMechanism": {
+        "memoryDelivered": false,
+        "skillBodyDelivered": false
+      },
+      "rsiUsage": {
+        "phases": {
+          "foreground": {
+            "requests": 24,
+            "usageUnavailableRuns": false,
+            "inputTokens": 378012,
+            "knownInputTokens": 378012,
+            "missingInputTokens": 0,
+            "outputTokens": 3115,
+            "knownOutputTokens": 3115,
+            "missingOutputTokens": 0,
+            "totalTokens": 381127,
+            "knownTotalTokens": 381127,
+            "missingTotalTokens": 0
+          },
+          "learning": {
+            "requests": 10,
+            "usageUnavailableRuns": false,
+            "inputTokens": 147619,
+            "knownInputTokens": 147619,
+            "missingInputTokens": 0,
+            "outputTokens": 3846,
+            "knownOutputTokens": 3846,
+            "missingOutputTokens": 0,
+            "totalTokens": 151465,
+            "knownTotalTokens": 151465,
+            "missingTotalTokens": 0
+          }
+        },
+        "total": {
+          "requests": 34,
+          "usageUnavailableRuns": false,
+          "inputTokens": 525631,
+          "knownInputTokens": 525631,
+          "missingInputTokens": 0,
+          "outputTokens": 6961,
+          "knownOutputTokens": 6961,
+          "missingOutputTokens": 0,
+          "totalTokens": 532592,
+          "knownTotalTokens": 532592,
+          "missingTotalTokens": 0
+        }
+      },
+      "rsiMechanism": {
+        "memoryDelivered": true,
+        "skillBodyDelivered": true
+      }
+    }
+  ],
+  "delivery": {
+    "gradedHeldOutRsi": 5,
+    "memoryBodyFromPrefix": 5,
+    "skillBodyFromPrefix": 5,
+    "bothBodiesFromPrefix": 5,
+    "gradedBaselineIsolationPass": 5,
+    "generatedSkillNamedInUserPrompts": false,
+    "profileL2L3FullBodyConsumptionSeparatelyVerified": false
+  },
+  "integrity": {
+    "frozenImplementationPass": true,
+    "publicRuntimeTreeVersionPass": true,
+    "allCompletedHeldOutCopiesMatch": true,
+    "sourceInventorySha256": "028b42b5705219eadc3fbf3ea1f5dceacd92c1c61c24811c613634dc7955a6bf",
+    "sourceFilesUnchanged": true,
+    "copies": [
+      {
+        "instanceId": "django__django-11066",
+        "matches": true,
+        "receiptSha256": "c9b4b943ba7de7c44a740a81c34ba548a2a906c03ae10318d77d99d445efe18a"
+      },
+      {
+        "instanceId": "django__django-11087",
+        "matches": true,
+        "receiptSha256": "c9b4b943ba7de7c44a740a81c34ba548a2a906c03ae10318d77d99d445efe18a"
+      },
+      {
+        "instanceId": "django__django-11095",
+        "matches": true,
+        "receiptSha256": "c9b4b943ba7de7c44a740a81c34ba548a2a906c03ae10318d77d99d445efe18a"
+      },
+      {
+        "instanceId": "django__django-11099",
+        "matches": true,
+        "receiptSha256": "c9b4b943ba7de7c44a740a81c34ba548a2a906c03ae10318d77d99d445efe18a"
+      },
+      {
+        "instanceId": "django__django-11119",
+        "matches": true,
+        "receiptSha256": "c9b4b943ba7de7c44a740a81c34ba548a2a906c03ae10318d77d99d445efe18a"
+      }
+    ]
+  },
+  "costIncludesPrefixAndFivePairs": {
+    "baseline": {
+      "requests": 280,
+      "usageUnavailableRuns": 15,
+      "inputTokens": null,
+      "knownInputTokens": 3910090,
+      "missingInputTokens": 0,
+      "outputTokens": null,
+      "knownOutputTokens": 35872,
+      "missingOutputTokens": 0,
+      "totalTokens": null,
+      "knownTotalTokens": 3945962,
+      "missingTotalTokens": 0
+    },
+    "rsi": {
+      "requests": 368,
+      "usageUnavailableRuns": 15,
+      "inputTokens": null,
+      "knownInputTokens": 6132023,
+      "missingInputTokens": 1,
+      "outputTokens": null,
+      "knownOutputTokens": 78347,
+      "missingOutputTokens": 1,
+      "totalTokens": null,
+      "knownTotalTokens": 6210370,
+      "missingTotalTokens": 1
+    }
+  },
+  "analysisSha256": "9476cef2b760b50c86164f5316096e968f3654b48527f9fdc72fa0a951a9ba60",
+  "modelCallsInAudit": 0
+}
