@@ -6,6 +6,7 @@ import { openLocalCore } from './local-core.js';
 import { MemoryPipelineManager, parseSkillFile, buildFtsQuery } from './core-entry.js';
 import { copyResources,versionResources } from './resources.js';
 import { State, workspace, type Settings } from './state.js';
+import { listAllSkills, listAllVersions } from './asset-pages.js';
 
 const ids = (scope: string) => ({ user_id:'local-user', team_id:scope, agent_id:'local-agent' });
 const text = (message: any) => (message?.content ?? []).map((block: any) => block.type === 'text' ? block.text : JSON.stringify(block)).join('\n');
@@ -234,7 +235,7 @@ export class Runtime {
     const entry=await this.scope(cwd), result:any[]=[];
     if (!this.state.settings().enabled) return result;
     for (const scope of [entry.id,'global']) {
-      const core=await this.core(scope),list=await core.skills.list(ids(scope));
+      const core=await this.core(scope),list=await listAllSkills(core.skills,ids(scope));
       for (const skill of list.items) if (!this.state.disabled(scope,skill.skill_id)) result.push({name:visibleName(skill.name),description:skill.description,invocation:{modelInvocable:true,userInvocable:true},source:'dsh-rsi',provider:'dsh-rsi',rank:scope === entry.id ? 290 : 295,locator:{scope,id:skill.skill_id},metadata:{scope,id:skill.skill_id,version:skill.version},resourceBase:{kind:'directory',path:join(core.resourceDir,'skills',skill.skill_id,`v${skill.version}`,'files')}});
     }
     return result;
@@ -252,7 +253,7 @@ export class Runtime {
       const core=await this.core(scope);
       layers[scope]=await core.layerCounts();
       memory.push(...(await core.readMemories()).map((row:any) => ({...row,scope})));
-      skills.push(...(await core.skills.list(ids(scope))).items.map((row:any) => ({...row,scope,visibleName:visibleName(row.name),disabled:this.state.disabled(scope,row.skill_id)})));
+      skills.push(...(await listAllSkills(core.skills,ids(scope))).items.map((row:any) => ({...row,scope,visibleName:visibleName(row.name),disabled:this.state.disabled(scope,row.skill_id)})));
     }
     return {workspace:entry,settings:this.state.settings(),usage:this.state.usage(),memory,skills,layers,jobs:this.state.jobs(entry.id).map(({payload,...job}:any) => ({...job,sourceSessionId:payload.sessionId,reason:payload.reason})),workspaces:this.state.db.prepare("SELECT value FROM kv WHERE key LIKE 'scope:%'").all().map(row => JSON.parse(row.value as string).cwd).filter((value,index,array) => array.indexOf(value) === index),profilePending:!!this.state.get(`profile-invalid:${entry.id}`)||!!this.state.get('profile-invalid:global')};
   }
@@ -267,7 +268,7 @@ export class Runtime {
     if (operation === 'snapshot') return this.snapshot(cwd);
     if (operation === 'settings') { const before=this.state.settings(); const after=this.state.configure(payload.settings); if (before.everyNConversations !== after.everyNConversations || before.idleSeconds !== after.idleSeconds) { for (const [key,pipeline] of this.pipelines) { await pipeline.destroy(); this.pipelines.delete(key); await this.createPipeline(key); } } this.invalidate(); await this.resume(); return this.snapshot(cwd); }
     if (operation === 'learn') return this.learnNow(cwd);
-    if (operation === 'versions') return core.skills.listVersions({...ids(scope),skill_id:payload.id});
+    if (operation === 'versions') return listAllVersions(core.skills,{...ids(scope),skill_id:payload.id});
     if (operation === 'skill') return core.skills.get({...ids(scope),skill_id:payload.id,version:payload.version});
     if (operation === 'memoryLayer') {
       if(!['L0','L1','L2','L3'].includes(payload.layer))throw new Error('未知记忆层级');
@@ -320,8 +321,8 @@ export class Runtime {
     }
     if (operation === 'export') {
       const skills=[];
-      for (const head of (await core.skills.list(ids(scope))).items) {
-        const versions=await core.skills.listVersions({...ids(scope),skill_id:head.skill_id});
+      for (const head of (await listAllSkills(core.skills,ids(scope))).items) {
+        const versions=await listAllVersions(core.skills,{...ids(scope),skill_id:head.skill_id});
         const contents=[]; for(const version of versions.items) contents.push({...version,resources:await versionResources(core,version)});skills.push({head,versions:contents});
       }
       const profileFiles=await copyResources({kind:'directory',path:core.profileDir}).catch((error:any)=>{if(error.code==='ENOENT')return [];throw error;});

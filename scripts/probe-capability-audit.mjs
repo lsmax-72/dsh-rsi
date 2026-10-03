@@ -25,14 +25,15 @@ try {
   for(let i=0;i<51;i++){const skill=await core.skills.create({...ids,name:`audit-${i}`,content:content(`audit-${i}`)});if(i===0)oldest=skill;}
   const all=await core.skills.list({...ids,pagination:{limit:1000}});
   const candidates=await runtime.candidates(cwd),snapshot=await runtime.snapshot(cwd),exported=await runtime.request('export',{cwd});
-  assert.equal(all.total,51);assert.equal(candidates.length,50);assert.equal(snapshot.skills.length,50);assert.equal(exported.skills.length,50);
+  assert.equal(all.total,51);assert.equal(candidates.length,51);assert.equal(snapshot.skills.length,51);assert.equal(exported.skills.length,51);
+  const oldestCandidate=candidates.find(c=>c.locator.id===oldest.skill_id);assert.ok(oldestCandidate);assert.ok((await runtime.definition(oldestCandidate,cwd)).content.includes('离线审计'));
   evidence.skillPagination={stored:all.total,candidates:candidates.length,management:snapshot.skills.length,export:exported.skills.length,omittedSkillIds:all.items.filter(s=>!candidates.some(c=>c.locator.id===s.skill_id)).map(s=>s.skill_id)};
   let head=oldest;
   for(let i=1;i<=50;i++)head=await core.skills.update({...ids,skill_id:head.skill_id,expected_version:head.version,content:content(head.name)+`\n审计修订 ${i}`});
   const versions=await runtime.request('versions',{cwd,id:head.skill_id});
   const exportWithVersions=await runtime.request('export',{cwd});
   const exportedVersions=exportWithVersions.skills.find(s=>s.head.skill_id===head.skill_id).versions;
-  assert.equal(versions.total,51);assert.equal(versions.items.length,50);assert.equal(exportedVersions.length,50);
+  assert.equal(versions.total,51);assert.equal(versions.items.length,51);assert.equal(exportedVersions.length,51);assert.ok(exportedVersions.some(v=>v.version===oldest.version));
   evidence.versionPagination={stored:versions.total,management:versions.items.length,export:exportedVersions.length,oldestVersion:oldest.version,oldestVersionExported:exportedVersions.some(v=>v.version===oldest.version)};
   const marker='WORKSPACE_AUDIT_MEMORY';
   await core.storeMemory({id:'audit-memory',sessionKey:'audit-source',sessionId:'audit-source',taskId:'audit-source-task',content:`${marker} 这个工作区需要先检查测试环境并保留完整失败日志。`,type:'instruction',priority:90,scene_name:'审计',source_message_ids:['fixture-source'],metadata:{}});
@@ -49,6 +50,6 @@ try {
   runtime.state.configure({learningEnabled:false});
   const failed=runtime.state.jobs(entry.id).find(j=>j.id===queued.id);assert.equal(failed.status,'failed');
   evidence.pipelineFailure={jobStatus:failed.status,runnerRejected:false,runnerReturned:result,error:failed.error,explanation:'A non-budget extraction error is caught by process(), which fulfills the native pipeline runner rather than invoking its rejection retry path.'};
-  evidence.status='CONFIRMED_DEFECTS_REPRODUCED';
+  evidence.status='PAGINATION_REPAIR_VERIFIED_OTHER_DEFECTS_REPRODUCED';
   console.log(JSON.stringify(evidence,null,2));
 } finally {await runtime.stop();await rm(root,{recursive:true,force:true});}
