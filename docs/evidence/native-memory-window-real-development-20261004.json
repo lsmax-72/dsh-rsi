@@ -1,0 +1,211 @@
+{
+  "status": "PASS_SMALL_REAL_NATIVE_WINDOW_CHECK",
+  "revision": "d4f27c8",
+  "model": "qwen3.8-27b",
+  "protocolSha256": "6a91eb676142091d42b7a77aa839850a1346e1b63c29f0830f842903a01093cb",
+  "method": "First20 original history messages from failed user in fresh isolated assets; no scorer, no real task execution, no change to frozen attempt",
+  "sourceMessages": 20,
+  "nativeNewMessageBatchSizes": [
+    10,
+    10
+  ],
+  "qualifiedMessageIdsDistinct": 20,
+  "nativeBatchOutputTokens": [
+    930,
+    958
+  ],
+  "nativeBatchFinishReasons": [
+    "stop",
+    "stop"
+  ],
+  "nativeJobs": [
+    {
+      "id": "persona-5-window-development-history:1",
+      "scope": "c52ddf65534b7b4603508435",
+      "session": "persona-5-window-development-history",
+      "turn": 1,
+      "status": "completed",
+      "stages": {
+        "recorded": true,
+        "memoryBatches": {
+          "next": 20,
+          "stored": 8
+        },
+        "memory": {
+          "stored": 8
+        },
+        "skills": {
+          "candidates": []
+        }
+      },
+      "error": null,
+      "created": 1791118109373,
+      "updated": 1791118210084,
+      "sourceSessionId": "persona-5-window-development-history",
+      "reason": {
+        "kind": "completed"
+      }
+    }
+  ],
+  "nativeLayers": {
+    "c52ddf65534b7b4603508435": {
+      "L0": 20,
+      "L1": 5,
+      "L2": 1,
+      "L3": 1
+    },
+    "global": {
+      "L0": 0,
+      "L1": 3,
+      "L2": 1,
+      "L3": 1
+    }
+  },
+  "nativeProfiles": [
+    {
+      "scope": "c52ddf65534b7b4603508435",
+      "trigger": {
+        "should": false,
+        "reason": ""
+      }
+    },
+    {
+      "scope": "global",
+      "trigger": {
+        "should": false,
+        "reason": ""
+      }
+    }
+  ],
+  "nativePipelines": [
+    {
+      "scope": "c52ddf65534b7b4603508435",
+      "queues": {
+        "l1": 0,
+        "l2": 0,
+        "l3": 0,
+        "l1Pending": false,
+        "l2Pending": false,
+        "l3Pending": false,
+        "l1Idle": true,
+        "l2Idle": true,
+        "l3Idle": true
+      },
+      "sessions": [
+        {
+          "sessionKey": "persona-5-window-development-history",
+          "conversation_count": 0,
+          "last_extraction_time": "",
+          "last_extraction_updated_time": "",
+          "last_active_time": 1791118109375,
+          "l2_pending_l1_count": 0,
+          "warmup_threshold": 0,
+          "l2_last_extraction_time": ""
+        },
+        {
+          "sessionKey": "c52ddf65534b7b4603508435",
+          "conversation_count": 0,
+          "last_extraction_time": "2026-10-04T12:51:56.004Z",
+          "last_extraction_updated_time": "2026-10-04T12:50:06.420Z",
+          "last_active_time": 1791118210086,
+          "l2_pending_l1_count": 0,
+          "warmup_threshold": 1,
+          "l2_last_extraction_time": "2026-10-04T12:51:56.004Z"
+        }
+      ]
+    }
+  ],
+  "questionIsolation": {
+    "matches": true,
+    "before": {
+      "jobs": [
+        "persona-5-window-development-history:1"
+      ],
+      "sources": [
+        "persona-5-window-development-history"
+      ],
+      "layers": {
+        "c52ddf65534b7b4603508435": {
+          "L0": 20,
+          "L1": 5,
+          "L2": 1,
+          "L3": 1
+        },
+        "global": {
+          "L0": 0,
+          "L1": 3,
+          "L2": 1,
+          "L3": 1
+        }
+      }
+    },
+    "after": {
+      "jobs": [
+        "persona-5-window-development-history:1"
+      ],
+      "sources": [
+        "persona-5-window-development-history"
+      ],
+      "layers": {
+        "c52ddf65534b7b4603508435": {
+          "L0": 20,
+          "L1": 5,
+          "L2": 1,
+          "L3": 1
+        },
+        "global": {
+          "L0": 0,
+          "L1": 3,
+          "L2": 1,
+          "L3": 1
+        }
+      }
+    }
+  },
+  "receipt": {
+    "status": "COMPLETED",
+    "developmentPilot": true,
+    "formalPersonaMemEvaluation": false,
+    "arm": "rsi",
+    "fixture": false,
+    "personaId": "5-window-development",
+    "questionIds": [
+      "window-check-one",
+      "window-check-two"
+    ],
+    "historyCutoffExclusive": 21,
+    "historySha256": "f9e64d437fdec5ac05fcc2a2d2f50f64e6e5e4e4828b5488bf437f9083bb547a",
+    "foregroundRequests": 2,
+    "learningRequests": 13,
+    "knownTokens": 74361,
+    "unknownActualUsage": 0,
+    "answersProvided": false,
+    "completeHistoryInBothArms": true,
+    "roleProjection": "Historical system backgrounds are labelled producer context; not identical to official standalone roles",
+    "accuracy": null
+  },
+  "learningTokens": 61862,
+  "foregroundTokens": 12499,
+  "knownTokens": 74361,
+  "unknownActualUsage": 0,
+  "realRequests": 15,
+  "learningRequests": 13,
+  "foregroundRequests": 2,
+  "gatewayLedgerMatches": true,
+  "allRequestsReconstructable": true,
+  "wireThinkingOrDeveloperEnabled": false,
+  "nativeSkillCandidates": [],
+  "effectClaim": false,
+  "limitations": [
+    "20 messages rather than the original full60-message failed turn",
+    "Transport checks are not PersonaMem scoring",
+    "No Skill candidates were generated; this run does not establish new Skill-body consumption",
+    "No guarantee for arbitrary content, large histories or all future output lengths"
+  ],
+  "evidenceSha256": {
+    "model-requests.json": "a9010a810254c86d08791576feaf84cfb51ee94afee34f9826a18289ad345d67",
+    "learning.json": "17bf626291e01ff750d020ff2a14b8a7e7e063fa4bfa371caf67e80e0c9ab70e",
+    "reconstruction.json": "fec181cbee61d97c86f612c42cb7ab9ca8a68141587ec743f8e28d2d85c3ce42",
+    "question-isolation.json": "27496cc2ce73347da22bb4d8bc043f74fec70fccfef2f48564d1da5063b7b217"
+  }
+}
