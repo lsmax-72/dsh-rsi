@@ -42,7 +42,7 @@ def summarize(root,freeze,scorer,official_source):
             user['arms'].append({'arm':arm,'runnerReturnCode':record.get('returncode'),'runnerStatus':receipt.get('status'),'scores':scores,'accuracy':sum(q['correct'] for q in scores)/len(scores) if len(scores)==freeze['questionCountPerUser'] else None,'knownTokens':known,'unknownActualUsage':missing,'foregroundTokens':sum(r['usage']['totalTokens'] for r in requests if r.get('usage') and r['phase']!='learning'),'backgroundTokens':sum(r['usage']['totalTokens'] for r in requests if r.get('usage') and r['phase']=='learning'),'gatewayLedgerMatches':True})
         assert len(set(histories))<=1,'Paired user history changed'
         users.append(user)
-    complete=all(len(u['arms'])==2 and all(a['accuracy'] is not None for a in u['arms']) for u in users)
+    complete=all(len(u['arms'])==2 and all(a['accuracy'] is not None and a['runnerReturnCode']==0 and a['runnerStatus']=='COMPLETED' for a in u['arms']) for u in users)
     result={'status':'COMPLETE_INDEPENDENT_SAVED_RESULTS' if complete else 'INCOMPLETE_WITHHOLD_FULL_PAIRED_ESTIMATE','users':users,'plannedUsers':len(users),'knownTokens':total,'unknownActualUsage':unknown,'officialScorerControlsPassed':3,'scoresReturnedToLearning':False,'smallSampleLimit':'Eight correlated user clusters; not the full benchmark or a universal causal guarantee.'}
     if complete:
         delta=[u['arms'][1]['accuracy']-u['arms'][0]['accuracy'] for u in users];rng=random.Random(freeze['selectionSeed']);boot=sorted(sum(rng.choices(delta,k=len(delta)))/len(delta) for _ in range(10000))

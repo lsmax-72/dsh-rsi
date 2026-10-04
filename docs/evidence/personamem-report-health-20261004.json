@@ -1,0 +1,17 @@
+{
+  "status": "PASS_OFFLINE_REPORT_COMPLETENESS_HEALTH_GATE",
+  "realModelRequests": 0,
+  "syntheticDataOnly": true,
+  "beforeRepair": "All four answers available with returncode=1/ERROR could incorrectly publish COMPLETE. Reproduced in independent fixture.",
+  "afterRepairControls": [
+    "healthy-complete-publishes-user-grouped-estimate",
+    "nonzero-return-with-all-answers-withholds-full-estimate",
+    "ERROR-receipt-with-return-zero-withholds-full-estimate",
+    "failed-attempt-costs-retained"
+  ],
+  "actualFreshResultAlreadyIncomplete": true,
+  "previousFrozenSummariesRewritten": false,
+  "nativeRuntimeChanged": false,
+  "verificationCommand": "python3 -B scripts/probe-persona-report-health.py --official-source <verified official source file>",
+  "officialAnswerMethodSha256": "a619e9665cc3d12e82de4876843c979cbd3e6e6781a8fe1c184fd697583935ae"
+}
