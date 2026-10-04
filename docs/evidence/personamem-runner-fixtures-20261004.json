@@ -1,0 +1,95 @@
+{
+  "status": "PASS",
+  "attempts": [
+    {
+      "attempt": "fixture-baseline",
+      "receipt": {
+        "status": "ERROR",
+        "classification": "UNCLASSIFIED_NOT_TASK_FAIL",
+        "error": "session \"persona-0-history\" is not live in this store",
+        "foregroundRequests": 0,
+        "learningRequests": 0,
+        "knownTokens": 0,
+        "unknownActualUsage": 0
+      },
+      "realModelRequests": 0
+    },
+    {
+      "attempt": "fixture-baseline-2",
+      "receipt": {
+        "status": "ERROR",
+        "classification": "UNCLASSIFIED_NOT_TASK_FAIL",
+        "error": "The expression evaluated to a falsy value:\n\n  assert.ok(sent)\n",
+        "foregroundRequests": 0,
+        "learningRequests": 0,
+        "knownTokens": 0,
+        "unknownActualUsage": 0
+      },
+      "realModelRequests": 0
+    },
+    {
+      "attempt": "fixture-rsi",
+      "receipt": {
+        "status": "ERROR",
+        "classification": "UNCLASSIFIED_NOT_TASK_FAIL",
+        "error": "The expression evaluated to a falsy value:\n\n  assert.ok(sent)\n",
+        "foregroundRequests": 0,
+        "learningRequests": 2,
+        "knownTokens": 40,
+        "unknownActualUsage": 0
+      },
+      "realModelRequests": 0
+    },
+    {
+      "attempt": "fixture-baseline-3",
+      "receipt": {
+        "status": "COMPLETED",
+        "developmentPilot": true,
+        "arm": "baseline",
+        "fixture": true,
+        "personaId": "0",
+        "questionIds": [
+          "acd74206-37dc-4756-94a8-b99a395d9a21",
+          "f546a74f-54de-40d0-9d88-8b0e30467d7b"
+        ],
+        "historyCutoffExclusive": 182,
+        "historySha256": "eeb336ef1029bdd8818a0a503b589dcb51bb249be5511729b6645f779ebddb37",
+        "foregroundRequests": 2,
+        "learningRequests": 0,
+        "knownTokens": 40,
+        "unknownActualUsage": 0,
+        "answersProvided": false,
+        "completeHistoryInBothArms": true,
+        "roleProjection": "Historical system backgrounds are labelled producer context; not identical to official standalone roles",
+        "accuracy": null
+      },
+      "realModelRequests": 0
+    },
+    {
+      "attempt": "fixture-rsi-2",
+      "receipt": {
+        "status": "COMPLETED",
+        "developmentPilot": true,
+        "arm": "rsi",
+        "fixture": true,
+        "personaId": "0",
+        "questionIds": [
+          "acd74206-37dc-4756-94a8-b99a395d9a21",
+          "f546a74f-54de-40d0-9d88-8b0e30467d7b"
+        ],
+        "historyCutoffExclusive": 3,
+        "historySha256": "16a184971cf405dd5f5f7df784fdd6f402e168858cb36059e4dd4832ffb5c8bc",
+        "foregroundRequests": 2,
+        "learningRequests": 2,
+        "knownTokens": 80,
+        "unknownActualUsage": 0,
+        "answersProvided": false,
+        "completeHistoryInBothArms": true,
+        "roleProjection": "Historical system backgrounds are labelled producer context; not identical to official standalone roles",
+        "accuracy": null
+      },
+      "realModelRequests": 0
+    }
+  ],
+  "scope": "Full-history baseline fixture and explicit short-history RSI learning fixture; failures preserved, no real requests or quality claim."
+}

@@ -1,0 +1,35 @@
+{
+  "status": "PREREGISTERED_DEVELOPMENT_PILOT",
+  "recordedAt": "2026-10-04T04:09:14.645029+00:00",
+  "personaId": "0",
+  "questionIds": [
+    "acd74206-37dc-4756-94a8-b99a395d9a21",
+    "f546a74f-54de-40d0-9d88-8b0e30467d7b"
+  ],
+  "contextId": "e898d03fec683b1cabf29f57287ff66f8a31842543ecef44b56766844c1c1301",
+  "historyCutoffExclusive": 182,
+  "publicInputSha256": "6d81fc391cf8409633ead223ab9c2e503f878c013cc44e1aa7bb327a89e04f02",
+  "model": "qwen3.8-27b",
+  "providerConfig": "Existing container pilot.patch.json qwen config, reasoning off; no provider substitution",
+  "arms": [
+    "baseline-full-history",
+    "rsi-full-history-plus-native-assets"
+  ],
+  "answerQuestionDispatches": 6,
+  "answerMaxTokensPerRequest": 4096,
+  "wallSecondsPerQuestion": 120,
+  "learningDispatches": 12,
+  "nativeHistoryLearningWindowSeconds": 900,
+  "nativeQuietBarrierSeconds": 45,
+  "answerLearningEnabled": false,
+  "answerScorerOnly": true,
+  "sameHistoryAndProjectionBothArms": true,
+  "taskIsolation": "Existing read-only Docker boundary, no host bind, dedicated state volume, internal model gateway, no shell/file/task code tools",
+  "pairedQuestionHistory": "Each answer gets exactly the same imported prefix, without previous question answers",
+  "allRequestsKnownUsageRequired": true,
+  "localEmbeddingTokens": "Unavailable; calls, characters and time reported separately",
+  "stopRule": "If full history capacity or native import/learning fails, preserve failure and classify; no silent truncation, retry or cap increase. Pilot not formal effect result.",
+  "finalUsersAndBudgets": "Not fixed; pilot user excluded from later independent evaluation",
+  "driverSha256": "507feea57fa3f61e3e5f06fb30c720e933ca8b5e257a1bacd0563be0610bd367",
+  "isolationRunnerSha256": "61f2dd31319879669be0a6cfb74f53adab00b5c8d188f78adbd1512e5420e579"
+}

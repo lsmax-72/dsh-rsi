@@ -47,6 +47,7 @@ def main():
     parser.add_argument('--instance',default='preflight',help='Unique public task ID; reused across its two arms only')
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--fixture', action='store_true')
+    parser.add_argument('--persona-input',type=Path,help='Public PersonaMem input only; answers must be absent')
     parser.add_argument('--formal',action='store_true')
     parser.add_argument('--expected-tree',help='Verified source Git tree for this task')
     parser.add_argument('--expected-version',help='Verified Django version in its scorer image')
@@ -77,7 +78,7 @@ def main():
         parser.error('Interruption control must use a fixture, not a paid model request.')
     if args.arm == 'baseline' and args.seed_assets:
         parser.error('Baseline cannot receive RSI assets.')
-    if not args.fixture and not args.baseline_date:
+    if not args.fixture and not args.persona_input and not args.baseline_date:
         parser.error('Real runs require --baseline-date from the scorer image HEAD at the base source tree; current time changes Django development version.')
     if not args.fixture and not os.environ.get('RSI_MODEL_UPSTREAM'):
         parser.error('Real preflight requires the authorized RSI_MODEL_UPSTREAM environment variable.')
@@ -95,6 +96,15 @@ def main():
         'learningCallBudget':args.learning_call_budget, 'learningDispatchLimit':learning_limit, 'fixtureLearning':args.fixture_learning, 'wallTimeMs':args.wall_seconds*1000,
         'settleMs':args.settle_seconds*1000,'formal':args.formal,'expectedTree':args.expected_tree,'expectedVersion':args.expected_version}
     if args.phases: driver['config']['phases']=json.loads(args.phases.read_text())
+    if args.persona_input:
+        if args.formal or args.phases or args.seed_assets: parser.error('PersonaMem pilot uses its own public history, not coding phases or old snapshots')
+        public=json.loads(args.persona_input.read_text())
+        if len(public.get('questions',[]))!=2 or any('correct_answer' in q for q in public['questions']): parser.error('Exactly two public pilot questions, without answers, are required')
+        driver['name']='/opt/rsi/scripts/personamem-pilot-task.mjs'
+        next(row for row in patch if row['id']=='tools')['config']['mode']='native'
+        driver['config']['phases']=[{'name':q['id']} for q in public['questions']]
+        services[:]=[row for row in services if row['id'] not in ['rsi-fs','rsi-files','rsi-search','rsi-shell','rsi-shell-env','rsi-bash','rsi-ptc']]
+        if args.fixture_learning: next(row for row in services if row['id']=='rsi')['config']['l2DelaySeconds']=86400
     if args.arm == 'baseline': services[:] = [s for s in services if s['id']!='rsi']
     else:
         service = next(s for s in services if s['id']=='rsi')
@@ -109,6 +119,7 @@ def main():
         model_sha=hashlib.sha256(embedding_model.read_bytes()).hexdigest()
         if model_sha!='6fa0c02a9c302be6f977521d399b4de3a46310a4f2621ee0063747881b673f67': parser.error('Use the pinned native local model')
         service['config']['embedding']={'provider':'local','modelPath':'/opt/rsi/embedding.gguf'}
+    if args.persona_input and args.fixture_learning: service['config']['settings']['idleSeconds']=1
     if args.fixture: services[:] = [s for s in services if s['id'] not in ['rsi-qwen','rsi-credentials']]
     prefix = 'rsi-preflight-' + uuid.uuid4().hex[:10]
     network, volume, image = prefix+'-net',prefix+'-state',prefix+':local'
@@ -133,6 +144,10 @@ def main():
             root=Path(temp)
             shutil.copytree(project/'lib',root/'lib')
             shutil.copy2(project/'scripts/pilot-task.mjs',root/'pilot-task.mjs')
+            if args.persona_input:
+                shutil.copy2(project/'scripts/personamem-pilot-task.mjs',root/'personamem-pilot-task.mjs')
+                shutil.copy2(project/'scripts/personamem-history.mjs',root/'personamem-history.mjs')
+                shutil.copy2(args.persona_input,root/'personamem.json')
             shutil.copy2(project/'scripts/audit-session-requests.mjs',root/'audit-session-requests.mjs')
             shutil.copy2(project/'scripts/task-input.mjs',root/'task-input.mjs')
             # Only public problem metadata already present in the prepared task image is reused.
@@ -140,6 +155,8 @@ def main():
             shutil.copy2(project/'package.json',root/'package.json')
             shutil.copy2(project/'package-lock.json',root/'package-lock.json')
             dockerfile = f'FROM {args.image}\nUSER root\nCOPY package.json package-lock.json /opt/rsi/\nRUN cd /opt/rsi && npm ci --ignore-scripts\nCOPY lib /opt/rsi/lib\nCOPY pilot-task.mjs audit-session-requests.mjs task-input.mjs pilot.json /opt/rsi/scripts/\nENV NODE_LLAMA_CPP_GPU=false\n'
+            if args.persona_input:
+                dockerfile += 'COPY personamem-pilot-task.mjs personamem-history.mjs /opt/rsi/scripts/\nCOPY personamem.json /opt/rsi/personamem.json\n'
             if embedding_model:
                 shutil.copy2(embedding_model,root/'embedding.gguf')
                 dockerfile += 'COPY embedding.gguf /opt/rsi/embedding.gguf\n'

@@ -1,0 +1,71 @@
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {mkdirSync,writeFileSync,renameSync,openSync,fsyncSync,closeSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+import {createUserMessage,LlmAdapter} from '@deepseek-ai/dsh-llm';
+import {Session} from '@deepseek-ai/dsh-session';
+import {appendPersonaHistory} from './personamem-history.mjs';
+export const name='personamem-pilot-task';
+export const inject=['llm','agents','sessions','sessionPersistence','tools','skills'];
+
+// Experimental driver only. Native import, learning, recall and Skill tools stay in their normal paths.
+export function apply(ctx,config){
+  const dir='/state/pilot/'+config.instanceId;mkdirSync(dir,{recursive:true});
+  const requests=[],checks=[],answers=[],tools=[],blocked=[];let phase='setup',front=0,back=0,questionCalls=0,lastLearningActivity=Date.now(),rsi;
+  const durable=(name,value)=>{const path=dir+'/'+name,tmp=path+'.tmp';writeFileSync(tmp,JSON.stringify(value,null,2));const fd=openSync(tmp,'r');try{fsyncSync(fd);}finally{closeSync(fd);}renameSync(tmp,path);};
+  const save=()=>durable('model-requests.json',requests);
+  ctx.on('llm/stream',async function*(options,next){
+    const background=options.sessionId.startsWith('rsi-');
+    if(background?back>=config.learningDispatchLimit:questionCalls>=config.dispatchLimit){blocked.push({sessionId:options.sessionId,reason:'EXPERIMENT_CALL_CAP',phase,time:Date.now()});durable('blocked-dispatches.json',blocked);throw Object.assign(new Error('Persona pilot dispatch cap'),{code:'BUDGET_EXHAUSTED'});}
+    if(background){assert.equal(phase,'learning','Question answers must never become learning input');back++;lastLearningActivity=Date.now();}else{front++;questionCalls++;}
+    const session=ctx.sessions.get(options.sessionId);if(session)await ctx.sessions.flush(session);
+    const handle=await ctx.sessionPersistence.open(options.sessionId,'read');const stored=await handle.read();
+    const restored=Session.fromRestore(options.sessionId,stored.events,handle.header,handle.inheritedEventCount,stored.eventState);await handle.close();
+    assert.deepEqual([...restored.deriveMessages()],options.messages,'Dispatch is not reconstructable from the durable native log');
+    checks.push({sessionId:options.sessionId,prefixEndSeq:stored.events.at(-1)?.seq,matches:true});durable('reconstruction.json',checks);
+    const row={sessionId:options.sessionId,phase:background?'learning':phase,messages:structuredClone(options.messages),usage:null,status:'DISPATCHING',observedAt:Date.now()};requests.push(row);save();
+    try{for await(const chunk of next()){if(chunk.type==='usage'){row.usage=chunk.usage;save();}if(chunk.type==='finish')row.finish=chunk.reason;yield chunk;}row.status='RETURNED';}catch(error){row.status='ERROR';row.error=error.message;throw error;}finally{row.finishedAt=Date.now();if(background)lastLearningActivity=Date.now();save();}
+  });
+  ctx.on('tools/result',(execution,result)=>{tools.push({name:execution.name,callId:execution.callId,args:execution.arguments,isError:result.isError===true,phase,requestOrdinal:front});durable('tool-results.json',tools);});
+  if(config.fixture){class Fixture extends LlmAdapter{async *stream(options){const background=options.sessionId.startsWith('rsi-'),system=options.messages.filter(m=>m.role==='system').flatMap(m=>m.content).map(b=>b.text??'').join('\n');const text=background?(system.includes('Skill Review Agent')?'Nothing to save.':'[]'):'<final_answer>(a)</final_answer>';yield{type:'block-start',index:0,blockType:'text'};yield{type:'block-end',index:0,block:{type:'text',text}};yield{type:'usage',usage:{inputTokens:13,outputTokens:7,totalTokens:20}};yield{type:'finish',reason:{kind:'stop'}};}}ctx.effect(()=>ctx.llm.registerAdapter(['pilot-fixture'],new Fixture()));}
+  ctx.effect(()=>{const alive=setInterval(()=>{},1000);const timer=setTimeout(async()=>{let deadline;let receipt;
+    try{
+      const input=JSON.parse(await readFile('/opt/rsi/personamem.json','utf8'));assert.equal(input.questions.length,2);assert.ok(!Object.hasOwn(input,'correct_answer'));rsi=ctx.get('rsi');assert.equal(!!rsi,config.arm==='rsi');if(rsi)await rsi.ready;
+      const seed=ctx.sessions.prepare('persona-'+input.personaId+'-history',{meta:{cwd:'/workspace'}});const imported=appendPersonaHistory(seed,input.history);
+      const agentOptions={provider:config.fixture?'pilot-fixture':'qwen',model:config.fixture?'fixture':'qwen3.8-27b',maxTokens:4096};
+      const history=await ctx.agents.create({sessionId:seed.id,meta:{cwd:'/workspace'},seed:imported.events,agentOptions});await ctx.sessions.flush(history.agent.session);
+      const importedRoles=[...history.agent.session.deriveMessages()].map(m=>({role:m.role,content:m.content.map(b=>b.text).join('')}));assert.deepEqual(importedRoles,input.history);
+      durable('import.json',{personaId:input.personaId,contextId:input.contextId,cutoff:input.historyCutoffExclusive,messages:input.history.length,historySha256:createHash('sha256').update(JSON.stringify(input.history)).digest('hex'),nativeHistoryExact:true});
+      if(rsi){
+        phase='learning';lastLearningActivity=Date.now();const until=Date.now()+config.settleMs;
+        rsi.runtime.observe(history.agent.session,imported.events.at(-1));
+        // Capture is the native log recovery entry. L0 indexing can consume much of this bounded window.
+        await rsi.runtime.captureQueue;
+        let settled=false;
+        while(Date.now()<until){const snapshot=await rsi.request('snapshot',{cwd:'/workspace'});durable('scheduler.json',snapshot);
+          if(snapshot.jobs.length&&snapshot.jobs.every(j=>j.status==='completed')&&rsi.runtime.active.size===0&&Date.now()-lastLearningActivity>=(config.fixture?1000:45000)){settled=true;break;}
+          if(snapshot.jobs.some(j=>['failed','paused','interrupted'].includes(j.status))&&rsi.runtime.active.size===0)break;
+          await new Promise(resolve=>setTimeout(resolve,1000));
+        }
+        await rsi.request('settings',{cwd:'/workspace',settings:{learningEnabled:false}});const snapshot=await rsi.request('snapshot',{cwd:'/workspace'});durable('learning.json',{settled,snapshot});durable('assets.json',await rsi.request('export',{cwd:'/workspace'}));
+        assert.ok(settled,'Native history learning did not finish within the predeclared window; do not score this as a task failure or expand it silently');
+        assert.equal(snapshot.layers[snapshot.workspace.id].L0,input.history.filter(m=>m.role!=='system').length);
+      }
+      const backgrounds=input.history.map((row,index)=>({...row,index})).filter(row=>row.role==='system');
+      for(const q of input.questions){phase=q.id;questionCalls=0;const id='persona-'+input.personaId+'-question-'+q.id;
+        const handle=await ctx.agents.create({sessionId:id,meta:{cwd:'/workspace'},seed:imported.events,agentOptions});
+        handle.agent.inject(createUserMessage({source:{kind:'personamem-history',form:'recall',sessionId:seed.id},content:[{type:'text',text:'Original system backgrounds in this public history, in historical order (indices refer to the imported log):\n'+backgrounds.map(row=>`[Historical system at original index ${row.index}]\n${row.content}`).join('\n\n')}]}));
+        handle.agent.inject(createUserMessage({source:{kind:'benchmark-protocol',form:'instructions'},content:[{type:'text',text:q.protocol}]}));
+        const start=Date.now();deadline=setTimeout(()=>handle.agent.cancel({kind:'hook',reason:'Persona pilot wall time limit'}),config.wallTimeMs);
+        handle.agent.followup(createUserMessage({source:{kind:'user'},content:[{type:'text',text:q.question+'\n\n'+q.options}]}));await handle.agent.whenIdle();await ctx.sessions.flush(handle.agent.session);clearTimeout(deadline);
+        const sent=requests.find(r=>r.sessionId===id);assert.ok(sent,'No model dispatch; inspect the saved native turn/end reason for '+id);const visible=sent.messages.flatMap(m=>m.content).filter(b=>b.type==='text').map(b=>b.text).join('\n');assert.ok(input.history.every(m=>visible.includes(m.content)),'Baseline/RSI lost historical text');
+        const reader=await ctx.sessionPersistence.open(id,'read');const saved=await reader.read();await reader.close();
+        const reason=saved.events.filter(e=>e.type==='turn/end').at(-1)?.data.reason;
+        const response=[...handle.agent.session.deriveMessages()].filter(m=>m.role==='assistant'&&!imported.messageIds.includes(m.id)).at(-1);assert.ok(response,'Missing current answer');
+        answers.push({questionId:q.id,personaId:input.personaId,sessionId:id,response:response.content.filter(b=>b.type==='text').map(b=>b.text).join('\n'),stopReason:reason,requests:questionCalls,wallMs:Date.now()-start,allHistoricalTextPresent:true});durable('answers.json',answers);
+      }
+      receipt={status:'COMPLETED',developmentPilot:true,arm:config.arm,fixture:!!config.fixture,personaId:input.personaId,questionIds:input.questions.map(q=>q.id),historyCutoffExclusive:input.historyCutoffExclusive,historySha256:createHash('sha256').update(JSON.stringify(input.history)).digest('hex'),foregroundRequests:front,learningRequests:back,knownTokens:requests.reduce((sum,r)=>sum+(r.usage?.totalTokens??0),0),unknownActualUsage:requests.filter(r=>!r.usage).length,answersProvided:false,completeHistoryInBothArms:true,roleProjection:'Historical system backgrounds are labelled producer context; not identical to official standalone roles',accuracy:null};
+    }catch(error){receipt={status:'ERROR',classification:'UNCLASSIFIED_NOT_TASK_FAIL',error:error.message,foregroundRequests:front,learningRequests:back,knownTokens:requests.reduce((sum,r)=>sum+(r.usage?.totalTokens??0),0),unknownActualUsage:requests.filter(r=>!r.usage).length};}
+    finally{clearTimeout(deadline);await ctx.root.fiber.dispose();save();durable('receipt.json',receipt);console.log(JSON.stringify(receipt));process.exit(receipt.status==='COMPLETED'?0:1);}
+  },0);return()=>{clearInterval(alive);clearTimeout(timer);};});
+}

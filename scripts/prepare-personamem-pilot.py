@@ -12,7 +12,7 @@ cutoff=int(first['end_index_in_shared_context']);history=contexts[first['shared_
 assert len(history)==cutoff and all(m['role'] in ['system','user','assistant'] and isinstance(m['content'],str) for m in history)
 instructions='Find the most appropriate model response and give your final answer (a), (b), (c), or (d) after the special token <final_answer>.'
 public=root/'public';public.mkdir(exist_ok=True)
-body={'personaId':first['persona_id'],'contextId':first['shared_context_id'],'historyCutoffExclusive':cutoff,'history':history,'questions':[{'id':r['question_id'],'questionType':r['question_type'],'prompt':r['user_question_or_message']+'\n\n'+instructions+'\n\n'+r['all_options']} for r in selected]}
+body={'personaId':first['persona_id'],'contextId':first['shared_context_id'],'historyCutoffExclusive':cutoff,'history':history,'questions':[{'id':r['question_id'],'questionType':r['question_type'],'question':r['user_question_or_message'],'options':r['all_options'],'protocol':instructions,'prompt':r['user_question_or_message']+'\n\n'+instructions+'\n\n'+r['all_options']} for r in selected]}
 (public/'pilot.json').write_text(json.dumps(body,ensure_ascii=False)+'\n')
 (root/'scorer/answers.json').write_text(json.dumps({r['question_id']:r['correct_answer'] for r in selected},indent=2)+'\n')
 # Extract the official grading method unchanged; never execute upstream imports or inference code.
