@@ -1,0 +1,20 @@
+{
+  "stage": "development-consumption-only",
+  "sourceTasks": [
+    "django__django-11095",
+    "django__django-11119"
+  ],
+  "phase": {
+    "name": "asset-consumption",
+    "prompt": "在这个 Django 源码项目里，接下来需要为 ModelAdmin 的一个配置属性提供可覆盖的 get_* 钩子。请先查看可用的相关流程经验，再给出一个最小核对计划：应定位哪些调用点、怎样验证 request 与 obj 两种情况、哪些已有经验确实被验证过。这里只制定计划，不改代码、不执行测试；不要把建议的测试写成已通过。"
+  },
+  "foregroundCalls": 6,
+  "learningCalls": 0,
+  "wallSeconds": 180,
+  "settleSeconds": 1,
+  "assets": "Closed natural assets and durable sessions from task-11119",
+  "assetNameProvided": false,
+  "manualLearningTriggered": false,
+  "officialTaskScoring": false,
+  "reason": "The two coding tasks did not load a Skill. This independent natural query checks relevant Skill delivery, not effectiveness."
+}
