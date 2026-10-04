@@ -1,0 +1,23 @@
+{
+  "status": "REGRESSION_REPRODUCED",
+  "baseline": {
+    "exitCode": 0,
+    "stdout": "False\n",
+    "stderr": ""
+  },
+  "savedPatch": {
+    "exitCode": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 17, in <module>\n  File \"/tmp/public-source/django/contrib/admin/options.py\", line 446, in to_field_allowed\n    for inline in admin.get_inlines(None):\n  File \"<string>\", line 13, in get_inlines\nAssertionError: public regression: request contract violated\n"
+  },
+  "sourceMethodSignature": "def to_field_allowed(self, request, to_field):",
+  "sourceSha256": "f755fbe374feb302c5308b5472a3122c4f58f0406d7a4e2a9633fd916a5daa86",
+  "patchSha256": "a34f37731079bf6bdb8b941698cffb2a527a42815ecb2f9828ceb78e50cee73b",
+  "probeSha256": "93a9215e3807b6fb97a9b78a708d46fae7c2cb97cdc783ba00ec0e65f00be6b4",
+  "modelRequests": 0,
+  "hiddenTestsOrGoldUsed": false,
+  "scorerResultsReturnedToLearning": false,
+  "limitation": "Public caller-contract counterexample only. Does not overwrite the saved official resolved score.",
+  "imageId": "sha256:740f04cbae39f3575f25ebe0bf1a29ce56404cd6f9789be5fc7700c052eb8a39",
+  "imageTag": "dsh-rsi-formal:django__django-11095"
+}

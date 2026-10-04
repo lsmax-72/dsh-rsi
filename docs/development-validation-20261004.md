@@ -58,3 +58,11 @@ Skill 的成功断言必须由实际工具结果支持，注明检查及结果�
 [证据约束送达夹具](evidence/development-evidence-guidance-20261004.json)验证追加条件实际进入原生 L1/Skill 提示；Skill 的新 Evidence 段生成质量仍需下一次正常学习检查。独立消费与分类复核共 59,607 token，另于两题 1,071,786 token 列出，开发检查已知合计 1,131,393 token。
 
 命令诊断现在关联原始 tool/result 的消息 ID、事件序号和实际输出；保留宿主 toolIsError 与非零退出码标记两个不同字段。第 17 次 bash 虽 toolIsError=false，原文仍含 [exit code: 1]，属于失败的复现尝试，不算通过验证。没有成功退出码标记时记为缺失，并按实际输出审阅预期行为，不从 isError=false 推断成功。
+
+## 资产内容质量审阅
+
+[统一判读回执](evidence/development-asset-review-20261004.json)区分相关性、实际交付、决策对应和内容质量。首题功能需求对模板题无关，对独立同类钩子问题相关；score=0、优先级或同属 Django 不是相关性判定。Skill 正文在第 2/3/4 次请求各交付 2,782 字符，共重复 8,346 字符；这是正文开销证据，不是 token 估算。其领域较窄仍不自动说明足够精简，正文超过通用 SOP 的 1500 软目标。
+
+发现已复现的内容错误：[公开反例](evidence/modeladmin-contract-diagnostic-20261004.json)。Skill 将 admin.get_inlines(None) 写作必做步骤，声称调用处没有 request；真实调用处为 to_field_allowed(self, request, to_field)。消费者一面重复 None 建议，一面提出 get_inlines 中 assert request is not None。隔离容器中原始源码处理该公开调用返回 False；保存补丁后触发 AssertionError。没有使用隐藏测试、官方答案或模型；原任务官方 resolved 回执保持不变。说明资产交付与核对意识已经得到验证，资产内容质量仍不合格，不能把“能消费”当成“经验正确”。
+
+这些资产产生于 be66e7e 及其原有指导条件，早于后续明确分开 Evidence/Validation 的追加条件；不能用旧产物直接判断新条件的真实生成效果。反例和审阅留在评分/诊断侧，不写回学习来源或旧快照。后续须按固定样本检查新产物，而不能只检查是否出现 Evidence 标题。环境验证已与内联行为检查分开：第二题仍是 4 次行为检查，额外的环境确认不算行为测试。

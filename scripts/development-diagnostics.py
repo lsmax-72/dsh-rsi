@@ -35,8 +35,8 @@ for instance in ['django__django-11095','django__django-11119']:
   try:normalized=' '.join(shlex.split(command))
   except ValueError:normalized=command
   observed=source_results.get(r['callId']);rendered=observed['text'] if observed else '';marker=re.search(r'\[exit code: (\d+)\]',rendered);description=r['args'].get('description','')
-  framework=bool(re.search(r'runtests\.py|pytest|unittest|manage\.py test',command));behavior=bool(re.search(r'python\s+-c',command) and re.search(r'reproduce|verify|check.*behavio',description,re.I))
-  commands.append({'command':command,'normalized':normalized,'patchSha256':r['patchSha256'],'requestOrdinal':r['requestOrdinal'],'toolIsError':r['isError'],'observedNonzeroExitCode':int(marker[1]) if marker else None,'exitCodeLimitation':'Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.','purposeDescription':description,'frameworkTest':framework,'inlineBehaviorProbe':behavior,'testRelated':framework or behavior,'actualResult':observed})
+  framework=bool(re.search(r'runtests\.py|pytest|unittest|manage\.py test',command));environment=bool(re.search(r'environment|versions?|interpreter|dependencies',description,re.I));behavior=bool(not environment and re.search(r'python\s+-c',command) and re.search(r'reproduce|verify|check.*behavio',description,re.I))
+  commands.append({'command':command,'normalized':normalized,'patchSha256':r['patchSha256'],'requestOrdinal':r['requestOrdinal'],'toolIsError':r['isError'],'observedNonzeroExitCode':int(marker[1]) if marker else None,'exitCodeLimitation':'Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.','purposeDescription':description,'environmentProbe':environment,'frameworkTest':framework,'inlineBehaviorProbe':behavior,'testRelated':framework or behavior,'actualResult':observed})
  grouping=collections.Counter((r['normalized'],r['patchSha256']) for r in commands)
  repeated=sum(count-1 for count in grouping.values() if count>1)
  metrics=[]

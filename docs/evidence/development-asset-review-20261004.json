@@ -1,0 +1,91 @@
+{
+  "status": "MANUAL_DEVELOPMENT_REVIEW_WITH_PUBLIC_NEGATIVE_CONTROL",
+  "modelRequests": 0,
+  "frozenInputsUnchanged": true,
+  "rubric": {
+    "relevance": [
+      "related",
+      "partly_related",
+      "unrelated"
+    ],
+    "decisionEvidence": [
+      "asset_and_action_correspond",
+      "consistent_but_causality_unproven",
+      "no_observed_evidence"
+    ],
+    "quality": [
+      "observed_validation_supported",
+      "unverified_proposal",
+      "contradicted_by_public_execution"
+    ],
+    "criticalRule": "Official resolved, correct delivery and a model statement of adoption do not certify the contents of an asset or the consumer plan."
+  },
+  "entries": [
+    {
+      "consumer": "django__django-11119",
+      "assetId": "m_1791070201571_0ae12b1a",
+      "version": 0,
+      "assetType": "Chat Memory",
+      "sourceTask": "django__django-11095",
+      "relevance": "unrelated",
+      "reason": "An admin inlines feature request is not a standing rule for a template Engine autoescape fix. Same repository alone is not sufficient relevance.",
+      "actualDelivery": "First request includes the recorded asset ref and body",
+      "decisionEvidence": "no_observed_evidence",
+      "priorityOrRecallScoreNotRelevanceLabel": true
+    },
+    {
+      "consumer": "natural-get-hook-plan",
+      "assetId": "m_1791070201571_0ae12b1a",
+      "version": 0,
+      "assetType": "Chat Memory",
+      "relevance": "related",
+      "reason": "Consumer asks for the same ModelAdmin hook workflow.",
+      "quality": "unverified_proposal",
+      "decisionEvidence": "consistent_but_causality_unproven",
+      "caution": "Correct delivery does not prove that the memory separately caused the chosen plan."
+    },
+    {
+      "consumer": "natural-get-hook-plan",
+      "assetId": "skl-HOFvz465cGgF",
+      "version": 1,
+      "assetType": "Skill",
+      "visibleName": "rsi-django-add-modeladmin-hook",
+      "relevance": "related",
+      "domainScope": "Reusable workflow for Django ModelAdmin get_* hooks",
+      "actualBodyDeliveries": [
+        {
+          "requestOrdinal": 2,
+          "bodyChars": 2782,
+          "bodySha256": "a6ab93f9bbed55f93b8d04fc87c0011e7868768975ea4816915cf27879718ecf",
+          "toolCallId": "call_22d6bfacdb264c73ab6048b3"
+        },
+        {
+          "requestOrdinal": 3,
+          "bodyChars": 2782,
+          "bodySha256": "a6ab93f9bbed55f93b8d04fc87c0011e7868768975ea4816915cf27879718ecf",
+          "toolCallId": "call_22d6bfacdb264c73ab6048b3"
+        },
+        {
+          "requestOrdinal": 4,
+          "bodyChars": 2782,
+          "bodySha256": "a6ab93f9bbed55f93b8d04fc87c0011e7868768975ea4816915cf27879718ecf",
+          "toolCallId": "call_22d6bfacdb264c73ab6048b3"
+        }
+      ],
+      "repeatedBodyCharsAcrossRequests": 8346,
+      "softGeneralSopTargetChars": 1500,
+      "exceedsSoftTarget": true,
+      "lengthAssessment": "Domain scope is narrower than a universal Skill but does not establish concise or correct content; do not exempt it based on its name alone. No character truncation proposed.",
+      "decisionEvidence": "asset_and_action_correspond",
+      "evidence": "After natural Skill load, consumer called original-conversation/profile tools and distinguished edits from absent execution validation. Source assistant message 42e246d9-6e22-4797-9d3c-169eb365a0ee still repeated the get_inlines(None) suggestion.",
+      "quality": "contradicted_by_public_execution",
+      "counterexample": "modeladmin-contract-diagnostic-20261004.json",
+      "problem": "Workflow calls admin.get_inlines(None) and labels the caller request-less. Actual source method is to_field_allowed(self, request, to_field). The consumer also proposes a subclass requiring request non-None. Applying the saved patch reproduces AssertionError in this public caller; unpatched source returns False.",
+      "causalImprovementClaim": false,
+      "additionalTokenCostAttributedToAsset": null,
+      "tokenLimitation": "40,695 tokens is the whole four-call consumer run, not a measured asset-only overhead. Body characters are not tokens."
+    }
+  ],
+  "learningOrScoringBackflow": false,
+  "nextUse": "Apply the same rubric and source/decision mapping to preregistered future samples; preserve quality failures separately from delivery and official resolved."
+}
