@@ -124,5 +124,18 @@
     "originalRuns": ".artifacts/continuous-merge-repaired-20261004/django__django-12262-rsi-0/scorer-infra-recovery-1/runs-before.json"
   },
   "fullSequenceEffectAvailable": false,
-  "limit": "This is an incomplete prefix. One model stream has unknown usage; cost ratios from known usage are lower-bound observations, not complete cost."
+  "limit": "This is an incomplete prefix. One model stream has unknown usage; cost ratios from known usage are lower-bound observations, not complete cost.",
+  "diagnosticIntegration": {
+    "status": "PASS_REAL_SAVED_USAGE_CORRECTION",
+    "diagnosticsSha256": "f7e946f5fcc726a955810692bcc52321a43d26d655431b898592a9ebb80d19b9",
+    "analysisReaderSha256": "ffa7a061533b005e45e571fd7e3b2dcb3db53130a0bef47936a21f5adac299eb",
+    "usageReaderSha256": "50cfa06219e33c5fb9c55ab7cc8c2ebeb58edc91d5a591e3e13557b7f4706450",
+    "savedGradedArms": 6,
+    "knownTokensUnchanged": 3999094,
+    "unknownActualUsage": 1,
+    "fivePositiveUsageArmsUnchanged": true,
+    "producerAndFrozenRuntimeUnchanged": true,
+    "originalReceiptAndLedgerRewritten": false,
+    "modelAndScorerCalls": 0
+  }
 }
