@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "fixtureOnly": true,
+  "realModelRequests": 0,
+  "controls": [
+    "Replicating perfectly correlated questions 100 times within each user does not narrow the interval",
+    "Single user has no user-cluster interval",
+    "Missing planned user answers do not silently disappear from the comparison"
+  ],
+  "twoUserDifference": 0,
+  "twoUserInterval": [
+    -1,
+    1
+  ]
+}

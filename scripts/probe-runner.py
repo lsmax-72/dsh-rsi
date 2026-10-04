@@ -47,6 +47,7 @@ def main():
     parser.add_argument('--instance',default='preflight',help='Unique public task ID; reused across its two arms only')
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--fixture', action='store_true')
+    parser.add_argument('--fixture-answer-stop',choices=['stop','max-tokens','error-after-text'],default='stop',help='PersonaMem fixture only: native finish reason; never modifies a real provider')
     parser.add_argument('--persona-input',type=Path,help='Public PersonaMem input only; answers must be absent')
     parser.add_argument('--formal',action='store_true')
     parser.add_argument('--expected-tree',help='Verified source Git tree for this task')
@@ -65,6 +66,7 @@ def main():
     parser.add_argument('--wall-seconds', type=int, default=1200)
     parser.add_argument('--settle-seconds', type=int, default=90)
     args = parser.parse_args()
+    if args.fixture_answer_stop!='stop' and (not args.fixture or not args.persona_input): parser.error('Synthetic finish reasons require a PersonaMem fixture')
     if args.formal and (args.fixture or args.instance=='preflight' or not args.expected_tree or not args.expected_version): parser.error('Formal runs require real task ID and frozen environment checks')
     if args.formal and args.arm=='rsi' and not args.learning_pool: parser.error('Formal RSI requires a durable learning pool')
     if not re.fullmatch(r'[a-zA-Z0-9_-]+',args.instance): parser.error('Invalid task ID')
@@ -92,7 +94,7 @@ def main():
     services = patch[-1]['insert']
     driver = next(s for s in services if s['id']=='rsi-pilot-task')
     driver['config'] = {'arm':args.arm, 'instanceId':args.instance, 'fixture':args.fixture,
-        'interruptCheckpoint':args.interrupt_checkpoint, 'baselineDate':args.baseline_date, 'dispatchLimit':args.dispatch_limit,
+        'fixtureAnswerStop':args.fixture_answer_stop,'interruptCheckpoint':args.interrupt_checkpoint, 'baselineDate':args.baseline_date, 'dispatchLimit':args.dispatch_limit,
         'learningCallBudget':args.learning_call_budget, 'learningDispatchLimit':learning_limit, 'fixtureLearning':args.fixture_learning, 'wallTimeMs':args.wall_seconds*1000,
         'settleMs':args.settle_seconds*1000,'formal':args.formal,'expectedTree':args.expected_tree,'expectedVersion':args.expected_version}
     if args.phases: driver['config']['phases']=json.loads(args.phases.read_text())

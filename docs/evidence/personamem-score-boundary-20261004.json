@@ -1,0 +1,54 @@
+{
+  "status": "PASS",
+  "cases": [
+    {
+      "case": "correct-but-truncated",
+      "correct": true,
+      "completed": false,
+      "answerAvailable": true,
+      "stopReason": {
+        "kind": "max-tokens"
+      }
+    },
+    {
+      "case": "wrong-but-completed",
+      "correct": false,
+      "completed": true,
+      "answerAvailable": true,
+      "stopReason": {
+        "kind": "completed"
+      }
+    },
+    {
+      "case": "ambiguous-but-completed",
+      "correct": false,
+      "completed": true,
+      "answerAvailable": true,
+      "stopReason": {
+        "kind": "completed"
+      }
+    },
+    {
+      "case": "empty-after-error",
+      "correct": false,
+      "completed": false,
+      "answerAvailable": false,
+      "stopReason": {
+        "kind": "error"
+      }
+    },
+    {
+      "case": "correct-but-interrupted",
+      "correct": true,
+      "completed": false,
+      "answerAvailable": true,
+      "stopReason": {
+        "kind": "interrupted"
+      }
+    }
+  ],
+  "fixtureOnly": true,
+  "realModelRequests": 0,
+  "actualScoresOverwritten": false,
+  "officialMethodUnchanged": true
+}

@@ -2,7 +2,7 @@
 
 来源：[官方仓库](https://github.com/bowen-upenn/PersonaMem)、[PersonaMem-v1 数据](https://huggingface.co/datasets/bowen-upenn/PersonaMem-v1)，使用官方 32k 文件。固定数据与源码修订见 [来源回执](evidence/personamem-provenance-20261004.json)。原始数据、答案、源码及 MIT 许可在评分侧独立目录；没有加入任务镜像或个人资产。
 
-当前只完成准备与导入夹具，尚未派发 PersonaMem 的真实模型请求。开发阶段首位用户、相同 shared_context_id 和相同截止点的两道题已准备；两个条件均使用原文 history[:end_index]，不删除基线历史。182 条消息含 5 条 system、102 条 user、75 条 assistant，全文 152,394 字符。题目只含公开问句和四个选项，correct_answer 另存评分目录。见 [准备回执](evidence/personamem-preparation-20261004.json)。
+本文按准备、首次真实运行和修正预演顺序保留记录；当前状态为首次运行已结束，修正预演的新调用预算待确认。开发阶段首位用户、相同 shared_context_id 和相同截止点的两道题已准备；两个条件均使用原文 history[:end_index]，不删除基线历史。182 条消息含 5 条 system、102 条 user、75 条 assistant，全文 152,394 字符。题目只含公开问句和四个选项，correct_answer 另存评分目录。见 [准备回执](evidence/personamem-preparation-20261004.json)。
 
 评分函数从固定修订 inference_standalone_openai.py 的 Evaluation.extract_answer 原样抽取，未运行其推理客户端或加载 API token。正确、错误和多选歧义三个控制通过；不是效果成绩。
 
@@ -12,7 +12,7 @@
 
 求解历史夹具发现普通 Agent 会清除/重写原始 5 个 system 节点（原索引 0、47、78、109、154）。必要适配：原有 user/assistant 仍经正式 seed 保留；5 条 system 原文以标明历史索引的 producer 消息补入，避免当作本轮宿主 system 指令。两组采用相同投影，不删减基线信息。角色投影发生改变，因此不声称实际求解请求与官方原始 OpenAI 请求角色完全等价。全部历史原文逐字出现在实际请求中，回执：[历史消费](evidence/personamem-history-consumption-20261004.json)。
 
-待验证：qwen 完整请求容量、真实历史学习与两类资产消费、全链路成本。服务报告 max_model_len=262144，只是容量声明，不能替代实际请求。不同 persona 使用独立插件数据目录，避免 global 资产混合；多道题的准确率与区间按用户分组。
+准备时待验证：qwen 完整请求容量、真实历史学习与两类资产消费、全链路成本。完整历史容量现已通过首次真实请求验证；真实分段学习与两类资产消费尚待修正预演。服务报告 max_model_len=262144，只是容量声明，不能替代实际请求。不同 persona 使用独立插件数据目录，避免 global 资产混合；多道题的准确率与区间按用户分组。
 
 开发用户不进入后续独立评价用户。通过预演后再固定最终用户、题单、顺序及预算；本次两题不是最终评测方案。
 
@@ -39,3 +39,11 @@
 下一次真实修正预演的 [具体方案](evidence/personamem-corrected-pilot-proposal-20261004.json)仍使用同一两题，不进入正式评测。提议单独最多 30 次后台、1800 秒学习窗口，输出上限 4096/题前台 6 次/120 秒不变；失败与额外费用单独保留，不覆盖原预算或结果。因用户明确要求不擅自扩大固定题单/预算，新增调用额度须确认后执行。
 
 [独立官方评分](evidence/personamem-pilot-first-scores-20261004.json)：基线 2/2，RSI 未进入答题，准确率为缺失而非 0。评分器只编译固定官方源码的原始 extract_answer 方法，正确/错误/歧义控制通过，网关发送数与全部请求用量匹配；评分不回流。当前只有一位开发用户且基线已满分，不报告提升或置信区间，也不能据这两题选择失败样本扩大评测。可复现命令使用 scripts/score-personamem-pilot.py，读取单独 scorer 目录，不派发模型或学习。
+
+## 评分与分组统计边界
+
+准确率直接使用固定官方 extract_answer 的结果，不再附加“轮次正常停止”条件；正常停止、预算截止、错误及缺少 usage 单列。[五项评分控制](evidence/personamem-score-boundary-20261004.json)通过：正确但截断/中断仍正确，正常结束的错误或多选歧义仍错误。已派发题目保留最后一次模型输出，包括未形成正式 assistant 消息的部分文本；空回答由官方方法判错。学习失败导致题目尚未开始，则属于基础设施/学习缺失，不伪造回答或记为 0% 准确率。
+
+[原生部分回答夹具](evidence/personamem-partial-answer-fixtures-20261004.json)分别模拟输出上限和输出文本后出错，两题原始文本均保留且实际输入仍可从日志重建；真实模型调用 0，夹具用量不计实际费用。[保存结果重新评分](evidence/personamem-real-score-recheck-20261004.json)仍为基线 2/2、RSI 未答题，已知总 102,780 token；首次回执没有被覆盖。
+
+后续固定题单后，scripts/user-cluster-stats.py 对每位用户先算两组准确率，再对配对用户差异做固定种子的 10,000 次重采样，报告用户宏平均差及 95% 百分位区间。题目不作为独立抽样单位。单用户不给区间；计划用户或题目缺失时阻止配对比较，先报告缺失情况，不能悄悄只留完整用户。[分组控制](evidence/user-cluster-stats-control-20261004.json)确认关联题重复 100 次不缩窄区间。用户少时区间粗糙且依赖样本，不视为总体或重复模型运行的覆盖保证；还未产生正式区间或效果成绩。

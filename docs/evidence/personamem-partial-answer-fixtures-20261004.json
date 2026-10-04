@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "fixtureOnly": true,
+  "realModelRequests": 0,
+  "actualResultsOverwritten": false,
+  "driverSha256": "cdf6aad7570fa739189a9a368c90f8679feaa63bbfcc668bacbeb6575714fa23",
+  "cases": [
+    {
+      "case": "fixture-truncated-answers",
+      "fixtureDispatches": 2,
+      "stopReason": "max-tokens",
+      "answersPreserved": 2,
+      "durableInputsReconstructed": true,
+      "fullHistoryPresent": true,
+      "fixtureKnownTokens": 40,
+      "fixtureUsageMissing": 0,
+      "notActualProviderCost": true
+    },
+    {
+      "case": "fixture-aborted-text-answers",
+      "fixtureDispatches": 2,
+      "stopReason": "error",
+      "answersPreserved": 2,
+      "durableInputsReconstructed": true,
+      "fullHistoryPresent": true,
+      "fixtureKnownTokens": 0,
+      "fixtureUsageMissing": 2,
+      "notActualProviderCost": true
+    }
+  ]
+}

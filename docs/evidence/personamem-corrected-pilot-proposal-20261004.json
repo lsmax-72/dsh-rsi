@@ -30,5 +30,11 @@
   "embeddingRealLocalAndReportedSeparately": true,
   "independentEffectClaim": false,
   "formalUsersAndProgrammingSequenceNotStarted": true,
-  "driverSha256": "bdf076de27ea3805d28ae60c4556d174b7c2e97058d5c9ee7eaa7a30ba339dc4"
+  "driverSha256": "cdf6aad7570fa739189a9a368c90f8679feaa63bbfcc668bacbeb6575714fa23",
+  "additionalOfflinePreparation": [
+    "Preserve partial native answers and grade with unchanged official method; termination remains separate",
+    "Paired user-cluster summary refuses silent missing-user exclusion",
+    "Generic caller-contract and validation-coverage guidance appended after unchanged native Skill prompt"
+  ],
+  "numericBudgetQuestionAndModelUnchanged": true
 }
