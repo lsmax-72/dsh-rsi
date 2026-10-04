@@ -1,0 +1,128 @@
+{
+  "status": "THREE_PAIRS_CLOSED_SCORER_INFRA_RECOVERED_TASK_FOUR_RUNNING",
+  "recordedAt": "2026-10-04T19:57:19.108691+00:00",
+  "freezeSha256": "29b0f161ca5f75017dfa4814e2e0e6435cda152bcb9ae2297310b3d3ef03eb3d",
+  "frozenRevision": "619baad55159699b073e9be12c24861b33e418d4",
+  "controllerSessionId": 50553,
+  "closedArms": [
+    {
+      "instanceId": "django__django-11848",
+      "arm": "baseline",
+      "resolved": false,
+      "knownTokens": 415376,
+      "unknownActualUsage": 0,
+      "ownPriorRawHistoryExact": null
+    },
+    {
+      "instanceId": "django__django-11848",
+      "arm": "rsi",
+      "resolved": false,
+      "knownTokens": 788033,
+      "unknownActualUsage": 0,
+      "ownPriorRawHistoryExact": null
+    },
+    {
+      "instanceId": "django__django-11551",
+      "arm": "rsi",
+      "resolved": true,
+      "knownTokens": 748114,
+      "unknownActualUsage": 0,
+      "ownPriorRawHistoryExact": true
+    },
+    {
+      "instanceId": "django__django-11551",
+      "arm": "baseline",
+      "resolved": true,
+      "knownTokens": 550989,
+      "unknownActualUsage": 0,
+      "ownPriorRawHistoryExact": true
+    },
+    {
+      "instanceId": "django__django-12262",
+      "arm": "baseline",
+      "resolved": true,
+      "knownTokens": 849542,
+      "unknownActualUsage": 0,
+      "ownPriorRawHistoryExact": true
+    },
+    {
+      "instanceId": "django__django-12262",
+      "arm": "rsi",
+      "resolved": false,
+      "knownTokens": 647040,
+      "unknownActualUsage": 1,
+      "ownPriorRawHistoryExact": true
+    }
+  ],
+  "knownTokens": 3999094,
+  "unknownActualUsage": 1,
+  "baselineResolved": 2,
+  "rsiResolved": 1,
+  "pairs": 3,
+  "plannedPairs": 8,
+  "officialScoreRecovery": {
+    "failure": "DNS resolution failed during official make_test_spec, before any evaluation container/test/report",
+    "originalScorerLogSha256": "5d967699690eb213365da2825f43af26d11891c5a034ba5e038d25f61f27d183",
+    "originalRunsSha256": "7b6b7d4a28dfdc748ce54dfb0f8b78298720345b82cacd27983ecb7f84722aef",
+    "requirementsUrl": "https://raw.githubusercontent.com/django/django/0668164b4ac93a5be79f5b87fae83c657124d9ab/tests/requirements/py3.txt",
+    "recoveredRequirementsSha256": "13d46653a202f77fa38d7010828dfecfe9feba95281a150c55c4c5356f46c5ef",
+    "scorerImage": "sha256:23c0777e08a37bd0643f7638eaca9c57d1ee16fca79b6312b8d6de7fd1b5e7da",
+    "patchSha256": "6952335898b6ca9898a4396c41c2cf250d8abb905a0165ea240e47e8feff48ed",
+    "additionalModelRequests": 0,
+    "taskReplay": false,
+    "infraRetrySlot": 1
+  },
+  "recoveryReport": {
+    "officialReportSha256": "eac39f87d667404e05b01b70ba91485418d81e0f07933c33990ef47dced71e11",
+    "originalTaskStateUnchanged": true,
+    "originalModelLedgerUnchanged": true,
+    "officialScorerImageUnchanged": true,
+    "remainingInfraRetries": 0,
+    "naturalBackgroundJobStatus": "interrupted",
+    "naturalJobError": "flush on a closed handle",
+    "partialLearningPolicy": "Preserve the interrupted checkpoint and all previous assets; do not rescue or replay learning",
+    "scoresReturnedToLearning": false
+  },
+  "usageAudit": {
+    "status": "SAVED_REAL_MODEL_USAGE_AUDITED",
+    "runDir": "/Users/lsmax/Coder/dsh-rsi/.artifacts/continuous-merge-repaired-20261004/django__django-12262-rsi-0",
+    "requests": 41,
+    "knownTokens": 647040,
+    "storedUnknownUsage": 0,
+    "unknownActualUsage": 1,
+    "unmeasuredRequests": [
+      {
+        "requestOrdinal": 41,
+        "sessionId": "rsi-91447f7d-d1a7-45b2-a9c0-c813b5c8add7",
+        "phase": "learning",
+        "storedStatus": "RETURNED",
+        "storedUsage": {
+          "inputTokens": 0,
+          "outputTokens": 0,
+          "totalTokens": 0
+        },
+        "classification": "ZERO_USAGE_UNMEASURED",
+        "observedFinishes": [
+          {
+            "kind": "aborted",
+            "failure": {
+              "message": "Request was aborted",
+              "code": "ABORTED"
+            }
+          }
+        ],
+        "observedTextDeltaChars": 232
+      }
+    ],
+    "realModelRequestsByReader": 0,
+    "originalLedgersChanged": false,
+    "limitation": "Positive supplied usage is counted; missing/all-zero usage remains unknown. This reader cannot recover provider usage for cancelled calls."
+  },
+  "localArtifacts": {
+    "before": ".artifacts/continuous-merge-repaired-20261004/django__django-12262-rsi-0/scorer-infra-recovery-1/audit-before.json",
+    "after": ".artifacts/continuous-merge-repaired-20261004/django__django-12262-rsi-0/scorer-infra-recovery-1/audit-after.json",
+    "originalRuns": ".artifacts/continuous-merge-repaired-20261004/django__django-12262-rsi-0/scorer-infra-recovery-1/runs-before.json"
+  },
+  "fullSequenceEffectAvailable": false,
+  "limit": "This is an incomplete prefix. One model stream has unknown usage; cost ratios from known usage are lower-bound observations, not complete cost."
+}
