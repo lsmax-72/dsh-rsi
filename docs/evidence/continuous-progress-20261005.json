@@ -1,0 +1,156 @@
+{
+  "status": "CONTINUOUS_CODING_FIRST_TWO_PAIRS_COMPLETE_SEQUENCE_RUNNING",
+  "recordedAt": "2026-10-04T16:48:13.777923+00:00",
+  "frozenRevision": "619baad55159699b073e9be12c24861b33e418d4",
+  "freezeSha256": "29b0f161ca5f75017dfa4814e2e0e6435cda152bcb9ae2297310b3d3ef03eb3d",
+  "controllerSessionId": 98962,
+  "frozenCheckout": "/private/tmp/dsh-rsi-continuous-frozen-619baad-20261005",
+  "plannedPairs": 8,
+  "completedPairs": 2,
+  "arms": [
+    {
+      "instanceId": "django__django-11848",
+      "arm": "baseline",
+      "resolved": false,
+      "knownTokens": 415376,
+      "unknownActualUsage": 0,
+      "ownPriorRawHistoryExact": null
+    },
+    {
+      "instanceId": "django__django-11848",
+      "arm": "rsi",
+      "resolved": false,
+      "knownTokens": 788033,
+      "unknownActualUsage": 0,
+      "ownPriorRawHistoryExact": null
+    },
+    {
+      "instanceId": "django__django-11551",
+      "arm": "rsi",
+      "resolved": true,
+      "knownTokens": 748114,
+      "unknownActualUsage": 0,
+      "ownPriorRawHistoryExact": true
+    },
+    {
+      "instanceId": "django__django-11551",
+      "arm": "baseline",
+      "resolved": true,
+      "knownTokens": 550989,
+      "unknownActualUsage": 0,
+      "ownPriorRawHistoryExact": true
+    }
+  ],
+  "wholeKnownTokensClosedArms": 2502512,
+  "unknownActualUsageClosedArms": 0,
+  "baselineSuccessesOfTwo": 1,
+  "rsiSuccessesOfTwo": 1,
+  "baselineKnownTokens": 966365,
+  "rsiKnownTokens": 1536147,
+  "fullSequenceEffectEstimateAvailable": false,
+  "sourceRestoreProofForBothSecondTaskArms": true,
+  "taskTwoMemoryFixedReview": {
+    "status": "PREDECLARED_TASK_TWO_MEMORY_RELEVANCE_REVIEW",
+    "reviewedAt": "2026-10-04T16:16:19.022321+00:00",
+    "fixedSampling": "Task 2 first actual task request, first four Memory refs; only three existed, do not invent a fourth.",
+    "actualRequestCaptureSha256": "8a7b9306d06b89e2f1c85a839326ce9eaaee8356548ae6432b5d6d1a7d8c6eeb",
+    "priorNativeHeadMatches": [
+      {
+        "id": "m_1791129416392_7e8669cf",
+        "version": 1,
+        "priorNativeHeadAndDeliveredBodyMatch": true,
+        "nativeSourceSession": "pilot-django__django-11848-task"
+      },
+      {
+        "id": "m_1791129416393_1046cc20",
+        "version": 0,
+        "priorNativeHeadAndDeliveredBodyMatch": true,
+        "nativeSourceSession": "pilot-django__django-11848-task"
+      },
+      {
+        "id": "m_1791129416393_41252505",
+        "version": 0,
+        "priorNativeHeadAndDeliveredBodyMatch": true,
+        "nativeSourceSession": "pilot-django__django-11848-task"
+      }
+    ],
+    "actualDeliveredMemoryCount": 3,
+    "sourceVersionAndBodyMatch": true,
+    "question": "admin.E108 incorrectly rejects instance-only descriptor fields in ModelAdmin.list_display checks.",
+    "labels": [
+      {
+        "id": "m_1791129416392_7e8669cf",
+        "label": "unrelated",
+        "reason": "HTTP two-digit-year parsing addresses a different module and mechanism from instance-only field descriptors; shared Django repository is not direct relevance."
+      },
+      {
+        "id": "m_1791129416393_1046cc20",
+        "label": "partial",
+        "reason": "The native Django tests/runtests.py entry can transfer, but the HTTP test module and python -m django.test attempt are not the needed admin-check test target or a proven general recipe."
+      },
+      {
+        "id": "m_1791129416393_41252505",
+        "label": "unrelated",
+        "reason": "Historical HTTP-year boundary test edits supply no descriptor lookup or admin validation knowledge for this task."
+      }
+    ],
+    "direct": 0,
+    "partial": 1,
+    "unrelated": 2,
+    "rsiTaskTwoScorerOrGoldRead": false,
+    "realModelRequestsByReader": 0,
+    "newAssetOrLearningWrites": false,
+    "closedSecondArmSourceRestoreAndReconstructionStillToVerify": true,
+    "decisionInfluence": "Not established yet; body delivery is observed, actual later modifications and test selection still need mapping.",
+    "scoreFieldLimit": "Native SQLite recall refs expose default score=0, not measured zero similarity."
+  },
+  "firstNativeSkillQuality": {
+    "nativeSkillId": "skl-C3ahj64rVZmT",
+    "nativeSkillVersion": 1,
+    "storedMarkdownChars": 3167,
+    "storedContentSha256": "90494f53a61d36f51e785694ce49a88b9a65fcba1bd8cd3eee7280be4649e658",
+    "findings": [
+      {
+        "kind": "intrinsic_algorithm_contradiction",
+        "evidence": "Reference implementation compares now_year - 50 (four-digit year 1976 for now_year=2026) to a two-digit year (26). Condition is false, yielding 1926, contradicting the same body proposed test (now_year % 100, now_year) = (26,2026).",
+        "support": "Static arithmetic inference from the asset itself, not an executed benchmark test or official answer."
+      },
+      {
+        "kind": "failed_attempt_presented_as_reference",
+        "evidence": "The body later describes this identical condition as an observed failing attempt, but still recommends it under Reference implementation. The unverified-final-tests disclaimer does not resolve that contradiction.",
+        "support": "Exact body comparison, no scorer feedback."
+      },
+      {
+        "kind": "unverified_memory_success_claim",
+        "recordId": "m_1791129416392_7e8669cf",
+        "evidence": "Memory says the change makes parsing conform to RFC 7231; prose-only extraction does not independently prove that. Label it as an assistant-reported attempted change, not verified compliance.",
+        "support": "Production memory input omits tool execution results; outcome claim requires execution coverage rather than assistant prose."
+      }
+    ]
+  },
+  "firstNativeSkillReviewMatchesFinalClosedHead": true,
+  "actualSkillBodyLoadsClosedArms": 0,
+  "catalogPresentInTaskTwoActualRequest": true,
+  "zeroBodyLoadsInterpretation": "Metadata availability is observed; the date-parsing Skill did not match the next admin-field task and was not loaded. This is not proof of a provider failure or actual Skill-body effectiveness.",
+  "resumeAudit": {
+    "status": "PASS_DOC_ONLY_REVISION_CHANGE_BETWEEN_TASKS_RESUME_SAME_FROZEN_CODE",
+    "recordedAt": "2026-10-04T16:43:50.942653+00:00",
+    "mainDocumentationRevision": "0cf903dfc9dd208f95c5277553a186db2852bdf2",
+    "frozenRevision": "619baad55159699b073e9be12c24861b33e418d4",
+    "freezeSha256Unchanged": "29b0f161ca5f75017dfa4814e2e0e6435cda152bcb9ae2297310b3d3ef03eb3d",
+    "frozenCheckout": "/private/tmp/dsh-rsi-continuous-frozen-619baad-20261005",
+    "frozenMethodFilesExactInBothCheckouts": true,
+    "completedArmsRetained": 4,
+    "knownTokensRetained": 2502512,
+    "thirdTaskPreviouslyDispatched": false,
+    "taskRetriesConsumed": 0,
+    "pausedControllerSession": 44771,
+    "newModelCallsByVerification": 0,
+    "budgetsAndTaskOrderChanged": false,
+    "reason": "Strict HEAD gate stopped on README/images-only commit; resume original code in an independent detached checkout without rewriting freeze or rerunning graded arms."
+  },
+  "diagnosticCorrection": "Separate stdout FAILED/OK from shell pipeline exit; correct environment introspection mislabeled as inline behavior, preserve original raw diagnostics.",
+  "sourceAndRuntimeDuringMeasurementChanged": false,
+  "scoresReturnedToLearning": false,
+  "firstEffectiveSnapshotScoringPendingUntilAll16ArmsClosed": true
+}
