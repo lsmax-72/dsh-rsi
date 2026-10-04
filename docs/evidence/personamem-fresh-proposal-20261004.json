@@ -1,0 +1,341 @@
+{
+  "status": "PREPARED_FRESH_USERS_NOT_FROZEN_NOT_RUN",
+  "recordedAt": "2026-10-04T18:12:32.199259+08:00",
+  "purpose": "Fresh users after an output-window repair. Original failed attempt and all costs remain separate.",
+  "model": "qwen3.8-27b",
+  "selectionSeed": 20261004,
+  "selectionUsesOnlyPublicIdsCutoffsAndPoolMembership": true,
+  "officialAnswersNotUsedForSelection": true,
+  "persona": {
+    "excludedDevelopmentUsers": [
+      "0",
+      "2",
+      "4",
+      "5",
+      "6",
+      "9",
+      "10",
+      "12",
+      "13"
+    ],
+    "eligibleUsers": [
+      "1",
+      "3",
+      "7",
+      "8",
+      "11",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19"
+    ],
+    "selectedUsers": [
+      "16",
+      "18",
+      "8",
+      "14",
+      "3",
+      "17",
+      "19",
+      "15"
+    ],
+    "questionCountPerUser": 4,
+    "pairedQuestions": 32,
+    "modelAnswersPlanned": 64,
+    "cases": [
+      {
+        "personaId": "16",
+        "contextId": "793db46bf4b7b99a33af860c6afe583bc9ede18fa80506e6952ccb5a1d01e693",
+        "cutoffExclusive": 152,
+        "questionIds": [
+          "d2c42ca1-5b3a-48b4-b3cc-ea27b9bed8e3",
+          "2747972e-07b2-461d-9acb-a8495bfef4c2",
+          "ec9c7628-9919-4234-b7b8-b90eda49cec5",
+          "ffe01d3c-de5c-4c67-b2db-e4983dfc6abc"
+        ],
+        "historyMessages": 152,
+        "historyChars": 134859,
+        "historySegments": 5,
+        "questionTypes": [
+          "recall_user_shared_facts",
+          "recall_user_shared_facts",
+          "provide_preference_aligned_recommendations",
+          "recalling_facts_mentioned_by_the_user"
+        ],
+        "publicInputSha256": "dea518743a5b0fd4cf9bd6fa2af0a6099a49f2589698fd90b6e42a38ec2407fd"
+      },
+      {
+        "personaId": "18",
+        "contextId": "246eaab75dc40bee43ca87c3eddd4b5b9e229e3f1481cc72c6d44b62f985560e",
+        "cutoffExclusive": 185,
+        "questionIds": [
+          "34737b01-85e0-4d41-bed6-5845ec2df199",
+          "e294a388-1896-46e0-86bb-38e879989b87",
+          "948ab76b-ba84-4c3b-8683-3d2d9f10283d",
+          "bb3b169c-68f3-4149-a016-643fa7cc8a05"
+        ],
+        "historyMessages": 185,
+        "historyChars": 145248,
+        "historySegments": 4,
+        "questionTypes": [
+          "suggest_new_ideas",
+          "provide_preference_aligned_recommendations",
+          "generalizing_to_new_scenarios",
+          "generalizing_to_new_scenarios"
+        ],
+        "publicInputSha256": "929fb3d5176068d7f45c8984ae242a2268a90df72e4ec0e38200cfb84cce0149"
+      },
+      {
+        "personaId": "8",
+        "contextId": "5c00a991550b5222efae1b357a4ab788855512ca85edcf467bab7a2816abd852",
+        "cutoffExclusive": 211,
+        "questionIds": [
+          "87241969-a1c4-47d7-a4d0-3308f9ca481f",
+          "2bc21867-0902-43e7-b186-6203fc477d93",
+          "d06f511a-0fd8-4ee0-8c35-fd3a87fd35ec",
+          "ba0bfd50-a1f2-40ea-8d43-168771beae1e"
+        ],
+        "historyMessages": 211,
+        "historyChars": 150886,
+        "historySegments": 7,
+        "questionTypes": [
+          "generalizing_to_new_scenarios",
+          "suggest_new_ideas",
+          "suggest_new_ideas",
+          "provide_preference_aligned_recommendations"
+        ],
+        "publicInputSha256": "f0ca6773358c6842176170f425b1046963b06c6c4609d14a686e4cc9c6845631"
+      },
+      {
+        "personaId": "14",
+        "contextId": "357073b65588cc3017575f7f4dde34dac5d5e0cd376ac2fc1fb693f216e0878b",
+        "cutoffExclusive": 183,
+        "questionIds": [
+          "a30c10c5-145a-49b0-b3d5-1479bf3c6797",
+          "e86a1aad-0117-4021-9c68-f923f4111d5f",
+          "8d52f6de-0bc5-4cac-8873-ca57060186b3",
+          "4b742ee7-077d-4cce-9c27-51dfe81fcdc4"
+        ],
+        "historyMessages": 183,
+        "historyChars": 161650,
+        "historySegments": 6,
+        "questionTypes": [
+          "suggest_new_ideas",
+          "recalling_the_reasons_behind_previous_updates",
+          "recall_user_shared_facts",
+          "provide_preference_aligned_recommendations"
+        ],
+        "publicInputSha256": "64e2c0586cb2aab6abf37a29d01405bfd6309b1edffff6d3f167bce6e1cf2351"
+      },
+      {
+        "personaId": "3",
+        "contextId": "aa95cf5880d83a73bb98512a07a64fb873fb24d9dac2bb1862f7c00008632260",
+        "cutoffExclusive": 159,
+        "questionIds": [
+          "9c209ff7-a6a8-48d8-ab38-e0b8aa2aaef7",
+          "945fb104-45bd-457f-a9a8-19620159e47d",
+          "d3767473-d464-42c1-9ead-7a61d922f120",
+          "a966820a-8b42-4ec9-8427-958468f98d3b"
+        ],
+        "historyMessages": 159,
+        "historyChars": 143915,
+        "historySegments": 5,
+        "questionTypes": [
+          "recall_user_shared_facts",
+          "provide_preference_aligned_recommendations",
+          "recall_user_shared_facts",
+          "recall_user_shared_facts"
+        ],
+        "publicInputSha256": "88353a13c148e3cbb7aed4436f505d2c77520116292bceb9cef78820d61d1a5c"
+      },
+      {
+        "personaId": "17",
+        "contextId": "40027b883505bfc53148a5b86c418f9374c3bdd49ebd5160d8f6901cfca51d06",
+        "cutoffExclusive": 180,
+        "questionIds": [
+          "5e856191-b76f-47ec-b5a4-f04893d8a313",
+          "59eb073a-174e-4115-aa22-b40eb447b1a2",
+          "9ac098cd-a109-412a-ad1a-ad90f2f8a6d3",
+          "f0f1c22f-ab86-4d6f-a017-6cdb7f5e88f4"
+        ],
+        "historyMessages": 180,
+        "historyChars": 164084,
+        "historySegments": 6,
+        "questionTypes": [
+          "suggest_new_ideas",
+          "recalling_the_reasons_behind_previous_updates",
+          "generalizing_to_new_scenarios",
+          "recalling_the_reasons_behind_previous_updates"
+        ],
+        "publicInputSha256": "455fa98d3237c5b3e555b6734c16cb22d97696fdbd8ae44276588bcb1302a9d3"
+      },
+      {
+        "personaId": "19",
+        "contextId": "947ec42fcf5d327ccb9640332b5fabe4b7a25acc46be08b925861fa0c6e8eaf0",
+        "cutoffExclusive": 152,
+        "questionIds": [
+          "0441a1ba-0d67-47a1-a910-00306910a6e3",
+          "d6d4a4e8-96c4-4b72-bdd3-204b44ec1826",
+          "fcfde00b-be10-4c52-922d-85cf7ae9f556",
+          "28200b70-034f-4c0c-bde7-21754136740d"
+        ],
+        "historyMessages": 152,
+        "historyChars": 134560,
+        "historySegments": 5,
+        "questionTypes": [
+          "suggest_new_ideas",
+          "recalling_facts_mentioned_by_the_user",
+          "recalling_the_reasons_behind_previous_updates",
+          "provide_preference_aligned_recommendations"
+        ],
+        "publicInputSha256": "a389ef9d644d1e484ca2e79ad0e3c9fa958dcf86b7ee6e1fe0c2963292e3c850"
+      },
+      {
+        "personaId": "15",
+        "contextId": "5f9be905f1374d0906caf04903eebe4f027af9d3d36acd2fef957928864bd8e6",
+        "cutoffExclusive": 150,
+        "questionIds": [
+          "0034a537-925f-448b-b275-eae07f3d9ae5",
+          "4b803069-7679-411e-8310-d885e6ed1e7d",
+          "d0b826d3-9805-416c-a8a8-343ffe1c9098",
+          "29c557de-15e3-43c5-b416-de5d4f1845e5"
+        ],
+        "historyMessages": 150,
+        "historyChars": 122667,
+        "historySegments": 4,
+        "questionTypes": [
+          "recall_user_shared_facts",
+          "recall_user_shared_facts",
+          "recall_user_shared_facts",
+          "recall_user_shared_facts"
+        ],
+        "publicInputSha256": "23b76c1ab6cddada2861305583c029da5263d44f51d3ecf0d80ee0c8e167b14a"
+      }
+    ],
+    "baselineRetainsSameFullCutoffHistory": true,
+    "sameHistoricalSystemRoleProjection": true,
+    "perUserAssetDirectoryIsolated": true,
+    "learningFrozenBeforeFirstQuestion": true,
+    "questionAnswersExcludedFromLearning": true,
+    "budgetProposal": {
+      "foregroundCallsPerQuestion": 6,
+      "wallSecondsPerQuestion": 120,
+      "maxOutputTokens": 4096,
+      "backgroundCallsPerUser": 80,
+      "learningWallSecondsPerUser": 2400,
+      "quietSeconds": 45,
+      "maximumActualGatewayCallsPerUserRsi": 104,
+      "maxConcurrentUsers": 2
+    },
+    "statistics": {
+      "accuracy": "Per-question counts and per-user macro accuracy",
+      "uncertainty": "Paired user-cluster bootstrap, 10000 draws, fixed seed",
+      "missingPlannedUser": "Withhold complete paired comparison; report coverage and cause",
+      "smallSampleLimit": "8 users give coarse intervals; not a full-benchmark or population guarantee"
+    }
+  },
+  "coding": {
+    "eligiblePoolSize": 32,
+    "orderedNewTaskIds": [
+      "django__django-11848",
+      "django__django-11551",
+      "django__django-12262",
+      "django__django-11815",
+      "django__django-11880",
+      "django__django-11790",
+      "django__django-11999",
+      "django__django-11740"
+    ],
+    "baseCommits": {
+      "django__django-11848": "f0adf3b9b7a19cdee05368ff0c0c2d087f011180",
+      "django__django-11551": "7991111af12056ec9a856f35935d273526338c1f",
+      "django__django-12262": "69331bb851c34f05bc77e9fc24020fe6908b9cd5",
+      "django__django-11815": "e02f67ef2d03d48128e7a118bf75f0418e24e8ac",
+      "django__django-11880": "06909fe084f87a65459a83bd69d7cdbe4fce9a7c",
+      "django__django-11790": "b1d6b35e146aea83b171c1b921178bbaae2795ed",
+      "django__django-11999": "84633905273fc916e3d17883810d9969c03f73c2",
+      "django__django-11740": "003bb34b218adb23d1a7e67932a6ba9b3c4dcc81"
+    },
+    "allTasksPreviouslyUnsolvedInProject": true,
+    "initialRsiAssetsEmpty": true,
+    "carryNaturalAssetsAndOfficialSourceLogsFromNToNPlus1": true,
+    "baselineTasksIndependentAndAssetFree": true,
+    "answersHiddenTestsAndScoresNeverReturnedToLearner": true,
+    "budgetProposal": {
+      "foregroundCallsPerTaskPerArm": 40,
+      "wallSecondsPerTask": 1200,
+      "outputMaxTokens": 8192,
+      "backgroundCallsPerTask": 20,
+      "totalBackgroundCap": 160,
+      "backgroundSettleSeconds": 900,
+      "oneUnscoredProvenInfraRetryMax": true
+    },
+    "outcomes": [
+      "Official resolved per saved patch",
+      "Paired early/late difference with task difficulty disclosure",
+      "Full-chain token including failed attempts",
+      "Repeated error/test/search counts",
+      "First supported effective edit location",
+      "Delivered asset relevance, length and decision correspondence"
+    ],
+    "limitation": "One fixed sequence cannot establish a universal temporal causal trend."
+  },
+  "remainingBeforeFreeze": [
+    "Review sampling/budget tradeoff using verified native pilot costs and serialize final immutable protocol.",
+    "Make the current two-question PersonaMem pilot driver support manifest-verified four-question independent cases.",
+    "Prepare and verify each new coding task source tree/scorer image/environment.",
+    "Record actual script/source/model/provider/embedding and public-input hashes before the first independent dispatch."
+  ],
+  "qualityLimitsCarriedIntoEvaluation": [
+    "Native general Skill length/resource guidance is unreliable (observed 2738 characters, 0 resources).",
+    "Successful asset delivery is not helpfulness or causal effect.",
+    "Evidence-boundary improvement verified in one bounded real consumer, not universally."
+  ],
+  "realModelRequests": 0,
+  "formalEvaluationStarted": false,
+  "stagingOutput": "/private/tmp/dsh-rsi-personamem-fresh-20261004",
+  "authorizationContext": "User requests autonomous continued progress; this draft does not silently expand an already frozen run.",
+  "supersedesForNewDispatchOnly": {
+    "oldFreezeSha256": "d3f2e157199f72fffd496fdac07045356d5b4023c5537d9688f88235291354bf",
+    "excludedAllPriorFrozenUsers": [
+      "0",
+      "2",
+      "4",
+      "5",
+      "6",
+      "9",
+      "10",
+      "12",
+      "13"
+    ],
+    "selectionUsesNoAnswersOrOutcomes": true
+  },
+  "datasetProvenance": {
+    "githubRevision": "d07e6ade22e85e0e5d562247323a9c3e07553226",
+    "datasetRevision": "a8076d5608c93ba2a28983cd78aa99b01a163ae7",
+    "files": {
+      "questions_32k.csv": {
+        "url": "https://huggingface.co/datasets/bowen-upenn/PersonaMem-v1/resolve/a8076d5608c93ba2a28983cd78aa99b01a163ae7/questions_32k.csv",
+        "sha256": "cccd34cf53e0bc4d9536c04cff5ca045156d9a4e227e83327112482840bbc93c",
+        "bytes": 1305366
+      },
+      "shared_contexts_32k.jsonl": {
+        "url": "https://huggingface.co/datasets/bowen-upenn/PersonaMem-v1/resolve/a8076d5608c93ba2a28983cd78aa99b01a163ae7/shared_contexts_32k.jsonl",
+        "sha256": "217247ebfec9e8442fc53570c795ab69f21aad08745f7de78d9beab51b122d4a",
+        "bytes": 5613210
+      },
+      "inference_standalone_openai.py": {
+        "url": "https://raw.githubusercontent.com/bowen-upenn/PersonaMem/d07e6ade22e85e0e5d562247323a9c3e07553226/inference_standalone_openai.py",
+        "sha256": "7ef9efca3bed32052a014efceb4daffad181ea4c3bad4bbbcb8ffbe386a9a472",
+        "bytes": 11791
+      },
+      "LICENSE": {
+        "url": "https://raw.githubusercontent.com/bowen-upenn/PersonaMem/d07e6ade22e85e0e5d562247323a9c3e07553226/LICENSE",
+        "sha256": "5cad9808b882c275f91578fbd742e007830123dad1f532b7c48f260d53bb6a20",
+        "bytes": 1068
+      }
+    }
+  }
+}
