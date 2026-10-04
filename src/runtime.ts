@@ -218,7 +218,10 @@ export class Runtime {
         throw error;
       }
     }
-    return {processedCount:jobs.length,profileScopes:[scope]};
+    // The native queue deduplicates notifications while this session is active.
+    // Later persisted turns must be returned as backlog so its existing idle timer drains them.
+    const hasMore=this.state.jobs(scope).some(job=>job.session===sessionId&&['pending','paused','interrupted'].includes(job.status));
+    return {processedCount:jobs.length,profileScopes:[scope],hasMore};
   }
   async learnNow(cwd: string) {
     const entry = await this.scope(cwd);

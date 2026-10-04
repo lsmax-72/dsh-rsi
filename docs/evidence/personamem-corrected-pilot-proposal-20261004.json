@@ -1,0 +1,34 @@
+{
+  "status": "PROPOSED_AWAITING_BUDGET_CONFIRMATION",
+  "recordedAt": "2026-10-04T04:35:13.643098+00:00",
+  "basis": "Existing fixed 12-call /900-second attempt is closed as OUTPUT_TRUNCATED; do not overwrite or extend it. Corrected history contains five original segments, requiring at least ten L1/Skill calls before scene/persona/tool loops.",
+  "historyCutoffExclusive": 182,
+  "questionIds": [
+    "acd74206-37dc-4756-94a8-b99a395d9a21",
+    "f546a74f-54de-40d0-9d88-8b0e30467d7b"
+  ],
+  "historySha256": "eeb336ef1029bdd8818a0a503b589dcb51bb249be5511729b6645f779ebddb37",
+  "model": "qwen3.8-27b",
+  "outputMaxTokensPerRequest": 4096,
+  "foregroundDispatchesPerQuestion": 6,
+  "foregroundWallSecondsPerQuestion": 120,
+  "newLearningDispatchLimit": 30,
+  "newLearningWindowSeconds": 1800,
+  "originalBudgetUnchanged": true,
+  "originalAttemptKnownTokens": 102780,
+  "nativeBacklogContractRestored": true,
+  "nativeImportBoundaries": [
+    0,
+    47,
+    78,
+    109,
+    154
+  ],
+  "noHistoryRemoved": true,
+  "answersScorerOnly": true,
+  "nativeAlgorithmUnchanged": true,
+  "embeddingRealLocalAndReportedSeparately": true,
+  "independentEffectClaim": false,
+  "formalUsersAndProgrammingSequenceNotStarted": true,
+  "driverSha256": "bdf076de27ea3805d28ae60c4556d174b7c2e97058d5c9ee7eaa7a30ba339dc4"
+}

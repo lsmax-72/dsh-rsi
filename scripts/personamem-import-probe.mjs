@@ -17,7 +17,7 @@ export function apply(ctx,config){
     await ctx.rsi.ready;
     const input=JSON.parse(await readFile(config.input,'utf8'));
     const seed=ctx.sessions.prepare('personamem-history-fixture',{meta:{cwd:config.root}});
-    const imported=appendPersonaHistory(seed,input.history);
+    const imported=await appendPersonaHistory(seed,input.history,{systemBoundaries:config.systemBoundaries===true});
     const handleAgent=await ctx.agents.create({sessionId:seed.id,meta:{cwd:config.root},seed:imported.events,agentOptions:{provider:'personamem-fixture',model:'fixture'}});
     const session=handleAgent.agent.session;
     assert.equal(createHash('sha256').update(JSON.stringify([...session.deriveMessages()].map(m=>({role:m.role,content:m.content.map(b=>b.text).join('')})))).digest('hex'),createHash('sha256').update(JSON.stringify(input.history)).digest('hex'),'Agent factory lost imported seed');
@@ -27,10 +27,11 @@ export function apply(ctx,config){
     const handle=await ctx.sessionPersistence.open(session.id,'read');const saved=await handle.read();const restored=Session.fromRestore(session.id,saved.events,handle.header,handle.inheritedEventCount,saved.eventState);await handle.close();
     assert.deepEqual([...restored.deriveMessages()],[...session.deriveMessages()]);
     let snapshot;
-    for(let i=0;i<500;i++){snapshot=await ctx.rsi.request('snapshot',{cwd:config.root});if(snapshot.jobs[0]?.status==='completed')break;await new Promise(r=>setTimeout(r,20));}
-    assert.equal(snapshot.jobs[0]?.status,'completed',JSON.stringify({jobs:snapshot.jobs,eventTypes:saved.events.map(e=>e.type),sources:ctx.rsi.runtime.state.sources()}));
-    const raw=input.history.filter(m=>m.role!=='system'),job=ctx.rsi.runtime.state.jobs(snapshot.workspace.id)[0];
-    assert.deepEqual(job.payload.messages.filter(m=>['user','assistant'].includes(m.role)).map(m=>({role:m.role,content:m.content})),raw);
+    for(let i=0;i<2000;i++){snapshot=await ctx.rsi.request('snapshot',{cwd:config.root});if(snapshot.jobs.length&&snapshot.jobs.every(j=>j.status==='completed'))break;await new Promise(r=>setTimeout(r,20));}
+    assert.ok(snapshot.jobs.length&&snapshot.jobs.every(j=>j.status==='completed'),JSON.stringify({jobs:snapshot.jobs,eventTypes:saved.events.map(e=>e.type),sources:ctx.rsi.runtime.state.sources()}));
+    const raw=input.history.filter(m=>m.role!=='system'),job=ctx.rsi.runtime.state.jobs(snapshot.workspace.id);
+    const jobMessages=job.sort((a,b)=>a.payload.turn-b.payload.turn).flatMap(j=>j.payload.messages);
+    assert.deepEqual(jobMessages.filter(m=>['user','assistant'].includes(m.role)).map(m=>({role:m.role,content:m.content})),raw);
     assert.equal(snapshot.layers[snapshot.workspace.id].L0,raw.length);assert.ok(calls.length>0);
     await ctx.rsi.request('settings',{cwd:config.root,settings:{learningEnabled:false}});
     handleAgent.agent.followup(createUserMessage({source:{kind:'user'},content:[{type:'text',text:input.questions[0].prompt}]}));await handleAgent.agent.whenIdle();await ctx.sessions.flush(session);
@@ -44,7 +45,7 @@ export function apply(ctx,config){
     const adapted=calls.find(r=>r.sessionId===comparison.agent.session.id),actualText=adapted.messages.flatMap(m=>m.content).filter(b=>b.type==='text').map(b=>b.text).join('\n');
     const missingAfterAdaptation=input.history.map((row,index)=>({index,role:row.role,chars:row.content.length,content:row.content})).filter(row=>!actualText.includes(row.content)).map(({content,...row})=>row);
     assert.equal(missingAfterAdaptation.length,0,JSON.stringify({missingAfterAdaptation,missingBeforeAdaptation:missingBeforeAdaptation.map(({content,...row})=>row)}));
-    const response={status:'PASS',checkedAt:new Date().toISOString(),importedMessages:input.history.length,rawMemoryMessages:raw.length,historyCutoffExclusive:input.historyCutoffExclusive,historySha256:createHash('sha256').update(JSON.stringify(imported.reconstructed)).digest('hex'),durableHistoryExactlyReconstructed:true,nativeTurnEndCapture:true,nativeL0Record:true,fixtureChatCalls:calls.length,historySystemNodesNormalizedAway:missingBeforeAdaptation.filter(row=>row.role==='system').map(row=>row.index),historyAfterExplicitSystemBackgroundAdaptation:true,foregroundFixtureCalls:2,realModelRequests:0,answersProvided:false,limitation:'Native import fixture only; All historical text is preserved in the adapted answering request; system backgrounds become labelled historical user context. Real model capacity still requires verification.'};
+    const response={status:'PASS',checkedAt:new Date().toISOString(),importedMessages:input.history.length,rawMemoryMessages:raw.length,turnBoundaries:imported.turnBoundaries,nativeImportedJobs:snapshot.jobs.length,historyCutoffExclusive:input.historyCutoffExclusive,historySha256:createHash('sha256').update(JSON.stringify(imported.reconstructed)).digest('hex'),durableHistoryExactlyReconstructed:true,nativeTurnEndCapture:true,nativeL0Record:true,fixtureChatCalls:calls.length,historySystemNodesNormalizedAway:missingBeforeAdaptation.filter(row=>row.role==='system').map(row=>row.index),historyAfterExplicitSystemBackgroundAdaptation:true,foregroundFixtureCalls:2,realModelRequests:0,answersProvided:false,limitation:'Native import fixture only; All historical text is preserved in the adapted answering request; system backgrounds become labelled historical user context. Real model capacity still requires verification.'};
     await writeFile(join(config.root,'receipt.json'),JSON.stringify(response,null,2));process.exit(0);
   }catch(error){console.error(error);process.exit(1);}},50);return()=>clearTimeout(timer);});
 }

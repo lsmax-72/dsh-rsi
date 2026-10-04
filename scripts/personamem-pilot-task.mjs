@@ -31,11 +31,11 @@ export function apply(ctx,config){
   ctx.effect(()=>{const alive=setInterval(()=>{},1000);const timer=setTimeout(async()=>{let deadline;let receipt;
     try{
       const input=JSON.parse(await readFile('/opt/rsi/personamem.json','utf8'));assert.equal(input.questions.length,2);assert.ok(!Object.hasOwn(input,'correct_answer'));rsi=ctx.get('rsi');assert.equal(!!rsi,config.arm==='rsi');if(rsi)await rsi.ready;
-      const seed=ctx.sessions.prepare('persona-'+input.personaId+'-history',{meta:{cwd:'/workspace'}});const imported=appendPersonaHistory(seed,input.history);
+      const seed=ctx.sessions.prepare('persona-'+input.personaId+'-history',{meta:{cwd:'/workspace'}});const imported=await appendPersonaHistory(seed,input.history,{systemBoundaries:true});
       const agentOptions={provider:config.fixture?'pilot-fixture':'qwen',model:config.fixture?'fixture':'qwen3.8-27b',maxTokens:4096};
       const history=await ctx.agents.create({sessionId:seed.id,meta:{cwd:'/workspace'},seed:imported.events,agentOptions});await ctx.sessions.flush(history.agent.session);
       const importedRoles=[...history.agent.session.deriveMessages()].map(m=>({role:m.role,content:m.content.map(b=>b.text).join('')}));assert.deepEqual(importedRoles,input.history);
-      durable('import.json',{personaId:input.personaId,contextId:input.contextId,cutoff:input.historyCutoffExclusive,messages:input.history.length,historySha256:createHash('sha256').update(JSON.stringify(input.history)).digest('hex'),nativeHistoryExact:true});
+      durable('import.json',{personaId:input.personaId,contextId:input.contextId,cutoff:input.historyCutoffExclusive,messages:input.history.length,historySha256:createHash('sha256').update(JSON.stringify(input.history)).digest('hex'),nativeHistoryExact:true,turnBoundaries:imported.turnBoundaries});
       if(rsi){
         phase='learning';lastLearningActivity=Date.now();const until=Date.now()+config.settleMs;
         rsi.runtime.observe(history.agent.session,imported.events.at(-1));

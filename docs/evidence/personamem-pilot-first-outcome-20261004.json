@@ -1,0 +1,28 @@
+{
+  "status": "ERROR",
+  "classification": "OUTPUT_TRUNCATED_IN_NATIVE_L1",
+  "error": "Native history learning did not finish within the predeclared window; do not score this as a task failure or expand it silently",
+  "foregroundRequests": 0,
+  "learningRequests": 1,
+  "knownTokens": 43433,
+  "unknownActualUsage": 0,
+  "nativeObserved": {
+    "L0": 177,
+    "L1": 0,
+    "actualInputTokens": 39337,
+    "actualOutputTokens": 4096,
+    "importedAsOneArtificialTurn": true,
+    "originalSystemBoundaries": [
+      0,
+      47,
+      78,
+      109,
+      154
+    ],
+    "truncatedOutput": "Source message UUID list exceeded output limit before any complete memory record was returned",
+    "taskAnswersAttempted": false,
+    "contextCapacityFailure": false
+  },
+  "preservedBaselineKnownTokens": 59347,
+  "bothArmsAttemptKnownTokens": 102780
+}
