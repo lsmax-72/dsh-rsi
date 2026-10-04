@@ -1,0 +1,103 @@
+{
+  "status": "DEVELOPMENT_PILOT_ONLY",
+  "users": 1,
+  "arms": [
+    {
+      "arm": "baseline",
+      "runnerStatus": "COMPLETED",
+      "questionScores": [
+        {
+          "questionId": "acd74206-37dc-4756-94a8-b99a395d9a21",
+          "correct": true,
+          "completed": true,
+          "answerAvailable": true,
+          "stopReason": {
+            "kind": "completed"
+          },
+          "knownTokens": 29616,
+          "responseSha256": "12f1b6829c559b9505de140996083f7c740c6d5abadfa58ab0c4677fb37680d4",
+          "allHistoricalTextPresent": true
+        },
+        {
+          "questionId": "f546a74f-54de-40d0-9d88-8b0e30467d7b",
+          "correct": true,
+          "completed": true,
+          "answerAvailable": true,
+          "stopReason": {
+            "kind": "completed"
+          },
+          "knownTokens": 29731,
+          "responseSha256": "7e91a7b1618680e4a2309fe245d78bdf3fb7017593a22506bbfea8cb77a5b86e",
+          "allHistoricalTextPresent": true
+        }
+      ],
+      "answered": 2,
+      "expectedQuestions": 2,
+      "normallyCompletedQuestions": 2,
+      "accuracy": 1.0,
+      "learningFailureCodes": [],
+      "historySha256": "eeb336ef1029bdd8818a0a503b589dcb51bb249be5511729b6645f779ebddb37",
+      "cutoff": 182,
+      "foregroundRequests": 2,
+      "learningRequests": 0,
+      "foregroundTokens": 59347,
+      "learningTokens": 0,
+      "knownTokens": 59347,
+      "unknownActualRequestUsage": 0,
+      "gatewayLedgerMatches": true,
+      "scorerResultsReturnedToLearning": false
+    },
+    {
+      "arm": "rsi",
+      "runnerStatus": "COMPLETED",
+      "questionScores": [
+        {
+          "questionId": "acd74206-37dc-4756-94a8-b99a395d9a21",
+          "correct": true,
+          "completed": true,
+          "answerAvailable": true,
+          "stopReason": {
+            "kind": "completed"
+          },
+          "knownTokens": 32941,
+          "responseSha256": "ac848d868a2d42557923621c3b4fb4dbe827123df6f05a6f7bc4556283883c99",
+          "allHistoricalTextPresent": true
+        },
+        {
+          "questionId": "f546a74f-54de-40d0-9d88-8b0e30467d7b",
+          "correct": true,
+          "completed": true,
+          "answerAvailable": true,
+          "stopReason": {
+            "kind": "completed"
+          },
+          "knownTokens": 33140,
+          "responseSha256": "26ae3075a039c0b49cc7f9c46984bcc6f70df6fcf85728648aafc1b1f9c3ab18",
+          "allHistoricalTextPresent": true
+        }
+      ],
+      "answered": 2,
+      "expectedQuestions": 2,
+      "normallyCompletedQuestions": 2,
+      "accuracy": 1.0,
+      "learningFailureCodes": [],
+      "historySha256": "eeb336ef1029bdd8818a0a503b589dcb51bb249be5511729b6645f779ebddb37",
+      "cutoff": 182,
+      "foregroundRequests": 2,
+      "learningRequests": 30,
+      "foregroundTokens": 66081,
+      "learningTokens": 249763,
+      "knownTokens": 315844,
+      "unknownActualRequestUsage": 0,
+      "gatewayLedgerMatches": true,
+      "scorerResultsReturnedToLearning": false
+    }
+  ],
+  "knownTokensTotal": 375191,
+  "sameFullHistoryBothArms": true,
+  "officialScorerControlsPassed": 3,
+  "scorerOnlyAnswers": true,
+  "confidenceInterval": null,
+  "reasonNoInterval": "One development user; correlated questions. Native learning failures are not wrong answers or zero accuracy. Future intervals cluster by user.",
+  "independentEffectClaim": false
+}

@@ -1,0 +1,63 @@
+{
+  "status": "DEVELOPMENT_PILOT_COMPLETED_WITH_PROFILE_BUDGET_LIMITATION",
+  "checkedAt": "2026-10-04T15:44:57.735166+08:00",
+  "sourceCommit": "3d0d550",
+  "model": "qwen3.8-27b",
+  "users": 1,
+  "baselineCorrect": 2,
+  "rsiCorrect": 2,
+  "accuracyUplift": 0,
+  "confidenceInterval": null,
+  "independentEffectClaim": false,
+  "nativeHistoryMessages": 182,
+  "nativeL0Messages": 177,
+  "allFiveConversationJobsCompleted": true,
+  "storedL1Records": 30,
+  "storedSkills": 0,
+  "actualSkillBodyDeliveries": 0,
+  "queryMemoryReferenceCounts": [
+    16,
+    16
+  ],
+  "allDeliveredL1IdsAndVersionsMatchClosedHeads": true,
+  "deliveredMemoryContextChars": [
+    5405,
+    5441
+  ],
+  "baselineTokens": 59347,
+  "rsiForegroundTokens": 66081,
+  "rsiLearningTokens": 249763,
+  "rsiTotalTokens": 315844,
+  "rsiForegroundRelativeIncrease": 0.11346824607815065,
+  "rsiTotalToBaselineTokenRatio": 5.321987632062278,
+  "pairKnownTokens": 375191,
+  "allPersonaAttemptsKnownTokensIncludingFirstFailure": 418624,
+  "actualRequestUsageMissing": 0,
+  "nativeGlobalSceneRefreshBlockedBeforeDispatch": [
+    {
+      "sessionId": "rsi-c29c1ab9-5972-4159-b716-66c4329135ad",
+      "taskId": "scene-extract-1791099272089",
+      "scope": "global",
+      "createdAt": 1791099272118,
+      "actualModelRequests": 0,
+      "nativeTurnEnds": [
+        {
+          "kind": "error",
+          "error": {
+            "code": "BUDGET_EXHAUSTED",
+            "message": "今日学习调用预算已用完"
+          }
+        }
+      ]
+    }
+  ],
+  "embeddingCalls": 238,
+  "embeddingInputChars": 159551,
+  "embeddingTimeMs": 332177,
+  "embeddingTokens": null,
+  "capacityNativeImportAndL1ConsumptionPassed": true,
+  "allLayerUpdatesFullyCompleted": false,
+  "skillQualityGateStillPending": true,
+  "formalEvaluationStarted": false,
+  "officialAnswersNotReturnedToLearning": true
+}
