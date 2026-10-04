@@ -1,0 +1,300 @@
+{
+  "status": "CONCRETE_DRAFT_NOT_FROZEN_NOT_RUN",
+  "recordedAt": "2026-10-04T18:12:32.199259+08:00",
+  "purpose": "Small independent PersonaMem comparison followed by a fresh sequential coding study; does not reproduce the full official benchmark.",
+  "model": "qwen3.8-27b",
+  "selectionSeed": 20261004,
+  "selectionUsesOnlyPublicIdsCutoffsAndPoolMembership": true,
+  "officialAnswersNotUsedForSelection": true,
+  "persona": {
+    "excludedDevelopmentUsers": [
+      "0"
+    ],
+    "eligibleUsers": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19"
+    ],
+    "selectedUsers": [
+      "6",
+      "2",
+      "10",
+      "13",
+      "5",
+      "9",
+      "4",
+      "12"
+    ],
+    "questionCountPerUser": 4,
+    "pairedQuestions": 32,
+    "modelAnswersPlanned": 64,
+    "cases": [
+      {
+        "personaId": "6",
+        "contextId": "8c336cac503ae78c7fe58a6aef0965963041cd579d1a885db4709293b1853829",
+        "cutoffExclusive": 212,
+        "questionIds": [
+          "dbbd6663-a17f-4b84-8579-6d39ad99c738",
+          "53bb55a3-2ca8-4ab5-a590-f8b68f491128",
+          "fe2e91a8-fd23-4ea7-a3f1-722a0396712d",
+          "b8e89a15-dbb5-4309-868a-3755bcb6b5da"
+        ],
+        "historyMessages": 212,
+        "historyChars": 154670,
+        "historySegments": 6,
+        "questionTypes": [
+          "recalling_the_reasons_behind_previous_updates",
+          "recall_user_shared_facts",
+          "recall_user_shared_facts",
+          "recall_user_shared_facts"
+        ],
+        "publicInputSha256": "51d749d34dbe3b56c164be4804f582342730bb66470a51d1a54193b130617ae9"
+      },
+      {
+        "personaId": "2",
+        "contextId": "1621543a17bd464feaf4ba73d83d579d0160987536bde8725ac29131ecf235c3",
+        "cutoffExclusive": 126,
+        "questionIds": [
+          "4e673ae2-aedb-4e12-83c9-9cb17e6b2711",
+          "ff92b10b-5eaa-4cc7-8a97-2e392059a52a",
+          "14f4861a-612b-462b-9b6b-2d9f0f903be3",
+          "f0147ccb-bc31-4c48-a31b-b93cef0681ba"
+        ],
+        "historyMessages": 126,
+        "historyChars": 112492,
+        "historySegments": 4,
+        "questionTypes": [
+          "generalizing_to_new_scenarios",
+          "suggest_new_ideas",
+          "recall_user_shared_facts",
+          "generalizing_to_new_scenarios"
+        ],
+        "publicInputSha256": "fce35755870aa9e9399a18d49f45a405f754f5f123fca9841593dacadb99549f"
+      },
+      {
+        "personaId": "10",
+        "contextId": "7797915581c01170c2a46616041687c09d59240b417898659034cd31cdc8cebf",
+        "cutoffExclusive": 188,
+        "questionIds": [
+          "35dae3c4-7bd6-4f65-af6e-747d7d326556",
+          "7c339c29-79db-4ec4-85f1-a11dae5dbdf4",
+          "e48cb6ad-1629-4107-befb-7f2c3ce4e65d",
+          "2b969ce1-cf22-4f80-af89-f42e57ad7c49"
+        ],
+        "historyMessages": 188,
+        "historyChars": 159748,
+        "historySegments": 5,
+        "questionTypes": [
+          "suggest_new_ideas",
+          "recall_user_shared_facts",
+          "generalizing_to_new_scenarios",
+          "recall_user_shared_facts"
+        ],
+        "publicInputSha256": "d055d364e0e9d67f37191bbb3e258779e8595e668312e9fbb4831553f22bcf76"
+      },
+      {
+        "personaId": "13",
+        "contextId": "a44f332994eedfff13f2c4870ee7e7da35a682625f25b789a5beccde572f5f0b",
+        "cutoffExclusive": 170,
+        "questionIds": [
+          "f7b31f4b-e088-4a2e-a505-1e3cd7426e9e",
+          "4534d8e3-44fc-4f72-9316-59a88ebd9e42",
+          "43436dbb-4b3e-4f1d-a2eb-fa61b16935f8",
+          "43653af1-207b-4de7-b29c-df5c9e29ead8"
+        ],
+        "historyMessages": 170,
+        "historyChars": 144800,
+        "historySegments": 5,
+        "questionTypes": [
+          "suggest_new_ideas",
+          "recall_user_shared_facts",
+          "recalling_the_reasons_behind_previous_updates",
+          "suggest_new_ideas"
+        ],
+        "publicInputSha256": "d4301f5ac80fcb0fa2a18e19f17734a9e19ac850ef10ab96ddfc5099132d7ee5"
+      },
+      {
+        "personaId": "5",
+        "contextId": "bc7411051b57e9cd98f3a7861f5215815b6212013d05ad447915ce8442b92845",
+        "cutoffExclusive": 204,
+        "questionIds": [
+          "f9a80fab-b8e6-4522-8484-0752aa2bc7aa",
+          "8e77a1eb-94be-451f-8c6e-db50537a602e",
+          "b4a5fcbd-e1be-4679-8bd5-92f9374c171c",
+          "3e4cc77a-0434-4dd4-a89a-de7c34c5826e"
+        ],
+        "historyMessages": 204,
+        "historyChars": 162221,
+        "historySegments": 5,
+        "questionTypes": [
+          "suggest_new_ideas",
+          "recall_user_shared_facts",
+          "generalizing_to_new_scenarios",
+          "suggest_new_ideas"
+        ],
+        "publicInputSha256": "fba181e417981028ce616f90d270ffb55e2c83a2182d813596a4d92a2dfa9231"
+      },
+      {
+        "personaId": "9",
+        "contextId": "28249d3fb6f594de0bf9a6708d5eb4ea140c4f157ffbf51dfeeb413452ef0291",
+        "cutoffExclusive": 150,
+        "questionIds": [
+          "a719edb3-a43f-4792-b820-fb45293c4e19",
+          "b502d7dc-2345-41a3-8a22-0fb9ff719c9e",
+          "b35349e0-993b-452a-bb5e-67668833b39b",
+          "436e377a-98ba-44fc-809c-1743bbf4e033"
+        ],
+        "historyMessages": 150,
+        "historyChars": 131374,
+        "historySegments": 5,
+        "questionTypes": [
+          "recall_user_shared_facts",
+          "recalling_the_reasons_behind_previous_updates",
+          "generalizing_to_new_scenarios",
+          "generalizing_to_new_scenarios"
+        ],
+        "publicInputSha256": "f7492183f2478258793c0ef4bbcf2656fa7d5569d43c6b2cd5c69489d264eb2f"
+      },
+      {
+        "personaId": "4",
+        "contextId": "ea6147f6dc11130b410e00146e314d9370b7fff04f994639c4a3d46ce1255e64",
+        "cutoffExclusive": 115,
+        "questionIds": [
+          "8c6f3412-d822-4131-9a51-184e6da3f476",
+          "bd39c6a3-3ebb-4f12-a9b5-f690ebdf5bca",
+          "8dbe465c-85ad-4663-a517-da7b86418cde",
+          "64e6edb1-2675-4bec-bac5-ac3cffb7a36c"
+        ],
+        "historyMessages": 115,
+        "historyChars": 106719,
+        "historySegments": 4,
+        "questionTypes": [
+          "generalizing_to_new_scenarios",
+          "recall_user_shared_facts",
+          "recalling_facts_mentioned_by_the_user",
+          "recalling_the_reasons_behind_previous_updates"
+        ],
+        "publicInputSha256": "0582d05028b52aea5d76028cf813301b29bdb6dc02668aabb83d5c1aa4569ec4"
+      },
+      {
+        "personaId": "12",
+        "contextId": "97c532a381a079396499e11df92f6b69c99bc3ce999e2aff2c81aedea4b4c45d",
+        "cutoffExclusive": 181,
+        "questionIds": [
+          "194ce23e-d6d7-46f9-99b0-a0eba223a0ee",
+          "a64ba818-abee-404e-9a38-f440b74bcca7",
+          "8be28bb6-049f-4735-8957-a15234c138f4",
+          "cb4799ed-15e8-4dda-a716-b81fa1d6d9da"
+        ],
+        "historyMessages": 181,
+        "historyChars": 164041,
+        "historySegments": 6,
+        "questionTypes": [
+          "suggest_new_ideas",
+          "recall_user_shared_facts",
+          "recall_user_shared_facts",
+          "generalizing_to_new_scenarios"
+        ],
+        "publicInputSha256": "e2f9c3c9928191c963e6e2a9b4f61a9b0582d1f18d36499b48a73e97967bcc7f"
+      }
+    ],
+    "baselineRetainsSameFullCutoffHistory": true,
+    "sameHistoricalSystemRoleProjection": true,
+    "perUserAssetDirectoryIsolated": true,
+    "learningFrozenBeforeFirstQuestion": true,
+    "questionAnswersExcludedFromLearning": true,
+    "budgetProposal": {
+      "foregroundCallsPerQuestion": 6,
+      "wallSecondsPerQuestion": 120,
+      "maxOutputTokens": 4096,
+      "backgroundCallsPerUser": 80,
+      "learningWallSecondsPerUser": 2400,
+      "quietSeconds": 45,
+      "maximumActualGatewayCallsPerUserRsi": 104,
+      "maxConcurrentUsers": 2
+    },
+    "statistics": {
+      "accuracy": "Per-question counts and per-user macro accuracy",
+      "uncertainty": "Paired user-cluster bootstrap, 10000 draws, fixed seed",
+      "missingPlannedUser": "Withhold complete paired comparison; report coverage and cause",
+      "smallSampleLimit": "8 users give coarse intervals; not a full-benchmark or population guarantee"
+    }
+  },
+  "coding": {
+    "eligiblePoolSize": 32,
+    "orderedNewTaskIds": [
+      "django__django-11848",
+      "django__django-11551",
+      "django__django-12262",
+      "django__django-11815",
+      "django__django-11880",
+      "django__django-11790",
+      "django__django-11999",
+      "django__django-11740"
+    ],
+    "baseCommits": {
+      "django__django-11848": "f0adf3b9b7a19cdee05368ff0c0c2d087f011180",
+      "django__django-11551": "7991111af12056ec9a856f35935d273526338c1f",
+      "django__django-12262": "69331bb851c34f05bc77e9fc24020fe6908b9cd5",
+      "django__django-11815": "e02f67ef2d03d48128e7a118bf75f0418e24e8ac",
+      "django__django-11880": "06909fe084f87a65459a83bd69d7cdbe4fce9a7c",
+      "django__django-11790": "b1d6b35e146aea83b171c1b921178bbaae2795ed",
+      "django__django-11999": "84633905273fc916e3d17883810d9969c03f73c2",
+      "django__django-11740": "003bb34b218adb23d1a7e67932a6ba9b3c4dcc81"
+    },
+    "allTasksPreviouslyUnsolvedInProject": true,
+    "initialRsiAssetsEmpty": true,
+    "carryNaturalAssetsAndOfficialSourceLogsFromNToNPlus1": true,
+    "baselineTasksIndependentAndAssetFree": true,
+    "answersHiddenTestsAndScoresNeverReturnedToLearner": true,
+    "budgetProposal": {
+      "foregroundCallsPerTaskPerArm": 40,
+      "wallSecondsPerTask": 1200,
+      "outputMaxTokens": 8192,
+      "backgroundCallsPerTask": 20,
+      "totalBackgroundCap": 160,
+      "backgroundSettleSeconds": 900,
+      "oneUnscoredProvenInfraRetryMax": true
+    },
+    "outcomes": [
+      "Official resolved per saved patch",
+      "Paired early/late difference with task difficulty disclosure",
+      "Full-chain token including failed attempts",
+      "Repeated error/test/search counts",
+      "First supported effective edit location",
+      "Delivered asset relevance, length and decision correspondence"
+    ],
+    "limitation": "One fixed sequence cannot establish a universal temporal causal trend."
+  },
+  "remainingBeforeFreeze": [
+    "Review sampling/budget tradeoff using verified native pilot costs and serialize final immutable protocol.",
+    "Make the current two-question PersonaMem pilot driver support manifest-verified four-question independent cases.",
+    "Prepare and verify each new coding task source tree/scorer image/environment.",
+    "Record actual script/source/model/provider/embedding and public-input hashes before the first independent dispatch."
+  ],
+  "qualityLimitsCarriedIntoEvaluation": [
+    "Native general Skill length/resource guidance is unreliable (observed 2738 characters, 0 resources).",
+    "Successful asset delivery is not helpfulness or causal effect.",
+    "Evidence-boundary improvement verified in one bounded real consumer, not universally."
+  ],
+  "realModelRequests": 0,
+  "formalEvaluationStarted": false,
+  "stagingOutput": "/private/tmp/dsh-rsi-next-evaluation-20261004",
+  "authorizationContext": "User requests autonomous continued progress; this draft does not silently expand an already frozen run."
+}

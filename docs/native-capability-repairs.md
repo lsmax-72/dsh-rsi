@@ -35,3 +35,9 @@ L0 捕获补充验证：索引成功写入后才推进原生捕获检查点；�
 回执：[原生装配及故障边界](evidence/native-vector-repair-20261004.json)、[真实本地模型](evidence/real-native-vector-20261004.json)。真实模型测试中，中文查询对英文资产的 FTS 命中为 0，向量搜索及原生 RRF 成功召回相关资产；这是小型接入验收，不是效果成绩。
 
 [本机生产包安装](evidence/package-native-binaries-20261004.json)实际加载了 sqlite-vec 与 node-llama-cpp 原生二进制；[安装版宿主回归](evidence/runtime-native-vectors-20261004.json)及[模型桥回归](evidence/bridge-native-vectors-20261004.json)通过，后两项使用明确的测试编码服务，没有真实语义质量结论。新增原生依赖的 [远程多平台 CI](evidence/native-package-ci-20261004.json) 已在 Linux/macOS/Windows 全部通过，修订 c962e78。核心清单现在为 60 个文件，逐文件哈希检查通过。
+
+## 后续真实前置验证（2026-10-04）
+
+[原生画像恢复](evidence/personamem-native-profile-recovery-outcome-20261004.json)已经完成：原生队列与待处理计数清零，两个范围PersonaTrigger均无需触发；原始2/2预演成绩不使用后恢复资产重算。答题来源排除、完整日志重建和学习完成门槛已补齐。
+
+[真实Skill与证据归属](evidence/development-historical-evidence-boundary-outcome-20261004.json)证明正常独立代理自然加载v3正文，实际请求与原生日志一致；宿主追加的历史证据边界不会进入学习。必要适配还保留提炼工具结果的callId、匹配名称、错误状态和原输出，防止将读取Skill视作执行测试。原生生产提示保留完整前缀，语言/覆盖/执行依据条件在前缀后追加。正文长度与资源拆分没有通过（2738字符、0资源）；这些是真实内容质量限制，与七项装配修复完成分开说明。
