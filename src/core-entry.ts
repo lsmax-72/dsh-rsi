@@ -3,6 +3,7 @@ export { SqliteSkillStore } from '../vendor/core/src/core/skill/skill-store.js';
 export { SkillResourceStore } from '../vendor/core/src/core/skill/skill-resource-store.js';
 export { SkillVersioning } from '../vendor/core/src/core/skill/skill-versioning.js';
 export { SkillExtractor } from '../vendor/core/src/core/skill/skill-extractor.js';
+export { shouldExtractL1 } from '../vendor/core/src/utils/sanitize.js';
 export { extractL1Memories } from '../vendor/core/src/core/record/l1-extractor.js';
 export { readAllMemoryRecords } from '../vendor/core/src/core/record/l1-reader.js';
 export { StorageAdapter } from '../vendor/core/src/core/storage/adapter.js';

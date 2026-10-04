@@ -15,6 +15,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--dsh', default=shutil.which('dsh') or '/Applications/DeepSeek Harness.app/Contents/Resources/runtime/cli/bin/dsh')
     parser.add_argument('--output', type=Path)
+    parser.add_argument('--probe',default='runtime-probe.mjs',choices=['runtime-probe.mjs','runtime-batch-probe.mjs'],help='Reuse the isolated native host for the selected fixture')
     args = parser.parse_args()
     cli = Path(args.dsh).expanduser().resolve()
     project = Path(__file__).resolve().parent.parent
@@ -38,7 +39,7 @@ def main():
                     {'id': 'rsi-integration', 'name': str(project / 'lib/index.js'), 'config': {
                         'embedding': embedding.config, 'dataDir': str(root / 'assets'), 'cwd': str(root), 'provider': 'rsi-probe', 'model': 'fixture', 'l2DelaySeconds': 86400,
                     }},
-                    {'id': 'rsi-runtime-probe', 'name': str(project / 'scripts/runtime-probe.mjs'), 'config': {'root': str(root), 'phase': phase}},
+                    {'id': 'rsi-runtime-probe', 'name': str(project / 'scripts' / args.probe), 'config': {'root': str(root), 'phase': phase}},
                 ]},
             ]
             patch = root / 'overlay.yml'

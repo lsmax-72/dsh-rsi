@@ -3,7 +3,7 @@ import { mkdir, writeFile, rm, readdir } from 'node:fs/promises';
 import { join,relative,resolve,isAbsolute } from 'node:path';
 import { DshModelRunner } from './model-bridge.js';
 import { openLocalCore } from './local-core.js';
-import { MemoryPipelineManager, parseSkillFile, buildFtsQuery } from './core-entry.js';
+import { MemoryPipelineManager, parseSkillFile, buildFtsQuery, shouldExtractL1 } from './core-entry.js';
 import { copyResources,versionResources } from './resources.js';
 import { State, workspace, type Settings } from './state.js';
 import { listAllSkills, listAllVersions } from './asset-pages.js';
@@ -194,14 +194,21 @@ export class Runtime {
             stages.recorded=true; this.state.updateJob(job.id,'running',stages);
           }
           if (!stages.memory) {
-            const messages = job.payload.messages.filter((m:any) => ['user','assistant'].includes(m.role)).map((m:any) => ({...m,timestamp:Date.parse(m.timestamp)}));
-            const result = await core.extractMemories({messages,sessionKey:sessionId,sessionId});
-            const global = await this.core('global');
-            for (const record of result.records.filter((r:any) => r.type === 'persona')) {
-              const saved=await global.storeMemory(record);if (!saved || !(await global.readMemories()).some((row:any)=>row.id===saved.id)) throw new Error('全局偏好写入失败');
-              core.memory.deleteL1Batch([record.id]);
+            const messages = job.payload.messages.filter((m:any) => ['user','assistant'].includes(m.role) && shouldExtractL1(m.content)).map((m:any) => ({...m,timestamp:Date.parse(m.timestamp)}));
+            // Keep the native ten-new/five-background window without dropping earlier turn messages.
+            // Persist each finished batch so a later truncation retries only the unfinished suffix.
+            const progress=stages.memoryBatches ?? {next:0,stored:0};
+            for(let next=progress.next;next<messages.length;next+=10){
+              const result=await core.extractMemories({messages:messages.slice(Math.max(0,next-5),next+10),newMessageCount:Math.min(10,messages.length-next),sessionKey:sessionId,sessionId});
+              const global=await this.core('global');
+              for(const record of result.records.filter((r:any)=>r.type==='persona')){
+                const saved=await global.storeMemory(record);if(!saved || !(await global.readMemories()).some((row:any)=>row.id===saved.id))throw new Error('全局偏好写入失败');
+                core.memory.deleteL1Batch([record.id]);
+              }
+              progress.next=Math.min(next+10,messages.length);progress.stored+=result.storedCount;
+              stages.memoryBatches=progress;this.state.updateJob(job.id,'running',stages);
             }
-            stages.memory={stored:result.storedCount}; this.state.updateJob(job.id,'running',stages);
+            stages.memory={stored:progress.stored};this.state.updateJob(job.id,'running',stages);
           }
           if (!stages.skills) {
             const result = await core.createSkillExtractor(this.state.settings().language).extract({...ids(scope),session_id:sessionId,task_id:job.id,messages:job.payload.messages,reason:`记录的轮次结果：${JSON.stringify(job.payload.reason)}`});

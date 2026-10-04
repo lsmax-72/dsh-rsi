@@ -1,0 +1,27 @@
+{
+  "status": "PASS",
+  "realModelRequests": 0,
+  "fixtureRequests": 5,
+  "qualifiedSourceMessages": 27,
+  "rawSourceMessages": 28,
+  "newMessageBatchSizes": [
+    10,
+    10,
+    10,
+    7
+  ],
+  "completedCursor": 27,
+  "failedBatchRetriedWithoutReplayingPrefix": true,
+  "shortTailDoesNotRelabelBackgroundAsNew": true,
+  "skillWaitsForCompleteMemoryStage": true,
+  "limitation": "Synthetic responses verify native batching and durable retry; no model quality or natural scheduler claim.",
+  "restart": {
+    "status": "PASS",
+    "completedCursor": 27,
+    "modelRequests": 0
+  },
+  "hostVersion": "0.2.0-rc.2",
+  "checkedAt": "2026-10-04T12:42:56.778419+00:00",
+  "isolatedHome": true,
+  "diagnostics": []
+}

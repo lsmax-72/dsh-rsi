@@ -74,9 +74,8 @@ export async function openLocalCore(dataDir: string, runner: any, logger: any, s
         let runnerError:any;
         const extractionRunner={run:async (params:any)=>{try{return await runner.run(params.taskId==='l1-extraction'?{...params,systemPrompt:`${params.systemPrompt}\nThese memory inputs contain user/assistant prose, without tool execution results. Do not convert assistant claims or plans into verified success. Attribute such outcomes as assistant-reported/unverified, retain the source message IDs, and never invent successful tests. Instruction memories are standing rules or reusable operating conventions; a one-off feature/fix request is not a rule for future unrelated tasks. Capture useful task-specific history as episodic context instead, without inventing success. Describe the scene from the user activity, not the extractor or AI narrator. Preserve durable user facts and preferences.`}:params);}catch(error){runnerError=error;throw error;}}};
         const result = await withEmbeddingIntegrity(()=>extractL1Memories({ ...input, baseDir:join(dataDir,'history'), config:{}, storage:history, logger,
-          // dsh emits many assistant messages inside one turn; the native ten-message default can drop its user input.
-          options:{ llmRunner:extractionRunner, enableDedup:true, vectorStore:memory, embeddingService, previousSceneName:previous || undefined,
-            maxMessagesPerExtraction:Math.max(10,input.messages.length) } }));
+          // The durable caller supplies bounded new-message batches and their native background.
+          options:{ llmRunner:extractionRunner, enableDedup:true, vectorStore:memory, embeddingService, previousSceneName:previous || undefined, maxMessagesPerExtraction:Math.min(10,input.newMessageCount ?? 10) } }));
         if (!result.success) throw runnerError ?? new Error('记忆提炼失败，请查看后台会话日志');
         for(const record of result.records)assertIndexed(record);
         const coverage=verifyVectorCoverage(memory);if(coverage.missingL1)throw new Error('记忆提炼向量写入不完整');
