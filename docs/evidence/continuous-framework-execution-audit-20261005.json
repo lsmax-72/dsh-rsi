@@ -1,0 +1,79 @@
+{
+  "status": "PASS_SAVED_FRAMEWORK_EXECUTION_NOT_SOURCE_MENTION",
+  "modelOrScorerCalls": 0,
+  "analysisOnly": true,
+  "frozenRuntimeUnchanged": true,
+  "oldDiagnosticSha256": "e5e0854170a3e0137a1b32dba7ce5dbda9097a3101db33f9924935a139b845e5",
+  "newDiagnosticSha256": "0fa82c7681f99b7ea8f74cee7cfb1b05e1baa7a315bf8c53a88aca76b2cff89d",
+  "analysisReaderSha256": "a0e7c392dca0882a784f6b22be4a31516352d8df1a9f916517a651cb3f12d004",
+  "firstHalfSavedComparison": [
+    {
+      "instanceId": "django__django-11848",
+      "arm": "baseline",
+      "legacyFrameworkMentionsCountedAsCommands": 7,
+      "frameworkExecutionCommands": 7,
+      "sourceOrHelpMentionsExcluded": 0,
+      "frameworkExecutionInvocationCandidates": 7
+    },
+    {
+      "instanceId": "django__django-11848",
+      "arm": "rsi",
+      "legacyFrameworkMentionsCountedAsCommands": 8,
+      "frameworkExecutionCommands": 8,
+      "sourceOrHelpMentionsExcluded": 0,
+      "frameworkExecutionInvocationCandidates": 8
+    },
+    {
+      "instanceId": "django__django-11551",
+      "arm": "rsi",
+      "legacyFrameworkMentionsCountedAsCommands": 11,
+      "frameworkExecutionCommands": 10,
+      "sourceOrHelpMentionsExcluded": 1,
+      "frameworkExecutionInvocationCandidates": 13
+    },
+    {
+      "instanceId": "django__django-11551",
+      "arm": "baseline",
+      "legacyFrameworkMentionsCountedAsCommands": 7,
+      "frameworkExecutionCommands": 0,
+      "sourceOrHelpMentionsExcluded": 7,
+      "frameworkExecutionInvocationCandidates": 0
+    },
+    {
+      "instanceId": "django__django-12262",
+      "arm": "baseline",
+      "legacyFrameworkMentionsCountedAsCommands": 5,
+      "frameworkExecutionCommands": 5,
+      "sourceOrHelpMentionsExcluded": 0,
+      "frameworkExecutionInvocationCandidates": 5
+    },
+    {
+      "instanceId": "django__django-12262",
+      "arm": "rsi",
+      "legacyFrameworkMentionsCountedAsCommands": 0,
+      "frameworkExecutionCommands": 0,
+      "sourceOrHelpMentionsExcluded": 0,
+      "frameworkExecutionInvocationCandidates": 0
+    },
+    {
+      "instanceId": "django__django-11815",
+      "arm": "rsi",
+      "legacyFrameworkMentionsCountedAsCommands": 4,
+      "frameworkExecutionCommands": 4,
+      "sourceOrHelpMentionsExcluded": 0,
+      "frameworkExecutionInvocationCandidates": 4
+    },
+    {
+      "instanceId": "django__django-11815",
+      "arm": "baseline",
+      "legacyFrameworkMentionsCountedAsCommands": 11,
+      "frameworkExecutionCommands": 10,
+      "sourceOrHelpMentionsExcluded": 1,
+      "frameworkExecutionInvocationCandidates": 10
+    }
+  ],
+  "chatCostAndUnknownUsageUnchanged": true,
+  "savedOldDiagnosticsUnmodified": true,
+  "actualFocusedRegressionNote": "Second-task baseline reads framework source but executes temporary Python tests; framework invocation zero does not mean zero behavior probes.",
+  "limit": "Conservative explicit framework execution candidates; custom Python checks require their separate saved-output review. Calling a framework does not prove success, adequacy or quality."
+}
