@@ -1,0 +1,23 @@
+{
+  "status": "PREREGISTERED_BEFORE_DISPATCH",
+  "recordedAt": "2026-10-04T18:02:00.614325+08:00",
+  "model": "qwen3.8-27b",
+  "callLimit": 4,
+  "wallSeconds": 120,
+  "outputMaxTokens": 4096,
+  "sameSkillVersion": 3,
+  "sameSkillBodySha256": "8236bd1c40d4242c1d16c2dc8654a3a487ea70b420f27378e7576abe173cef98",
+  "sameQuestion": "Django 的 Engine.render_to_string 在 autoescape=False 时仍转义 HTML。请说明最小修复的调用表达式，并给出应覆盖的公开验证用例；区分已观察证据与建议验证。本轮只提供修复建议，不执行代码或测试。",
+  "onlyNativeSkillToolVisible": true,
+  "taskCommandsAllowed": 0,
+  "backgroundCallsAllowed": 0,
+  "assetContentNotInjectedOrEditedByDriver": true,
+  "scorerNotInput": true,
+  "purpose": "Check whether a durable host evidence-boundary message prevents historical Skill validation from being presented as execution in the new session. Prior two-call answer explicitly made this incorrect provenance claim.",
+  "previousConsumerRequests": 6,
+  "previousConsumerKnownTokens": 8923,
+  "previousConsumerDeliveryPassed": true,
+  "previousConsumerProvenancePassed": false,
+  "hostIndexSha256": "205c9766f8722a1dc305b30f64a8be40f22b08eaa14d2288c99375289d4e8ec5",
+  "authorization": "Autonomous bounded development validation authorized 2026-10-04."
+}

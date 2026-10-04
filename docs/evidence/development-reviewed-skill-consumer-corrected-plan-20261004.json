@@ -1,0 +1,38 @@
+{
+  "status": "PREREGISTERED_BEFORE_DISPATCH",
+  "recordedAt": "2026-10-04T17:50:54.075056+08:00",
+  "model": "qwen3.8-27b",
+  "callLimit": 4,
+  "wallSeconds": 120,
+  "outputMaxTokens": 4096,
+  "foregroundOnly": true,
+  "taskCommandsAllowed": 0,
+  "nativeToolRegistryRestrict": [
+    "skill"
+  ],
+  "nativeMonotonicGuard": true,
+  "expectedSkillId": "skl-bHAUoR5iyX2n",
+  "expectedVersion": 3,
+  "bodyChars": 2738,
+  "bodySha256": "8236bd1c40d4242c1d16c2dc8654a3a487ea70b420f27378e7576abe173cef98",
+  "question": "Django 的 Engine.render_to_string 在 autoescape=False 时仍转义 HTML。请说明最小修复的调用表达式，并给出应覆盖的公开验证用例；区分已观察证据与建议验证。本轮只提供修复建议，不执行代码或测试。",
+  "explicitSkillNameInQuestion": false,
+  "previousConsumerCalls": 4,
+  "previousConsumerKnownTokens": 5738,
+  "previousConsumerDeliveredBody": true,
+  "previousConsumerProposalCompleted": false,
+  "correction": "First read-only consumer presented unavailable tool schemas and then denied their calls. Reuse native agent.ctx.tools.restrict for consistent model-visible and executable Skill-only capability surface, rather than an around-execute assertion.",
+  "sourceCompactReviewCalls": 6,
+  "sourceCompactReviewKnownTokens": 102992,
+  "compactReviewBodyTargetMet": false,
+  "existingSourceAssetsAndLogsUnchanged": true,
+  "pluginSha256": "af265e546b61bc570e4f39575fc9b2ed4d23585fcf991f849e253ec41107912e",
+  "authorization": "Autonomous bounded development checks authorized by user 2026-10-04.",
+  "zeroCallPreparationFailure": {
+    "status": "GLOBAL_SCHEMA_VIEW_MISUSED_FOR_AGENT_RESTRICTION_CHECK",
+    "requests": 0,
+    "previousOutputRoot": "/private/tmp/dsh-rsi-reviewed-skill-consumer-20261004-2",
+    "correction": "The native schemas(scope) accessor requires the agent scope object; schemas() reads the global view. Restriction itself is unchanged."
+  },
+  "outputRoot": "/private/tmp/dsh-rsi-reviewed-skill-consumer-20261004-3"
+}

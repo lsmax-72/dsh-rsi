@@ -7,3 +7,7 @@ lib/
 
 # Local experiment traces and scorer outputs must never enter task images or published packages.
 .artifacts/
+
+# Generated Python cache from local evaluation helpers.
+__pycache__/
+*.py[cod]

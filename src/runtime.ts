@@ -153,7 +153,10 @@ export class Runtime {
             messages.push({ id:e.data.message.id,role:'assistant',content:text(e.data.message),timestamp:new Date(e.time).toISOString() });
           }
           if (e.type === 'tool/call') messages.push({role:'tool_call',content:JSON.stringify(e.data),timestamp:new Date(e.time).toISOString()});
-          if (e.type === 'tool/result') messages.push({role:'tool_result',content:text(e.data.message),timestamp:new Date(e.time).toISOString()});
+          if (e.type === 'tool/result') {
+            const message=e.data.message,call=trace.find((item:any)=>item.type==='tool/call'&&item.data.callId===message.toolCallId);
+            messages.push({role:'tool_result',content:JSON.stringify({tool:call?.data.name??'unknown',callId:message.toolCallId,isError:message.isError===true,output:text(message)}),timestamp:new Date(e.time).toISOString()});
+          }
         }
         if (!messages.some(m => m.role === 'user' && m.content.trim())) continue;
         const selected = this.config.provider && this.config.model ? {provider:this.config.provider,model:this.config.model} : route;

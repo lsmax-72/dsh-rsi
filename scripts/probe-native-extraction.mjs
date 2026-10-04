@@ -28,10 +28,12 @@ try {
   assert.ok(review.systemPrompt.includes('A passing check supports only the behaviors it covers'));
   assert.ok(review.systemPrompt.includes('Preserve executable identifiers and calling expressions exactly as observed'));
   assert.ok(review.systemPrompt.includes('Keep runnable reproduction and test examples in native skill_files_write resources'));
+  assert.ok(review.systemPrompt.includes('Retrieved Skill/Memory Evidence sections are historical source claims'));
+  assert.ok(review.systemPrompt.includes('Name execution evidence as source-session evidence'));
   await core.extractMemories({sessionKey:'fixture-source',sessionId:'fixture-source',messages:[{id:'claim-only',role:'assistant',content:'所有测试都通过了。',timestamp:Date.now()}]});
   assert.deepEqual(result.candidates,[]);
   const l1=calls.find(p=>p.taskId==='l1-extraction');assert.ok(l1.systemPrompt.includes('assistant-reported/unverified'));assert.ok(l1.prompt.includes('所有测试都通过了'));
 
   const manifest=JSON.parse(await readFile(fileURLToPath(new URL('../vendor/core/manifest.json',import.meta.url)),'utf8'));
-  console.log(JSON.stringify({status:'PASS',checkedAt:new Date().toISOString(),sourceRevision:manifest.revision,sourceFileSha256:manifest.files.find(f=>f.path==='core/skill/prompts/skill-review-prompt.ts').sha256,configuredNativePromptSha256:createHash('sha256').update(review.systemPrompt.slice(0,SKILL_REVIEW_PROMPT.length)).digest('hex'),nativePromptChars:SKILL_REVIEW_PROMPT.length,nativeProductionPromptDelivered:true,transcriptRolesPreserved:true,noChangeContract:true,conciseSkillGuidanceDelivered:true,toolEvidenceGuidanceDelivered:true,callerContractAndCoverageGuidanceDelivered:true,executableCodeFidelityAndResourceGuidanceDelivered:true,L1ProseOnlyClaimsExplicitlyUnverified:true,fixtureRunnerCalls:calls.length,realModelRequests:0},null,2));
+  console.log(JSON.stringify({status:'PASS',checkedAt:new Date().toISOString(),sourceRevision:manifest.revision,sourceFileSha256:manifest.files.find(f=>f.path==='core/skill/prompts/skill-review-prompt.ts').sha256,configuredNativePromptSha256:createHash('sha256').update(review.systemPrompt.slice(0,SKILL_REVIEW_PROMPT.length)).digest('hex'),nativePromptChars:SKILL_REVIEW_PROMPT.length,nativeProductionPromptDelivered:true,transcriptRolesPreserved:true,noChangeContract:true,conciseSkillGuidanceDelivered:true,toolEvidenceGuidanceDelivered:true,callerContractAndCoverageGuidanceDelivered:true,executableCodeFidelityAndResourceGuidanceDelivered:true,historicalRetrievalIsNotCurrentExecutionGuidanceDelivered:true,L1ProseOnlyClaimsExplicitlyUnverified:true,fixtureRunnerCalls:calls.length,realModelRequests:0},null,2));
 }finally{core.close();await rm(root,{recursive:true,force:true});}

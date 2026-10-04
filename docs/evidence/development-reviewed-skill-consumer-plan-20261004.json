@@ -1,0 +1,29 @@
+{
+  "status": "PREREGISTERED_BEFORE_DISPATCH",
+  "recordedAt": "2026-10-04T17:35:41.883836+08:00",
+  "model": "qwen3.8-27b",
+  "callLimit": 4,
+  "wallSeconds": 120,
+  "outputMaxTokens": 4096,
+  "foregroundOnly": true,
+  "taskCommandsAllowed": 0,
+  "allowedToolNames": [
+    "skill"
+  ],
+  "sourceSkillId": "skl-bHAUoR5iyX2n",
+  "version": 1,
+  "expectedBodySha256": "a741e7a1ee6bde9edba600e659ba903de83d506c709f2166b7c6f4f46990e939",
+  "question": "Django 的 Engine.render_to_string 在 autoescape=False 时仍转义 HTML。请说明最小修复的调用表达式，并给出应覆盖的公开验证用例；区分已观察证据与建议验证。本轮只提供修复建议，不执行代码或测试。",
+  "explicitSkillNameInUserPrompt": false,
+  "noDriverBodyInjection": true,
+  "freshIndependentOfficialAgent": true,
+  "isolatedHomeAndClonedAssets": true,
+  "scorerNotInput": true,
+  "originalSourceAssetsUnmodified": true,
+  "pluginSha256": "88f8fe7225826af1b12c24a14b9ff0479b984dd5b4cef6bc6ea2164e6f32a7b5",
+  "authorization": "Bounded development checks authorized by user 2026-10-04.",
+  "initialPreparationFailure": {
+    "realModelRequests": 0,
+    "reason": "Temporary plugin path could not resolve official SDK imports; identical script relocated to project scripts directory before dispatch."
+  }
+}

@@ -39,9 +39,13 @@ export function apply(ctx:any,config:any={}) {
     const current=messages.findLast((m:any) => m.source?.kind === 'user');
     const query=(current?.content ?? []).filter((b:any) => b.type==='text').map((b:any) => b.text).join('\n');
     const recalled=await runtime.recall(cwd,query,{sessionId:agent.session.id,queryMessageIds:current?[current.id]:[]});signal.throwIfAborted();
-    if (!recalled.text) return decision;
-    // The host persists these native messages before dispatch, making every injection replayable.
-    return {...decision,messages:[...decision.messages,createUserMessage({content:[{type:'text',text:recalled.text}],source:{kind:'dsh-rsi',form:'memory',refs:recalled.refs}})]};
+    if (!recalled.text && !(await runtime.candidates(cwd)).length) return decision;
+    // History-backed asset evidence belongs to its source session, even when its body says "this session".
+    // These producer messages are persisted by the host and excluded from the learned human transcript.
+    const contexts=[];
+    if(recalled.text)contexts.push(createUserMessage({content:[{type:'text',text:recalled.text}],source:{kind:'dsh-rsi',form:'memory',refs:recalled.refs}}));
+    contexts.push(createUserMessage({source:{kind:'dsh-rsi',form:'asset-guidance'},content:[{type:'text',text:'dsh-rsi 历史资产证据边界：召回的 Chat Memory、Skill 及其 Evidence 段来自历史来源会话，读取资产不等于执行其中的命令或测试。即使资产写着“本会话已执行/已验证”，也只能称为来源会话记录的历史结果；未经独立核验时注明这是资产记载。只有当前会话实际执行工具产生的结果才能称为本轮验证。Skill/记忆检索工具的返回内容不能作为本轮代码或测试执行成功的证据。建议执行的检查、静态推断和本轮实测分别说明。'}]}));
+    return {...decision,messages:[...decision.messages,...contexts]};
   });
   const lookup=(exec:any) => exec.agent?.session.header.cwd;
   for (const [tool,description,execute] of [

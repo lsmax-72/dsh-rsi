@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-04T10:00:54.962Z",
+  "sourceRevision": "e09899c2136fb6bc27ecc68505e32bdb637cdfa8",
+  "sourceFileSha256": "91c2adaf6fb7a4139a31982e0470ec7e1ecdbb5826765168a025239f51d8f3de",
+  "configuredNativePromptSha256": "0ed83c6534e4688d72cc45fc6844b6e2fddf4e892adba9f7c08db654fb425938",
+  "nativePromptChars": 13129,
+  "nativeProductionPromptDelivered": true,
+  "transcriptRolesPreserved": true,
+  "noChangeContract": true,
+  "conciseSkillGuidanceDelivered": true,
+  "toolEvidenceGuidanceDelivered": true,
+  "callerContractAndCoverageGuidanceDelivered": true,
+  "executableCodeFidelityAndResourceGuidanceDelivered": true,
+  "historicalRetrievalIsNotCurrentExecutionGuidanceDelivered": true,
+  "L1ProseOnlyClaimsExplicitlyUnverified": true,
+  "fixtureRunnerCalls": 2,
+  "realModelRequests": 0,
+  "producerGuidePersistsButDoesNotEnterLearning": true,
+  "nativeToolIdentityPreservedInLearningInput": true,
+  "verificationScriptSha256": "a177eae1972711907ad9f2c78b4b0e113271995a31a48a979cbe001952fd84c7"
+}
