@@ -1,0 +1,82 @@
+{
+  "status": "PASS_EXACT_IMPORTED_EMBEDDING_PREFIX_EXCLUSION",
+  "analysisOnly": true,
+  "frozenRuntimeChanged": false,
+  "realModelOrScorerRequests": 0,
+  "diagnosticsSha256": "3a3a11f5048a44c1354ad15d3320a45f9334096ba5f73b62c2d203e83e75e7d6",
+  "analysisReaderSha256": "bd922bc2814a4c1907b1530ad45c6e4d94de6c520f635b9db489b57e4d84e533",
+  "rsiTasks": [
+    {
+      "instanceId": "django__django-11848",
+      "newCalls": 48,
+      "importedCallsExcluded": 0,
+      "newInputChars": 21683,
+      "newDurationMs": 103340,
+      "prefixChecks": [
+        {
+          "relativeLog": "scopes/global/diagnostics/embedding.log",
+          "priorBytePrefixMatches": true,
+          "importedCalls": 0,
+          "newCalls": 1
+        },
+        {
+          "relativeLog": "scopes/c52ddf65534b7b4603508435/diagnostics/embedding.log",
+          "priorBytePrefixMatches": true,
+          "importedCalls": 0,
+          "newCalls": 47
+        }
+      ]
+    },
+    {
+      "instanceId": "django__django-11551",
+      "newCalls": 45,
+      "importedCallsExcluded": 48,
+      "newInputChars": 44907,
+      "newDurationMs": 79702,
+      "prefixChecks": [
+        {
+          "relativeLog": "scopes/global/diagnostics/embedding.log",
+          "priorBytePrefixMatches": true,
+          "importedCalls": 1,
+          "newCalls": 1
+        },
+        {
+          "relativeLog": "scopes/c52ddf65534b7b4603508435/diagnostics/embedding.log",
+          "priorBytePrefixMatches": true,
+          "importedCalls": 47,
+          "newCalls": 44
+        }
+      ]
+    },
+    {
+      "instanceId": "django__django-12262",
+      "newCalls": 43,
+      "importedCallsExcluded": 93,
+      "newInputChars": 29813,
+      "newDurationMs": 95939,
+      "prefixChecks": [
+        {
+          "relativeLog": "scopes/global/diagnostics/embedding.log",
+          "priorBytePrefixMatches": true,
+          "importedCalls": 2,
+          "newCalls": 1
+        },
+        {
+          "relativeLog": "scopes/c52ddf65534b7b4603508435/diagnostics/embedding.log",
+          "priorBytePrefixMatches": true,
+          "importedCalls": 91,
+          "newCalls": 42
+        }
+      ]
+    }
+  ],
+  "oldCumulativeCountsIncorrectlySummed": 277,
+  "correctIncrementalCalls": 136,
+  "correctIncrementalInputChars": 96403,
+  "correctIncrementalDurationMs": 278981,
+  "knownChatTokensUnchanged": 3999094,
+  "unknownActualChatUsage": 1,
+  "embeddingTokenUsage": null,
+  "originalDiagnosticsRewritten": false,
+  "limitation": "Metrics count logged native embedding calls, including failures. Local embedding token usage is unavailable; characters and elapsed time cannot substitute for tokens."
+}
