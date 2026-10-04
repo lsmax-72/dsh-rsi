@@ -56,178 +56,400 @@
           "normalized": "cd /workspace && pwd && ls && which python && python --version && git log --oneline -3 && git status",
           "patchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
           "requestOrdinal": 1,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": null,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "Check workspace and environment",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": false,
+          "testRelated": false,
+          "actualResult": {
+            "messageId": "27ccc1aa-b61d-49e4-9041-4682cafcbfbd",
+            "eventSeq": 14,
+            "text": "/workspace\nAUTHORS\nCONTRIBUTING.rst\ndjango\ndocs\nextras\nGruntfile.js\nINSTALL\njs_tests\nLICENSE\nLICENSE.python\nMANIFEST.in\npackage.json\nREADME.rst\nscripts\nsetup.cfg\nsetup.py\ntests\ntox.ini\n/opt/miniconda3/envs/testbed/bin/python\nc015ab1 Pilot task baseline\nOn branch master\nnothing to commit, working tree clean\n[stderr]\nPython 3.6.13 :: Anaconda, Inc.\n"
+          }
         },
         {
           "command": "cd /workspace && grep -n \"inlines\" django/contrib/admin/options.py | head -40",
           "normalized": "cd /workspace && grep -n inlines django/contrib/admin/options.py | head -40",
           "patchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
           "requestOrdinal": 2,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": null,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "Find inlines usage in ModelAdmin",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": false,
+          "testRelated": false,
+          "actualResult": {
+            "messageId": "b41f005d-e109-4e10-9a5e-393638c4e301",
+            "eventSeq": 19,
+            "text": "446:            for inline in admin.inlines:\n555:    inlines = []\n585:        for inline_class in self.inlines:\n783:    def get_formsets_with_inlines(self, request, obj=None):\n785:        Yield formsets and the corresponding inlines.\n1922:        for FormSet, inline in self.get_formsets_with_inlines(*get_formsets_args):\n1997:              'inlines%s.js' % extra]\n"
+          }
         },
         {
           "command": "cd /workspace && sed -n 540,600p django/contrib/admin/options.py && sed -n 775,800p django/contrib/admin/options.py",
           "normalized": "cd /workspace && sed -n 540,600p django/contrib/admin/options.py && sed -n 775,800p django/contrib/admin/options.py",
           "patchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
           "requestOrdinal": 3,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": null,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "Read inlines property and get_formsets_with_inlines",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": false,
+          "testRelated": false,
+          "actualResult": {
+            "messageId": "d97b8517-ac1a-46ed-a84d-f4c14dd3bf68",
+            "eventSeq": 24,
+            "text": "\n    list_display = ('__str__',)\n    list_display_links = ()\n    list_filter = ()\n    list_select_related = False\n    list_per_page = 100\n    list_max_show_all = 200\n    list_editable = ()\n    search_fields = ()\n    date_hierarchy = None\n    save_as = False\n    save_as_continue = True\n    save_on_top = False\n    paginator = Paginator\n    preserve_filters = True\n    inlines = []\n\n    # Custom templates (designed to be over-ridden in subclasses)\n    add_form_template = None\n    change_form_template = None\n    change_list_template = None\n    delete_confirmation_template = None\n    delete_selected_confirmation_template = None\n    object_history_template = None\n    popup_response_template = None\n\n    # Actions\n    actions = []\n    action_form = helpers.ActionForm\n    actions_on_top = True\n    actions_on_bottom = False\n    actions_selection_counter = True\n    checks_class = ModelAdminChecks\n\n    def __init__(self, model, admin_site):\n        self.model = model\n        self.opts = model._meta\n        self.admin_site = admin_site\n        super().__init__()\n\n    def __str__(self):\n        return \"%s.%s\" % (self.model._meta.app_label, self.__class__.__name__)\n\n    def get_inline_instances(self, request, obj=None):\n        inline_instances = []\n        for inline_class in self.inlines:\n            inline = inline_class(self.model, self.admin_site)\n            if request:\n                if not (inline.has_view_or_change_permission(request, obj) or\n                        inline.has_add_permission(request, obj) or\n                        inline.has_delete_permission(request, obj)):\n                    continue\n                if not inline.has_add_permission(request, obj):\n                    inline.max_num = 0\n            inline_instances.append(inline)\n\n        return inline_instances\n\n    def get_urls(self):\n        from django.urls import path\n\n            'formfield_callback': partial(self.formfield_for_dbfield, request=request),\n            **kwargs,\n        }\n        return modelformset_factory(\n            self.model, self.get_changelist_form(request), extra=0,\n            fields=self.list_editable, **defaults\n        )\n\n    def get_formsets_with_inlines(self, request, obj=None):\n        \"\"\"\n        Yield formsets and the corresponding inlines.\n        \"\"\"\n        for inline in self.get_inline_instances(request, obj):\n            yield inline.get_formset(request, obj), inline\n\n    def get_paginator(self, request, queryset, per_page, orphans=0, allow_empty_first_page=True):\n        return self.paginator(queryset, per_page, orphans, allow_empty_first_page)\n\n    def log_addition(self, request, object, message):\n        \"\"\"\n        Log that an object has been successfully added.\n\n        The default implementation creates an admin LogEntry object.\n        \"\"\"\n        from django.contrib.admin.models import LogEntry, ADDITION\n        return LogEntry.objects.log_action(\n"
+          }
         },
         {
           "command": "cd /workspace && sed -n 435,460p django/contrib/admin/options.py && grep -n \"def get_\" django/contrib/admin/options.py | sed -n 1,40p",
           "normalized": "cd /workspace && sed -n 435,460p django/contrib/admin/options.py && grep -n def get_ django/contrib/admin/options.py | sed -n 1,40p",
           "patchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
           "requestOrdinal": 4,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": null,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "Inspect line 446 context and get_ hooks ordering",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": false,
+          "testRelated": false,
+          "actualResult": {
+            "messageId": "b95844bc-bff8-46d2-85a4-b57aedc69157",
+            "eventSeq": 29,
+            "text": "        # Allow reverse relationships to models defining m2m fields if they\n        # target the specified field.\n        for many_to_many in opts.many_to_many:\n            if many_to_many.m2m_target_field_name() == to_field:\n                return True\n\n        # Make sure at least one of the models registered for this site\n        # references this field through a FK or a M2M relationship.\n        registered_models = set()\n        for model, admin in self.admin_site._registry.items():\n            registered_models.add(model)\n            for inline in admin.inlines:\n                registered_models.add(inline.model)\n\n        related_objects = (\n            f for f in opts.get_fields(include_hidden=True)\n            if (f.auto_created and not f.concrete)\n        )\n        for related_object in related_objects:\n            related_model = related_object.related_model\n            remote_field = related_object.field.remote_field\n            if (any(issubclass(model, related_model) for model in registered_models) and\n                    hasattr(remote_field, 'get_related_field') and\n                    remote_field.get_related_field() == field):\n                return True\n\n60:def get_content_type_for_model(obj):\n67:def get_ul_class(radio_style):\n206:    def get_field_queryset(self, db, db_field, request):\n277:    def get_autocomplete_fields(self, request):\n284:    def get_view_on_site_url(self, obj=None):\n297:    def get_empty_value_display(self):\n306:    def get_exclude(self, request, obj=None):\n312:    def get_fields(self, request, obj=None):\n322:    def get_fieldsets(self, request, obj=None):\n330:    def get_ordering(self, request):\n336:    def get_readonly_fields(self, request, obj=None):\n342:    def get_prepopulated_fields(self, request, obj=None):\n348:    def get_queryset(self, request):\n360:    def get_sortable_by(self, request):\n583:    def get_inline_instances(self, request, obj=None):\n598:    def get_urls(self):\n642:    def get_model_perms(self, request):\n658:    def get_form(self, request, obj=None, change=False, **kwargs):\n706:    def get_changelist(self, request, **kwargs):\n713:    def get_changelist_instance(self, request):\n741:    def get_object(self, request, object_id, from_field=None):\n756:    def get_changelist_form(self, request, **kwargs):\n769:    def get_changelist_formset(self, request, **kwargs):\n783:    def get_formsets_with_inlines(self, request, obj=None):\n790:    def get_paginator(self, request, queryset, per_page, orphans=0, allow_empty_first_page=True):\n877:    def get_actions(self, request):\n889:    def get_action_choices(self, request, default_choices=BLANK_CHOICE_DASH):\n900:    def get_action(self, action):\n930:    def get_list_display(self, request):\n937:    def get_list_display_links(self, request, list_display):\n949:    def get_list_filter(self, request):\n956:    def get_list_select_related(self, request):\n963:    def get_search_fields(self, request):\n970:    def get_search_results(self, request, queryset, search_term):\n1018:    def get_preserved_filters(self, request):\n1463:    def get_inline_formsets(self, request, formsets, inline_instances, obj=None):\n1481:    def get_changeform_initial_data(self, request):\n1805:    def get_deleted_objects(self, objs, request):\n2004:    def get_extra(self, request, obj=None, **kwargs):\n2008:    def get_min_num(self, request, obj=None, **kwargs):\n"
+          }
         },
         {
           "command": "cd /workspace && grep -rn \"get_fieldsets\\|get_form(self\" django/contrib/admin/options.py | head && grep -rn \"inlines\" tests/admin_scripts/*.py tests/admin_views/*.py 2>/dev/null | head -20 && grep -rn \"self.inlines\\|admin.inlines\\|\\.inlines\" django/contrib/admin/*.py | grep -v options.py",
           "normalized": "cd /workspace && grep -rn get_fieldsets\\|get_form(self django/contrib/admin/options.py | head && grep -rn inlines tests/admin_scripts/*.py tests/admin_views/*.py 2>/dev/null | head -20 && grep -rn self.inlines\\|admin.inlines\\|\\.inlines django/contrib/admin/*.py | grep -v options.py",
           "patchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
           "requestOrdinal": 5,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": null,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "Check existing inlines references",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": false,
+          "testRelated": false,
+          "actualResult": {
+            "messageId": "0edd7de6-e564-4728-a2be-92e2a11ac83b",
+            "eventSeq": 34,
+            "text": "322:    def get_fieldsets(self, request, obj=None):\n658:    def get_form(self, request, obj=None, change=False, **kwargs):\n666:            fields = flatten_fieldsets(self.get_fieldsets(request, obj))\n1466:            fieldsets = list(inline.get_fieldsets(request, obj))\n1572:            readonly_fields = flatten_fieldsets(self.get_fieldsets(request, obj))\n1577:            list(self.get_fieldsets(request, obj)),\n2021:            fields = flatten_fieldsets(self.get_fieldsets(request, obj))\ntests/admin_views/admin.py:247:    inlines = (\ntests/admin_views/admin.py:329:    inlines = [ChildInline]\ntests/admin_views/admin.py:363:    inlines = [PictureInline]\ntests/admin_views/admin.py:410:    inlines = [\ntests/admin_views/admin.py:450:    inlines = [SubPostInline]\ntests/admin_views/admin.py:478:    inlines = [\ntests/admin_views/admin.py:757:    inlines = [RelatedPrepopulatedInline1, RelatedPrepopulatedInline2, RelatedPrepopulatedInline3]\ntests/admin_views/admin.py:852:    inlines = [DependentChildInline]\ntests/admin_views/admin.py:897:    inlines = [CityInlineAdmin]\ntests/admin_views/admin.py:906:    inlines = [RestaurantInlineAdmin]\ntests/admin_views/admin.py:923:    inlines = [WorkerInlineAdmin]\ntests/admin_views/admin.py:939:    inlines = [InlineReferenceInline]\ntests/admin_views/admin.py:957:    def get_formsets_with_inlines(self, request, obj=None):\ntests/admin_views/admin.py:959:            raise Exception(\"'obj' passed to get_formsets_with_inlines wasn't None during add_view\")\ntests/admin_views/admin.py:961:            raise Exception(\"'obj' passed to get_formsets_with_inlines was None during change_view\")\ntests/admin_views/admin.py:962:        return super().get_formsets_with_inlines(request, obj)\ntests/admin_views/admin.py:970:    Section, save_as=True, inlines=[ArticleInline],\ntests/admin_views/admin.py:1045:site.register(Book, inlines=[ChapterInline])\ntests/admin_views/customadmin.py:58:site.register(models.Section, inlines=[base_admin.ArticleInline], search_fields=['name'])\ntests/admin_views/test_autocomplete_view.py:30:    inlines = [AuthorshipInline]\ndjango/contrib/admin/checks.py:657:        if not isinstance(obj.inlines, (list, tuple)):\ndjango/contrib/admin/checks.py:662:                for index, item in enumerate(obj.inlines)\n"
+          }
         },
         {
           "command": "cd /workspace && grep -rn \"get_inline_instances\" django/ docs/ | head && grep -rn \"inlines\" docs/ref/contrib/admin/index.rst | head -30",
           "normalized": "cd /workspace && grep -rn get_inline_instances django/ docs/ | head && grep -rn inlines docs/ref/contrib/admin/index.rst | head -30",
           "patchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
           "requestOrdinal": 6,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": null,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "Find all get_inline_instances usages and docs",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": false,
+          "testRelated": false,
+          "actualResult": {
+            "messageId": "ed3f9056-6f48-47c8-8376-3b49a8fa296e",
+            "eventSeq": 39,
+            "text": "django/contrib/admin/options.py:583:    def get_inline_instances(self, request, obj=None):\ndjango/contrib/admin/options.py:787:        for inline in self.get_inline_instances(request, obj):\ndocs/ref/contrib/admin/index.txt:1611:.. method:: ModelAdmin.get_inline_instances(request, obj=None)\ndocs/ref/contrib/admin/index.txt:1613:    The ``get_inline_instances`` method is given the ``HttpRequest`` and the\ndocs/ref/contrib/admin/index.txt:1623:            def get_inline_instances(self, request, obj=None):\ndocs/ref/contrib/admin/index.txt:1748:                for inline in self.get_inline_instances(request, obj):\n[stderr]\ngrep: docs/ref/contrib/admin/index.rst: No such file or directory\n"
+          }
         },
         {
           "command": "cd /workspace && grep -rn \"get_fieldsets\\|get_readonly_fields\\|get_form \" docs/ref/contrib/admin/index.txt | head && grep -n \"ModelAdmin.get_form\" docs/ref/contrib/admin/index.txt",
           "normalized": "cd /workspace && grep -rn get_fieldsets\\|get_readonly_fields\\|get_form  docs/ref/contrib/admin/index.txt | head && grep -n ModelAdmin.get_form docs/ref/contrib/admin/index.txt",
           "patchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
           "requestOrdinal": 7,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": null,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "Find doc ordering of get_* methods",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": false,
+          "testRelated": false,
+          "actualResult": {
+            "messageId": "ea8fb6ae-af1e-41fb-8126-97dc8ac4e81a",
+            "eventSeq": 44,
+            "text": "1529:.. method:: ModelAdmin.get_readonly_fields(request, obj=None)\n1531:    The ``get_readonly_fields`` method is given the ``HttpRequest`` and the\n1570:.. method:: ModelAdmin.get_fieldsets(request, obj=None)\n1572:    The ``get_fieldsets`` method is given the ``HttpRequest`` and the ``obj``\n448:    :meth:`ModelAdmin.get_form` method.\n535:    :meth:`ModelAdmin.get_formsets_with_inlines`.\n1717:.. method:: ModelAdmin.get_form(request, obj=None, **kwargs)\n1736:.. method:: ModelAdmin.get_formsets_with_inlines(request, obj=None)\n2346:.. method:: InlineModelAdmin.get_formset(request, obj=None, **kwargs)\n2350:    :class:`ModelAdmin.get_formsets_with_inlines`.\n"
+          }
         },
         {
           "command": "cd /workspace && sed -n 1520,1650p docs/ref/contrib/admin/index.txt",
           "normalized": "cd /workspace && sed -n 1520,1650p docs/ref/contrib/admin/index.txt",
           "patchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
           "requestOrdinal": 8,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": null,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "Read docs around get_readonly/fieldsets/inline_instances",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": false,
+          "testRelated": false,
+          "actualResult": {
+            "messageId": "7600fc7b-64cd-4efe-a540-44eee66e6dc9",
+            "eventSeq": 49,
+            "text": "    that at this point the parent object and its form have already been saved.\n\n.. method:: ModelAdmin.get_autocomplete_fields(request)\n\n    The ``get_autocomplete_fields()`` method is given the ``HttpRequest`` and is\n    expected to return a ``list`` or ``tuple`` of field names that will be\n    displayed with an autocomplete widget as described above in the\n    :attr:`ModelAdmin.autocomplete_fields` section.\n\n.. method:: ModelAdmin.get_readonly_fields(request, obj=None)\n\n    The ``get_readonly_fields`` method is given the ``HttpRequest`` and the\n    ``obj`` being edited (or ``None`` on an add form) and is expected to return\n    a ``list`` or ``tuple`` of field names that will be displayed as read-only,\n    as described above in the :attr:`ModelAdmin.readonly_fields` section.\n\n.. method:: ModelAdmin.get_prepopulated_fields(request, obj=None)\n\n    The ``get_prepopulated_fields`` method is given the ``HttpRequest`` and the\n    ``obj`` being edited (or ``None`` on an add form) and is expected to return\n    a ``dictionary``, as described above in the :attr:`ModelAdmin.prepopulated_fields`\n    section.\n\n.. method:: ModelAdmin.get_list_display(request)\n\n    The ``get_list_display`` method is given the ``HttpRequest`` and is\n    expected to return a ``list`` or ``tuple`` of field names that will be\n    displayed on the changelist view as described above in the\n    :attr:`ModelAdmin.list_display` section.\n\n.. method:: ModelAdmin.get_list_display_links(request, list_display)\n\n    The ``get_list_display_links`` method is given the ``HttpRequest`` and\n    the ``list`` or ``tuple`` returned by :meth:`ModelAdmin.get_list_display`.\n    It is expected to return either ``None`` or a ``list`` or ``tuple`` of field\n    names on the changelist that will be linked to the change view, as described\n    in the :attr:`ModelAdmin.list_display_links` section.\n\n.. method:: ModelAdmin.get_exclude(request, obj=None)\n\n    The ``get_exclude`` method is given the ``HttpRequest`` and the ``obj``\n    being edited (or ``None`` on an add form) and is expected to return a list\n    of fields, as described in :attr:`ModelAdmin.exclude`.\n\n.. method:: ModelAdmin.get_fields(request, obj=None)\n\n    The ``get_fields`` method is given the ``HttpRequest`` and the ``obj``\n    being edited (or ``None`` on an add form) and is expected to return a list\n    of fields, as described above in the :attr:`ModelAdmin.fields` section.\n\n.. method:: ModelAdmin.get_fieldsets(request, obj=None)\n\n    The ``get_fieldsets`` method is given the ``HttpRequest`` and the ``obj``\n    being edited (or ``None`` on an add form) and is expected to return a list\n    of two-tuples, in which each two-tuple represents a ``<fieldset>`` on the\n    admin form page, as described above in the :attr:`ModelAdmin.fieldsets` section.\n\n.. method:: ModelAdmin.get_list_filter(request)\n\n    The ``get_list_filter`` method is given the ``HttpRequest`` and is expected\n    to return the same kind of sequence type as for the\n    :attr:`~ModelAdmin.list_filter` attribute.\n\n.. method:: ModelAdmin.get_list_select_related(request)\n\n    The ``get_list_select_related`` method is given the ``HttpRequest`` and\n    should return a boolean or list as :attr:`ModelAdmin.list_select_related`\n    does.\n\n.. method:: ModelAdmin.get_search_fields(request)\n\n    The ``get_search_fields`` method is given the ``HttpRequest`` and is expected\n    to return the same kind of sequence type as for the\n    :attr:`~ModelAdmin.search_fields` attribute.\n\n.. method:: ModelAdmin.get_sortable_by(request)\n\n    The ``get_sortable_by()`` method is passed the ``HttpRequest`` and is\n    expected to return a collection (e.g. ``list``, ``tuple``, or ``set``) of\n    field names that will be sortable in the change list page.\n\n    Its default implementation returns :attr:`sortable_by` if it's set,\n    otherwise it defers to :meth:`get_list_display`.\n\n    For example, to prevent one or more columns from being sortable::\n\n        class PersonAdmin(admin.ModelAdmin):\n\n            def get_sortable_by(self, request):\n                return {*self.get_list_display(request)} - {'rank'}\n\n.. method:: ModelAdmin.get_inline_instances(request, obj=None)\n\n    The ``get_inline_instances`` method is given the ``HttpRequest`` and the\n    ``obj`` being edited (or ``None`` on an add form) and is expected to return\n    a ``list`` or ``tuple`` of :class:`~django.contrib.admin.InlineModelAdmin`\n    objects, as described below in the :class:`~django.contrib.admin.InlineModelAdmin`\n    section. For example, the following would return inlines without the default\n    filtering based on add, change, delete, and view permissions::\n\n        class MyModelAdmin(admin.ModelAdmin):\n            inlines = (MyInline,)\n\n            def get_inline_instances(self, request, obj=None):\n                return [inline(self.model, self.admin_site) for inline in self.inlines]\n\n    If you override this method, make sure that the returned inlines are\n    instances of the classes defined in :attr:`inlines` or you might encounter\n    a \"Bad Request\" error when adding related objects.\n\n.. method:: ModelAdmin.get_urls()\n\n    The ``get_urls`` method on a ``ModelAdmin`` returns the URLs to be used for\n    that ModelAdmin in the same way as a URLconf.  Therefore you can extend\n    them as documented in :doc:`/topics/http/urls`::\n\n        from django.contrib import admin\n        from django.template.response import TemplateResponse\n        from django.urls import path\n\n        class MyModelAdmin(admin.ModelAdmin):\n            def get_urls(self):\n                urls = super().get_urls()\n                my_urls = [\n                    path('my_view/', self.my_view),\n                ]\n                return my_urls + urls\n\n            def my_view(self, request):\n                # ...\n                context = dict(\n"
+          }
         },
         {
           "command": "cd /workspace && grep -rn \"inlines\" docs/ref/contrib/admin/index.txt | head -20",
           "normalized": "cd /workspace && grep -rn inlines docs/ref/contrib/admin/index.txt | head -20",
           "patchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
           "requestOrdinal": 9,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": null,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "Find inlines attribute docs",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": false,
+          "testRelated": false,
+          "actualResult": {
+            "messageId": "0be9e74d-4f74-464c-892a-5f476ebc2e7b",
+            "eventSeq": 54,
+            "text": "532:.. attribute:: ModelAdmin.inlines\n535:    :meth:`ModelAdmin.get_formsets_with_inlines`.\n1617:    section. For example, the following would return inlines without the default\n1621:            inlines = (MyInline,)\n1624:                return [inline(self.model, self.admin_site) for inline in self.inlines]\n1626:    If you override this method, make sure that the returned inlines are\n1627:    instances of the classes defined in :attr:`inlines` or you might encounter\n1736:.. method:: ModelAdmin.get_formsets_with_inlines(request, obj=None)\n1742:    view, you could override ``get_formsets_with_inlines`` as follows::\n1745:            inlines = [MyInline, SomeOtherInline]\n1747:            def get_formsets_with_inlines(self, request, obj=None):\n2168:.. _admin-inlines:\n2178:    parent model. These are called inlines. Suppose you have these two models::\n2190:    inlines to a model by specifying them in a ``ModelAdmin.inlines``::\n2198:            inlines = [\n2268:    is rendered for the inlines. Defaults to ``None``. As with classes\n2269:    configured in :attr:`~ModelAdmin.fieldsets`, inlines with a ``collapse``\n2281:    provided to enable any number of additional inlines to be added in addition\n2350:    :class:`ModelAdmin.get_formsets_with_inlines`.\n2437:        inlines = [\n"
+          }
         },
         {
           "command": "cd /workspace && sed -n 525,545p docs/ref/contrib/admin/index.txt",
           "normalized": "cd /workspace && sed -n 525,545p docs/ref/contrib/admin/index.txt",
           "patchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
           "requestOrdinal": 10,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": null,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "Read inlines attribute doc",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": false,
+          "testRelated": false,
+          "actualResult": {
+            "messageId": "6c9b85ab-d2fc-4c0f-8479-588d2fa7bdeb",
+            "eventSeq": 59,
+            "text": "\n        ``formfield_overrides`` won't let you change the widget on relation\n        fields that have ``raw_id_fields``, ``radio_fields``, or\n        ``autocomplete_fields`` set. That's because ``raw_id_fields``,\n        ``radio_fields``, and ``autocomplete_fields`` imply custom widgets of\n        their own.\n\n.. attribute:: ModelAdmin.inlines\n\n    See :class:`InlineModelAdmin` objects below as well as\n    :meth:`ModelAdmin.get_formsets_with_inlines`.\n\n.. attribute:: ModelAdmin.list_display\n\n    Set ``list_display`` to control which fields are displayed on the change\n    list page of the admin.\n\n    Example::\n\n        list_display = ('first_name', 'last_name')\n\n"
+          }
         },
         {
           "command": "cd /workspace && sed -n 528,538p docs/ref/contrib/admin/index.txt && ls docs/releases/ | head -20 && python -c \"import django; print(django.get_version())\"",
           "normalized": "cd /workspace && sed -n 528,538p docs/ref/contrib/admin/index.txt && ls docs/releases/ | head -20 && python -c import django; print(django.get_version())",
           "patchSha256": "28da4c7ebe70a9b9fab568c91213d1abfef941fc406d2c416de02a081c3399e3",
           "requestOrdinal": 17,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": null,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "Check inlines attr docs and version",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": false,
+          "testRelated": false,
+          "actualResult": {
+            "messageId": "ae6e0a08-b7ef-453d-ad2e-586ec9ca46ad",
+            "eventSeq": 94,
+            "text": "        ``autocomplete_fields`` set. That's because ``raw_id_fields``,\n        ``radio_fields``, and ``autocomplete_fields`` imply custom widgets of\n        their own.\n\n.. attribute:: ModelAdmin.inlines\n\n    A list of :class:`InlineModelAdmin` objects, or None.  See\n    :class:`InlineModelAdmin` objects below as well as\n    :meth:`ModelAdmin.get_formsets_with_inlines`.\n\n.. attribute:: ModelAdmin.list_display\n0.95.txt\n0.96.txt\n1.0.1.txt\n1.0.2.txt\n1.0-porting-guide.txt\n1.0.txt\n1.10.1.txt\n1.10.2.txt\n1.10.3.txt\n1.10.4.txt\n1.10.5.txt\n1.10.6.txt\n1.10.7.txt\n1.10.8.txt\n1.10.txt\n1.11.10.txt\n1.11.11.txt\n1.11.12.txt\n1.11.13.txt\n1.11.14.txt\n3.0.dev20260813005902\n"
+          }
         },
         {
           "command": "cd /workspace && ls docs/releases/ | tail -8 && grep -n \"ModelAdmin\" docs/releases/3.0.txt | head",
           "normalized": "cd /workspace && ls docs/releases/ | tail -8 && grep -n ModelAdmin docs/releases/3.0.txt | head",
           "patchSha256": "28da4c7ebe70a9b9fab568c91213d1abfef941fc406d2c416de02a081c3399e3",
           "requestOrdinal": 18,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": null,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "Find latest release notes",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": false,
+          "testRelated": false,
+          "actualResult": {
+            "messageId": "e1898f2e-b058-46c9-bb03-a3ad81b9fa92",
+            "eventSeq": 99,
+            "text": "2.1.7.txt\n2.1.8.txt\n2.1.txt\n2.2.1.txt\n2.2.txt\n3.0.txt\nindex.txt\nsecurity.txt\n48:  :attr:`.ModelAdmin.list_display`.\n"
+          }
         },
         {
           "command": "cd /workspace && sed -n 1,120p docs/releases/3.0.txt",
           "normalized": "cd /workspace && sed -n 1,120p docs/releases/3.0.txt",
           "patchSha256": "28da4c7ebe70a9b9fab568c91213d1abfef941fc406d2c416de02a081c3399e3",
           "requestOrdinal": 19,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": null,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "Read 3.0 release notes admin section",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": false,
+          "testRelated": false,
+          "actualResult": {
+            "messageId": "1ab1c296-b54d-4d73-8a43-f68bcc01938e",
+            "eventSeq": 104,
+            "text": "============================================\nDjango 3.0 release notes - UNDER DEVELOPMENT\n============================================\n\n*Expected December 2019*\n\nWelcome to Django 3.0!\n\nThese release notes cover the :ref:`new features <whats-new-3.0>`, as well as\nsome :ref:`backwards incompatible changes <backwards-incompatible-3.0>` you'll\nwant to be aware of when upgrading from Django 2.2 or earlier. We've\n:ref:`dropped some features<removed-features-3.0>` that have reached the end of\ntheir deprecation cycle, and we've :ref:`begun the deprecation process for\nsome features <deprecated-features-3.0>`.\n\nSee the :doc:`/howto/upgrade-version` guide if you're updating an existing\nproject.\n\nPython compatibility\n====================\n\nDjango 3.0 supports Python 3.6, 3.7, and 3.8. We **highly recommend** and only\nofficially support the latest release of each series.\n\nThe Django 2.2.x series is the last to support Python 3.5.\n\nThird-party library support for older version of Django\n=======================================================\n\nFollowing the release of Django 3.0, we suggest that third-party app authors\ndrop support for all versions of Django prior to 2.2. At that time, you should\nbe able to run your package's tests using ``python -Wd`` so that deprecation\nwarnings appear. After making the deprecation warning fixes, your app should be\ncompatible with Django 3.0.\n\n.. _whats-new-3.0:\n\nWhat's new in Django 3.0\n========================\n\nMinor features\n--------------\n\n:mod:`django.contrib.admin`\n~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n* Added support for the ``admin_order_field`` attribute on properties in\n  :attr:`.ModelAdmin.list_display`.\n\n:mod:`django.contrib.admindocs`\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n* ...\n\n:mod:`django.contrib.auth`\n~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n* ...\n\n:mod:`django.contrib.contenttypes`\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n* ...\n\n:mod:`django.contrib.gis`\n~~~~~~~~~~~~~~~~~~~~~~~~~\n\n* Allowed MySQL spatial lookup functions to operate on real geometries.\n  Previous support was limited to bounding boxes.\n\n* Added the :class:`~django.contrib.gis.db.models.functions.GeometryDistance`\n  function, supported on PostGIS.\n\n:mod:`django.contrib.messages`\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n* ...\n\n:mod:`django.contrib.postgres`\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n* ...\n\n:mod:`django.contrib.redirects`\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n* ...\n\n:mod:`django.contrib.sessions`\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n* ...\n\n:mod:`django.contrib.sitemaps`\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n* ...\n\n:mod:`django.contrib.sites`\n~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n* ...\n\n:mod:`django.contrib.staticfiles`\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n* ...\n\n:mod:`django.contrib.syndication`\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n* ...\n\nCache\n~~~~~\n\n* ...\n\nCSRF\n~~~~\n"
+          }
         },
         {
           "command": "cd /workspace && grep -n \"class.*Inline.*Test\\|def test.*inline\" tests/admin_views/test_inlines.py | head -30",
           "normalized": "cd /workspace && grep -n class.*Inline.*Test\\|def test.*inline tests/admin_views/test_inlines.py | head -30",
           "patchSha256": "7f2d13a6793be739265360c0883538c47cbff9885bdee6704ead86427dc15116",
           "requestOrdinal": 21,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": null,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "List inline tests",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": false,
+          "testRelated": false,
+          "actualResult": {
+            "messageId": "c2ad2d90-37d9-4da9-9067-5c73a32d1ed4",
+            "eventSeq": 114,
+            "text": "[stderr]\ngrep: tests/admin_views/test_inlines.py: No such file or directory\n"
+          }
         },
         {
           "command": "cd /workspace && grep -rln \"get_inline_instances\\|inlines\" tests/admin_views/*.py | head && ls tests/admin_views/",
           "normalized": "cd /workspace && grep -rln get_inline_instances\\|inlines tests/admin_views/*.py | head && ls tests/admin_views/",
           "patchSha256": "7f2d13a6793be739265360c0883538c47cbff9885bdee6704ead86427dc15116",
           "requestOrdinal": 22,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": null,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "Find inline-related test files",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": false,
+          "testRelated": false,
+          "actualResult": {
+            "messageId": "c17d7c67-a97d-4354-98d6-35324155c9fe",
+            "eventSeq": 119,
+            "text": "tests/admin_views/admin.py\ntests/admin_views/customadmin.py\ntests/admin_views/test_autocomplete_view.py\ntests/admin_views/tests.py\nadmin.py\ncustomadmin.py\ncustom_has_permission_admin.py\nforms.py\n__init__.py\nmodels.py\ntemplates\ntest_actions.py\ntest_adminsite.py\ntest_autocomplete_view.py\ntest_forms.py\ntest_multidb.py\ntests.py\ntest_templatetags.py\nurls.py\nviews.py\n"
+          }
         },
         {
           "command": "cd /workspace && grep -n \"InlineAdminModel\\|class InlineAdmin\" tests/admin_views/admin.py | head -20 && grep -n \"class.*Test.*Inline\\|class Inline\" tests/admin_views/tests.py | head -20",
           "normalized": "cd /workspace && grep -n InlineAdminModel\\|class InlineAdmin tests/admin_views/admin.py | head -20 && grep -n class.*Test.*Inline\\|class Inline tests/admin_views/tests.py | head -20",
           "patchSha256": "7f2d13a6793be739265360c0883538c47cbff9885bdee6704ead86427dc15116",
           "requestOrdinal": 23,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": null,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "Find inline test classes",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": false,
+          "testRelated": false,
+          "actualResult": {
+            "messageId": "e8cf9ff7-e796-4cd0-ba1b-84c253bd91fd",
+            "eventSeq": 124,
+            "text": "3613:class TestInlineNotEditable(TestCase):\n6227:class InlineAdminViewOnSiteTest(TestCase):\n"
+          }
         },
         {
           "command": "cd /workspace && grep -n \"inlines = \" tests/admin_views/admin.py | head && sed -n 240,300p tests/admin_views/admin.py",
           "normalized": "cd /workspace && grep -n inlines =  tests/admin_views/admin.py | head && sed -n 240,300p tests/admin_views/admin.py",
           "patchSha256": "7f2d13a6793be739265360c0883538c47cbff9885bdee6704ead86427dc15116",
           "requestOrdinal": 24,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": null,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "Look at admin.py inlines registrations",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": false,
+          "testRelated": false,
+          "actualResult": {
+            "messageId": "9519d3c5-427e-40bd-bdd3-5fab5a312736",
+            "eventSeq": 129,
+            "text": "247:    inlines = (\n329:    inlines = [ChildInline]\n363:    inlines = [PictureInline]\n410:    inlines = [\n450:    inlines = [SubPostInline]\n478:    inlines = [\n757:    inlines = [RelatedPrepopulatedInline1, RelatedPrepopulatedInline2, RelatedPrepopulatedInline3]\n852:    inlines = [DependentChildInline]\n897:    inlines = [CityInlineAdmin]\n906:    inlines = [RestaurantInlineAdmin]\n\nclass BarAccountAdmin(admin.StackedInline):\n    model = BarAccount\n    extra = 1\n\n\nclass PersonaAdmin(admin.ModelAdmin):\n    inlines = (\n        FooAccountAdmin,\n        BarAccountAdmin\n    )\n\n\nclass SubscriberAdmin(admin.ModelAdmin):\n    actions = ['mail_admin']\n    action_form = MediaActionForm\n\n    def delete_queryset(self, request, queryset):\n        SubscriberAdmin.overridden = True\n        super().delete_queryset(request, queryset)\n\n    def mail_admin(self, request, selected):\n        EmailMessage(\n            'Greetings from a ModelAdmin action',\n            'This is the test email from an admin action',\n            'from@example.com',\n            ['to@example.com']\n        ).send()\n\n\ndef external_mail(modeladmin, request, selected):\n    EmailMessage(\n        'Greetings from a function action',\n        'This is the test email from a function action',\n        'from@example.com',\n        ['to@example.com']\n    ).send()\n\n\nexternal_mail.short_description = 'External mail (Another awesome action)'\n\n\ndef redirect_to(modeladmin, request, selected):\n    from django.http import HttpResponseRedirect\n    return HttpResponseRedirect('/some-where-else/')\n\n\nredirect_to.short_description = 'Redirect to (Awesome action)'\n\n\ndef download(modeladmin, request, selected):\n    buf = StringIO('This is the content of the file')\n    return StreamingHttpResponse(FileWrapper(buf))\n\n\ndownload.short_description = 'Download subscription'\n\n\ndef no_perm(modeladmin, request, selected):\n    return HttpResponse(content='No permission to perform this action', status=403)\n\n"
+          }
         },
         {
           "command": "cd /workspace && sed -n 320,370p tests/admin_views/admin.py && grep -n \"class Child\\b\\|class Child(\" tests/admin_views/models.py | head -3",
           "normalized": "cd /workspace && sed -n 320,370p tests/admin_views/admin.py && grep -n class Child\\b\\|class Child( tests/admin_views/models.py | head -3",
           "patchSha256": "7f2d13a6793be739265360c0883538c47cbff9885bdee6704ead86427dc15116",
           "requestOrdinal": 25,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": null,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "Look at ChildAdmin/ChildInline",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": false,
+          "testRelated": false,
+          "actualResult": {
+            "messageId": "8a1805cb-c99a-478a-b6f3-80c0aea4b697",
+            "eventSeq": 134,
+            "text": "    ordering = ('name',)\n\n\nclass ChildInline(admin.StackedInline):\n    model = Child\n\n\nclass ParentAdmin(admin.ModelAdmin):\n    model = Parent\n    inlines = [ChildInline]\n    save_as = True\n    list_display = ('id', 'name',)\n    list_display_links = ('id',)\n    list_editable = ('name',)\n\n    def save_related(self, request, form, formsets, change):\n        super().save_related(request, form, formsets, change)\n        first_name, last_name = form.instance.name.split()\n        for child in form.instance.child_set.all():\n            if len(child.name.split()) < 2:\n                child.name = child.name + ' ' + last_name\n                child.save()\n\n\nclass EmptyModelAdmin(admin.ModelAdmin):\n    def get_queryset(self, request):\n        return super().get_queryset(request).filter(pk__gt=1)\n\n\nclass OldSubscriberAdmin(admin.ModelAdmin):\n    actions = None\n\n\ntemp_storage = FileSystemStorage(tempfile.mkdtemp())\nUPLOAD_TO = os.path.join(temp_storage.location, 'test_upload')\n\n\nclass PictureInline(admin.TabularInline):\n    model = Picture\n    extra = 1\n\n\nclass GalleryAdmin(admin.ModelAdmin):\n    inlines = [PictureInline]\n\n\nclass PictureAdmin(admin.ModelAdmin):\n    pass\n\n\nclass LanguageAdmin(admin.ModelAdmin):\n334:class Child(models.Model):\n"
+          }
         },
         {
           "command": "cd /workspace && sed -n 940,975p tests/admin_views/admin.py && grep -n \"site.register(Parent\" tests/admin_views/admin.py",
           "normalized": "cd /workspace && sed -n 940,975p tests/admin_views/admin.py && grep -n site.register(Parent tests/admin_views/admin.py",
           "patchSha256": "7f2d13a6793be739265360c0883538c47cbff9885bdee6704ead86427dc15116",
           "requestOrdinal": 26,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": null,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "Look at test admin at line 950",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": false,
+          "testRelated": false,
+          "actualResult": {
+            "messageId": "9e2df933-731c-4b81-8ac7-4d0ce9e480fa",
+            "eventSeq": 139,
+            "text": "\n\nclass PlotReadonlyAdmin(admin.ModelAdmin):\n    readonly_fields = ('plotdetails',)\n\n\nclass GetFormsetsArgumentCheckingAdmin(admin.ModelAdmin):\n    fields = ['name']\n\n    def add_view(self, request, *args, **kwargs):\n        request.is_add_view = True\n        return super().add_view(request, *args, **kwargs)\n\n    def change_view(self, request, *args, **kwargs):\n        request.is_add_view = False\n        return super().change_view(request, *args, **kwargs)\n\n    def get_formsets_with_inlines(self, request, obj=None):\n        if request.is_add_view and obj is not None:\n            raise Exception(\"'obj' passed to get_formsets_with_inlines wasn't None during add_view\")\n        if not request.is_add_view and obj is None:\n            raise Exception(\"'obj' passed to get_formsets_with_inlines was None during change_view\")\n        return super().get_formsets_with_inlines(request, obj)\n\n\nsite = admin.AdminSite(name=\"admin\")\nsite.site_url = '/my-site-url/'\nsite.register(Article, ArticleAdmin)\nsite.register(CustomArticle, CustomArticleAdmin)\nsite.register(\n    Section, save_as=True, inlines=[ArticleInline],\n    readonly_fields=['name_property'], search_fields=['name'],\n)\nsite.register(ModelWithStringPrimaryKey)\nsite.register(Color)\nsite.register(Thing, ThingAdmin)\n986:site.register(Parent, ParentAdmin)\n1033:site.register(ParentWithUUIDPK)\n1069:site.register(ParentWithDependentChildren, ParentWithDependentChildrenAdmin)\n"
+          }
         },
         {
           "command": "cd /workspace && sed -n 325,345p tests/admin_views/models.py && grep -n \"Parent\" tests/admin_views/models.py | head -10",
           "normalized": "cd /workspace && sed -n 325,345p tests/admin_views/models.py && grep -n Parent tests/admin_views/models.py | head -10",
           "patchSha256": "7f2d13a6793be739265360c0883538c47cbff9885bdee6704ead86427dc15116",
           "requestOrdinal": 27,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": null,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "Check Parent/Child models",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": false,
+          "testRelated": false,
+          "actualResult": {
+            "messageId": "f8bb1075-ee2e-47ab-851e-5f8fcbfab6d2",
+            "eventSeq": 144,
+            "text": "\nclass Parent(models.Model):\n    name = models.CharField(max_length=128)\n\n    def clean(self):\n        if self.name == '_invalid':\n            raise ValidationError('invalid')\n\n\nclass Child(models.Model):\n    parent = models.ForeignKey(Parent, models.CASCADE, editable=False)\n    name = models.CharField(max_length=30, blank=True)\n\n    def clean(self):\n        if self.name == '_invalid':\n            raise ValidationError('invalid')\n\n\nclass EmptyModel(models.Model):\n    def __str__(self):\n        return \"Primary key = %s\" % self.id\n326:class Parent(models.Model):\n335:    parent = models.ForeignKey(Parent, models.CASCADE, editable=False)\n821:class ParentWithDependentChildren(models.Model):\n837:    parent = models.ForeignKey(ParentWithDependentChildren, models.CASCADE)\n893:class ReferencedByParent(models.Model):\n897:class ParentWithFK(models.Model):\n899:        ReferencedByParent,\n906:class ChildOfReferer(ParentWithFK):\n969:class ParentWithUUIDPK(models.Model):\n978:    parent = models.ForeignKey(ParentWithUUIDPK, on_delete=models.SET_NULL, null=True, blank=True)\n"
+          }
         },
         {
           "command": "cd /workspace && sed -n 320,335p tests/admin_views/models.py",
           "normalized": "cd /workspace && sed -n 320,335p tests/admin_views/models.py",
           "patchSha256": "7f2d13a6793be739265360c0883538c47cbff9885bdee6704ead86427dc15116",
           "requestOrdinal": 28,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": null,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "Check Gallery/Picture models",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": false,
+          "testRelated": false,
+          "actualResult": {
+            "messageId": "50ece745-8d75-4423-aea1-58e0c38e770b",
+            "eventSeq": 149,
+            "text": "\nclass Vodcast(Media):\n    media = models.OneToOneField(Media, models.CASCADE, primary_key=True, parent_link=True)\n    released = models.BooleanField(default=False)\n\n\nclass Parent(models.Model):\n    name = models.CharField(max_length=128)\n\n    def clean(self):\n        if self.name == '_invalid':\n            raise ValidationError('invalid')\n\n\nclass Child(models.Model):\n    parent = models.ForeignKey(Parent, models.CASCADE, editable=False)\n"
+          }
         },
         {
           "command": "cd /workspace && grep -n \"class Picture\\|class Gallery\" tests/admin_views/models.py",
           "normalized": "cd /workspace && grep -n class Picture\\|class Gallery tests/admin_views/models.py",
           "patchSha256": "7f2d13a6793be739265360c0883538c47cbff9885bdee6704ead86427dc15116",
           "requestOrdinal": 29,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": null,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "Check Gallery/Picture models",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": false,
+          "testRelated": false,
+          "actualResult": {
+            "messageId": "9bc98b74-ec47-4b32-85fb-f903a3ea9e18",
+            "eventSeq": 154,
+            "text": "352:class Gallery(models.Model):\n356:class Picture(models.Model):\n"
+          }
         }
       ],
+      "frameworkTestCommands": 0,
+      "inlineBehaviorProbes": 0,
       "learningSlotsWithoutMatchingCurrentRunRequest": [],
       "notes": [
         "Persistent assets/jobs read after shutdown; pre-shutdown receipt/export may be stale.",
@@ -314,178 +536,400 @@
           "normalized": "cd /workspace && python -c import django; print(django.__version__, django.__file__) && python --version",
           "patchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
           "requestOrdinal": 1,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": null,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "Verify Django testbed environment",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": true,
+          "testRelated": true,
+          "actualResult": {
+            "messageId": "070ad738-5e7a-40ad-aa3d-80b6d455aa86",
+            "eventSeq": 15,
+            "text": "3.0.dev20260813005919 /workspace/django/__init__.py\n[stderr]\nPython 3.6.13 :: Anaconda, Inc.\n"
+          }
         },
         {
           "command": "cd /workspace && grep -n \"class Context\\|class RequestContext\\|def __init__\" django/template/context.py | head",
           "normalized": "cd /workspace && grep -n class Context\\|class RequestContext\\|def __init__ django/template/context.py | head",
           "patchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
           "requestOrdinal": 5,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": null,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "Locate Context class definition",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": false,
+          "testRelated": false,
+          "actualResult": {
+            "messageId": "36906712-684b-409b-b0ff-14fedd18cc6f",
+            "eventSeq": 35,
+            "text": "8:class ContextPopException(Exception):\n13:class ContextDict(dict):\n14:    def __init__(self, context, *args, **kwargs):\n28:    def __init__(self, dict_=None):\n135:class Context(BaseContext):\n137:    def __init__(self, dict_=None, autoescape=True, use_l10n=None, use_tz=None):\n215:class RequestContext(Context):\n222:    def __init__(self, request, dict_=None, processors=None, use_l10n=None, use_tz=None, autoescape=True):\n"
+          }
         },
         {
           "command": "cd /workspace && sed -n 30,110p django/template/backends/base.py",
           "normalized": "cd /workspace && sed -n 30,110p django/template/backends/base.py",
           "patchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
           "requestOrdinal": 7,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": null,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "View BaseEngine render method",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": false,
+          "testRelated": false,
+          "actualResult": {
+            "messageId": "c91c219a-8031-48f3-b7ab-f1f3d94e3a35",
+            "eventSeq": 45,
+            "text": "        raise ImproperlyConfigured(\n            \"{} doesn't support loading templates from installed \"\n            \"applications.\".format(self.__class__.__name__))\n\n    def from_string(self, template_code):\n        \"\"\"\n        Create and return a template for the given source code.\n\n        This method is optional.\n        \"\"\"\n        raise NotImplementedError(\n            \"subclasses of BaseEngine should provide \"\n            \"a from_string() method\")\n\n    def get_template(self, template_name):\n        \"\"\"\n        Load and return a template for the given name.\n\n        Raise TemplateDoesNotExist if no such template exists.\n        \"\"\"\n        raise NotImplementedError(\n            \"subclasses of BaseEngine must provide \"\n            \"a get_template() method\")\n\n    # Utility methods: they are provided to minimize code duplication and\n    #                  security issues in third-party backends.\n\n    @cached_property\n    def template_dirs(self):\n        \"\"\"\n        Return a list of directories to search for templates.\n        \"\"\"\n        # Immutable return value because it's cached and shared by callers.\n        template_dirs = tuple(self.dirs)\n        if self.app_dirs:\n            template_dirs += get_app_template_dirs(self.app_dirname)\n        return template_dirs\n\n    def iter_template_filenames(self, template_name):\n        \"\"\"\n        Iterate over candidate files for template_name.\n\n        Ignore files that don't lie inside configured template dirs to avoid\n        directory traversal attacks.\n        \"\"\"\n        for template_dir in self.template_dirs:\n            try:\n                yield safe_join(template_dir, template_name)\n            except SuspiciousFileOperation:\n                # The joined path was located outside of this template_dir\n                # (it might be inside another one, so this isn't fatal).\n                pass\n"
+          }
         },
         {
           "command": "cd /workspace && grep -n \"autoescape\\|use_l10n\\|use_tz\" django/template/backends/django.py | head -40",
           "normalized": "cd /workspace && grep -n autoescape\\|use_l10n\\|use_tz django/template/backends/django.py | head -40",
           "patchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
           "requestOrdinal": 8,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": null,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "Check Django backend render handling",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": false,
+          "testRelated": false,
+          "actualResult": {
+            "messageId": "9e7d00fb-ff1d-41af-8878-357016023480",
+            "eventSeq": 50,
+            "text": "21:        options.setdefault('autoescape', True)\n59:        context = make_context(context, request, autoescape=self.backend.engine.autoescape)\n"
+          }
         },
         {
           "command": "cd /workspace && sed -n 1,80p django/template/backends/django.py",
           "normalized": "cd /workspace && sed -n 1,80p django/template/backends/django.py",
           "patchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
           "requestOrdinal": 9,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": null,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "Read Django template backend",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": false,
+          "testRelated": false,
+          "actualResult": {
+            "messageId": "eca4c76d-1717-41b1-bdb0-824fbe2cbdc1",
+            "eventSeq": 55,
+            "text": "from importlib import import_module\nfrom pkgutil import walk_packages\n\nfrom django.apps import apps\nfrom django.conf import settings\nfrom django.template import TemplateDoesNotExist\nfrom django.template.context import make_context\nfrom django.template.engine import Engine\nfrom django.template.library import InvalidTemplateLibrary\n\nfrom .base import BaseEngine\n\n\nclass DjangoTemplates(BaseEngine):\n\n    app_dirname = 'templates'\n\n    def __init__(self, params):\n        params = params.copy()\n        options = params.pop('OPTIONS').copy()\n        options.setdefault('autoescape', True)\n        options.setdefault('debug', settings.DEBUG)\n        options.setdefault('file_charset', settings.FILE_CHARSET)\n        libraries = options.get('libraries', {})\n        options['libraries'] = self.get_templatetag_libraries(libraries)\n        super().__init__(params)\n        self.engine = Engine(self.dirs, self.app_dirs, **options)\n\n    def from_string(self, template_code):\n        return Template(self.engine.from_string(template_code), self)\n\n    def get_template(self, template_name):\n        try:\n            return Template(self.engine.get_template(template_name), self)\n        except TemplateDoesNotExist as exc:\n            reraise(exc, self)\n\n    def get_templatetag_libraries(self, custom_libraries):\n        \"\"\"\n        Return a collation of template tag libraries from installed\n        applications and the supplied custom_libraries argument.\n        \"\"\"\n        libraries = get_installed_libraries()\n        libraries.update(custom_libraries)\n        return libraries\n\n\nclass Template:\n\n    def __init__(self, template, backend):\n        self.template = template\n        self.backend = backend\n\n    @property\n    def origin(self):\n        return self.template.origin\n\n    def render(self, context=None, request=None):\n        context = make_context(context, request, autoescape=self.backend.engine.autoescape)\n        try:\n            return self.template.render(context)\n        except TemplateDoesNotExist as exc:\n            reraise(exc, self.backend)\n\n\ndef copy_exception(exc, backend=None):\n    \"\"\"\n    Create a new TemplateDoesNotExist. Preserve its declared attributes and\n    template debug data but discard __traceback__, __context__, and __cause__\n    to make this object suitable for keeping around (in a cache, for example).\n    \"\"\"\n    backend = backend or exc.backend\n    new = exc.__class__(*exc.args, tried=exc.tried, backend=backend, chain=exc.chain)\n    if hasattr(exc, 'template_debug'):\n        new.template_debug = exc.template_debug\n    return new\n\n\ndef reraise(exc, backend):\n    \"\"\"\n"
+          }
         },
         {
           "command": "cd /workspace && sed -n 215,280p django/template/context.py",
           "normalized": "cd /workspace && sed -n 215,280p django/template/context.py",
           "patchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
           "requestOrdinal": 10,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": null,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "Read RequestContext and make_context",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": false,
+          "testRelated": false,
+          "actualResult": {
+            "messageId": "5157d403-b3b8-4f0c-8d00-59cc6cbf4bc7",
+            "eventSeq": 60,
+            "text": "class RequestContext(Context):\n    \"\"\"\n    This subclass of template.Context automatically populates itself using\n    the processors defined in the engine's configuration.\n    Additional processors can be specified as a list of callables\n    using the \"processors\" keyword argument.\n    \"\"\"\n    def __init__(self, request, dict_=None, processors=None, use_l10n=None, use_tz=None, autoescape=True):\n        super().__init__(dict_, use_l10n=use_l10n, use_tz=use_tz, autoescape=autoescape)\n        self.request = request\n        self._processors = () if processors is None else tuple(processors)\n        self._processors_index = len(self.dicts)\n\n        # placeholder for context processors output\n        self.update({})\n\n        # empty dict for any new modifications\n        # (so that context processors don't overwrite them)\n        self.update({})\n\n    @contextmanager\n    def bind_template(self, template):\n        if self.template is not None:\n            raise RuntimeError(\"Context is already bound to a template\")\n\n        self.template = template\n        # Set context processors according to the template engine's settings.\n        processors = (template.engine.template_context_processors +\n                      self._processors)\n        updates = {}\n        for processor in processors:\n            updates.update(processor(self.request))\n        self.dicts[self._processors_index] = updates\n\n        try:\n            yield\n        finally:\n            self.template = None\n            # Unset context processors.\n            self.dicts[self._processors_index] = {}\n\n    def new(self, values=None):\n        new_context = super().new(values)\n        # This is for backwards-compatibility: RequestContexts created via\n        # Context.new don't include values from context processors.\n        if hasattr(new_context, '_processors_index'):\n            del new_context._processors_index\n        return new_context\n\n\ndef make_context(context, request=None, **kwargs):\n    \"\"\"\n    Create a suitable Context from a plain dict and optionally an HttpRequest.\n    \"\"\"\n    if context is not None and not isinstance(context, dict):\n        raise TypeError('context must be a dict rather than %s.' % context.__class__.__name__)\n    if request is None:\n        context = Context(context, **kwargs)\n    else:\n        # The following pattern is required to ensure values from\n        # context override those from template context processors.\n        original_context = context\n        context = RequestContext(request, **kwargs)\n        if original_context:\n            context.push(original_context)\n    return context\n"
+          }
         },
         {
           "command": "cd /workspace && grep -n \"render_to_string\" django/template/engine.py tests/template_tests/test_engine.py | head -20",
           "normalized": "cd /workspace && grep -n render_to_string django/template/engine.py tests/template_tests/test_engine.py | head -20",
           "patchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
           "requestOrdinal": 11,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": null,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "Find render_to_string tests",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": false,
+          "testRelated": false,
+          "actualResult": {
+            "messageId": "6cedb38e-bc15-4557-9ca6-e6ed3bd38890",
+            "eventSeq": 65,
+            "text": "django/template/engine.py:149:    def render_to_string(self, template_name, context=None):\ntests/template_tests/test_engine.py:20:            self.engine.render_to_string('test_context.html', {'obj': 'test'}),\n"
+          }
         },
         {
           "command": "cd /workspace && grep -rn \"render_to_string\" tests/template_tests/ | grep -i \"autoescape\\|engine\" ",
           "normalized": "cd /workspace && grep -rn render_to_string tests/template_tests/ | grep -i autoescape\\|engine",
           "patchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
           "requestOrdinal": 12,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": null,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "Search related tests",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": false,
+          "testRelated": false,
+          "actualResult": {
+            "messageId": "2a1375c9-e915-458a-8935-171c3e4b408f",
+            "eventSeq": 70,
+            "text": ")\ntests/template_tests/syntax_tests/test_url.py:70:        output = self.engine.render_to_string('url10', {'client': {'id': 1}})\ntests/template_tests/syntax_tests/test_url.py:75:        output = self.engine.render_to_string('url11', {'client': {'id': 1}})\ntests/template_tests/syntax_tests/test_url.py:80:        output = self.engine.render_to_string('url12', {'client': {'id': 1}})\ntests/template_tests/syntax_tests/test_url.py:85:        output = self.engine.render_to_string('url13', {'client': {'id': 1}, 'arg': ['a', 'b']})\ntests/template_tests/syntax_tests/test_url.py:90:        output = self.engine.render_to_string('url14', {'client': {'id': 1}, 'arg': ['a', 'b']})\ntests/template_tests/syntax_tests/test_url.py:95:        output = self.engine.render_to_string('url15')\ntests/template_tests/syntax_tests/test_url.py:100:        output = self.engine.render_to_string('url18')\ntests/template_tests/syntax_tests/test_url.py:105:        output = self.engine.render_to_string(\ntests/template_tests/syntax_tests/test_url.py:112:        output = self.engine.render_to_string('url20', {'client': {'id': 1}, 'url_name_in_var': 'named.client'})\ntests/template_tests/syntax_tests/test_url.py:119:        output = self.engine.render_to_string('url21', {'client': {'id': 1}})\ntests/template_tests/syntax_tests/test_url.py:131:            self.engine.render_to_string('url-fail02')\ntests/template_tests/syntax_tests/test_url.py:136:            self.engine.render_to_string('url-fail03')\ntests/template_tests/syntax_tests/test_url.py:171:            self.engine.render_to_string('url-fail11')\ntests/template_tests/syntax_tests/test_url.py:176:            self.engine.render_to_string('url-fail12', {'named_url': 'no_such_view'})\ntests/template_tests/syntax_tests/test_url.py:181:            self.engine.render_to_string('url-fail13', {'named_url': 'template_tests.views.client'})\ntests/template_tests/syntax_tests/test_url.py:186:            self.engine.render_to_string('url-fail14', {'named_url': 'view'})\ntests/template_tests/syntax_tests/test_url.py:191:            self.engine.render_to_string('url-fail15', {'named_url': 'view'})\ntests/template_tests/syntax_tests/test_url.py:196:            self.engine.render_to_string('url-fail16', {'named_url': 'view'})\ntests/template_tests/syntax_tests/test_url.py:201:            self.engine.render_to_string('url-fail17', {'named_url': 'view'})\ntests/template_tests/syntax_tests/test_url.py:206:            self.engine.render_to_string('url-fail18', {'named_url': 'view'})\ntests/template_tests/syntax_tests/test_url.py:211:            self.engine.render_to_string('url-fail19', {'named_url': 'view'})\ntests/template_tests/syntax_tests/test_url.py:216:        output = self.engine.render_to_string('url-asvar01')\ntests/template_tests/syntax_tests/test_url.py:221:        output = self.engine.render_to_string('url-asvar02')\ntests/template_tests/syntax_tests/test_url.py:226:        output = self.engine.render_to_string('url-asvar03')\ntests/template_tests/syntax_tests/test_named_endblock.py:12:        output = self.engine.render_to_string('namedendblocks01')\ntests/template_tests/syntax_tests/test_named_endblock.py:46:        output = self.engine.render_to_string('namedendblocks06')\ntests/template_tests/syntax_tests/test_named_endblock.py:52:        output = self.engine.render_to_string('namedendblocks07')\ntests/template_tests/syntax_tests/test_firstof.py:11:        output = self.engine.render_to_string('firstof01', {'a': 0, 'c': 0, 'b': 0})\ntests/template_tests/syntax_tests/test_firstof.py:16:        output = self.engine.render_to_string('firstof02', {'a': 1, 'c': 0, 'b': 0})\ntests/template_tests/syntax_tests/test_firstof.py:21:        output = self.engine.render_to_string('firstof03', {'a': 0, 'c': 0, 'b': 2})\ntests/template_tests/syntax_tests/test_firstof.py:26:        output = self.engine.render_to_string('firstof04', {'a': 0, 'c': 3, 'b': 0})\ntests/template_tests/syntax_tests/test_firstof.py:31:        output = self.engine.render_to_string('firstof05', {'a': 1, 'c': 3, 'b': 2})\ntests/template_tests/syntax_tests/test_firstof.py:36:        output = self.engine.render_to_string('firstof06', {'c': 3, 'b': 0})\ntests/template_tests/syntax_tests/test_firstof.py:41:        output = self.engine.render_to_string('firstof07', {'a': 0})\ntests/template_tests/syntax_tests/test_firstof.py:46:        output = self.engine.render_to_string('firstof08', {'a': 0, 'b': 0})\ntests/template_tests/syntax_tests/test_firstof.py:56:        output = self.engine.render_to_string('firstof10', {'a': '<'})\ntests/template_tests/syntax_tests/test_firstof.py:61:        output = self.engine.render_to_string('firstof11', {'a': '<', 'b': '>'})\ntests/template_tests/syntax_tests/test_firstof.py:66:        output = self.engine.render_to_string('firstof12', {'a': '', 'b': '>'})\ntests/template_tests/syntax_tests/test_firstof.py:71:        output = self.engine.render_to_string('firstof13', {'a': '<'})\ntests/template_tests/syntax_tests/test_firstof.py:76:        output = self.engine.render_to_string('firstof14', {'a': '<'})\ntests/template_tests/syntax_tests/test_firstof.py:82:        output = self.engine.render_to_string('firstof15', ctx)\ntests/template_tests/syntax_tests/test_firstof.py:89:        output = self.engine.render_to_string('firstof16', ctx)\ntests/template_tests/syntax_tests/test_multiline.py:19:        output = self.engine.render_to_string('multiline01')\ntests/template_tests/syntax_tests/test_if.py:12:        output = self.engine.render_to_string('if-tag01', {'foo': True})\ntests/template_tests/syntax_tests/test_if.py:17:        output = self.engine.render_to_string('if-tag02', {'foo': False})\ntests/template_tests/syntax_tests/test_if.py:22:        output = self.engine.render_to_string('if-tag03')\ntests/template_tests/syntax_tests/test_if.py:27:        output = self.engine.render_to_string('if-tag04', {'foo': True})\ntests/template_tests/syntax_tests/test_if.py:32:        output = self.engine.render_to_string('if-tag05', {'bar': True})\ntests/template_tests/syntax_tests/test_if.py:37:        output = self.engine.render_to_string('if-tag06')\ntests/template_tests/syntax_tests/test_if.py:42:        output = self.engine.render_to_string('if-tag07', {'foo': True})\ntests/template_tests/syntax_tests/test_if.py:47:        output = self.engine.render_to_string('if-tag08', {'bar': True})\ntests/template_tests/syntax_tests/test_if.py:52:        output = self.engine.render_to_string('if-tag09')\ntests/template_tests/syntax_tests/test_if.py:57:        output = self.engine.render_to_string('if-tag10', {'foo': True})\ntests/template_tests/syntax_tests/test_if.py:62:        output = self.engine.render_to_string('if-tag11', {'bar': True})\ntests/template_tests/syntax_tests/test_if.py:67:        output = self.engine.render_to_string('if-tag12', {'baz': True})\ntests/template_tests/syntax_tests/test_if.py:72:        output = self.engine.render_to_string('if-tag13')\ntests/template_tests/syntax_tests/test_if.py:78:        output = self.engine.render_to_string('if-tag-filter01', {'foo': 'abcde'})\ntests/template_tests/syntax_tests/test_if.py:83:        output = self.engine.render_to_string('if-tag-filter02')\ntests/template_tests/syntax_tests/test_if.py:89:        output = self.engine.render_to_string('if-tag-eq01')\ntests/template_tests/syntax_tests/test_if.py:94:        output = self.engine.render_to_string('if-tag-eq02', {'foo': 1})\ntests/template_tests/syntax_tests/test_if.py:99:        output = self.engine.render_to_string('if-tag-eq03', {'foo': 1, 'bar': 1})\ntests/template_tests/syntax_tests/test_if.py:104:        output = self.engine.render_to_string('if-tag-eq04', {'foo': 1, 'bar': 2})\ntests/template_tests/syntax_tests/test_if.py:109:        output = self.engine.render_to_string('if-tag-eq05')\ntests/template_tests/syntax_tests/test_if.py:115:        output = self.engine.render_to_string('if-tag-noteq01')\ntests/template_tests/syntax_tests/test_if.py:120:        output = self.engine.render_to_string('if-tag-noteq02', {'foo': 1})\ntests/template_tests/syntax_tests/test_if.py:125:        output = self.engine.render_to_string('if-tag-noteq03', {'foo': 1, 'bar': 1})\ntests/template_tests/syntax_tests/test_if.py:130:        output = self.engine.render_to_string('if-tag-noteq04', {'foo': 1, 'bar': 2})\ntests/template_tests/syntax_tests/test_if.py:135:        output = self.engine.render_to_string('if-tag-noteq05')\ntests/template_tests/syntax_tests/test_if.py:141:        output = self.engine.render_to_string('if-tag-gt-01')\ntests/template_tests/syntax_tests/test_if.py:146:        output = self.engine.render_to_string('if-tag-gt-02')\ntests/template_tests/syntax_tests/test_if.py:151:        output = self.engine.render_to_string('if-tag-gte-01')\ntests/template_tests/syntax_tests/test_if.py:156:        output = self.engine.render_to_string('if-tag-gte-02')\ntests/template_tests/syntax_tests/test_if.py:161:        output = self.engine.render_to_string('if-tag-lt-01')\ntests/template_tests/syntax_tests/test_if.py:166:        output = self.engine.render_to_string('if-tag-lt-02')\ntests/template_tests/syntax_tests/test_if.py:171:        output = self.engine.render_to_string('if-tag-lte-01')\ntests/template_tests/syntax_tests/test_if.py:176:        output = self.engine.render_to_string('if-tag-lte-02')\ntests/template_tests/syntax_tests/test_if.py:182:        output = self.engine.render_to_string('if-tag-in-01', {'x': [1]})\ntests/template_tests/syntax_tests/test_if.py:187:        output = self.engine.render_to_string('if-tag-in-02', {'x': [1]})\ntests/template_tests/syntax_tests/test_if.py:192:        output = self.engine.render_to_string('if-tag-not-in-01', {'x': [1]})\ntests/template_tests/syntax_tests/test_if.py:197:        output = self.engine.render_to_string('if-tag-not-in-02', {'x': [1]})\ntests/template_tests/syntax_tests/test_if.py:203:        output = self.engine.render_to_string('if-tag-and01', {'foo': True, 'bar': True})\ntests/template_tests/syntax_tests/test_if.py:208:        output = self.engine.render_to_string('if-tag-and02', {'foo': True, 'bar': False})\ntests/template_tests/syntax_tests/test_if.py:213:        output = self.engine.render_to_string('if-tag-and03', {'foo': False, 'bar': True})\ntests/template_tests/syntax_tests/test_if.py:218:        output = self.engine.render_to_string('if-tag-and04', {'foo': False, 'bar': False})\ntests/template_tests/syntax_tests/test_if.py:223:        output = self.engine.render_to_string('if-tag-and05', {'foo': False})\ntests/template_tests/syntax_tests/test_if.py:228:        output = self.engine.render_to_string('if-tag-and06', {'bar': False})\ntests/template_tests/syntax_tests/test_if.py:233:        output = self.engine.render_to_string('if-tag-and07', {'foo': True})\ntests/template_tests/syntax_tests/test_if.py:238:        output = self.engine.render_to_string('if-tag-and08', {'bar': True})\ntests/template_tests/syntax_tests/test_if.py:244:        output = self.engine.render_to_string('if-tag-or01', {'foo': True, 'bar': True})\ntests/template_tests/syntax_tests/test_if.py:249:        output = self.engine.render_to_string('if-tag-or02', {'foo': True, 'bar': False})\ntests/template_tests/syntax_tests/test_if.py:254:        output = self.engine.render_to_string('if-tag-or03', {'foo': False, 'bar': True})\ntests/template_tests/syntax_tests/test_if.py:259:        output = self.engine.render_to_string('if-tag-or04', {'foo': False, 'bar': False})\ntests/template_tests/syntax_tests/test_if.py:264:        output = self.engine.render_to_string('if-tag-or05', {'foo': False})\ntests/template_tests/syntax_tests/test_if.py:269:        output = self.engine.render_to_string('if-tag-or06', {'bar': False})\ntests/template_tests/syntax_tests/test_if.py:274:        output = self.engine.render_to_string('if-tag-or07', {'foo': True})\ntests/template_tests/syntax_tests/test_if.py:279:        output = self.engine.render_to_string('if-tag-or08', {'bar': True})\ntests/template_tests/syntax_tests/test_if.py:287:        output = self.engine.render_to_string('if-tag-or09', {'baz': True})\ntests/template_tests/syntax_tests/test_if.py:293:        output = self.engine.render_to_string('if-tag-not01', {'foo': True})\ntests/template_tests/syntax_tests/test_if.py:298:        output = self.engine.render_to_string('if-tag-not02', {'foo': True})\ntests/template_tests/syntax_tests/test_if.py:303:        output = self.engine.render_to_string('if-tag-not06')\ntests/template_tests/syntax_tests/test_if.py:308:        output = self.engine.render_to_string('if-tag-not07', {'foo': True, 'bar': True})\ntests/template_tests/syntax_tests/test_if.py:313:        output = self.engine.render_to_string('if-tag-not08', {'foo': True, 'bar': False})\ntests/template_tests/syntax_tests/test_if.py:318:        output = self.engine.render_to_string('if-tag-not09', {'foo': False, 'bar': True})\ntests/template_tests/syntax_tests/test_if.py:323:        output = self.engine.render_to_string('if-tag-not10', {'foo': False, 'bar': False})\ntests/template_tests/syntax_tests/test_if.py:328:        output = self.engine.render_to_string('if-tag-not11')\ntests/template_tests/syntax_tests/test_if.py:333:        output = self.engine.render_to_string('if-tag-not12', {'foo': True, 'bar': True})\ntests/template_tests/syntax_tests/test_if.py:338:        output = self.engine.render_to_string('if-tag-not13', {'foo': True, 'bar': False})\ntests/template_tests/syntax_tests/test_if.py:343:        output = self.engine.render_to_string('if-tag-not14', {'foo': False, 'bar': True})\ntests/template_tests/syntax_tests/test_if.py:348:        output = self.engine.render_to_string('if-tag-not15', {'foo': False, 'bar': False})\ntests/template_tests/syntax_tests/test_if.py:353:        output = self.engine.render_to_string('if-tag-not16')\ntests/template_tests/syntax_tests/test_if.py:358:        output = self.engine.render_to_string('if-tag-not17', {'foo': True, 'bar': True})\ntests/template_tests/syntax_tests/test_if.py:363:        output = self.engine.render_to_string('if-tag-not18', {'foo': True, 'bar': False})\ntests/template_tests/syntax_tests/test_if.py:368:        output = self.engine.render_to_string('if-tag-not19', {'foo': False, 'bar': True})\ntests/template_tests/syntax_tests/test_if.py:373:        output = self.engine.render_to_string('if-tag-not20', {'foo': False, 'bar': False})\ntests/template_tests/syntax_tests/test_if.py:378:        output = self.engine.render_to_string('if-tag-not21')\ntests/template_tests/syntax_tests/test_if.py:383:        output = self.engine.render_to_string('if-tag-not22', {'foo': True, 'bar': True})\ntests/template_tests/syntax_tests/test_if.py:388:        output = self.engine.render_to_string('if-tag-not23', {'foo': True, 'bar': False})\ntests/template_tests/syntax_tests/test_if.py:393:        output = self.engine.render_to_string('if-tag-not24', {'foo': False, 'bar': True})\ntests/template_tests/syntax_tests/test_if.py:398:        output = self.engine.render_to_string('if-tag-not25', {'foo': False, 'bar': False})\ntests/template_tests/syntax_tests/test_if.py:403:        output = self.engine.render_to_string('if-tag-not26')\ntests/template_tests/syntax_tests/test_if.py:408:        output = self.engine.render_to_string('if-tag-not27', {'foo': True, 'bar': True})\ntests/template_tests/syntax_tests/test_if.py:413:        output = self.engine.render_to_string('if-tag-not28', {'foo': True, 'bar': False})\ntests/template_tests/syntax_tests/test_if.py:418:        output = self.engine.render_to_string('if-tag-not29', {'foo': False, 'bar': True})\ntests/template_tests/syntax_tests/test_if.py:423:        output = self.engine.render_to_string('if-tag-not30', {'foo': False, 'bar': False})\ntests/template_tests/syntax_tests/test_if.py:428:        output = self.engine.render_to_string('if-tag-not31')\ntests/template_tests/syntax_tests/test_if.py:433:        output = self.engine.render_to_string('if-tag-not32', {'foo': True, 'bar': True})\ntests/template_tests/syntax_tests/test_if.py:438:        output = self.engine.render_to_string('if-tag-not33', {'foo': True, 'bar': False})\ntests/template_tests/syntax_tests/test_if.py:443:        output = self.engine.render_to_string('if-tag-not34', {'foo': False, 'bar': True})\ntests/template_tests/syntax_tests/test_if.py:448:        output = self.engine.render_to_string('if-tag-not35', {'foo': False, 'bar': False})\ntests/template_tests/syntax_tests/test_if.py:460:            self.engine.render_to_string('if-tag-error02', {'foo': True})\ntests/template_tests/syntax_tests/test_if.py:465:            self.engine.render_to_string('if-tag-error03', {'foo': True})\ntests/template_tests/syntax_tests/test_if.py:470:            self.engine.render_to_string('if-tag-error04', {'foo': True})\ntests/template_tests/syntax_tests/test_if.py:475:            self.engine.render_to_string('if-tag-error05', {'foo': True})\ntests/template_tests/syntax_tests/test_if.py:523:        output = self.engine.render_to_string('if-tag-shortcircuit01', {'x': TestObj()})\ntests/template_tests/syntax_tests/test_if.py:532:        output = self.engine.render_to_string('if-tag-shortcircuit02', {'x': TestObj()})\ntests/template_tests/syntax_tests/test_if.py:538:        output = self.engine.render_to_string('if-tag-badarg01')\ntests/template_tests/syntax_tests/test_if.py:543:        output = self.engine.render_to_string('if-tag-badarg02', {'y': 0})\ntests/template_tests/syntax_tests/test_if.py:548:        output = self.engine.render_to_string('if-tag-badarg03', {'y': 1})\ntests/template_tests/syntax_tests/test_if.py:553:        output = self.engine.render_to_string('if-tag-badarg04')\ntests/template_tests/syntax_tests/test_if.py:560:            self.engine.render_to_string('if-tag-single-eq', {'foo': 1})\ntests/template_tests/syntax_tests/test_if.py:564:        output = self.engine.render_to_string('template', {'foo': True})\ntests/template_tests/syntax_tests/test_if.py:569:        output = self.engine.render_to_string('template', {'foo': 1})\ntests/template_tests/syntax_tests/test_if.py:574:        output = self.engine.render_to_string('template', {'foo': 1})\ntests/template_tests/syntax_tests/test_if.py:579:        output = self.engine.render_to_string('template', {})\ntests/template_tests/syntax_tests/test_if.py:586:        output = self.engine.render_to_string('template', {'foo': False})\ntests/template_tests/syntax_tests/test_if.py:591:        output = self.engine.render_to_string('template', {'foo': None})\ntests/template_tests/syntax_tests/test_if.py:596:        output = self.engine.render_to_string('template', {'foo': False})\ntests/template_tests/syntax_tests/test_if.py:601:        output = self.engine.render_to_string('template', {})\ntests/template_tests/syntax_tests/test_extends.py:72:        output = self.engine.render_to_string('inheritance01')\ntests/template_tests/syntax_tests/test_extends.py:80:        output = self.engine.render_to_string('inheritance02')\ntests/template_tests/syntax_tests/test_extends.py:88:        output = self.engine.render_to_string('inheritance03')\ntests/template_tests/syntax_tests/test_extends.py:96:        output = self.engine.render_to_string('inheritance04')\ntests/template_tests/syntax_tests/test_extends.py:104:        output = self.engine.render_to_string('inheritance05')\ntests/template_tests/syntax_tests/test_extends.py:112:        output = self.engine.render_to_string('inheritance06', {'foo': 'inheritance02'})\ntests/template_tests/syntax_tests/test_extends.py:120:        output = self.engine.render_to_string('inheritance07')\ntests/template_tests/syntax_tests/test_extends.py:129:        output = self.engine.render_to_string('inheritance08')\ntests/template_tests/syntax_tests/test_extends.py:137:        output = self.engine.render_to_string('inheritance09')\ntests/template_tests/syntax_tests/test_extends.py:145:        output = self.engine.render_to_string('inheritance10')\ntests/template_tests/syntax_tests/test_extends.py:154:        output = self.engine.render_to_string('inheritance11')\ntests/template_tests/syntax_tests/test_extends.py:163:        output = self.engine.render_to_string('inheritance12')\ntests/template_tests/syntax_tests/test_extends.py:171:        output = self.engine.render_to_string('inheritance13')\ntests/template_tests/syntax_tests/test_extends.py:179:        output = self.engine.render_to_string('inheritance14')\ntests/template_tests/syntax_tests/test_extends.py:187:        output = self.engine.render_to_string('inheritance15')\ntests/template_tests/syntax_tests/test_extends.py:195:        output = self.engine.render_to_string('inheritance16')\ntests/template_tests/syntax_tests/test_extends.py:203:        output = self.engine.render_to_string('inheritance17')\ntests/template_tests/syntax_tests/test_extends.py:211:        output = self.engine.render_to_string('inheritance18')\ntests/template_tests/syntax_tests/test_extends.py:219:        output = self.engine.render_to_string('inheritance19')\ntests/template_tests/syntax_tests/test_extends.py:227:        output = self.engine.render_to_string('inheritance20')\ntests/template_tests/syntax_tests/test_extends.py:235:        output = self.engine.render_to_string('inheritance21')\ntests/template_tests/syntax_tests/test_extends.py:243:        output = self.engine.render_to_string('inheritance22')\ntests/template_tests/syntax_tests/test_extends.py:252:        output = self.engine.render_to_string('inheritance23')\ntests/template_tests/syntax_tests/test_extends.py:263:        output = self.engine.render_to_string('inheritance24', {'context_template': context_template})\ntests/template_tests/syntax_tests/test_extends.py:275:        output = self.engine.render_to_string('inheritance25', {'context_template': context_template})\ntests/template_tests/syntax_tests/test_extends.py:283:        output = self.engine.render_to_string('inheritance26')\ntests/template_tests/syntax_tests/test_extends.py:291:        output = self.engine.render_to_string('inheritance27')\ntests/template_tests/syntax_tests/test_extends.py:299:        output = self.engine.render_to_string('inheritance 28')\ntests/template_tests/syntax_tests/test_extends.py:307:        output = self.engine.render_to_string('inheritance29')\ntests/template_tests/syntax_tests/test_extends.py:315:        output = self.engine.render_to_string('inheritance30', {'optional': True})\ntests/template_tests/syntax_tests/test_extends.py:322:        output = self.engine.render_to_string('inheritance31', {'optional': True})\ntests/template_tests/syntax_tests/test_extends.py:327:        output = self.engine.render_to_string('inheritance32')\ntests/template_tests/syntax_tests/test_extends.py:335:        output = self.engine.render_to_string('inheritance33', {'optional': 1})\ntests/template_tests/syntax_tests/test_extends.py:344:        output = self.engine.render_to_string('inheritance34', {'optional': 1})\ntests/template_tests/syntax_tests/test_extends.py:353:        output = self.engine.render_to_string('inheritance35', {'optional': 2})\ntests/template_tests/syntax_tests/test_extends.py:361:        output = self.engine.render_to_string('inheritance36', {'numbers': '123'})\ntests/template_tests/syntax_tests/test_extends.py:370:        output = self.engine.render_to_string('inheritance37', {'numbers': '123'})\ntests/template_tests/syntax_tests/test_extends.py:379:        output = self.engine.render_to_string('inheritance38')\ntests/template_tests/syntax_tests/test_extends.py:385:        output = self.engine.render_to_string('inheritance39', {'optional': True})\ntests/template_tests/syntax_tests/test_extends.py:390:        output = self.engine.render_to_string('inheritance40', {'optional': 1})\ntests/template_tests/syntax_tests/test_extends.py:395:        output = self.engine.render_to_string('inheritance41', {'numbers': '123'})\ntests/template_tests/syntax_tests/test_extends.py:403:        output = self.engine.render_to_string('inheritance42')\ntests/template_tests/syntax_tests/test_extends.py:409:            self.engine.render_to_string('inheritance_empty')\ntests/template_tests/syntax_tests/test_extends.py:415:            self.engine.render_to_string('extends_duplicate')\ntests/template_tests/syntax_tests/test_extends.py:421:            self.engine.render_to_string('duplicate_block')\ntests/template_tests/syntax_tests/test_spaceless.py:10:        output = self.engine.render_to_string('spaceless01')\ntests/template_tests/syntax_tests/test_spaceless.py:15:        output = self.engine.render_to_string('spaceless02')\ntests/template_tests/syntax_tests/test_spaceless.py:20:        output = self.engine.render_to_string('spaceless03')\ntests/template_tests/syntax_tests/test_spaceless.py:25:        output = self.engine.render_to_string('spaceless04', {'text': 'This & that'})\ntests/template_tests/syntax_tests/test_spaceless.py:32:        output = self.engine.render_to_string('spaceless05', {'text': 'This & that'})\ntests/template_tests/syntax_tests/test_spaceless.py:37:        output = self.engine.render_to_string('spaceless06', {'text': 'This & that'})\ntests/template_tests/syntax_tests/test_regroup.py:20:        output = self.engine.render_to_string('regroup01', {\ntests/template_tests/syntax_tests/test_regroup.py:41:        output = self.engine.render_to_string('regroup02', {})\ntests/template_tests/syntax_tests/test_regroup.py:57:        output = self.engine.render_to_string('regroup03', {\ntests/template_tests/syntax_tests/test_regroup.py:76:        output = self.engine.render_to_string('regroup04', {\ntests/template_tests/syntax_tests/test_regroup.py:112:        output = self.engine.render_to_string('regroup_unpack', {\ntests/template_tests/syntax_tests/test_filter_tag.py:11:        output = self.engine.render_to_string('filter01')\ntests/template_tests/syntax_tests/test_filter_tag.py:16:        output = self.engine.render_to_string('filter02')\ntests/template_tests/syntax_tests/test_filter_tag.py:21:        output = self.engine.render_to_string('filter03')\ntests/template_tests/syntax_tests/test_filter_tag.py:26:        output = self.engine.render_to_string('filter04', {'remove': 'spam'})\ntests/template_tests/syntax_tests/test_with.py:13:        output = self.engine.render_to_string('with01', {'dict': {'key': 50}})\ntests/template_tests/syntax_tests/test_with.py:18:        output = self.engine.render_to_string('legacywith01', {'dict': {'key': 50}})\ntests/template_tests/syntax_tests/test_with.py:25:        output = self.engine.render_to_string('with02', {'dict': {'key': 50}})\ntests/template_tests/syntax_tests/test_with.py:35:        output = self.engine.render_to_string('legacywith02', {'dict': {'key': 50}})\ntests/template_tests/syntax_tests/test_with.py:43:        output = self.engine.render_to_string('with03', {'alpha': 'A', 'beta': 'B'})\ntests/template_tests/syntax_tests/test_with.py:49:            self.engine.render_to_string('with-error01', {'dict': {'key': 50}})\ntests/template_tests/syntax_tests/test_with.py:54:            self.engine.render_to_string('with-error02', {'dict': {'key': 50}})\ntests/template_tests/syntax_tests/test_load.py:15:        output = self.engine.render_to_string('load01')\ntests/template_tests/syntax_tests/test_load.py:20:        output = self.engine.render_to_string('load02')\ntests/template_tests/syntax_tests/test_load.py:26:        output = self.engine.render_to_string('load03')\ntests/template_tests/syntax_tests/test_load.py:32:        output = self.engine.render_to_string('load04')\ntests/template_tests/syntax_tests/test_load.py:38:        output = self.engine.render_to_string('load05', {'statement': 'not shouting'})\ntests/template_tests/syntax_tests/test_load.py:43:        output = self.engine.render_to_string('load06')\ntests/template_tests/syntax_tests/test_list_index.py:14:        output = self.engine.render_to_string('list-index01', {'var': ['first item', 'second item']})\ntests/template_tests/syntax_tests/test_list_index.py:22:        output = self.engine.render_to_string('list-index02', {'var': ['first item', 'second item']})\ntests/template_tests/syntax_tests/test_list_index.py:33:        output = self.engine.render_to_string('list-index03', {'var': None})\ntests/template_tests/syntax_tests/test_list_index.py:44:        output = self.engine.render_to_string('list-index04', {'var': {}})\ntests/template_tests/syntax_tests/test_list_index.py:55:        output = self.engine.render_to_string('list-index05', {'var': {'1': \"hello\"}})\ntests/template_tests/syntax_tests/test_list_index.py:65:        output = self.engine.render_to_string('list-index06', {\"var\": {1: \"hello\"}})\ntests/template_tests/syntax_tests/test_list_index.py:74:        output = self.engine.render_to_string('list-index07', {\"var\": {'1': \"hello\", 1: \"world\"}})\ntests/template_tests/syntax_tests/test_cycle.py:29:        output = self.engine.render_to_string('cycle10')\ntests/template_tests/syntax_tests/test_cycle.py:34:        output = self.engine.render_to_string('cycle11')\ntests/template_tests/syntax_tests/test_cycle.py:39:        output = self.engine.render_to_string('cycle12')\ntests/template_tests/syntax_tests/test_cycle.py:44:        output = self.engine.render_to_string('cycle13', {'test': list(range(5))})\ntests/template_tests/syntax_tests/test_cycle.py:49:        output = self.engine.render_to_string('cycle14', {'one': '1', 'two': '2'})\ntests/template_tests/syntax_tests/test_cycle.py:54:        output = self.engine.render_to_string('cycle15', {'test': list(range(5)), 'aye': 'a', 'bee': 'b'})\ntests/template_tests/syntax_tests/test_cycle.py:59:        output = self.engine.render_to_string('cycle16', {'one': 'A', 'two': '2'})\ntests/template_tests/syntax_tests/test_cycle.py:65:        output = self.engine.render_to_string('cycle17')\ntests/template_tests/syntax_tests/test_cycle.py:76:        output = self.engine.render_to_string('cycle19')\ntests/template_tests/syntax_tests/test_cycle.py:81:        output = self.engine.render_to_string('cycle20', {'two': 'C & D', 'one': 'A & B'})\ntests/template_tests/syntax_tests/test_cycle.py:87:        output = self.engine.render_to_string('cycle21', {'two': 'C & D', 'one': 'A & B'})\ntests/template_tests/syntax_tests/test_cycle.py:92:        output = self.engine.render_to_string('cycle22', {'values': [1, 2, 3, 4]})\ntests/template_tests/syntax_tests/test_cycle.py:98:        output = self.engine.render_to_string('cycle23', {'values': [1, 2, 3, 4]})\ntests/template_tests/syntax_tests/test_cycle.py:107:        output = self.engine.render_to_string('cycle24', {'values': [1, 2, 3, 4]})\ntests/template_tests/syntax_tests/test_cycle.py:112:        output = self.engine.render_to_string('cycle25', {'a': '<'})\ntests/template_tests/syntax_tests/test_cycle.py:117:        output = self.engine.render_to_string('cycle26', {'a': '<', 'b': '>'})\ntests/template_tests/syntax_tests/test_cycle.py:122:        output = self.engine.render_to_string('cycle27', {'a': '<', 'b': '>'})\ntests/template_tests/syntax_tests/test_cycle.py:127:        output = self.engine.render_to_string('cycle28', {'a': '<', 'b': '>'})\ntests/template_tests/syntax_tests/test_cycle.py:145:        output = self.engine.render_to_string('cycle29', {'values': [1, 2, 3, 4, 5, 6, 7, 8, 8, 8, 9, 9]})\ntests/template_tests/syntax_tests/test_cycle.py:163:        output = self.engine.render_to_string(\ntests/template_tests/syntax_tests/test_cycle.py:179:            self.engine.render_to_string('undefined_cycle')\ntests/template_tests/syntax_tests/test_resetcycle.py:31:        output = self.engine.render_to_string('resetcycle05', {'test': list(range(5))})\ntests/template_tests/syntax_tests/test_resetcycle.py:41:        output = self.engine.render_to_string('resetcycle06', {'test': list(range(5))})\ntests/template_tests/syntax_tests/test_resetcycle.py:51:        output = self.engine.render_to_string('resetcycle07', {'test': list(range(5))})\ntests/template_tests/syntax_tests/test_resetcycle.py:61:        output = self.engine.render_to_string('resetcycle08', {'outer': list(range(2)), 'inner': list(range(3))})\ntests/template_tests/syntax_tests/test_resetcycle.py:72:        output = self.engine.render_to_string('resetcycle09', {'outer': list(range(2)), 'inner': list(range(3))})\ntests/template_tests/syntax_tests/test_resetcycle.py:83:        output = self.engine.render_to_string('resetcycle10', {'test': list(range(5))})\ntests/template_tests/syntax_tests/test_resetcycle.py:94:        output = self.engine.render_to_string('resetcycle11', {'test': list(range(5))})\ntests/template_tests/syntax_tests/test_cache.py:19:        output = self.engine.render_to_string('cache03')\ntests/template_tests/syntax_tests/test_cache.py:27:        self.engine.render_to_string('cache03')\ntests/template_tests/syntax_tests/test_cache.py:28:        output = self.engine.render_to_string('cache04')\ntests/template_tests/syntax_tests/test_cache.py:33:        output = self.engine.render_to_string('cache05', {'foo': 1})\ntests/template_tests/syntax_tests/test_cache.py:38:        output = self.engine.render_to_string('cache06', {'foo': 2})\ntests/template_tests/syntax_tests/test_cache.py:47:        self.engine.render_to_string('cache05', context)\ntests/template_tests/syntax_tests/test_cache.py:48:        output = self.engine.render_to_string('cache07', context)\ntests/template_tests/syntax_tests/test_cache.py:60:        self.engine.render_to_string('cache06', context)\ntests/template_tests/syntax_tests/test_cache.py:61:        output = self.engine.render_to_string('cache08', context)\ntests/template_tests/syntax_tests/test_cache.py:78:            self.engine.render_to_string('cache13')\ntests/template_tests/syntax_tests/test_cache.py:83:            self.engine.render_to_string('cache14', {'foo': 'fail'})\ntests/template_tests/syntax_tests/test_cache.py:88:            self.engine.render_to_string('cache15', {'foo': []})\ntests/template_tests/syntax_tests/test_cache.py:95:        output = self.engine.render_to_string('cache16', {'foo': 'foo', 'bar': 'with spaces'})\ntests/template_tests/syntax_tests/test_cache.py:103:        output = self.engine.render_to_string(\ntests/template_tests/syntax_tests/test_cache.py:122:        output = self.engine.render_to_string('cache18')\ntests/template_tests/syntax_tests/test_cache.py:131:        output = self.engine.render_to_string('first')\ntests/template_tests/syntax_tests/test_cache.py:133:        output = self.engine.render_to_string('second')\ntests/template_tests/syntax_tests/test_if_changed.py:12:        output = self.engine.render_to_string('ifchanged01', {'num': (1, 2, 3)})\ntests/template_tests/syntax_tests/test_if_changed.py:17:        output = self.engine.render_to_string('ifchanged02', {'num': (1, 1, 3)})\ntests/template_tests/syntax_tests/test_if_changed.py:22:        output = self.engine.render_to_string('ifchanged03', {'num': (1, 1, 1)})\ntests/template_tests/syntax_tests/test_if_changed.py:29:        output = self.engine.render_to_string('ifchanged04', {'num': (1, 2, 3), 'numx': (2, 2, 2)})\ntests/template_tests/syntax_tests/test_if_changed.py:36:        output = self.engine.render_to_string('ifchanged05', {'num': (1, 1, 1), 'numx': (1, 2, 3)})\ntests/template_tests/syntax_tests/test_if_changed.py:43:        output = self.engine.render_to_string('ifchanged06', {'num': (1, 1, 1), 'numx': (2, 2, 2)})\ntests/template_tests/syntax_tests/test_if_changed.py:51:        output = self.engine.render_to_string('ifchanged07', {'num': (1, 1, 1), 'numx': (2, 2, 2), 'numy': (3, 3, 3)})\ntests/template_tests/syntax_tests/test_if_changed.py:58:        output = self.engine.render_to_string('ifchanged08', {'datalist': [\ntests/template_tests/syntax_tests/test_if_changed.py:70:        output = self.engine.render_to_string('ifchanged-param01', {'num': (1, 2, 3)})\ntests/template_tests/syntax_tests/test_if_changed.py:76:        output = self.engine.render_to_string('ifchanged-param02', {'num': (1, 2, 3), 'numx': (5, 6, 7)})\ntests/template_tests/syntax_tests/test_if_changed.py:86:        output = self.engine.render_to_string('ifchanged-param03', {'num': (1, 1, 2), 'numx': (5, 6, 6)})\ntests/template_tests/syntax_tests/test_if_changed.py:97:        output = self.engine.render_to_string(\ntests/template_tests/syntax_tests/test_if_changed.py:111:        output = self.engine.render_to_string(\ntests/template_tests/syntax_tests/test_if_changed.py:124:        output = self.engine.render_to_string('ifchanged-else01', {'ids': [1, 1, 2, 2, 2, 3]})\ntests/template_tests/syntax_tests/test_if_changed.py:131:        output = self.engine.render_to_string('ifchanged-else02', {'ids': [1, 1, 2, 2, 2, 3]})\ntests/template_tests/syntax_tests/test_if_changed.py:138:        output = self.engine.render_to_string('ifchanged-else03', {'ids': [1, 1, 2, 2, 2, 3]})\ntests/template_tests/syntax_tests/test_if_changed.py:145:        output = self.engine.render_to_string('ifchanged-else04', {'ids': [1, 1, 2, 2, 2, 3, 4]})\ntests/template_tests/syntax_tests/test_if_changed.py:155:        output = self.engine.render_to_string('ifchanged-filter-ws', {'num': (1, 2, 3)})\ntests/template_tests/syntax_tests/test_if_changed.py:213:        output = engine.render_to_string('template', {'vars': [1, 1, 2, 2, 3, 3]})\ntests/template_tests/syntax_tests/test_if_changed.py:224:        output = engine.render_to_string('template', {'vars': [1, 1, 2, 2, 3, 3]})\ntests/template_tests/syntax_tests/test_for.py:13:        output = self.engine.render_to_string('for-tag01', {'values': [1, 2, 3]})\ntests/template_tests/syntax_tests/test_for.py:18:        output = self.engine.render_to_string('for-tag02', {'values': [1, 2, 3]})\ntests/template_tests/syntax_tests/test_for.py:23:        output = self.engine.render_to_string('for-tag-vars01', {'values': [6, 6, 6]})\ntests/template_tests/syntax_tests/test_for.py:28:        output = self.engine.render_to_string('for-tag-vars02', {'values': [6, 6, 6]})\ntests/template_tests/syntax_tests/test_for.py:33:        output = self.engine.render_to_string('for-tag-vars03', {'values': [6, 6, 6]})\ntests/template_tests/syntax_tests/test_for.py:38:        output = self.engine.render_to_string('for-tag-vars04', {'values': [6, 6, 6]})\ntests/template_tests/syntax_tests/test_for.py:44:        output = self.engine.render_to_string('for-tag-vars05', {'values': [6, 6, 6]})\ntests/template_tests/syntax_tests/test_for.py:50:        output = self.engine.render_to_string('for-tag-vars06', {'values': [6, 6, 6]})\ntests/template_tests/syntax_tests/test_for.py:55:        output = self.engine.render_to_string('for-tag-unpack01', {'items': (('one', 1), ('two', 2))})\ntests/template_tests/syntax_tests/test_for.py:60:        output = self.engine.render_to_string('for-tag-unpack03', {'items': (('one', 1), ('two', 2))})\ntests/template_tests/syntax_tests/test_for.py:65:        output = self.engine.render_to_string('for-tag-unpack04', {'items': (('one', 1), ('two', 2))})\ntests/template_tests/syntax_tests/test_for.py:70:        output = self.engine.render_to_string('for-tag-unpack05', {'items': (('one', 1), ('two', 2))})\ntests/template_tests/syntax_tests/test_for.py:77:            self.engine.render_to_string('for-tag-unpack06', {'items': (('one', 1), ('two', 2))})\ntests/template_tests/syntax_tests/test_for.py:83:            self.engine.render_to_string('for-tag-unpack07', {'items': (('one', 1), ('two', 2))})\ntests/template_tests/syntax_tests/test_for.py:89:            self.engine.render_to_string('for-tag-unpack08', {'items': (('one', 1), ('two', 2))})\ntests/template_tests/syntax_tests/test_for.py:95:            self.engine.render_to_string('double-quote', {'items': (1, 2)})\ntests/template_tests/syntax_tests/test_for.py:101:            self.engine.render_to_string('single-quote', {'items': (1, 2)})\ntests/template_tests/syntax_tests/test_for.py:107:            self.engine.render_to_string('vertical-bar', {'items': (1, 2)})\ntests/template_tests/syntax_tests/test_for.py:114:        output = self.engine.render_to_string('for-tag-unpack09', {'items': (('one', 1), ('two', 2))})\ntests/template_tests/syntax_tests/test_for.py:119:        output = self.engine.render_to_string(\ntests/template_tests/syntax_tests/test_for.py:129:        output = self.engine.render_to_string('for-tag-empty01', {'values': [1, 2, 3]})\ntests/template_tests/syntax_tests/test_for.py:134:        output = self.engine.render_to_string('for-tag-empty02', {'values': []})\ntests/template_tests/syntax_tests/test_for.py:140:        output = self.engine.render_to_string('for-tag-empty03')\ntests/template_tests/syntax_tests/test_for.py:148:        output = self.engine.render_to_string('for-tag-filter-ws', {'s': 'abc'})\ntests/template_tests/syntax_tests/test_for.py:153:        output = self.engine.render_to_string('for-tag-unpack-strs', {'items': ('ab', 'ac')})\ntests/template_tests/syntax_tests/test_for.py:159:            self.engine.render_to_string(\ntests/template_tests/syntax_tests/test_for.py:167:            self.engine.render_to_string(\ntests/template_tests/syntax_tests/test_for.py:175:            self.engine.render_to_string(\ntests/template_tests/syntax_tests/test_for.py:183:            self.engine.render_to_string('for-tag-unpack14', {'items': (1, 2)})\ntests/template_tests/syntax_tests/test_for.py:194:        output = self.engine.render_to_string('main', {\ntests/template_tests/syntax_tests/test_for.py:206:            self.engine.render_to_string('invalid_for_loop', {'items': (1, 2)})\ntests/template_tests/syntax_tests/test_for.py:212:            self.engine.render_to_string('invalid_for_loop', {'items': (1, 2)})\ntests/template_tests/syntax_tests/test_builtins.py:10:        output = self.engine.render_to_string('builtins01')\ntests/template_tests/syntax_tests/test_builtins.py:15:        output = self.engine.render_to_string('builtins02')\ntests/template_tests/syntax_tests/test_builtins.py:20:        output = self.engine.render_to_string('builtins03')\ntests/template_tests/syntax_tests/test_basic.py:20:        output = self.engine.render_to_string('basic-syntax01')\ntests/template_tests/syntax_tests/test_basic.py:29:        output = self.engine.render_to_string('basic-syntax02', {'headline': 'Success'})\ntests/template_tests/syntax_tests/test_basic.py:37:        output = self.engine.render_to_string('basic-syntax03', {\"first\": 1, \"second\": 2})\ntests/template_tests/syntax_tests/test_basic.py:45:        output = self.engine.render_to_string('basic-syntax04')\ntests/template_tests/syntax_tests/test_basic.py:80:        output = self.engine.render_to_string('basic-syntax09', {'var': SomeClass()})\ntests/template_tests/syntax_tests/test_basic.py:88:        output = self.engine.render_to_string('basic-syntax10', {'var': SomeClass()})\ntests/template_tests/syntax_tests/test_basic.py:96:        output = self.engine.render_to_string('basic-syntax11', {'var': SomeClass()})\ntests/template_tests/syntax_tests/test_basic.py:145:        output = self.engine.render_to_string('basic-syntax18', {\"foo\": {\"bar\": \"baz\"}})\ntests/template_tests/syntax_tests/test_basic.py:153:        output = self.engine.render_to_string('basic-syntax19', {\"foo\": {\"bar\": \"baz\"}})\ntests/template_tests/syntax_tests/test_basic.py:165:        output = self.engine.render_to_string('basic-syntax20', {'var': SomeClass()})\ntests/template_tests/syntax_tests/test_basic.py:186:        output = self.engine.render_to_string('basic-syntax21')\ntests/template_tests/syntax_tests/test_basic.py:191:        output = self.engine.render_to_string('basic-syntax22')\ntests/template_tests/syntax_tests/test_basic.py:208:        output = self.engine.render_to_string('basic-syntax24')\ntests/template_tests/syntax_tests/test_basic.py:215:        output = self.engine.render_to_string('basic-syntax25')\ntests/template_tests/syntax_tests/test_basic.py:220:        output = self.engine.render_to_string('basic-syntax26')\ntests/template_tests/syntax_tests/test_basic.py:225:        output = self.engine.render_to_string('basic-syntax27')\ntests/template_tests/syntax_tests/test_basic.py:232:        output = self.engine.render_to_string('basic-syntax28', {'a': SilentGetItemClass()})\ntests/template_tests/syntax_tests/test_basic.py:240:        output = self.engine.render_to_string('basic-syntax29', {'a': SilentAttrClass()})\ntests/template_tests/syntax_tests/test_basic.py:250:        output = self.engine.render_to_string(\ntests/template_tests/syntax_tests/test_basic.py:258:        output = self.engine.render_to_string(\ntests/template_tests/syntax_tests/test_basic.py:266:        output = self.engine.render_to_string(\ntests/template_tests/syntax_tests/test_basic.py:274:        output = self.engine.render_to_string(\ntests/template_tests/syntax_tests/test_basic.py:282:        output = self.engine.render_to_string(\ntests/template_tests/syntax_tests/test_basic.py:291:        output = self.engine.render_to_string('basic-syntax35', {\"1\": \"abc\"})\ntests/template_tests/syntax_tests/test_basic.py:296:        output = self.engine.render_to_string('basic-syntax36', {\"1\": \"abc\"})\ntests/template_tests/syntax_tests/test_basic.py:304:        output = self.engine.render_to_string('basic-syntax37', {\"callable\": lambda: \"foo bar\"})\ntests/template_tests/syntax_tests/test_basic.py:312:        output = self.engine.render_to_string('basic-syntax38', {\"var\": {\"callable\": lambda: \"foo bar\"}})\ntests/template_tests/syntax_tests/test_basic.py:319:            self.engine.render_to_string('template')\ntests/template_tests/syntax_tests/test_basic.py:325:            self.engine.render_to_string('template')\ntests/template_tests/syntax_tests/test_basic.py:329:        output = self.engine.render_to_string('tpl-str')\ntests/template_tests/syntax_tests/test_basic.py:331:        output = self.engine.render_to_string('tpl-percent')\ntests/template_tests/syntax_tests/test_basic.py:333:        output = self.engine.render_to_string('tpl-weird-percent')\ntests/template_tests/syntax_tests/test_invalid_string.py:11:        output = self.engine.render_to_string('invalidstr01')\ntests/template_tests/syntax_tests/test_invalid_string.py:19:        output = self.engine.render_to_string('invalidstr02')\ntests/template_tests/syntax_tests/test_invalid_string.py:27:        output = self.engine.render_to_string('invalidstr03')\ntests/template_tests/syntax_tests/test_invalid_string.py:32:        output = self.engine.render_to_string('invalidstr04')\ntests/template_tests/syntax_tests/test_invalid_string.py:37:        output = self.engine.render_to_string('invalidstr04_2')\ntests/template_tests/syntax_tests/test_invalid_string.py:42:        output = self.engine.render_to_string('invalidstr05')\ntests/template_tests/syntax_tests/test_invalid_string.py:50:        output = self.engine.render_to_string('invalidstr06')\ntests/template_tests/syntax_tests/test_invalid_string.py:58:        output = self.engine.render_to_string('invalidstr07')\ntests/template_tests/syntax_tests/test_width_ratio.py:12:        output = self.engine.render_to_string('widthratio01', {'a': 50, 'b': 100})\ntests/template_tests/syntax_tests/test_width_ratio.py:17:        output = self.engine.render_to_string('widthratio02', {'a': 0, 'b': 0})\ntests/template_tests/syntax_tests/test_width_ratio.py:22:        output = self.engine.render_to_string('widthratio03', {'a': 0, 'b': 100})\ntests/template_tests/syntax_tests/test_width_ratio.py:27:        output = self.engine.render_to_string('widthratio04', {'a': 50, 'b': 100})\ntests/template_tests/syntax_tests/test_width_ratio.py:32:        output = self.engine.render_to_string('widthratio05', {'a': 100, 'b': 100})\ntests/template_tests/syntax_tests/test_width_ratio.py:40:        output = self.engine.render_to_string('widthratio06', {'a': 50, 'b': 80})\ntests/template_tests/syntax_tests/test_width_ratio.py:48:        output = self.engine.render_to_string('widthratio07', {'a': 50, 'b': 70})\ntests/template_tests/syntax_tests/test_width_ratio.py:60:            self.engine.render_to_string('widthratio09', {'a': 50, 'b': 100})\ntests/template_tests/syntax_tests/test_width_ratio.py:64:        output = self.engine.render_to_string('widthratio10', {'a': 50, 'b': 100})\ntests/template_tests/syntax_tests/test_width_ratio.py:72:        output = self.engine.render_to_string('widthratio11', {'a': 50, 'c': 100, 'b': 100})\ntests/template_tests/syntax_tests/test_width_ratio.py:79:        output = self.engine.render_to_string('widthratio12a', {'a': 'a', 'c': 100, 'b': 100})\ntests/template_tests/syntax_tests/test_width_ratio.py:84:        output = self.engine.render_to_string('widthratio12b', {'a': None, 'c': 100, 'b': 100})\ntests/template_tests/syntax_tests/test_width_ratio.py:89:        output = self.engine.render_to_string('widthratio13a', {'a': 0, 'c': 100, 'b': 'b'})\ntests/template_tests/syntax_tests/test_width_ratio.py:94:        output = self.engine.render_to_string('widthratio13b', {'a': 0, 'c': 100, 'b': None})\ntests/template_tests/syntax_tests/test_width_ratio.py:100:            self.engine.render_to_string('widthratio14a', {'a': 0, 'c': 'c', 'b': 100})\ntests/template_tests/syntax_tests/test_width_ratio.py:105:            self.engine.render_to_string('widthratio14b', {'a': 0, 'c': None, 'b': 100})\ntests/template_tests/syntax_tests/test_width_ratio.py:112:        output = self.engine.render_to_string('widthratio15', {'a': 50, 'b': 100})\ntests/template_tests/syntax_tests/test_width_ratio.py:118:        output = self.engine.render_to_string('widthratio16', {'a': 50, 'b': 100})\ntests/template_tests/syntax_tests/test_width_ratio.py:123:        output = self.engine.render_to_string('widthratio17', {'a': 100, 'b': 100})\ntests/template_tests/syntax_tests/test_width_ratio.py:138:        output = self.engine.render_to_string('widthratio20', {'a': float('inf'), 'b': float('inf')})\ntests/template_tests/syntax_tests/test_width_ratio.py:143:        output = self.engine.render_to_string('widthratio21', {'a': float('inf'), 'b': 2})\ntests/template_tests/syntax_tests/test_width_ratio.py:148:        output = self.engine.render_to_string('t', {'a': 0, 'b': 0})\ntests/template_tests/syntax_tests/test_width_ratio.py:153:        output = self.engine.render_to_string('t', {'a': 'a', 'c': 100, 'b': 100})\ntests/template_tests/syntax_tests/test_template_tag.py:11:        output = self.engine.render_to_string('templatetag01')\ntests/template_tests/syntax_tests/test_template_tag.py:16:        output = self.engine.render_to_string('templatetag02')\ntests/template_tests/syntax_tests/test_template_tag.py:21:        output = self.engine.render_to_string('templatetag03')\ntests/template_tests/syntax_tests/test_template_tag.py:26:        output = self.engine.render_to_string('templatetag04')\ntests/template_tests/syntax_tests/test_template_tag.py:41:        output = self.engine.render_to_string('templatetag07')\ntests/template_tests/syntax_tests/test_template_tag.py:46:        output = self.engine.render_to_string('templatetag08')\ntests/template_tests/syntax_tests/test_template_tag.py:51:        output = self.engine.render_to_string('templatetag09')\ntests/template_tests/syntax_tests/test_template_tag.py:56:        output = self.engine.render_to_string('templatetag10')\ntests/template_tests/syntax_tests/test_template_tag.py:61:        output = self.engine.render_to_string('templatetag11')\ntests/template_tests/syntax_tests/test_template_tag.py:66:        output = self.engine.render_to_string('templatetag12')\ntests/template_tests/syntax_tests/test_autoescape.py:12:        output = self.engine.render_to_string('autoescape-tag01')\ntests/template_tests/syntax_tests/test_autoescape.py:17:        output = self.engine.render_to_string('autoescape-tag02', {'first': '<b>hello</b>'})\ntests/template_tests/syntax_tests/test_autoescape.py:22:        output = self.engine.render_to_string('autoescape-tag03', {'first': '<b>hello</b>'})\ntests/template_tests/syntax_tests/test_autoescape.py:31:        output = self.engine.render_to_string('autoescape-tag04', {'first': '<a>'})\ntests/template_tests/syntax_tests/test_autoescape.py:36:        output = self.engine.render_to_string('autoescape-tag05', {'first': '<b>first</b>'})\ntests/template_tests/syntax_tests/test_autoescape.py:43:        output = self.engine.render_to_string('autoescape-tag06', {'first': mark_safe('<b>first</b>')})\ntests/template_tests/syntax_tests/test_autoescape.py:48:        output = self.engine.render_to_string('autoescape-tag07', {'first': mark_safe('<b>Apple</b>')})\ntests/template_tests/syntax_tests/test_autoescape.py:59:        output = self.engine.render_to_string('autoescape-tag08', {\"var\": None})\ntests/template_tests/syntax_tests/test_autoescape.py:66:        output = self.engine.render_to_string('autoescape-tag09', {'unsafe': UnsafeClass()})\ntests/template_tests/syntax_tests/test_autoescape.py:71:        output = self.engine.render_to_string('autoescape-tag10', {'safe': SafeClass()})\ntests/template_tests/syntax_tests/test_autoescape.py:82:            self.engine.render_to_string('autoescape-filtertag01', {'first': '<a>'})\ntests/template_tests/syntax_tests/test_autoescape.py:89:        output = self.engine.render_to_string('autoescape-ifequal01', {'var': 'this & that'})\ntests/template_tests/syntax_tests/test_autoescape.py:95:        output = self.engine.render_to_string('autoescape-filters01', {'var': 'this & that'})\ntests/template_tests/syntax_tests/test_autoescape.py:100:        output = self.engine.render_to_string('autoescape-filters02', {'var': ('Tom', 'Dick', 'Harry')})\ntests/template_tests/syntax_tests/test_autoescape.py:108:        output = self.engine.render_to_string('autoescape-literals01')\ntests/template_tests/syntax_tests/test_autoescape.py:116:        output = self.engine.render_to_string('autoescape-stringiterations01', {'var': 'K&R'})\ntests/template_tests/syntax_tests/test_autoescape.py:124:        output = self.engine.render_to_string('autoescape-lookup01', {'var': {'key': 'this & that'}})\ntests/template_tests/syntax_tests/test_autoescape.py:131:            self.engine.render_to_string('autoescape-incorrect-arg', {'var': {'key': 'this & that'}})\ntests/template_tests/syntax_tests/test_autoescape.py:137:            self.engine.render_to_string('autoescape-incorrect-arg', {'var': {'key': 'this & that'}})\ntests/template_tests/syntax_tests/test_now.py:17:        output = self.engine.render_to_string('now01')\ntests/template_tests/syntax_tests/test_now.py:25:        output = self.engine.render_to_string('now02')\ntests/template_tests/syntax_tests/test_now.py:33:        output = self.engine.render_to_string('now03')\ntests/template_tests/syntax_tests/test_now.py:40:        output = self.engine.render_to_string('now04')\ntests/template_tests/syntax_tests/test_now.py:45:        output = self.engine.render_to_string('now05')\ntests/template_tests/syntax_tests/test_now.py:52:        output = self.engine.render_to_string('now06')\ntests/template_tests/syntax_tests/test_now.py:59:        output = self.engine.render_to_string('now07')\ntests/template_tests/syntax_tests/test_now.py:67:            self.engine.render_to_string('no_args')\ntests/template_tests/syntax_tests/test_include.py:20:        output = self.engine.render_to_string('include01')\ntests/template_tests/syntax_tests/test_include.py:25:        output = self.engine.render_to_string('include02', {'headline': 'Included'})\ntests/template_tests/syntax_tests/test_include.py:30:        output = self.engine.render_to_string(\ntests/template_tests/syntax_tests/test_include.py:47:        output = self.engine.render_to_string('include06')\ntests/template_tests/syntax_tests/test_include.py:52:        output = self.engine.render_to_string('include07', {'headline': 'Included'})\ntests/template_tests/syntax_tests/test_include.py:57:        output = self.engine.render_to_string('include08', {'headline': 'basic-syntax02'})\ntests/template_tests/syntax_tests/test_include.py:67:        output = self.engine.render_to_string('include09', {'first': 'Ul', 'second': 'lU'})\ntests/template_tests/syntax_tests/test_include.py:72:        output = self.engine.render_to_string('include10', {'first': '1'})\ntests/template_tests/syntax_tests/test_include.py:80:        output = self.engine.render_to_string('include11', {'first': '1'})\ntests/template_tests/syntax_tests/test_include.py:88:        output = self.engine.render_to_string('include12', {'second': '2'})\ntests/template_tests/syntax_tests/test_include.py:99:        output = self.engine.render_to_string('include13', {'first': '&'})\ntests/template_tests/syntax_tests/test_include.py:112:        output = self.engine.render_to_string('include14', {'var1': '&'})\ntests/template_tests/syntax_tests/test_include.py:299:        output = engine.render_to_string('template', {'vars': range(9)})\ntests/template_tests/syntax_tests/test_simple_tag.py:12:        output = self.engine.render_to_string('simpletag-renamed01')\ntests/template_tests/syntax_tests/test_simple_tag.py:17:        output = self.engine.render_to_string('simpletag-renamed02')\ntests/template_tests/syntax_tests/test_if_equal.py:12:        output = self.engine.render_to_string('ifequal01', {'a': 1, 'b': 2})\ntests/template_tests/syntax_tests/test_if_equal.py:17:        output = self.engine.render_to_string('ifequal02', {'a': 1, 'b': 1})\ntests/template_tests/syntax_tests/test_if_equal.py:22:        output = self.engine.render_to_string('ifequal03', {'a': 1, 'b': 2})\ntests/template_tests/syntax_tests/test_if_equal.py:27:        output = self.engine.render_to_string('ifequal04', {'a': 1, 'b': 1})\ntests/template_tests/syntax_tests/test_if_equal.py:32:        output = self.engine.render_to_string('ifequal05', {'a': 'test'})\ntests/template_tests/syntax_tests/test_if_equal.py:37:        output = self.engine.render_to_string('ifequal06', {'a': 'no'})\ntests/template_tests/syntax_tests/test_if_equal.py:42:        output = self.engine.render_to_string('ifequal07', {'a': 'test'})\ntests/template_tests/syntax_tests/test_if_equal.py:47:        output = self.engine.render_to_string('ifequal08', {'a': 'no'})\ntests/template_tests/syntax_tests/test_if_equal.py:52:        output = self.engine.render_to_string('ifequal09')\ntests/template_tests/syntax_tests/test_if_equal.py:57:        output = self.engine.render_to_string('ifequal10')\ntests/template_tests/syntax_tests/test_if_equal.py:63:        output = self.engine.render_to_string('ifequal-split01')\ntests/template_tests/syntax_tests/test_if_equal.py:68:        output = self.engine.render_to_string('ifequal-split02', {'a': 'foo'})\ntests/template_tests/syntax_tests/test_if_equal.py:73:        output = self.engine.render_to_string('ifequal-split03', {'a': 'test man'})\ntests/template_tests/syntax_tests/test_if_equal.py:78:        output = self.engine.render_to_string('ifequal-split04', {'a': 'test man'})\ntests/template_tests/syntax_tests/test_if_equal.py:83:        output = self.engine.render_to_string('ifequal-split05', {'a': ''})\ntests/template_tests/syntax_tests/test_if_equal.py:88:        output = self.engine.render_to_string('ifequal-split06', {'a': 'i \"love\" you'})\ntests/template_tests/syntax_tests/test_if_equal.py:93:        output = self.engine.render_to_string('ifequal-split07', {'a': 'i love you'})\ntests/template_tests/syntax_tests/test_if_equal.py:98:        output = self.engine.render_to_string('ifequal-split08', {'a': \"I'm happy\"})\ntests/template_tests/syntax_tests/test_if_equal.py:103:        output = self.engine.render_to_string('ifequal-split09', {'a': r'slash\\man'})\ntests/template_tests/syntax_tests/test_if_equal.py:108:        output = self.engine.render_to_string('ifequal-split10', {'a': 'slashman'})\ntests/template_tests/syntax_tests/test_if_equal.py:114:        output = self.engine.render_to_string('ifequal-numeric01', {'x': '5'})\ntests/template_tests/syntax_tests/test_if_equal.py:119:        output = self.engine.render_to_string('ifequal-numeric02', {'x': 5})\ntests/template_tests/syntax_tests/test_if_equal.py:124:        output = self.engine.render_to_string('ifequal-numeric03', {'x': 5})\ntests/template_tests/syntax_tests/test_if_equal.py:129:        output = self.engine.render_to_string('ifequal-numeric04', {'x': 5.2})\ntests/template_tests/syntax_tests/test_if_equal.py:134:        output = self.engine.render_to_string('ifequal-numeric05', {'x': 0.2})\ntests/template_tests/syntax_tests/test_if_equal.py:139:        output = self.engine.render_to_string('ifequal-numeric06', {'x': 0.2})\ntests/template_tests/syntax_tests/test_if_equal.py:144:        output = self.engine.render_to_string('ifequal-numeric07', {'x': 2})\ntests/template_tests/syntax_tests/test_if_equal.py:149:        output = self.engine.render_to_string('ifequal-numeric08', {'x': 5})\ntests/template_tests/syntax_tests/test_if_equal.py:154:        output = self.engine.render_to_string('ifequal-numeric09', {'x': '5'})\ntests/template_tests/syntax_tests/test_if_equal.py:159:        output = self.engine.render_to_string('ifequal-numeric10', {'x': -5})\ntests/template_tests/syntax_tests/test_if_equal.py:164:        output = self.engine.render_to_string('ifequal-numeric11', {'x': -5.2})\ntests/template_tests/syntax_tests/test_if_equal.py:169:        output = self.engine.render_to_string('ifequal-numeric12', {'x': 5})\ntests/template_tests/syntax_tests/test_if_equal.py:175:        output = self.engine.render_to_string('ifequal-filter01', {'a': 'a'})\ntests/template_tests/syntax_tests/test_if_equal.py:180:        output = self.engine.render_to_string('ifequal-filter02', {'a': 'a'})\ntests/template_tests/syntax_tests/test_if_equal.py:185:        output = self.engine.render_to_string('ifequal-filter03', {'a': 'x', 'b': 'X'})\ntests/template_tests/syntax_tests/test_if_equal.py:190:        output = self.engine.render_to_string('ifequal-filter04', {'x': 'aaa'})\ntests/template_tests/syntax_tests/test_if_equal.py:195:        output = self.engine.render_to_string('ifequal-filter05', {'x': 'aaa'})\ntests/template_tests/syntax_tests/test_if_equal.py:203:        output = self.engine.render_to_string('ifnotequal01', {'a': 1, 'b': 2})\ntests/template_tests/syntax_tests/test_if_equal.py:208:        output = self.engine.render_to_string('ifnotequal02', {'a': 1, 'b': 1})\ntests/template_tests/syntax_tests/test_if_equal.py:213:        output = self.engine.render_to_string('ifnotequal03', {'a': 1, 'b': 2})\ntests/template_tests/syntax_tests/test_if_equal.py:218:        output = self.engine.render_to_string('ifnotequal04', {'a': 1, 'b': 1})\ntests/template_tests/syntax_tests/test_if_equal.py:224:            self.engine.render_to_string('one_var', {'a': 1})\ntests/template_tests/syntax_tests/test_verbatim.py:11:        output = self.engine.render_to_string('verbatim-tag01')\ntests/template_tests/syntax_tests/test_verbatim.py:16:        output = self.engine.render_to_string('verbatim-tag02')\ntests/template_tests/syntax_tests/test_verbatim.py:21:        output = self.engine.render_to_string('verbatim-tag03')\ntests/template_tests/syntax_tests/test_verbatim.py:31:        output = self.engine.render_to_string('verbatim-tag05')\ntests/template_tests/syntax_tests/test_verbatim.py:37:        output = self.engine.render_to_string('verbatim-tag06')\ntests/template_tests/syntax_tests/test_numpy.py:22:        output = self.engine.render_to_string(\ntests/template_tests/syntax_tests/test_numpy.py:33:        output = self.engine.render_to_string(\ntests/template_tests/syntax_tests/test_lorem.py:11:        output = self.engine.render_to_string('lorem1')\ntests/template_tests/syntax_tests/test_lorem.py:16:        output = self.engine.render_to_string('lorem_random')\ntests/template_tests/syntax_tests/test_exceptions.py:16:            self.engine.render_to_string('exception01')\ntests/template_tests/syntax_tests/test_exceptions.py:25:                self.engine.render_to_string('exception02')\ntests/template_tests/syntax_tests/test_exceptions.py:28:                self.engine.render_to_string('exception02')\ntests/template_tests/syntax_tests/test_exceptions.py:59:            self.engine.render_to_string('exception05')\ntests/template_tests/test_extends_relative.py:56:            engine.render_to_string('error_extends.html')\ntests/template_tests/test_extends_relative.py:80:            engine.render_to_string('error_include.html')\ntests/template_tests/test_extends_relative.py:105:            engine.render_to_string('dir1/looped.html')\n\n[output truncated; full output: /tmp/dsh-subprocess-4n33pD/dsh-subprocess-7-1-ba6b8e24048b-stdout.log]"
+          }
         },
         {
           "command": "cd /workspace && grep -rn \"autoescape\" tests/template_tests/test_engine.py | head; grep -rn \"class EngineTestCase\\|setUp\" tests/template_tests/test_engine.py | head",
           "normalized": "cd /workspace && grep -rn autoescape tests/template_tests/test_engine.py | head; grep -rn class EngineTestCase\\|setUp tests/template_tests/test_engine.py | head",
           "patchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
           "requestOrdinal": 13,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": null,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "Check engine tests for autoescape",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": false,
+          "testRelated": false,
+          "actualResult": {
+            "messageId": "e49ff256-06b4-43ee-90c2-0ab94e00237f",
+            "eventSeq": 75,
+            "text": "15:    def setUp(self):\n"
+          }
         },
         {
           "command": "cd /workspace && sed -n 1,60p django/template/engine.py",
           "normalized": "cd /workspace && sed -n 1,60p django/template/engine.py",
           "patchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
           "requestOrdinal": 15,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": null,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "Read top of engine.py",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": false,
+          "testRelated": false,
+          "actualResult": {
+            "messageId": "dc1e2c06-ed7c-4fc2-8e8c-f3e8c3a30a84",
+            "eventSeq": 85,
+            "text": "import functools\n\nfrom django.core.exceptions import ImproperlyConfigured\nfrom django.utils.functional import cached_property\nfrom django.utils.module_loading import import_string\n\nfrom .base import Context, Template\nfrom .context import _builtin_context_processors\nfrom .exceptions import TemplateDoesNotExist\nfrom .library import import_library\n\n\nclass Engine:\n    default_builtins = [\n        'django.template.defaulttags',\n        'django.template.defaultfilters',\n        'django.template.loader_tags',\n    ]\n\n    def __init__(self, dirs=None, app_dirs=False, context_processors=None,\n                 debug=False, loaders=None, string_if_invalid='',\n                 file_charset='utf-8', libraries=None, builtins=None, autoescape=True):\n        if dirs is None:\n            dirs = []\n        if context_processors is None:\n            context_processors = []\n        if loaders is None:\n            loaders = ['django.template.loaders.filesystem.Loader']\n            if app_dirs:\n                loaders += ['django.template.loaders.app_directories.Loader']\n            if not debug:\n                loaders = [('django.template.loaders.cached.Loader', loaders)]\n        else:\n            if app_dirs:\n                raise ImproperlyConfigured(\n                    \"app_dirs must not be set when loaders is defined.\")\n        if libraries is None:\n            libraries = {}\n        if builtins is None:\n            builtins = []\n\n        self.dirs = dirs\n        self.app_dirs = app_dirs\n        self.autoescape = autoescape\n        self.context_processors = context_processors\n        self.debug = debug\n        self.loaders = loaders\n        self.string_if_invalid = string_if_invalid\n        self.file_charset = file_charset\n        self.libraries = libraries\n        self.template_libraries = self.get_template_libraries(libraries)\n        self.builtins = self.default_builtins + builtins\n        self.template_builtins = self.get_template_builtins(self.builtins)\n\n    @staticmethod\n    @functools.lru_cache()\n    def get_default():\n        \"\"\"\n        Return the first DjangoTemplates backend that's configured, or raise\n        ImproperlyConfigured if none are configured.\n"
+          }
         },
         {
           "command": "cd /workspace && grep -n \"^from\\|^import\" django/template/context.py && head -15 django/template/base.py | grep -n \"import\"",
           "normalized": "cd /workspace && grep -n ^from\\|^import django/template/context.py && head -15 django/template/base.py | grep -n import",
           "patchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
           "requestOrdinal": 16,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": 1,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "Check imports for circular risk",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": false,
+          "testRelated": false,
+          "actualResult": {
+            "messageId": "1133680e-b968-4987-872c-1eadc5b3a482",
+            "eventSeq": 90,
+            "text": "1:from contextlib import contextmanager\n2:from copy import copy\n[exit code: 1]"
+          }
         },
         {
           "command": "cd /workspace && python -c \"\nfrom django.template.engine import Engine\nengine = Engine(autoescape=False)\nprint(repr(engine.render_to_string('{% raw %}{% endraw %}' and '{{ var }}', {'var': '<b>hi</b>'})))\n\"",
           "normalized": "cd /workspace && python -c \nfrom django.template.engine import Engine\nengine = Engine(autoescape=False)\nprint(repr(engine.render_to_string('{% raw %}{% endraw %}' and '{{ var }}', {'var': '<b>hi</b>'})))\n",
           "patchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
           "requestOrdinal": 17,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": 1,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "Reproduce render_to_string autoescape bug",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": true,
+          "testRelated": true,
+          "actualResult": {
+            "messageId": "d3bedf1a-b8a8-4cac-84e9-d1a864d5eb57",
+            "eventSeq": 96,
+            "text": "[stderr]\nTraceback (most recent call last):\n  File \"<string>\", line 4, in <module>\n  File \"/workspace/django/template/engine.py\", line 157, in render_to_string\n    t = self.get_template(template_name)\n  File \"/workspace/django/template/engine.py\", line 143, in get_template\n    template, origin = self.find_template(template_name)\n  File \"/workspace/django/template/engine.py\", line 129, in find_template\n    raise TemplateDoesNotExist(name, tried=tried)\ndjango.template.exceptions.TemplateDoesNotExist: {{ var }}\n[exit code: 1]"
+          }
         },
         {
           "command": "cd /workspace && python -c \"\nfrom django.template.engine import Engine\nengine = Engine(autoescape=False)\nt = engine.from_string('{{ var }}')\nfrom django.template import Context\nprint(repr(t.render(Context({'var': '<b>hi</b>'}, autoescape=False))))\nprint(repr(t.render(Context({'var': '<b>hi</b>'}))))\n\"",
           "normalized": "cd /workspace && python -c \nfrom django.template.engine import Engine\nengine = Engine(autoescape=False)\nt = engine.from_string('{{ var }}')\nfrom django.template import Context\nprint(repr(t.render(Context({'var': '<b>hi</b>'}, autoescape=False))))\nprint(repr(t.render(Context({'var': '<b>hi</b>'}))))\n",
           "patchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
           "requestOrdinal": 18,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": null,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "Check render autoescape behavior",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": true,
+          "testRelated": true,
+          "actualResult": {
+            "messageId": "4dc7facd-257a-4c97-bbd3-e7331c6b4392",
+            "eventSeq": 101,
+            "text": "'<b>hi</b>'\n'&lt;b&gt;hi&lt;/b&gt;'\n"
+          }
         },
         {
           "command": "cd /workspace && python -c \"\nimport os\nos.makedirs('/tmp/tpl', exist_ok=True)\nopen('/tmp/tpl/t.html','w').write('{{ var }}')\nfrom django.template.engine import Engine\nengine = Engine(dirs=['/tmp/tpl'], autoescape=False)\nprint(repr(engine.render_to_string('t.html', {'var': '<b>hi</b>'})))\n\"",
           "normalized": "cd /workspace && python -c \nimport os\nos.makedirs('/tmp/tpl', exist_ok=True)\nopen('/tmp/tpl/t.html','w').write('{{ var }}')\nfrom django.template.engine import Engine\nengine = Engine(dirs=['/tmp/tpl'], autoescape=False)\nprint(repr(engine.render_to_string('t.html', {'var': '<b>hi</b>'})))\n",
           "patchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
           "requestOrdinal": 19,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": null,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "Reproduce bug with file template",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": true,
+          "testRelated": true,
+          "actualResult": {
+            "messageId": "a190fb3d-5720-4585-9aff-f3a21ab0f4bd",
+            "eventSeq": 106,
+            "text": "'&lt;b&gt;hi&lt;/b&gt;'\n"
+          }
         },
         {
           "command": "cd /workspace && python -c \"\nfrom django.template.engine import Engine\nengine = Engine(dirs=['/tmp/tpl'], autoescape=False)\nprint(repr(engine.render_to_string('t.html', {'var': '<b>hi</b>'})))\nengine2 = Engine(dirs=['/tmp/tpl'], autoescape=True)\nprint(repr(engine2.render_to_string('t.html', {'var': '<b>hi</b>'})))\n# list of template names\nengine3 = Engine(dirs=['/tmp/tpl'], autoescape=False)\nprint(repr(engine3.render_to_string(['t.html'], {'var': '<b>hi</b>'})))\n\"",
           "normalized": "cd /workspace && python -c \nfrom django.template.engine import Engine\nengine = Engine(dirs=['/tmp/tpl'], autoescape=False)\nprint(repr(engine.render_to_string('t.html', {'var': '<b>hi</b>'})))\nengine2 = Engine(dirs=['/tmp/tpl'], autoescape=True)\nprint(repr(engine2.render_to_string('t.html', {'var': '<b>hi</b>'})))\n# list of template names\nengine3 = Engine(dirs=['/tmp/tpl'], autoescape=False)\nprint(repr(engine3.render_to_string(['t.html'], {'var': '<b>hi</b>'})))\n",
           "patchSha256": "ddab8d4d510e0dabe72cda3551d52fb90fa5ce100c8b50b9b52364c53285a96c",
           "requestOrdinal": 21,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": null,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "Verify fix for both autoescape settings",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": true,
+          "testRelated": true,
+          "actualResult": {
+            "messageId": "0755fe27-f206-423e-87ac-278dc639f5c3",
+            "eventSeq": 116,
+            "text": "'<b>hi</b>'\n'&lt;b&gt;hi&lt;/b&gt;'\n'<b>hi</b>'\n"
+          }
         },
         {
           "command": "cd /workspace && ls tests/template_tests/ | head -30 && ls tests | grep -i backend",
           "normalized": "cd /workspace && ls tests/template_tests/ | head -30 && ls tests | grep -i backend",
           "patchSha256": "ddab8d4d510e0dabe72cda3551d52fb90fa5ce100c8b50b9b52364c53285a96c",
           "requestOrdinal": 23,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": null,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "List template test modules",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": false,
+          "testRelated": false,
+          "actualResult": {
+            "messageId": "7594246f-212f-4056-bbdb-dfaea7dfe144",
+            "eventSeq": 126,
+            "text": "alternate_urls.py\nannotated_tag_function.py\nbroken_tag.py\neggs\nfilter_tests\n__init__.py\njinja2\nother_templates\nrecursive_templates\nrelative_templates\nsyntax_tests\ntemplates\ntemplatetags\ntest_base.py\ntest_callables.py\ntest_context.py\ntest_custom.py\ntest_engine.py\ntest_extends.py\ntest_extends_relative.py\ntest_library.py\ntest_loaders.py\ntest_logging.py\ntest_nodelist.py\ntest_origin.py\ntest_parser.py\ntest_response.py\ntest_smartif.py\ntests.py\nurls.py\nbackends\ntemplate_backends\n"
+          }
         },
         {
           "command": "cd /workspace && grep -n \"autoescape\" tests/template_backends/tests.py | head",
           "normalized": "cd /workspace && grep -n autoescape tests/template_backends/tests.py | head",
           "patchSha256": "ddab8d4d510e0dabe72cda3551d52fb90fa5ce100c8b50b9b52364c53285a96c",
           "requestOrdinal": 24,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": null,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "Find autoescape tests in template backends",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": false,
+          "testRelated": false,
+          "actualResult": {
+            "messageId": "3e155f3c-61c6-47bf-8f6a-ea9576173cfc",
+            "eventSeq": 131,
+            "text": "[stderr]\ngrep: tests/template_backends/tests.py: No such file or directory\n"
+          }
         },
         {
           "command": "cd /workspace && ls tests/template_backends/ tests/backends/ 2>/dev/null; ls tests | head",
           "normalized": "cd /workspace && ls tests/template_backends/ tests/backends/ 2>/dev/null; ls tests | head",
           "patchSha256": "ddab8d4d510e0dabe72cda3551d52fb90fa5ce100c8b50b9b52364c53285a96c",
           "requestOrdinal": 25,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": null,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "List backends test dirs",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": false,
+          "testRelated": false,
+          "actualResult": {
+            "messageId": "f7f6a7dc-a38a-4a48-bf5c-51a9f31a82a9",
+            "eventSeq": 136,
+            "text": "tests/backends/:\nbase\n__init__.py\nmodels.py\nmysql\noracle\npostgresql\nsqlite\ntest_ddl_references.py\ntests.py\ntest_utils.py\n\ntests/template_backends/:\napps\nforbidden\n__init__.py\njinja2\ntemplates\ntemplate_strings\ntest_django.py\ntest_dummy.py\ntest_jinja2.py\ntest_utils.py\nabsolute_url_overrides\nadmin_autodiscover\nadmin_changelist\nadmin_checks\nadmin_custom_urls\nadmin_default_site\nadmin_docs\nadmin_filters\nadmin_inlines\nadmin_ordering\n"
+          }
         },
         {
           "command": "cd /workspace && grep -rn \"autoescape\" tests/template_backends/test_django.py | head",
           "normalized": "cd /workspace && grep -rn autoescape tests/template_backends/test_django.py | head",
           "patchSha256": "ddab8d4d510e0dabe72cda3551d52fb90fa5ce100c8b50b9b52364c53285a96c",
           "requestOrdinal": 26,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": null,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "Check django backend tests for autoescape",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": false,
+          "testRelated": false,
+          "actualResult": {
+            "messageId": "95e66041-121b-4ce2-aafd-88d6e0afae9f",
+            "eventSeq": 141,
+            "text": "132:    def test_autoescape_off(self):\n135:            'OPTIONS': {'autoescape': False},\n143:    def test_autoescape_default(self):\n"
+          }
         },
         {
           "command": "cd /workspace && sed -n 120,160p tests/template_backends/test_django.py",
           "normalized": "cd /workspace && sed -n 120,160p tests/template_backends/test_django.py",
           "patchSha256": "ddab8d4d510e0dabe72cda3551d52fb90fa5ce100c8b50b9b52364c53285a96c",
           "requestOrdinal": 27,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": null,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "View autoescape backend tests",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": false,
+          "testRelated": false,
+          "actualResult": {
+            "messageId": "1dbdb687-82a2-4520-818e-6f16ea5c8801",
+            "eventSeq": 146,
+            "text": "            },\n        })\n\n        self.assertEqual(\n            engine.engine.builtins, [\n                'django.template.defaulttags',\n                'django.template.defaultfilters',\n                'django.template.loader_tags',\n                'template_backends.apps.good.templatetags.good_tags',\n            ]\n        )\n\n    def test_autoescape_off(self):\n        templates = [{\n            'BACKEND': 'django.template.backends.django.DjangoTemplates',\n            'OPTIONS': {'autoescape': False},\n        }]\n        engines = EngineHandler(templates=templates)\n        self.assertEqual(\n            engines['django'].from_string('Hello, {{ name }}').render({'name': 'Bob & Jim'}),\n            'Hello, Bob & Jim'\n        )\n\n    def test_autoescape_default(self):\n        templates = [{\n            'BACKEND': 'django.template.backends.django.DjangoTemplates',\n        }]\n        engines = EngineHandler(templates=templates)\n        self.assertEqual(\n            engines['django'].from_string('Hello, {{ name }}').render({'name': 'Bob & Jim'}),\n            'Hello, Bob &amp; Jim'\n        )\n\n    default_loaders = [\n        'django.template.loaders.filesystem.Loader',\n        'django.template.loaders.app_directories.Loader',\n    ]\n\n    @override_settings(DEBUG=False)\n    def test_non_debug_default_template_loaders(self):\n        engine = DjangoTemplates({'DIRS': [], 'APP_DIRS': True, 'NAME': 'django', 'OPTIONS': {}})\n"
+          }
         },
         {
           "command": "cd /workspace && grep -rn \"write_template\\|def get_template_dir\" tests/template_tests/test_engine.py tests/template_tests/utils.py | head",
           "normalized": "cd /workspace && grep -rn write_template\\|def get_template_dir tests/template_tests/test_engine.py tests/template_tests/utils.py | head",
           "patchSha256": "1bf6d884bd883eb556df03102988119e84ccc3f52f343fad8105909d89965053",
           "requestOrdinal": 29,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": null,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "Check for write_template helper",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": false,
+          "testRelated": false,
+          "actualResult": {
+            "messageId": "d85f9678-25d1-442e-9d81-85b308afcc54",
+            "eventSeq": 156,
+            "text": "tests/template_tests/test_engine.py:30:        self.write_template(\n"
+          }
         },
         {
           "command": "cd /workspace && grep -rln \"def write_template\" tests/ | head",
           "normalized": "cd /workspace && grep -rln def write_template tests/ | head",
           "patchSha256": "1bf6d884bd883eb556df03102988119e84ccc3f52f343fad8105909d89965053",
           "requestOrdinal": 30,
-          "isError": false,
-          "testRelated": false
+          "toolIsError": false,
+          "observedNonzeroExitCode": null,
+          "exitCodeLimitation": "Zero exit code is not present in the rendered output; absence of an error marker alone is not proof of the expected behavior.",
+          "purposeDescription": "Find existing write_template helpers",
+          "frameworkTest": false,
+          "inlineBehaviorProbe": false,
+          "testRelated": false,
+          "actualResult": {
+            "messageId": "504b85dc-2ad6-425b-a4dd-d7f9986fef75",
+            "eventSeq": 161,
+            "text": "(no output)"
+          }
         }
       ],
+      "frameworkTestCommands": 0,
+      "inlineBehaviorProbes": 5,
       "learningSlotsWithoutMatchingCurrentRunRequest": [
         {
           "id": "rsi-00209d80-0b78-4838-9ec0-240089c1c90c:1",

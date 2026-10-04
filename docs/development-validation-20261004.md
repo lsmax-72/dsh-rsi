@@ -41,7 +41,7 @@ Skill 的成功断言必须由实际工具结果支持，注明检查及结果�
 
 [实际请求和最终状态诊断](evidence/development-real-diagnostics-20261004.json)与 [第一题评分](evidence/development-score-11095-20261004.json)、[第二题评分](evidence/development-score-11119-20261004.json)、[首个修改评分](evidence/development-first-edit-11095-20261004.json)。共 60 次前台、11 次后台实际模型请求，1,071,786 token，实际请求 usage 均已知，并与模型网关发送数一致。本地编码次数/字符/耗时另列，token 不可获得；第二题编码日志继承首题历史，不能将其与首题再次相加。
 
-没有观察到测试执行命令；相同代码状态下完全相同的 shell 命令重复次数为 0，但这不等于没有冗余排查。同一目的的不同命令仍需人工审阅。两个 resolved 不是独立盲测准确率，也没有基线，不能报告提升。完整跑完/产出文件不计作质量。
+没有观察到测试框架执行命令；第一题没有行为测试，第二题执行了 4 次内联 Python 行为检查：第 17 次复现因 TemplateDoesNotExist 失败，第 18 次核对 Context 自动转义，第 19 次复现错误转义，第 21 次修复后输出三个预期转义结果。它们不能遗漏为“没有测试”。相同代码状态下完全相同的 shell 命令重复次数为 0，但这不等于没有冗余排查。同一目的的不同命令仍需人工审阅。两个 resolved 不是独立盲测准确率，也没有基线，不能报告提升。完整跑完/产出文件不计作质量。
 
 管道暴露的实际问题：L0 的串行编码在 Linux AMD64 模拟环境较慢，加上提炼和 Skill 工具循环，90 秒不足以让所有资产在下一题开始前就绪。首题关闭前 snapshot/export 与最终持久库不同，诊断以关闭后的数据库副本和完整模型账本为准。后续协议应预先设有界的学习完成观察窗，未完成必须保留为未完成；不为本轮追加额度或改写结果。外部流量闸门拦下的尝试与继承预算槽位另记，不与已发送请求或未知 API 用量混为一谈。
 
@@ -56,3 +56,5 @@ Skill 的成功断言必须由实际工具结果支持，注明检查及结果�
 [真实 L1 分类复核](evidence/development-memory-classification-20261004.json)将首题原始持久会话导入全新资产库，仅调用一次原生 L1：生成 1 条 episodic，没有将 get_inlines 需求当作长期 instruction，来源消息 ID 保留。本次 8,071 token；前一次因缺少现有 provider 的 reasoningEfforts 映射而输出截断，10,841 token，失败记录保留。两次共 18,912 token，不加入两题编程成绩。真实复核只证明该样本分类，不保证所有场景分类正确。
 
 [证据约束送达夹具](evidence/development-evidence-guidance-20261004.json)验证追加条件实际进入原生 L1/Skill 提示；Skill 的新 Evidence 段生成质量仍需下一次正常学习检查。独立消费与分类复核共 59,607 token，另于两题 1,071,786 token 列出，开发检查已知合计 1,131,393 token。
+
+命令诊断现在关联原始 tool/result 的消息 ID、事件序号和实际输出；保留宿主 toolIsError 与非零退出码标记两个不同字段。第 17 次 bash 虽 toolIsError=false，原文仍含 [exit code: 1]，属于失败的复现尝试，不算通过验证。没有成功退出码标记时记为缺失，并按实际输出审阅预期行为，不从 isError=false 推断成功。
