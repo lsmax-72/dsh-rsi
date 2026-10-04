@@ -49,6 +49,9 @@ def main():
     parser.add_argument('--fixture', action='store_true')
     parser.add_argument('--fixture-answer-stop',choices=['stop','max-tokens','error-after-text'],default='stop',help='PersonaMem fixture only: native finish reason; never modifies a real provider')
     parser.add_argument('--persona-input',type=Path,help='Public PersonaMem input only; answers must be absent')
+    parser.add_argument('--persona-protocol',type=Path,help='Frozen independent PersonaMem manifest; validates user, questions, public hash and budgets before dispatch')
+    parser.add_argument('--persona-fixture-questions',type=int,choices=[2,4],default=2,help='Fixture-only question count; real independent cases require a frozen manifest')
+    parser.add_argument('--validate-only',action='store_true',help='Verify a frozen PersonaMem case without Docker or model dispatch')
     parser.add_argument('--profile-recovery',action='store_true',help='Native checkpoint recovery only; requires matching closed assets/source logs, no foreground tasks')
     parser.add_argument('--formal',action='store_true')
     parser.add_argument('--expected-tree',help='Verified source Git tree for this task')
@@ -68,6 +71,9 @@ def main():
     parser.add_argument('--settle-seconds', type=int, default=90)
     args = parser.parse_args()
     if args.fixture_answer_stop!='stop' and (not args.fixture or not args.persona_input): parser.error('Synthetic finish reasons require a PersonaMem fixture')
+    if args.persona_fixture_questions!=2 and (not args.fixture or not args.persona_input): parser.error('Synthetic question count requires a PersonaMem fixture')
+    if args.validate_only and not args.persona_protocol: parser.error('Validation-only requires an independent PersonaMem protocol')
+    if args.persona_protocol and (not args.persona_input or args.fixture or args.formal or args.profile_recovery): parser.error('Independent PersonaMem requires its frozen protocol and real public input only')
     if args.profile_recovery and (args.arm!='rsi' or not args.seed_assets or not args.seed_sessions or args.persona_input or args.formal or args.phases): parser.error('Profile recovery requires RSI and its closed native assets/source logs only')
     if args.formal and (args.fixture or args.instance=='preflight' or not args.expected_tree or not args.expected_version): parser.error('Formal runs require real task ID and frozen environment checks')
     if args.formal and args.arm=='rsi' and not args.learning_pool: parser.error('Formal RSI requires a durable learning pool')
@@ -103,7 +109,26 @@ def main():
     if args.persona_input:
         if args.formal or args.phases or args.seed_assets: parser.error('PersonaMem pilot uses its own public history, not coding phases or old snapshots')
         public=json.loads(args.persona_input.read_text())
-        if len(public.get('questions',[]))!=2 or any('correct_answer' in q for q in public['questions']): parser.error('Exactly two public pilot questions, without answers, are required')
+        expected_questions=args.persona_fixture_questions if args.fixture else 2
+        if args.persona_protocol:
+            frozen=json.loads(args.persona_protocol.read_text())
+            if frozen.get('status')!='FROZEN_INDEPENDENT_PERSONAMEM' or frozen.get('model')!='qwen3.8-27b': parser.error('Independent PersonaMem protocol is not frozen for the configured model')
+            case=next((c for c in frozen['cases'] if c['personaId']==public['personaId']),None)
+            if case is None or case['publicInputSha256']!=hashlib.sha256(args.persona_input.read_bytes()).hexdigest() or case['questionIds']!=[q['id'] for q in public['questions']]: parser.error('Public PersonaMem input differs from the frozen case')
+            expected_questions=frozen['questionCountPerUser']
+            if frozen['upstreamSha256']!=hashlib.sha256(os.environ['RSI_MODEL_UPSTREAM'].encode()).hexdigest(): parser.error('Frozen model endpoint changed')
+            image_id=subprocess.check_output(['docker','image','inspect','--format','{{.Id}}',args.image],text=True).strip()
+            if image_id!=frozen['taskImageId']: parser.error('Frozen task/runtime image changed')
+            budgets=frozen['budgets']
+            if budgets['maxOutputTokens']!=4096 or budgets['quietSeconds']!=45: parser.error('Unsupported independent PersonaMem output/quiet budgets')
+            if (args.dispatch_limit,args.wall_seconds,args.learning_call_budget,args.settle_seconds)!=(budgets['foregroundCallsPerQuestion'],budgets['wallSecondsPerQuestion'],budgets['backgroundCallsPerUser'],budgets['learningWallSecondsPerUser']): parser.error('PersonaMem limits differ from the frozen budgets')
+            expected_learning=budgets['backgroundCallsPerUser'] if args.arm=='rsi' else 0
+            if learning_limit!=expected_learning or args.request_limit!=(expected_learning+expected_questions*args.dispatch_limit): parser.error('PersonaMem actual dispatch/gateway cap differs from protocol')
+            if subprocess.check_output(['git','rev-parse','HEAD'],cwd=project,text=True).strip()!=frozen['revision'] or subprocess.check_output(['git','status','--porcelain'],cwd=project,text=True).strip(): parser.error('Frozen PersonaMem revision or clean checkout changed')
+            if any(not (project/path).is_file() or hashlib.sha256((project/path).read_bytes()).hexdigest()!=sha for path,sha in frozen['inputSha256'].items()): parser.error('Frozen implementation bytes changed')
+            driver['config']['personaFormal']=True
+        if len(public.get('questions',[]))!=expected_questions or any('correct_answer' in q for q in public['questions']): parser.error('Public question count/answer separation differs from the selected PersonaMem mode')
+        driver['config']['expectedQuestionCount']=expected_questions
         driver['name']='/opt/rsi/scripts/personamem-pilot-task.mjs'
         next(row for row in patch if row['id']=='tools')['config']['mode']='native'
         driver['config']['phases']=[{'name':q['id']} for q in public['questions']]
@@ -128,6 +153,8 @@ def main():
         service['config']['embedding']={'provider':'local','modelPath':'/opt/rsi/embedding.gguf'}
     if args.persona_input and args.fixture_learning: service['config']['settings']['idleSeconds']=1
     if args.fixture: services[:] = [s for s in services if s['id'] not in ['rsi-qwen','rsi-credentials']]
+    if args.validate_only:
+        print(json.dumps({'status':'VALIDATED_NO_DISPATCH','instanceId':args.instance,'personaId':public['personaId'],'questionIds':[q['id'] for q in public['questions']],'arm':args.arm,'realModelRequests':0,'formalBenchmarkStarted':False}));return
     prefix = 'rsi-preflight-' + uuid.uuid4().hex[:10]
     network, volume, image = prefix+'-net',prefix+'-state',prefix+':local'
     pool=None
@@ -138,7 +165,7 @@ def main():
         learning_limit=pool.reserve(prefix,learning_limit)
         driver['config']['learningDispatchLimit']=learning_limit
         (output/'budget-reservation.json').write_text(json.dumps({'leaseId':prefix,'quota':learning_limit,'pool':pool.snapshot()},indent=2))
-    # Persona limits apply per question; the relay sees the sum of both question budgets.
+    # Persona limits apply per question; the relay sees the sum of all question budgets.
     foreground_limit=args.dispatch_limit*(len(public['questions']) if args.persona_input else 1)
     relay_limit=min(args.request_limit,foreground_limit+learning_limit)
     containers = []
@@ -208,7 +235,7 @@ def main():
             'dispatchLimit':args.dispatch_limit,'learningCallBudget':args.learning_call_budget,'learningDispatchLimit':learning_limit, 'fixtureLearning':args.fixture_learning,
             'wallSecondsPerPhase':args.wall_seconds,'settleSecondsPerPhase':args.settle_seconds,
             'embeddingModelSha256':model_sha if embedding_model else None,'embeddingProvider':'native-local' if embedding_model else None,
-            'formalBenchmark':args.formal,'instanceId':args.instance, 'sourceSessionsRestored':bool(args.seed_sessions), 'effectivePatch':patch},indent=2))
+            'formalBenchmark':args.formal or bool(args.persona_protocol),'personaProtocolSha256':hashlib.sha256(args.persona_protocol.read_bytes()).hexdigest() if args.persona_protocol else None,'instanceId':args.instance, 'sourceSessionsRestored':bool(args.seed_sessions), 'effectivePatch':patch},indent=2))
         phase_count = len(driver['config'].get('phases',[{}]))
         until = time.monotonic() + phase_count*(args.wall_seconds+args.settle_seconds)+90
         killed = False
@@ -231,7 +258,7 @@ def main():
         if args.interrupt_checkpoint: assert killed and state['ExitCode']==137
         else: assert state['ExitCode']==0 and receipt.exists(), (output/'run.log').read_text()[-6000:]
         print(json.dumps({'status':'INTERRUPTION_CAPTURED' if killed else 'PASS','arm':args.arm,'fixture':args.fixture,
-            'output':str(output),'formalBenchmarkStarted':args.formal}))
+            'output':str(output),'formalBenchmarkStarted':args.formal or bool(args.persona_protocol)}))
     finally:
         # Export on host timeout or exception too, before removing the only durable state volume.
         if started and not exported:

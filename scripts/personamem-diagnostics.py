@@ -5,7 +5,7 @@ from pathlib import Path
 p=argparse.ArgumentParser();p.add_argument('--run',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--instance',default='persona-0');args=p.parse_args()
 if args.output.exists():p.error('Preserve previous diagnostics')
 root=args.run.resolve();state=json.loads((root/'state.json').read_text());assert state['container']['Running'] is False,'Read exported terminal runs only'
-folder=root/'state/pilot'/args.instance;requests=json.loads((folder/'model-requests.json').read_text());checks=json.loads((folder/'reconstruction.json').read_text());assert all(x['matches'] for x in checks) and len(checks)==len(requests)
+folder=root/'state/pilot'/args.instance;receipt=json.loads((folder/'receipt.json').read_text());requests=json.loads((folder/'model-requests.json').read_text());checks=json.loads((folder/'reconstruction.json').read_text());assert all(x['matches'] for x in checks) and len(checks)==len(requests)
 memories=[];skills=[];jobs=[];pipeline_states=[]
 with tempfile.TemporaryDirectory() as temp:
  for index,f in enumerate((root/'state/assets').rglob('*.sqlite')):
@@ -37,7 +37,7 @@ for ordinal,request in enumerate(requests,1):
  first=not row['requests'];row['requests'].append(ordinal)
  for message in request['messages']:
   source=message.get('source',{});body=text(message)
-  if first and source.get('kind')=='dsh-rsi':
+  if first and source.get('kind')=='dsh-rsi' and source.get('form')=='memory':
    row['firstContextChars']+=len(body)
    for scope in source.get('refs',[]):
     for ref in scope.get('memories',[]):
@@ -45,5 +45,5 @@ for ordinal,request in enumerate(requests,1):
      row['firstMemoryRefs'].append({'scope':scope_id,**ref,'closedHeadMatches':asset is not None,'assetBodyChars':len(asset['content']) if asset else None})
   name=re.search(r'<skill_content name="([^"]+)">',body);instructions=re.search(r'<skill_instructions>\s*([\s\S]*?)\s*</skill_instructions>',body)
   if name and instructions:skill_loads.append({'questionId':request['phase'],'requestOrdinal':ordinal,'name':name[1],'bodyChars':len(instructions[1]),'bodySha256':hashlib.sha256(instructions[1].encode()).hexdigest(),'toolCallId':message.get('toolCallId')})
-result={'status':'DEVELOPMENT_DIAGNOSTICS_ONLY','realNewModelRequests':0,'nativeJobs':jobs,'nativePipelineStates':pipeline_states,'learningRunsWithoutActualDispatch':undispatched,'storedMemories':[{**m,'bodyChars':len(m['content'])} for m in memories],'storedSkills':[{**s,'storedMarkdownChars':len(s['content'])} for s in skills],'questions':list(questions.values()),'actualSkillBodyDeliveries':skill_loads,'skillCharsRepeatedAcrossRequests':sum(x['bodyChars'] for x in skill_loads),'embeddingCalls':len(metrics),'embeddingInputChars':sum(x['input_chars'] for x in metrics),'embeddingTimeMs':sum(x['duration_ms'] for x in metrics),'embeddingTokenUsage':None,'durableRequestReconstructions':len(checks),'firstEffectiveCodeEdit':None,'codeTestCounts':None,'codingMetricsNotApplicable':True,'qualityAndCausalityNotInferredFromDelivery':True,'scorerDataRead':False}
+result={'status':'INDEPENDENT_DIAGNOSTICS_ONLY' if receipt.get('formalPersonaMemEvaluation') else 'DEVELOPMENT_DIAGNOSTICS_ONLY','realNewModelRequests':0,'nativeJobs':jobs,'nativePipelineStates':pipeline_states,'learningRunsWithoutActualDispatch':undispatched,'storedMemories':[{**m,'bodyChars':len(m['content'])} for m in memories],'storedSkills':[{**s,'storedMarkdownChars':len(s['content'])} for s in skills],'questions':list(questions.values()),'actualSkillBodyDeliveries':skill_loads,'skillCharsRepeatedAcrossRequests':sum(x['bodyChars'] for x in skill_loads),'embeddingCalls':len(metrics),'embeddingInputChars':sum(x['input_chars'] for x in metrics),'embeddingTimeMs':sum(x['duration_ms'] for x in metrics),'embeddingTokenUsage':None,'durableRequestReconstructions':len(checks),'firstEffectiveCodeEdit':None,'codeTestCounts':None,'codingMetricsNotApplicable':True,'qualityAndCausalityNotInferredFromDelivery':True,'scorerDataRead':False}
 args.output.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n');print(json.dumps({k:v for k,v in result.items() if k not in ['nativeJobs','storedMemories','storedSkills','questions','actualSkillBodyDeliveries']}))

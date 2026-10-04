@@ -1,0 +1,117 @@
+{
+  "status": "PASS",
+  "scope": "Four-question native fixture and actual pre-dispatch negative controls; not task quality or independent outcome",
+  "fixtureReceipt": {
+    "status": "COMPLETED",
+    "developmentPilot": true,
+    "formalPersonaMemEvaluation": false,
+    "arm": "rsi",
+    "fixture": true,
+    "personaId": "0",
+    "questionIds": [
+      "acd74206-37dc-4756-94a8-b99a395d9a21",
+      "f546a74f-54de-40d0-9d88-8b0e30467d7b",
+      "acd74206-37dc-4756-94a8-b99a395d9a21-fixture-copy",
+      "f546a74f-54de-40d0-9d88-8b0e30467d7b-fixture-copy"
+    ],
+    "historyCutoffExclusive": 3,
+    "historySha256": "16a184971cf405dd5f5f7df784fdd6f402e168858cb36059e4dd4832ffb5c8bc",
+    "foregroundRequests": 4,
+    "learningRequests": 2,
+    "knownTokens": 120,
+    "unknownActualUsage": 0,
+    "answersProvided": false,
+    "completeHistoryInBothArms": true,
+    "roleProjection": "Historical system backgrounds are labelled producer context; not identical to official standalone roles",
+    "accuracy": null
+  },
+  "questionIsolation": {
+    "matches": true,
+    "before": {
+      "jobs": [
+        "persona-0-history:1"
+      ],
+      "sources": [
+        "persona-0-history"
+      ],
+      "layers": {
+        "c52ddf65534b7b4603508435": {
+          "L0": 2,
+          "L1": 0,
+          "L2": 0,
+          "L3": 0
+        },
+        "global": {
+          "L0": 0,
+          "L1": 0,
+          "L2": 0,
+          "L3": 0
+        }
+      }
+    },
+    "after": {
+      "jobs": [
+        "persona-0-history:1"
+      ],
+      "sources": [
+        "persona-0-history"
+      ],
+      "layers": {
+        "c52ddf65534b7b4603508435": {
+          "L0": 2,
+          "L1": 0,
+          "L2": 0,
+          "L3": 0
+        },
+        "global": {
+          "L0": 0,
+          "L1": 0,
+          "L2": 0,
+          "L3": 0
+        }
+      }
+    }
+  },
+  "freezeGuards": {
+    "status": "PASS",
+    "cases": [
+      {
+        "case": "draft",
+        "status": "REJECTED_BEFORE_DISPATCH",
+        "expectedReason": "not frozen",
+        "realModelRequests": 0
+      },
+      {
+        "case": "wrong-public",
+        "status": "REJECTED_BEFORE_DISPATCH",
+        "expectedReason": "differs from the frozen case",
+        "realModelRequests": 0
+      },
+      {
+        "case": "wrong-budget",
+        "status": "REJECTED_BEFORE_DISPATCH",
+        "expectedReason": "differ from the frozen budgets",
+        "realModelRequests": 0
+      },
+      {
+        "case": "dirty-checkout",
+        "status": "REJECTED_BEFORE_DISPATCH",
+        "expectedReason": "clean checkout changed",
+        "realModelRequests": 0
+      }
+    ],
+    "realModelRequests": 0
+  },
+  "officialUnchangedGraderControls": 3,
+  "realModelRequests": 0,
+  "fixtureSyntheticTokensExcludedFromRealCost": 120,
+  "failedPreparationAttempts": [
+    {
+      "output": ".artifacts/personamem-pilot-20261004/fixture-four-native-isolation",
+      "reason": "EACCES /state/home/profiles/sdk-minimal in generic harness image",
+      "realModelRequests": 0
+    }
+  ],
+  "productionAlgorithmsChanged": false,
+  "formalEvaluationStarted": false
+}
