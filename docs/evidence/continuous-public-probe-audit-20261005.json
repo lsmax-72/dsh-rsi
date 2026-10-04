@@ -1,0 +1,86 @@
+{
+  "status": "MANUAL_PUBLIC_TRACE_PROBE_REVIEW_NOT_OFFICIAL_SCORE_FEEDBACK",
+  "instanceId": "django__django-12262",
+  "arm": "rsi",
+  "candidateArtifactSha256": "a394fe010886710fe5f6fb5e9f33c89337a489d56a303ea05452a239e08d75f4",
+  "legacyInlineBehaviorProbes": 0,
+  "observedPythonExecutionCommands": 21,
+  "environmentAndSourceInspectionOrdinals": [
+    1,
+    10
+  ],
+  "moduleOrSignatureInspectionOrdinals": [
+    23,
+    39
+  ],
+  "reproductionAndComponentProbeAttemptOrdinals": [
+    4,
+    5,
+    6,
+    7,
+    8,
+    12,
+    18,
+    19,
+    20,
+    21,
+    22,
+    25,
+    26,
+    28,
+    33,
+    37,
+    40
+  ],
+  "reproductionOrProbeAttempts": 17,
+  "successfulQualityTestsClaimed": false,
+  "publicOutputEvidence": {
+    "requestOrdinal": 37,
+    "sourceResult": {
+      "messageId": "fbc613d8-5c2e-4fe5-b871-407f342c0357",
+      "eventSeq": 199,
+      "text": "A no-kw default OK -> 'hello world'\nB kw w/ default MISMATCH -> TemplateSyntaxError 'hello' received unexpected keyword argument 'greeting'\nC dup kw OK -> TemplateSyntaxError 'hi' received multiple values for keyword argument 'greeting'\nD missing kw OK -> TemplateSyntaxError 'hi' did not receive value(s) for the argument(s): 'greeting'\nE kw w/o default OK -> 'yo world'\nF bad kw OK -> TemplateSyntaxError 'hi' received unexpected keyword argument 'nope'\nG incl kw w/ default MISMATCH -> TemplateSyntaxError 'inc' received unexpected keyword argument 'greeting'\nH incl dup kw MISMATCH -> TemplateSyntaxError 'inc' received unexpected keyword argument 'greeting'\nI incl bad kw OK -> TemplateSyntaxError 'inc' received unexpected keyword argument 'nope'\nFAILURES PRESENT\n"
+    },
+    "patchSha256": "6952335898b6ca9898a4396c41c2cf250d8abb905a0165ea240e47e8feff48ed",
+    "interpretation": "The post-edit public probe reported three MISMATCH cases and FAILURES PRESENT; zero shell-error markers do not make it pass."
+  },
+  "callContractErrorExamples": [
+    {
+      "requestOrdinal": 19,
+      "sourceResult": {
+        "messageId": "884b99c6-b317-4984-8650-856b3f649a38",
+        "eventSeq": 109,
+        "text": "[stderr]\nTraceback (most recent call last):\n  File \"<stdin>\", line 5, in <module>\nAttributeError: module 'django.template.base' has no attribute 'Engine'\n[exit code: 1]"
+      }
+    },
+    {
+      "requestOrdinal": 20,
+      "sourceResult": {
+        "messageId": "aa393792-b98d-4787-9bd6-9e49d999f3a7",
+        "eventSeq": 114,
+        "text": "[stderr]\nTraceback (most recent call last):\n  File \"<stdin>\", line 6, in <module>\n  File \"/workspace/django/template/base.py\", line 411, in __init__\n    self.tokens = list(reversed(tokens))\nTypeError: 'Engine' object is not reversible\n[exit code: 1]"
+      }
+    },
+    {
+      "requestOrdinal": 21,
+      "sourceResult": {
+        "messageId": "3df1b0f8-8bce-4abf-920b-e69478cc17b3",
+        "eventSeq": 119,
+        "text": "[stderr]\nTraceback (most recent call last):\n  File \"<stdin>\", line 7, in <module>\nTypeError: __init__() takes 2 positional arguments but 3 were given\n[exit code: 1]"
+      }
+    },
+    {
+      "requestOrdinal": 22,
+      "sourceResult": {
+        "messageId": "8c9f0f2d-cf3e-4dea-a332-85c7586bf0e5",
+        "eventSeq": 124,
+        "text": "[stderr]\nTraceback (most recent call last):\n  File \"<stdin>\", line 8, in <module>\nTypeError: 'Lexer' object is not iterable\n[exit code: 1]"
+      }
+    }
+  ],
+  "interpretation": "Repeated component API/signature errors and a failing public behavior check occurred. This does not establish an avoidable recurrence caused by ignored assets: no matching template API remedy is identified in delivered prior assets, and no Skill body was loaded.",
+  "errorRubricUnchanged": true,
+  "modelOrScorerCalls": 0,
+  "productionCodeOrAssetsChanged": false,
+  "limitation": "Manual intent labels apply to this specific closed trace only. Candidate counts for other tasks still require review. These attempts include failed setups and are not 17 effective tests."
+}
