@@ -1,0 +1,56 @@
+{
+  "status": "PREREGISTERED_BEFORE_DISPATCH",
+  "recordedAt": "2026-10-04T16:16:09.460429+08:00",
+  "purpose": "Complete pending native profile work via original PipelineManager checkpoint restoration; do not repeat L0/L1/Skill import or answer questions.",
+  "model": "qwen3.8-27b",
+  "newLearningDispatchLimit": 6,
+  "learningWallSeconds": 600,
+  "quietSeconds": 45,
+  "gatewayRequestLimit": 6,
+  "foregroundRequestsAllowed": 0,
+  "originalAssetDataDir": "/Users/lsmax/Coder/dsh-rsi/.artifacts/personamem-pilot-20261004/rsi-corrected-1/state/assets",
+  "originalStateSha256": "58b3e426e253ac816d9173f427a6ab4e46612116d35116af093b0e395d8eadf8",
+  "questionSessionLogsExcluded": true,
+  "historicalDailyUsagePreserved": 30,
+  "cloneControlChanges": {
+    "dailyCallBudget": [
+      30,
+      36
+    ],
+    "learningEnabled": [
+      false,
+      true
+    ]
+  },
+  "originalAssetsUnmodified": true,
+  "nativeCheckpointAndAlgorithmUnchanged": true,
+  "officialAnswersOrScoresNotInput": true,
+  "earlierAccuracyNotRescoredWithRecoveredProfiles": true,
+  "pluginSha256": "b3a28b5e7e9f33ff9d52f4ff1948b23b37f65066c1effe6e47d993b43a0e7dce",
+  "runnerSha256": "85d593a6504de935613138827e50cda63d59ce94351864d319ac0590f128422f",
+  "authorization": "Autonomous bounded development adjustment authorized by user 2026-10-04.",
+  "questionSourceIdsExcluded": [
+    "persona-0-question-acd74206-37dc-4756-94a8-b99a395d9a21",
+    "persona-0-question-f546a74f-54de-40d0-9d88-8b0e30467d7b"
+  ],
+  "unlearnedQuestionAndRepeatedSeedJobsExcluded": [
+    "persona-0-question-acd74206-37dc-4756-94a8-b99a395d9a21:1",
+    "persona-0-question-acd74206-37dc-4756-94a8-b99a395d9a21:2",
+    "persona-0-question-acd74206-37dc-4756-94a8-b99a395d9a21:3",
+    "persona-0-question-acd74206-37dc-4756-94a8-b99a395d9a21:4",
+    "persona-0-question-acd74206-37dc-4756-94a8-b99a395d9a21:5",
+    "persona-0-question-acd74206-37dc-4756-94a8-b99a395d9a21:6",
+    "persona-0-question-f546a74f-54de-40d0-9d88-8b0e30467d7b:1",
+    "persona-0-question-f546a74f-54de-40d0-9d88-8b0e30467d7b:2",
+    "persona-0-question-f546a74f-54de-40d0-9d88-8b0e30467d7b:3",
+    "persona-0-question-f546a74f-54de-40d0-9d88-8b0e30467d7b:4",
+    "persona-0-question-f546a74f-54de-40d0-9d88-8b0e30467d7b:5",
+    "persona-0-question-f546a74f-54de-40d0-9d88-8b0e30467d7b:6"
+  ],
+  "sourceFilterPurpose": "Learning-only checkpoint: remove queued post-cutoff question sessions from an independent clone. No answer was learned in the closed run; no original evidence is deleted.",
+  "firstPreparationAttempt": {
+    "status": "PROVENANCE_GUARD_BLOCKED_BEFORE_DISPATCH",
+    "realModelRequests": 0,
+    "reason": "Question session files excluded but their source/job registrations remained in the clone."
+  }
+}

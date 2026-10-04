@@ -31,6 +31,8 @@ export function apply(ctx,config){
   ctx.effect(()=>{const alive=setInterval(()=>{},1000);const timer=setTimeout(async()=>{let deadline;let receipt;
     try{
       const input=JSON.parse(await readFile('/opt/rsi/personamem.json','utf8'));assert.equal(input.questions.length,2);assert.ok(!Object.hasOwn(input,'correct_answer'));rsi=ctx.get('rsi');assert.equal(!!rsi,config.arm==='rsi');if(rsi)await rsi.ready;
+      // Benchmark answers and their replayed seed turns must never be queued for later learning.
+      if(rsi){const observe=rsi.runtime.observe.bind(rsi.runtime),prefix='persona-'+input.personaId+'-question-';rsi.runtime.observe=(session,event)=>{if(!session.id.startsWith(prefix))observe(session,event);};}
       const seed=ctx.sessions.prepare('persona-'+input.personaId+'-history',{meta:{cwd:'/workspace'}});const imported=await appendPersonaHistory(seed,input.history,{systemBoundaries:true});
       const agentOptions={provider:config.fixture?'pilot-fixture':'qwen',model:config.fixture?'fixture':'qwen3.8-27b',maxTokens:4096};
       const history=await ctx.agents.create({sessionId:seed.id,meta:{cwd:'/workspace'},seed:imported.events,agentOptions});await ctx.sessions.flush(history.agent.session);
@@ -43,7 +45,7 @@ export function apply(ctx,config){
         await rsi.runtime.captureQueue;
         let settled=false;
         while(Date.now()<until){const snapshot=await rsi.request('snapshot',{cwd:'/workspace'});durable('scheduler.json',snapshot);
-          if(snapshot.jobs.length&&snapshot.jobs.every(j=>j.status==='completed')&&rsi.runtime.active.size===0&&Date.now()-lastLearningActivity>=(config.fixture?1000:45000)){settled=true;break;}
+          if(snapshot.jobs.length&&snapshot.jobs.every(j=>j.status==='completed')&&snapshot.nativeProfiles.every(p=>!p.trigger.should)&&snapshot.nativePipelines.length&&snapshot.nativePipelines.every(p=>p.queues.l1Idle&&p.queues.l2Idle&&p.queues.l3Idle&&p.sessions.every(s=>s.conversation_count===0&&s.l2_pending_l1_count===0))&&rsi.runtime.active.size===0&&Date.now()-lastLearningActivity>=(config.fixture?1000:45000)){settled=true;break;}
           if(snapshot.jobs.some(j=>['failed','paused','interrupted'].includes(j.status))&&rsi.runtime.active.size===0)break;
           await new Promise(resolve=>setTimeout(resolve,1000));
         }

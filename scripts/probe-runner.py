@@ -49,6 +49,7 @@ def main():
     parser.add_argument('--fixture', action='store_true')
     parser.add_argument('--fixture-answer-stop',choices=['stop','max-tokens','error-after-text'],default='stop',help='PersonaMem fixture only: native finish reason; never modifies a real provider')
     parser.add_argument('--persona-input',type=Path,help='Public PersonaMem input only; answers must be absent')
+    parser.add_argument('--profile-recovery',action='store_true',help='Native checkpoint recovery only; requires matching closed assets/source logs, no foreground tasks')
     parser.add_argument('--formal',action='store_true')
     parser.add_argument('--expected-tree',help='Verified source Git tree for this task')
     parser.add_argument('--expected-version',help='Verified Django version in its scorer image')
@@ -67,6 +68,7 @@ def main():
     parser.add_argument('--settle-seconds', type=int, default=90)
     args = parser.parse_args()
     if args.fixture_answer_stop!='stop' and (not args.fixture or not args.persona_input): parser.error('Synthetic finish reasons require a PersonaMem fixture')
+    if args.profile_recovery and (args.arm!='rsi' or not args.seed_assets or not args.seed_sessions or args.persona_input or args.formal or args.phases): parser.error('Profile recovery requires RSI and its closed native assets/source logs only')
     if args.formal and (args.fixture or args.instance=='preflight' or not args.expected_tree or not args.expected_version): parser.error('Formal runs require real task ID and frozen environment checks')
     if args.formal and args.arm=='rsi' and not args.learning_pool: parser.error('Formal RSI requires a durable learning pool')
     if not re.fullmatch(r'[a-zA-Z0-9_-]+',args.instance): parser.error('Invalid task ID')
@@ -80,7 +82,7 @@ def main():
         parser.error('Interruption control must use a fixture, not a paid model request.')
     if args.arm == 'baseline' and args.seed_assets:
         parser.error('Baseline cannot receive RSI assets.')
-    if not args.fixture and not args.persona_input and not args.baseline_date:
+    if not args.fixture and not args.persona_input and not args.profile_recovery and not args.baseline_date:
         parser.error('Real runs require --baseline-date from the scorer image HEAD at the base source tree; current time changes Django development version.')
     if not args.fixture and not os.environ.get('RSI_MODEL_UPSTREAM'):
         parser.error('Real preflight requires the authorized RSI_MODEL_UPSTREAM environment variable.')
@@ -106,7 +108,10 @@ def main():
         next(row for row in patch if row['id']=='tools')['config']['mode']='native'
         driver['config']['phases']=[{'name':q['id']} for q in public['questions']]
         services[:]=[row for row in services if row['id'] not in ['rsi-fs','rsi-files','rsi-search','rsi-shell','rsi-shell-env','rsi-bash','rsi-ptc']]
-        if args.fixture_learning: next(row for row in services if row['id']=='rsi')['config']['l2DelaySeconds']=86400
+    if args.profile_recovery:
+        driver['name']='/opt/rsi/scripts/recover-native-profiles.mjs'
+        services[:]=[row for row in services if row['id'] not in ['rsi-fs','rsi-files','rsi-search','rsi-shell','rsi-shell-env','rsi-bash','rsi-ptc']]
+        next(row for row in patch if row['id']=='tools')['config']['mode']='native'
     if args.arm == 'baseline': services[:] = [s for s in services if s['id']!='rsi']
     else:
         service = next(s for s in services if s['id']=='rsi')
@@ -148,6 +153,7 @@ def main():
             root=Path(temp)
             shutil.copytree(project/'lib',root/'lib')
             shutil.copy2(project/'scripts/pilot-task.mjs',root/'pilot-task.mjs')
+            if args.profile_recovery:shutil.copy2(project/'scripts/recover-native-profiles.mjs',root/'recover-native-profiles.mjs')
             if args.persona_input:
                 shutil.copy2(project/'scripts/personamem-pilot-task.mjs',root/'personamem-pilot-task.mjs')
                 shutil.copy2(project/'scripts/personamem-history.mjs',root/'personamem-history.mjs')
@@ -161,6 +167,7 @@ def main():
             dockerfile = f'FROM {args.image}\nUSER root\nCOPY package.json package-lock.json /opt/rsi/\nRUN cd /opt/rsi && npm ci --ignore-scripts\nCOPY lib /opt/rsi/lib\nCOPY pilot-task.mjs audit-session-requests.mjs task-input.mjs pilot.json /opt/rsi/scripts/\nENV NODE_LLAMA_CPP_GPU=false\n'
             if args.persona_input:
                 dockerfile += 'COPY personamem-pilot-task.mjs personamem-history.mjs /opt/rsi/scripts/\nCOPY personamem.json /opt/rsi/personamem.json\n'
+            if args.profile_recovery:dockerfile += 'COPY recover-native-profiles.mjs /opt/rsi/scripts/\n'
             if embedding_model:
                 shutil.copy2(embedding_model,root/'embedding.gguf')
                 dockerfile += 'COPY embedding.gguf /opt/rsi/embedding.gguf\n'

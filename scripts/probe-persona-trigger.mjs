@@ -6,7 +6,7 @@ import {openLocalCore} from '../lib/local-core.js';
 import {createStorageTools} from '../lib/core-entry.js';
 
 const root=await mkdtemp('/private/tmp/dsh-rsi-persona-trigger-');
-const calls=[];let l1Calls=0;
+const calls=[];let l1Calls=0,failPersona=false;
 const logger={info(){},warn(){},error(){},debug(){}};
 const runner={async run(params){
   calls.push(params);
@@ -16,7 +16,7 @@ const runner={async run(params){
     await tools.write.execute({path:'工作区测试.md',content:'-----META-START-----\ncreated: 2000-01-01T00:00:00Z\nupdated: 2000-01-01T00:00:00Z\nsummary: 保留测试日志\nheat: 1\n-----META-END-----\n\n用户要求先运行目标测试并保留完整失败日志。'});
     return '已保存场景。';
   }
-  if(params.taskId==='persona-generation'){await tools.write.execute({path:'persona.md',content:'用户在工作区测试时重视目标测试和完整失败日志。'});return '已保存画像。';}
+  if(params.taskId==='persona-generation'){if(failPersona)throw Error('Fixture persona failure');await tools.write.execute({path:'persona.md',content:'用户在工作区测试时重视目标测试和完整失败日志。'});return '已保存画像。';}
   throw Error('Unexpected fixture task '+params.taskId);
 }};
 const core=await openLocalCore(join(root,'assets'),runner,logger,fixtureEmbedding());
@@ -39,6 +39,8 @@ try {
   await core.checkpoint.incrementScenesProcessed();await core.checkpoint.markL1ExtractionComplete('fixture-source',49);assert.equal((await core.personaTrigger.shouldGenerate()).should,false);
   await core.checkpoint.markL1ExtractionComplete('fixture-source',1);assert.ok((await core.personaTrigger.shouldGenerate()).reason.includes('阈值'));
   await core.checkpoint.setPersonaUpdateRequest('明确请求更新');assert.ok((await core.personaTrigger.shouldGenerate()).reason.includes('主动请求'));await core.checkpoint.clearPersonaRequest();
-  await core.profile.unlink('persona.md');assert.ok((await core.personaTrigger.shouldGenerate()).reason.includes('恢复'));assert.equal(await core.generatePersona(),true);
-  console.log(JSON.stringify({status:'PASS',checkedAt:new Date().toISOString(),realModelRequests:0,fixtureRunnerCalls:calls.length,checks:['empty-profile-no-dispatch','L0-index-failure-does-not-advance-checkpoint','native-L0-capture-cursor-and-count','native-L1-count','previous-scene-continuity','native-L2-count','navigation-only-is-not-L3','native-cold-start','native-no-trigger-no-dispatch','native-no-change-no-dispatch','native-threshold-50','native-explicit-request','native-missing-persona-recovery']},null,2));
+  await core.profile.unlink('persona.md');assert.ok((await core.personaTrigger.shouldGenerate()).reason.includes('恢复'));
+  failPersona=true;await assert.rejects(core.generatePersona(),/画像生成失败/);assert.equal((await core.personaTrigger.shouldGenerate()).should,true,'An idle failed L3 must remain incomplete');
+  failPersona=false;assert.equal(await core.generatePersona(),true);
+  console.log(JSON.stringify({status:'PASS',checkedAt:new Date().toISOString(),realModelRequests:0,fixtureRunnerCalls:calls.length,checks:['empty-profile-no-dispatch','L0-index-failure-does-not-advance-checkpoint','native-L0-capture-cursor-and-count','native-L1-count','previous-scene-continuity','native-L2-count','navigation-only-is-not-L3','native-cold-start','native-no-trigger-no-dispatch','native-no-change-no-dispatch','native-threshold-50','native-explicit-request','native-missing-persona-recovery','failed-L3-keeps-native-trigger-pending']},null,2));
 }finally{core.close();await rm(root,{recursive:true,force:true});}

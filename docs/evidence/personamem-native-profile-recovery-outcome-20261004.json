@@ -1,0 +1,291 @@
+{
+  "status": "NATIVE_CHECKPOINT_RECOVERY_COMPLETED_AND_SOURCE_ISOLATED",
+  "attempts": [
+    {
+      "attempt": "native-profile-recovery-2",
+      "receipt": {
+        "status": "INCOMPLETE",
+        "foregroundRequests": 0,
+        "learningRequests": 6,
+        "knownTokens": 55624,
+        "unknownActualUsage": 0,
+        "nativePipelines": [
+          {
+            "scope": "c52ddf65534b7b4603508435",
+            "queues": {
+              "l1": 0,
+              "l2": 0,
+              "l3": 0,
+              "l1Pending": false,
+              "l2Pending": false,
+              "l3Pending": false,
+              "l1Idle": true,
+              "l2Idle": true,
+              "l3Idle": true
+            },
+            "sessions": [
+              {
+                "sessionKey": "persona-0-history",
+                "conversation_count": 0,
+                "last_extraction_time": "",
+                "last_extraction_updated_time": "",
+                "last_active_time": 1791098256904,
+                "l2_pending_l1_count": 0,
+                "warmup_threshold": 0,
+                "l2_last_extraction_time": ""
+              },
+              {
+                "sessionKey": "c52ddf65534b7b4603508435",
+                "conversation_count": 0,
+                "last_extraction_time": "2026-10-04T07:25:39.945Z",
+                "last_extraction_updated_time": "2026-10-04T07:23:25.076Z",
+                "last_active_time": 1791098609330,
+                "l2_pending_l1_count": 1,
+                "warmup_threshold": 1,
+                "l2_last_extraction_time": "2026-10-04T07:25:39.945Z"
+              }
+            ]
+          }
+        ],
+        "originalFiveJobs": [
+          {
+            "id": "persona-0-history:1",
+            "status": "completed"
+          },
+          {
+            "id": "persona-0-history:2",
+            "status": "completed"
+          },
+          {
+            "id": "persona-0-history:3",
+            "status": "completed"
+          },
+          {
+            "id": "persona-0-history:4",
+            "status": "completed"
+          },
+          {
+            "id": "persona-0-history:5",
+            "status": "completed"
+          }
+        ],
+        "originalQuestionsNotReanswered": true,
+        "scorerRead": false,
+        "fixture": false
+      },
+      "actualTaskIds": [
+        "scene-extract-1791104886296",
+        "scene-extract-1791104886296",
+        "scene-extract-1791104886296",
+        "scene-extract-1791104886296",
+        "scene-extract-1791104886296",
+        "scene-extract-1791104886296"
+      ],
+      "sources": [
+        "persona-0-history"
+      ],
+      "jobs": [
+        "persona-0-history:1",
+        "persona-0-history:2",
+        "persona-0-history:3",
+        "persona-0-history:4",
+        "persona-0-history:5"
+      ],
+      "allActualInputsReconstructed": true,
+      "noNewL0L1SkillJobs": true,
+      "questionSourcesAndJobsAbsent": true,
+      "modelRequestsSha256": "c00ab435532ab7737673d4894f47b40de015e0c83e6e8a196ee997f80797f16b"
+    },
+    {
+      "attempt": "native-profile-recovery-3",
+      "receipt": {
+        "status": "NATIVE_CHECKPOINT_RECOVERY_COMPLETED",
+        "budgetExhausted": false,
+        "foregroundRequests": 0,
+        "learningRequests": 6,
+        "knownTokens": 41046,
+        "unknownActualUsage": 0,
+        "nativePipelines": [
+          {
+            "scope": "c52ddf65534b7b4603508435",
+            "queues": {
+              "l1": 0,
+              "l2": 0,
+              "l3": 0,
+              "l1Pending": false,
+              "l2Pending": false,
+              "l3Pending": false,
+              "l1Idle": true,
+              "l2Idle": true,
+              "l3Idle": true
+            },
+            "sessions": [
+              {
+                "sessionKey": "persona-0-history",
+                "conversation_count": 0,
+                "last_extraction_time": "",
+                "last_extraction_updated_time": "",
+                "last_active_time": 1791098256904,
+                "l2_pending_l1_count": 0,
+                "warmup_threshold": 0,
+                "l2_last_extraction_time": ""
+              },
+              {
+                "sessionKey": "c52ddf65534b7b4603508435",
+                "conversation_count": 0,
+                "last_extraction_time": "2026-10-04T09:28:58.168Z",
+                "last_extraction_updated_time": "2026-10-04T07:32:35.170Z",
+                "last_active_time": 1791098609330,
+                "l2_pending_l1_count": 0,
+                "warmup_threshold": 1,
+                "l2_last_extraction_time": "2026-10-04T09:28:58.168Z"
+              }
+            ]
+          }
+        ],
+        "originalFiveJobs": [
+          {
+            "id": "persona-0-history:1",
+            "status": "completed"
+          },
+          {
+            "id": "persona-0-history:2",
+            "status": "completed"
+          },
+          {
+            "id": "persona-0-history:3",
+            "status": "completed"
+          },
+          {
+            "id": "persona-0-history:4",
+            "status": "completed"
+          },
+          {
+            "id": "persona-0-history:5",
+            "status": "completed"
+          }
+        ],
+        "originalQuestionsNotReanswered": true,
+        "scorerRead": false,
+        "fixture": false
+      },
+      "actualTaskIds": [
+        "scene-extract-1791106078811",
+        "scene-extract-1791106078811",
+        "scene-extract-1791106078811",
+        "scene-extract-1791106104037",
+        "scene-extract-1791106104037",
+        "scene-extract-1791106104037"
+      ],
+      "sources": [
+        "persona-0-history"
+      ],
+      "jobs": [
+        "persona-0-history:1",
+        "persona-0-history:2",
+        "persona-0-history:3",
+        "persona-0-history:4",
+        "persona-0-history:5"
+      ],
+      "allActualInputsReconstructed": true,
+      "noNewL0L1SkillJobs": true,
+      "questionSourcesAndJobsAbsent": true,
+      "modelRequestsSha256": "3d8ba21121e530980314c88a7cdb37e6baecfa9c7a30f36b83d60a2545770874"
+    }
+  ],
+  "totalNewActualRequests": 12,
+  "totalNewKnownTokens": 96670,
+  "unknownActualUsage": 0,
+  "originalCorrectedPilotKnownTokens": 315844,
+  "correctedFlowIncludingSeparateRecoveryKnownTokens": 412514,
+  "baselineKnownTokens": 59347,
+  "firstFailedL1KnownTokens": 43433,
+  "allPersonaAttemptsKnownTokens": 515294,
+  "originalClosedAccuracyUnchanged": true,
+  "twoQuestionsNotReanswered": true,
+  "finalNativeTriggerAudit": {
+    "status": "NATIVE_TRIGGER_PENDING_NONE",
+    "realModelRequests": 0,
+    "nativeAlgorithmsUnchanged": true,
+    "scopes": [
+      {
+        "scope": "c52ddf65534b7b4603508435",
+        "trigger": {
+          "should": false,
+          "reason": ""
+        },
+        "checkpoint": {
+          "last_captured_timestamp": 1791098256742,
+          "total_processed": 177,
+          "last_persona_at": 106,
+          "last_persona_time": "2026-10-04T07:26:21.069Z",
+          "request_persona_update": false,
+          "persona_update_reason": "",
+          "memories_since_last_persona": 26,
+          "scenes_processed": 4,
+          "runner_states": {
+            "persona-0-history": {
+              "last_captured_timestamp": 1791098256742,
+              "last_l1_cursor": 0,
+              "last_scene_name": "我（AI）在和音乐制作人Kanoa回顾近一年音乐创作与文化交流项目"
+            }
+          },
+          "pipeline_states": {},
+          "l0_conversations_count": 5,
+          "total_memories_extracted": 44
+        },
+        "personaBodyChars": 1716
+      },
+      {
+        "scope": "global",
+        "trigger": {
+          "should": false,
+          "reason": ""
+        },
+        "checkpoint": {
+          "last_captured_timestamp": 0,
+          "total_processed": 0,
+          "last_persona_at": 0,
+          "last_persona_time": "2026-10-04T07:25:39.943Z",
+          "request_persona_update": false,
+          "persona_update_reason": "",
+          "memories_since_last_persona": 6,
+          "scenes_processed": 2,
+          "runner_states": {
+            "persona-0-history": {
+              "last_captured_timestamp": 0,
+              "last_l1_cursor": 0,
+              "last_scene_name": "我（AI）在和音乐制作人Kanoa回顾近一年音乐创作与文化交流项目"
+            }
+          },
+          "pipeline_states": {},
+          "l0_conversations_count": 0,
+          "total_memories_extracted": 9
+        },
+        "personaBodyChars": 1093
+      }
+    ],
+    "limitation": "Native threshold/no-change semantics respected. This does not mean every persona sentence was regenerated after the latest scene update."
+  },
+  "originalStateSha256StillMatches": true,
+  "strictSmallFixture": {
+    "settled": true,
+    "sources": [
+      "persona-0-history"
+    ],
+    "jobs": [
+      "persona-0-history:1"
+    ],
+    "realModelRequests": 0,
+    "fakeUsageNotRealCost": true,
+    "threeMessageHistoryNotCapacityOrEffectEvidence": true,
+    "nativeQueuesAndPendingCountsClear": true
+  },
+  "formalEvaluationStarted": false,
+  "remainingEntryConditions": [
+    "Latest Skill independent natural selection and actual body delivery.",
+    "Skill body length/resource guidance remains imperfect; disclose and decide bounded corrective work before protocol freeze.",
+    "Final PersonaMem users/questions and new coding sequence/budgets not frozen."
+  ],
+  "limitation": "Native PersonaTrigger does not regenerate every persona on every scene change. Respecting native threshold/no-change behavior is not a latest-content guarantee."
+}

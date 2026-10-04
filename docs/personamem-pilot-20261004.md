@@ -2,7 +2,7 @@
 
 来源：[官方仓库](https://github.com/bowen-upenn/PersonaMem)、[PersonaMem-v1 数据](https://huggingface.co/datasets/bowen-upenn/PersonaMem-v1)，使用官方 32k 文件。固定数据与源码修订见 [来源回执](evidence/personamem-provenance-20261004.json)。原始数据、答案、源码及 MIT 许可在评分侧独立目录；没有加入任务镜像或个人资产。
 
-本文按准备、首次真实运行和修正预演顺序保留记录；当前状态为首次运行已结束，修正预演的新调用预算待确认。开发阶段首位用户、相同 shared_context_id 和相同截止点的两道题已准备；两个条件均使用原文 history[:end_index]，不删除基线历史。182 条消息含 5 条 system、102 条 user、75 条 assistant，全文 152,394 字符。题目只含公开问句和四个选项，correct_answer 另存评分目录。见 [准备回执](evidence/personamem-preparation-20261004.json)。
+本文按准备、首次真实运行和修正预演顺序保留记录；当前状态为修正预演两组均2/2，原生待处理检查点已通过独立开发恢复；正式效果评价尚未开始。开发阶段首位用户、相同 shared_context_id 和相同截止点的两道题已准备；两个条件均使用原文 history[:end_index]，不删除基线历史。182 条消息含 5 条 system、102 条 user、75 条 assistant，全文 152,394 字符。题目只含公开问句和四个选项，correct_answer 另存评分目录。见 [准备回执](evidence/personamem-preparation-20261004.json)。
 
 评分函数从固定修订 inference_standalone_openai.py 的 Evaluation.extract_answer 原样抽取，未运行其推理客户端或加载 API token。正确、错误和多选歧义三个控制通过；不是效果成绩。
 
@@ -59,3 +59,13 @@
 基线前台 59,347 token；RSI 前台 66,081（增加约 11.35%）、学习 249,763，RSI 合计 315,844（基线的 5.32 倍）。本次配对比较 375,191；首次失败保留，所有 PersonaMem 已尝试费用不重复计基线合计 418,624。无已发送请求 usage 缺失。原生本地向量共 238 次、159,551 输入字符、332,177ms；未提供 token 用量，不伪造或混入 LLM token。
 
 [关闭后的诊断](evidence/personamem-corrected-pilot-diagnostics-20261004.json)另外确认：最后一次全局场景更新在派发前遇到 BUDGET_EXHAUSTED，没有实际模型请求；原生 pipeline 仍有未完成更新标记。答题是在明确冻结学习后进行，其评分有效，但“作业均完成/静默”不能代表全部场景与画像更新已完整刷新。容量、原生导入、L1 消费通过；正式实验前应处理完整更新观察和有限预算口径，新 Skill 质量检查也仍待完成。
+
+## 原生检查点恢复与答题来源隔离
+
+[恢复回执](evidence/personamem-native-profile-recovery-outcome-20261004.json)：原修正预演的30次学习预算没有完成最后的场景更新。另行固定的6次恢复耗尽后仍有待处理项，明确记为INCOMPLETE；下一独立12次额度实际只用6次即完成。两次共12调用、96,670 token，保留旧结果及部分场景编辑，未重新导入L0/L1/Skill、未重答两题。所有模型输入经正式日志逐字重建，答案与判分不回流。
+
+答题会话在 learningEnabled=false 时仍可保存成后续待处理工作，不能把暂停学习当作来源隔离。初次恢复准备被来源校验挡在实际调用前；随后仅在独立恢复副本移除两题来源及12个尚未学习的答题/重放历史工作，保留原始记录不动。预演脚本现在在正式观察入口排除答题会话，短历史零调用夹具证明来源/工作仅含历史导入。生产默认观察逻辑未改。
+
+完成条件增加原生PipelineManager队列、conversation_count和l2_pending_l1_count，并读取原生PersonaTrigger待触发状态；不能用5个工作完成或没有活动调用替代全链路完成。固定调用预算用完且队列空闲时提前保留未完成回执，避免无效等待。[画像失败夹具](evidence/native-profile-pending-gate-20261004.json)验证L3失败仍留下原生触发条件；[宿主回归](evidence/native-runtime-profile-health-20261004.json)为0真实调用。源组件未改，没有新的调度或画像算法。
+
+最终两个范围的原生队列空闲、待处理计数0、PersonaTrigger.should=false，工作区/通用画像均有正文；原生阈值和无变化跳过意味着画像不必在每次场景变化后重新生成，不能说所有正文都是最新重写。恢复后资产不能用于改写原来的2/2成绩。原修正RSI费用315,844保持不变；计入两个额外恢复的当前流程费用412,514。基线59,347及首轮失败43,433全部计入，所有PersonaMem开发尝试共515,294已知token；本地embedding用量继续分列，不伪造token。

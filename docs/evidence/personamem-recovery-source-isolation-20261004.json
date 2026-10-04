@@ -1,0 +1,73 @@
+{
+  "recordedAt": "2026-10-04T17:05:08.016356+08:00",
+  "excludedSources": [
+    "persona-0-question-acd74206-37dc-4756-94a8-b99a395d9a21",
+    "persona-0-question-f546a74f-54de-40d0-9d88-8b0e30467d7b"
+  ],
+  "excludedPendingJobs": [
+    {
+      "id": "persona-0-question-acd74206-37dc-4756-94a8-b99a395d9a21:1",
+      "session": "persona-0-question-acd74206-37dc-4756-94a8-b99a395d9a21",
+      "status": "pending"
+    },
+    {
+      "id": "persona-0-question-acd74206-37dc-4756-94a8-b99a395d9a21:2",
+      "session": "persona-0-question-acd74206-37dc-4756-94a8-b99a395d9a21",
+      "status": "pending"
+    },
+    {
+      "id": "persona-0-question-acd74206-37dc-4756-94a8-b99a395d9a21:3",
+      "session": "persona-0-question-acd74206-37dc-4756-94a8-b99a395d9a21",
+      "status": "pending"
+    },
+    {
+      "id": "persona-0-question-acd74206-37dc-4756-94a8-b99a395d9a21:4",
+      "session": "persona-0-question-acd74206-37dc-4756-94a8-b99a395d9a21",
+      "status": "pending"
+    },
+    {
+      "id": "persona-0-question-acd74206-37dc-4756-94a8-b99a395d9a21:5",
+      "session": "persona-0-question-acd74206-37dc-4756-94a8-b99a395d9a21",
+      "status": "pending"
+    },
+    {
+      "id": "persona-0-question-acd74206-37dc-4756-94a8-b99a395d9a21:6",
+      "session": "persona-0-question-acd74206-37dc-4756-94a8-b99a395d9a21",
+      "status": "pending"
+    },
+    {
+      "id": "persona-0-question-f546a74f-54de-40d0-9d88-8b0e30467d7b:1",
+      "session": "persona-0-question-f546a74f-54de-40d0-9d88-8b0e30467d7b",
+      "status": "pending"
+    },
+    {
+      "id": "persona-0-question-f546a74f-54de-40d0-9d88-8b0e30467d7b:2",
+      "session": "persona-0-question-f546a74f-54de-40d0-9d88-8b0e30467d7b",
+      "status": "pending"
+    },
+    {
+      "id": "persona-0-question-f546a74f-54de-40d0-9d88-8b0e30467d7b:3",
+      "session": "persona-0-question-f546a74f-54de-40d0-9d88-8b0e30467d7b",
+      "status": "pending"
+    },
+    {
+      "id": "persona-0-question-f546a74f-54de-40d0-9d88-8b0e30467d7b:4",
+      "session": "persona-0-question-f546a74f-54de-40d0-9d88-8b0e30467d7b",
+      "status": "pending"
+    },
+    {
+      "id": "persona-0-question-f546a74f-54de-40d0-9d88-8b0e30467d7b:5",
+      "session": "persona-0-question-f546a74f-54de-40d0-9d88-8b0e30467d7b",
+      "status": "pending"
+    },
+    {
+      "id": "persona-0-question-f546a74f-54de-40d0-9d88-8b0e30467d7b:6",
+      "session": "persona-0-question-f546a74f-54de-40d0-9d88-8b0e30467d7b",
+      "status": "pending"
+    }
+  ],
+  "originalRunUnmodified": true,
+  "questionHistoryJobsWereQueuedButNotLearned": true,
+  "onlyHistoricalSourceRemains": true,
+  "newModelCalls": 0
+}

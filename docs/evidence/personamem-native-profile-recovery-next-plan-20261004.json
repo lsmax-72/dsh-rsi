@@ -1,0 +1,41 @@
+{
+  "status": "PREREGISTERED_BEFORE_DISPATCH",
+  "recordedAt": "2026-10-04T17:26:45.948965+08:00",
+  "purpose": "Separate bounded native checkpoint continuation after six-call recovery closed INCOMPLETE; preserve previous partial scene edits, original history and all failed costs.",
+  "model": "qwen3.8-27b",
+  "newLearningDispatchLimit": 12,
+  "wallSeconds": 600,
+  "quietSeconds": 45,
+  "maxOutputTokensPerCall": 4096,
+  "foregroundRequestsAllowed": 0,
+  "sourceSessions": [
+    "persona-0-history"
+  ],
+  "historyJobs": [
+    "persona-0-history:1",
+    "persona-0-history:2",
+    "persona-0-history:3",
+    "persona-0-history:4",
+    "persona-0-history:5"
+  ],
+  "sourceAttempt": "native-profile-recovery-2",
+  "previousAttemptRequests": 6,
+  "previousAttemptKnownTokens": 55624,
+  "additionalCapReason": "Workspace scene edit needed six actual calls and global scene had zero dispatched; reserve native tool loop and persona calls, without changing algorithm.",
+  "cloneControlChanges": {
+    "dailyCallBudget": [
+      36,
+      48
+    ],
+    "learningEnabled": [
+      false,
+      true
+    ]
+  },
+  "officialAnswersOrScoresNotInput": true,
+  "questionSessionsNotPresent": true,
+  "originalQuestionsNotReanswered": true,
+  "noL0L1SkillReimport": true,
+  "pluginSha256": "0bd8faa7a3fdaedbdb1127705c04c56348a8779693e53657cabe37926ba2790f",
+  "authorization": "User allows autonomous bounded development adjustments, 2026-10-04."
+}

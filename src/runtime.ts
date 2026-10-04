@@ -288,14 +288,15 @@ export class Runtime {
     return {...candidate,content:parsed.body,metadata:{...candidate.metadata,version:skill.version},resourceBase:{kind:'directory',path:join(core.resourceDir,'skills',id,`v${skill.version}`,'files')}};
   }
   async snapshot(cwd:string) {
-    const entry=await this.scope(cwd), memory:any[]=[],skills:any[]=[],layers:any={};
+    const entry=await this.scope(cwd), memory:any[]=[],skills:any[]=[],layers:any={},nativeProfiles:any[]=[];
     for (const scope of [entry.id,'global']) {
       const core=await this.core(scope);
       layers[scope]=await core.layerCounts();
+      nativeProfiles.push({scope,trigger:await core.personaTrigger.shouldGenerate()});
       memory.push(...(await core.readMemories()).map((row:any) => ({...row,scope})));
       skills.push(...(await listAllSkills(core.skills,ids(scope))).items.map((row:any) => ({...row,scope,visibleName:visibleName(row.name),disabled:this.state.disabled(scope,row.skill_id)})));
     }
-    return {workspace:entry,settings:this.state.settings(),usage:this.state.usage(),memory,skills,layers,jobs:this.state.jobs(entry.id).map(({payload,...job}:any) => ({...job,sourceSessionId:payload.sessionId,reason:payload.reason})),workspaces:this.state.db.prepare("SELECT value FROM kv WHERE key LIKE 'scope:%'").all().map(row => JSON.parse(row.value as string).cwd).filter((value,index,array) => array.indexOf(value) === index),profilePending:!!this.state.get(`profile-invalid:${entry.id}`)||!!this.state.get('profile-invalid:global')};
+    return {workspace:entry,settings:this.state.settings(),usage:this.state.usage(),memory,skills,layers,jobs:this.state.jobs(entry.id).map(({payload,...job}:any) => ({...job,sourceSessionId:payload.sessionId,reason:payload.reason})),workspaces:this.state.db.prepare("SELECT value FROM kv WHERE key LIKE 'scope:%'").all().map(row => JSON.parse(row.value as string).cwd).filter((value,index,array) => array.indexOf(value) === index),nativeProfiles,profilePending:!!this.state.get(`profile-invalid:${entry.id}`)||!!this.state.get('profile-invalid:global'),nativePipelines:[...this.pipelines].filter(([scope])=>scope===entry.id).map(([scope,pipeline])=>({scope,queues:pipeline.getQueueSizes(),sessions:pipeline.getSessionKeys().map(sessionKey=>({sessionKey,...pipeline.getSessionState(sessionKey)}))}))};
   }
   async request(operation:string,payload:any) {
     if (!payload || typeof payload !== 'object' || Array.isArray(payload)) throw new Error('请求格式无效');
