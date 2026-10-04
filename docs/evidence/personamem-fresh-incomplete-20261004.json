@@ -1,0 +1,269 @@
+{
+  "status": "TERMINAL_INCOMPLETE_NATIVE_MERGE_GUARD_FALSE_POSITIVE",
+  "checkedAt": "2026-10-04T15:41:00.578541+00:00",
+  "freezeSha256": "61773090c494ee8d74c79c0f8fb38ccaf82d3537e33dfe551127f6cebfe25ecf",
+  "failedUser": "8",
+  "originalNativeFailure": {
+    "id": "persona-8-history:1",
+    "scope": "c52ddf65534b7b4603508435",
+    "session": "persona-8-history",
+    "turn": 1,
+    "status": "failed",
+    "stages": {
+      "failure": {
+        "attempts": 1,
+        "code": "EXTRACTION_FAILED",
+        "retryable": true
+      },
+      "recorded": true,
+      "memoryBatches": {
+        "next": 30,
+        "stored": 15
+      }
+    },
+    "error": "记忆正文与向量写入不一致",
+    "created": 1791126404810,
+    "updated": 1791126668757,
+    "sourceSessionId": "persona-8-history",
+    "reason": {
+      "kind": "completed"
+    }
+  },
+  "sameBatchNativeMergeDecision": {
+    "record_id": "m_1791126638658_33fabcc7",
+    "action": "merge",
+    "target_ids": [
+      "m_1791126638658_9f569355"
+    ],
+    "merged_content": "用户尝试通过社交网络营销（管理多个平台的内容和通知）提升线上存在感，但这让他/她感到疲惫、分心且难以分辨核心价值。用户开始怀疑这种多平台策略是否值得，认为它分散了精力，是对更有意义业务活动的干扰。",
+    "merged_type": "episodic",
+    "merged_priority": 75,
+    "merged_timestamps": []
+  },
+  "currentNativeIndexAudit": [
+    {
+      "scope": "c52ddf65534b7b4603508435",
+      "databaseSha256": "8247a6e6825777fc974ff31a34c0556e3957251ad8cec3a9d07af8743afb2227",
+      "currentHeads": 13,
+      "vectorRows": 13,
+      "missingOrTimestampMismatch": []
+    },
+    {
+      "scope": "global",
+      "databaseSha256": "52ad5c72cdb5cde132863a41111fd56d021720e5226875a51e2a3c0faff726e3",
+      "currentHeads": 7,
+      "vectorRows": 7,
+      "missingOrTimestampMismatch": []
+    }
+  ],
+  "failedArmActualRequests": 7,
+  "failedArmKnownTokens": 35029,
+  "failedArmUnknownUsage": 0,
+  "reconstructionMatches": 7,
+  "allFailedArmRequestsReturnedNormally": true,
+  "wholeAttemptActualRequests": 158,
+  "wholeAttemptKnownTokens": 1473900,
+  "wholeAttemptUnknownActualUsage": 1,
+  "completedPairedUsers": 2,
+  "plannedPairedUsers": 8,
+  "fullCohortEstimatePublishable": false,
+  "failureEvidenceSha256": {
+    "learning.json": "278e12089990bbccee5149f98efea40a083e88858088a8e181d8c44b2065989c",
+    "model-requests.json": "fc568f53eab4bc570fa4e851220e9ad110a1d791f0f8df9e61f5adff025a17e2",
+    "reconstruction.json": "2acbeae81e2c3795659eaa6dc12629ad8aafa334d2a30a80289fe013cd41f1ed",
+    "results.json": "08ac3d73280a90c8f5e2d16c7258dd161b987e2500f207a5548a6fb6d4ac3513"
+  },
+  "fixtureBeforeRepair": {
+    "reproducedSameError": true,
+    "realModelRequests": 0
+  },
+  "repairPolicy": "Observe actual native synchronous successful deletions within extraction; check surviving heads and vectors. Do not rewrite native parser/writer.",
+  "nativeDecisionConformanceLimit": "Native parser/writer accepted and executed a target from the same batch; this does not establish conformity to the conflict prompt candidate-pool instruction.",
+  "previousStudyRepairedOrRetried": false,
+  "healthGate": {
+    "status": "INCOMPLETE_WITHHOLD_FULL_PAIRED_ESTIMATE",
+    "freezeSha256": "61773090c494ee8d74c79c0f8fb38ccaf82d3537e33dfe551127f6cebfe25ecf",
+    "rows": [
+      {
+        "personaId": "16",
+        "arm": "baseline",
+        "healthy": true,
+        "checks": {
+          "closedExitZero": true,
+          "receiptCompleted": true,
+          "realFrozenEvaluation": true,
+          "exactQuestionSet": true,
+          "allQuestionsDispatched": true,
+          "durableReconstructionMatches": true,
+          "gatewayMatches": true,
+          "noUpstreamHttpError": true
+        }
+      },
+      {
+        "personaId": "16",
+        "arm": "rsi",
+        "healthy": true,
+        "checks": {
+          "closedExitZero": true,
+          "receiptCompleted": true,
+          "realFrozenEvaluation": true,
+          "exactQuestionSet": true,
+          "allQuestionsDispatched": true,
+          "durableReconstructionMatches": true,
+          "gatewayMatches": true,
+          "noUpstreamHttpError": true
+        }
+      },
+      {
+        "personaId": "18",
+        "arm": "baseline",
+        "healthy": true,
+        "checks": {
+          "closedExitZero": true,
+          "receiptCompleted": true,
+          "realFrozenEvaluation": true,
+          "exactQuestionSet": true,
+          "allQuestionsDispatched": true,
+          "durableReconstructionMatches": true,
+          "gatewayMatches": true,
+          "noUpstreamHttpError": true
+        }
+      },
+      {
+        "personaId": "18",
+        "arm": "rsi",
+        "healthy": true,
+        "checks": {
+          "closedExitZero": true,
+          "receiptCompleted": true,
+          "realFrozenEvaluation": true,
+          "exactQuestionSet": true,
+          "allQuestionsDispatched": true,
+          "durableReconstructionMatches": true,
+          "gatewayMatches": true,
+          "noUpstreamHttpError": true
+        }
+      },
+      {
+        "personaId": "8",
+        "arm": "baseline",
+        "healthy": true,
+        "checks": {
+          "closedExitZero": true,
+          "receiptCompleted": true,
+          "realFrozenEvaluation": true,
+          "exactQuestionSet": true,
+          "allQuestionsDispatched": true,
+          "durableReconstructionMatches": true,
+          "gatewayMatches": true,
+          "noUpstreamHttpError": true
+        }
+      },
+      {
+        "personaId": "8",
+        "arm": "rsi",
+        "healthy": false,
+        "checks": {
+          "closedExitZero": false
+        }
+      },
+      {
+        "personaId": "14",
+        "arm": "baseline",
+        "healthy": false,
+        "checks": {
+          "closedExitZero": false
+        }
+      },
+      {
+        "personaId": "14",
+        "arm": "rsi",
+        "healthy": false,
+        "checks": {
+          "closedExitZero": false
+        }
+      },
+      {
+        "personaId": "3",
+        "arm": "baseline",
+        "healthy": false,
+        "checks": {
+          "closedExitZero": false
+        }
+      },
+      {
+        "personaId": "3",
+        "arm": "rsi",
+        "healthy": false,
+        "checks": {
+          "closedExitZero": false
+        }
+      },
+      {
+        "personaId": "17",
+        "arm": "baseline",
+        "healthy": false,
+        "checks": {
+          "closedExitZero": false
+        }
+      },
+      {
+        "personaId": "17",
+        "arm": "rsi",
+        "healthy": false,
+        "checks": {
+          "closedExitZero": false
+        }
+      },
+      {
+        "personaId": "19",
+        "arm": "baseline",
+        "healthy": false,
+        "checks": {
+          "closedExitZero": false
+        }
+      },
+      {
+        "personaId": "19",
+        "arm": "rsi",
+        "healthy": false,
+        "checks": {
+          "closedExitZero": false
+        }
+      },
+      {
+        "personaId": "15",
+        "arm": "baseline",
+        "healthy": false,
+        "checks": {
+          "closedExitZero": false
+        }
+      },
+      {
+        "personaId": "15",
+        "arm": "rsi",
+        "healthy": false,
+        "checks": {
+          "closedExitZero": false
+        }
+      }
+    ],
+    "plannedArms": 16,
+    "healthyClosedArms": 5,
+    "savedSummaryClaimsComplete": false,
+    "savedSummaryHealthConflict": false,
+    "fullPairedEstimatePublishable": false,
+    "actualNewModelRequests": 0,
+    "scorerDataRead": false,
+    "qualityAndEffectNotInferredFromHealth": true
+  },
+  "repairVerification": {
+    "status": "PASS",
+    "realModelRequests": 0,
+    "sameBatchMergeBeforeRepair": "Reproduced 记忆正文与向量写入不一致",
+    "sameBatchMergeAfterRepair": "PASS: native intermediate deletion, surviving body/vector timestamps, failed-upsert rejection, synchronous boolean delete",
+    "nativeVectorProbe": "PASS: sqlite-vec, reindex, FTS/vector/RRF, embedding and upsert failure controls",
+    "nativeRuntimeBatchProbe": "PASS: 27 qualified messages, failed suffix retry, 10+10+7 completion, restart zero requests",
+    "sourceIntegrity": "Verified all 60 core and 10 panel source files at e09899c2136fb6bc27ecc68505e32bdb637cdfa8"
+  }
+}

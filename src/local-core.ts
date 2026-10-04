@@ -1,4 +1,5 @@
 import { DatabaseSync } from 'node:sqlite';
+import { AsyncLocalStorage } from 'node:async_hooks';
 import { mkdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import { createReadyEmbedding, guardedEmbedding, withEmbeddingIntegrity, verifyVectorCoverage } from './native-embedding.js';
@@ -26,6 +27,19 @@ export async function openLocalCore(dataDir: string, runner: any, logger: any, s
     if(after.missingL1 || after.missingL0)throw new Error('已有资产向量重建不完整');
     if (!memory.isFtsAvailable()) throw new Error('记忆全文索引不可用');
     const assertIndexed=(record:any)=>{if(!record)return;const indexed=memory.getRawDb().prepare('SELECT m.content,m.updated_time,v.updated_time AS vector_updated FROM l1_records m JOIN l1_vec v ON v.record_id=m.record_id WHERE m.record_id=?').get(record.id);if(!indexed || indexed.content!==record.content || indexed.vector_updated!==indexed.updated_time)throw new Error('记忆正文与向量写入不一致');};
+    // Native extraction returns intermediate writes; later merges can remove them in the same call.
+    // Exempt only deletions actually performed by that extraction, never arbitrary missing rows.
+    const extractionDeletes=new AsyncLocalStorage<Set<string>>();
+    const findHead=memory.getRawDb().prepare('SELECT record_id FROM l1_records WHERE record_id=?');
+    const nativeDelete=memory.deleteL1Batch.bind(memory);
+    memory.deleteL1Batch=(ids,filter)=>{
+      const audit=extractionDeletes.getStore();
+      if(!audit)return nativeDelete(ids,filter);
+      const existing=ids.filter(id=>findHead.get(id));
+      const success=nativeDelete(ids,filter);
+      if(success)for(const id of existing)if(!findHead.get(id))audit.add(id);
+      return success;
+    };
     const ensureVectors=async()=>{const missing=verifyVectorCoverage(memory);if(missing.missingL1 || missing.missingL0){await withEmbeddingIntegrity(()=>memory.reindexAll(text=>embeddingService.embed(text)));const remaining=verifyVectorCoverage(memory);if(remaining.missingL1 || remaining.missingL0)throw new Error('记忆向量修复不完整');}};
     db.exec('PRAGMA journal_mode=WAL; PRAGMA foreign_keys=ON;');
     const resourceDir = join(dataDir, 'skill-assets');
@@ -73,11 +87,15 @@ export async function openLocalCore(dataDir: string, runner: any, logger: any, s
         const previous=checkpoint.getRunnerState(await checkpoint.read(),input.sessionKey).last_scene_name;
         let runnerError:any;
         const extractionRunner={run:async (params:any)=>{try{return await runner.run(params.taskId==='l1-extraction'?{...params,systemPrompt:`${params.systemPrompt}\nThese memory inputs contain user/assistant prose, without tool execution results. Do not convert assistant claims or plans into verified success. Attribute such outcomes as assistant-reported/unverified, retain the source message IDs, and never invent successful tests. Instruction memories are standing rules or reusable operating conventions; a one-off feature/fix request is not a rule for future unrelated tasks. Capture useful task-specific history as episodic context instead, without inventing success. Describe the scene from the user activity, not the extractor or AI narrator. Preserve durable user facts and preferences.`}:params);}catch(error){runnerError=error;throw error;}}};
-        const result = await withEmbeddingIntegrity(()=>extractL1Memories({ ...input, baseDir:join(dataDir,'history'), config:{}, storage:history, logger,
+        const deleted=new Set<string>();
+        const result = await extractionDeletes.run(deleted,()=>withEmbeddingIntegrity(()=>extractL1Memories({ ...input, baseDir:join(dataDir,'history'), config:{}, storage:history, logger,
           // The durable caller supplies bounded new-message batches and their native background.
-          options:{ llmRunner:extractionRunner, enableDedup:true, vectorStore:memory, embeddingService, previousSceneName:previous || undefined, maxMessagesPerExtraction:Math.min(10,input.newMessageCount ?? 10) } }));
+          options:{ llmRunner:extractionRunner, enableDedup:true, vectorStore:memory, embeddingService, previousSceneName:previous || undefined, maxMessagesPerExtraction:Math.min(10,input.newMessageCount ?? 10) } })));
         if (!result.success) throw runnerError ?? new Error('记忆提炼失败，请查看后台会话日志');
-        for(const record of result.records)assertIndexed(record);
+        for(const record of new Map(result.records.map(record=>[record.id,record])).values()){
+          if(deleted.has(record.id) && !findHead.get(record.id))continue;
+          assertIndexed(record);
+        }
         const coverage=verifyVectorCoverage(memory);if(coverage.missingL1)throw new Error('记忆提炼向量写入不完整');
         await checkpoint.markL1ExtractionComplete(input.sessionKey,result.storedCount,undefined,result.lastSceneName);
         return result;
