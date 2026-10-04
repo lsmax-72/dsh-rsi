@@ -1,0 +1,100 @@
+{
+  "status": "RECOVERED_TASK_THREE_SKILL_SOURCE_AND_COVERAGE_AUDIT",
+  "recordedAt": "2026-10-04T20:20:01.228416+00:00",
+  "reviewPerformedAfterSourceTaskOfficialScoreKnown": true,
+  "sourceJobId": "pilot-django__django-12262-task:1",
+  "producedUnderTaskFourBudget": true,
+  "skillId": "skl-NgTZwOkmiS4t",
+  "name": "django-simple-tag-kwonly-default-fix",
+  "version": 1,
+  "bodyUnicodeCodepoints": 6807,
+  "bodySha256": "2529244d5c6dd603042dde68acffe0d4f452a68f3da2265e51e0e9640752b266",
+  "nativeSkillActualRequestSessionId": "rsi-ba915a56-d855-48b2-ba6b-71e6f059be67",
+  "coverage": {
+    "status": "PASS_EXACT_NATIVE_TRANSCRIPT_COVERAGE_AUDIT",
+    "jobId": "pilot-django__django-12262-task:1",
+    "sourceMessages": 123,
+    "fullTranscriptUtf16Chars": 96154,
+    "actualPromptUtf16Chars": 40663,
+    "nativeHeadChars": 8000,
+    "nativeTailChars": 32000,
+    "nativeTranscriptExactlyMatchesActualModelPromptSuffix": true,
+    "removedUtf16Chars": 56154,
+    "fullTranscriptSha256": "f531fcdd33d089570ccd00821bffa6495cd1c596f4bf28cae341f0a41f481289",
+    "actualPromptSha256": "2a35fbd8a7b6a916027bd73c931745f27c5bf2100d2c2d96bfafd211e3b99e49",
+    "roleCounts": {
+      "user": {
+        "total": 1,
+        "fullyRemoved": 0,
+        "partial": 0
+      },
+      "assistant": {
+        "total": 40,
+        "fullyRemoved": 26,
+        "partial": 0
+      },
+      "tool_call": {
+        "total": 41,
+        "fullyRemoved": 26,
+        "partial": 0
+      },
+      "tool_result": {
+        "total": 41,
+        "fullyRemoved": 25,
+        "partial": 2
+      }
+    },
+    "newModelRequests": 0,
+    "scorerOrGoldRead": false,
+    "productionCodeOrAssetsChanged": false,
+    "limit": "This proves literal input coverage, not why the model produced a contradictory algorithm. Missing middle evidence is not presumed to be successful evidence."
+  },
+  "criticalSource": {
+    "originalObservedSignatureLine": "params, varargs, varkw, defaults, kwonly, kwonly_defaults, _ = getfullargspec(unwrap(func))",
+    "payloadMessageIndices": [
+      29,
+      53
+    ],
+    "nativeCoverageSpans": [
+      {
+        "index": 29,
+        "role": "tool_result",
+        "serializedChars": 1065,
+        "start": 31169,
+        "end": 32234,
+        "fullyRetained": false,
+        "fullyRemoved": true,
+        "partial": false,
+        "testSummaryLines": []
+      },
+      {
+        "index": 53,
+        "role": "tool_result",
+        "serializedChars": 3048,
+        "start": 41481,
+        "end": 44529,
+        "fullyRetained": false,
+        "fullyRemoved": true,
+        "partial": false,
+        "testSummaryLines": []
+      }
+    ],
+    "originalSignatureAbsentFromActualSkillPrompt": true,
+    "contradictorySkillClaim": "params = args + kwonlyargs",
+    "originalSourceRecord": "Third-task request 17: sed -n 90,165p django/template/library.py shows both registration helpers passing positional params and kwonly separately to parse_bits."
+  },
+  "supportedNegativeExperience": [
+    "Skill correctly retains that swapping error-check order alone was incomplete and B/G/H still mismatched.",
+    "Skill says final all-green execution was not observed."
+  ],
+  "unresolvedQuality": [
+    "The asserted compile_func params concatenation contradicts the originally observed source.",
+    "The source excerpt was wholly cut from the actual Skill prompt. This is evidence omission, not proof that omission alone caused the model error.",
+    "6807 Unicode codepoints remain substantially above the configured concise SOP target."
+  ],
+  "firstFourTasksSkillBodyDelivery": "No foreground Skill body observed in tasks 1/2/3 or all 40 task-four requests; catalog summaries are separate.",
+  "additionalModelOrScorerCalls": 0,
+  "originalStateOrAssetsChanged": false,
+  "frozenMethodChanged": false,
+  "nativeConfigurationFinding": "The unmodified SkillExtractor already accepts headChars/tailChars. Any future window development probe can use these native options instead of rewriting transcript selection. Current study defaults stay frozen."
+}
