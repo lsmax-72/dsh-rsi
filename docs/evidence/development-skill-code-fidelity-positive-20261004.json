@@ -1,0 +1,52 @@
+{
+  "status": "OBSERVED_EXPRESSION_PUBLIC_CHECKS_PASS",
+  "skillId": "skl-bHAUoR5iyX2n",
+  "version": 1,
+  "bodyChars": 2233,
+  "bodySha256": "a741e7a1ee6bde9edba600e659ba903de83d506c709f2166b7c6f4f46990e939",
+  "publicChecks": {
+    "before": "&lt;b&gt;hi&lt;/b&gt;",
+    "cases": [
+      {
+        "case": "autoescapeFalse",
+        "actual": "<b>hi</b>",
+        "expected": "<b>hi</b>",
+        "pass": true
+      },
+      {
+        "case": "autoescapeTrue",
+        "actual": "&lt;b&gt;hi&lt;/b&gt;",
+        "expected": "&lt;b&gt;hi&lt;/b&gt;",
+        "pass": true
+      },
+      {
+        "case": "listTemplateNames",
+        "actual": "<b>hi</b>",
+        "expected": "<b>hi</b>",
+        "pass": true
+      },
+      {
+        "case": "existingContextPreserved",
+        "actual": "<b>hi</b>",
+        "expected": "<b>hi</b>",
+        "pass": true
+      }
+    ]
+  },
+  "rawGeneratedCodeExecuted": false,
+  "trustedPublicMethodWithSingleObservedExpressionChange": true,
+  "realModelRequests": 0,
+  "frameworkTestsExecuted": false,
+  "officialAnswersOrHiddenTestsRead": false,
+  "resourceCount": 0,
+  "softBodyTarget": 1500,
+  "softBodyTargetMet": false,
+  "fullQualityGatePassed": false,
+  "limitation": "Correct expression and four public behavior cases pass; body remains too long and no resource offload. Does not prove model selection or task benefit.",
+  "bodyParsing": "Native parser body: remove closing fence and a single leading blank line; preserve trailing newline.",
+  "publicDiagnosticImage": "dsh-rsi-formal:django__django-11119",
+  "initialDiagnosticPreparationErrors": [
+    "Wrong task image already had corrected expression; no model calls.",
+    "Receipt resource field used resources instead of manifest; public behavior assertions had passed."
+  ]
+}

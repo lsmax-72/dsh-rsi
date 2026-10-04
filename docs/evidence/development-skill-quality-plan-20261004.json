@@ -1,0 +1,23 @@
+{
+  "status": "PREREGISTERED_BEFORE_DISPATCH",
+  "recordedAt": "2026-10-04T15:48:11.428553+08:00",
+  "purpose": "Verify current native Skill generation from existing second development task with observed inline behavior checks; no new solver or effect score.",
+  "model": "qwen3.8-27b",
+  "nativeCallsMax": 6,
+  "wallSeconds": 240,
+  "outputMaxTokensPerCall": 4096,
+  "sourceSessionId": "pilot-django__django-11119-task",
+  "sourceJobId": "pilot-django__django-11119-task:1",
+  "sourceMessages": 91,
+  "sourceLogSha256": "bf01203c866c86e21711bb703fb7ee15cac31b7b77beb5de74cb1093aae5692b",
+  "sourcePayloadSha256": "78eef6415e90885a9ec32ca9256e05eac06cefbae4d1cd395dbddbd426ee3dce",
+  "pluginSha256": "a69492ee1ed02b8529654f0c6ff2950b4900818220f46c9e1eb7e022cf4c7beb",
+  "coreGuidanceSha256": "27889eb66e1eeccfd16b336b537185d070cad40c6004ebfdb14ed811356f8a9a",
+  "isolatedHomeAndFreshAssets": true,
+  "taskCommandsExecuted": 0,
+  "scorerRead": false,
+  "officialAnswersNotInput": true,
+  "qualityRequiresManualContentReview": true,
+  "old20DevelopmentOnly": true,
+  "authorization": "User allows autonomous bounded development validation (2026-10-04)."
+}

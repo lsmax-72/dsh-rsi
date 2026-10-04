@@ -1,0 +1,24 @@
+{
+  "status": "GENERATED_SKILL_PUBLIC_SNIPPET_FAILURE_REPRODUCED",
+  "source": "Actual native Skill review output; copied-variable diagnostic, no official answers or hidden tests",
+  "skillId": "skl-eUPULgL7xjwy",
+  "skillName": "django-engine-render-to-string-autoescape",
+  "skillVersion": 1,
+  "storedMarkdownChars": 2521,
+  "bodyChars": 2367,
+  "bodySha256": "97cc3b34b04ab4fd648654a2e43e32bf55846903655c13e4aa6d79267bca2427",
+  "nativeOwnerMatchesProduction": true,
+  "publicDiagnostic": {
+    "correctSourceExpression": false,
+    "generatedSnippetError": "AttributeError",
+    "message": "'dict' object has no attribute 'Context'"
+  },
+  "rawGeneratedCodeExecuted": false,
+  "onlyFixedPublicExpressionExecuted": true,
+  "taskContainerNetwork": "none",
+  "hostBinds": [],
+  "realModelRequests": 0,
+  "qualityGatePassed": false,
+  "evidenceSeparationImproved": true,
+  "limitation": "Evidence header and prior public checks do not validate newly rewritten code; body exceeds 1500-character soft target."
+}
