@@ -301,7 +301,12 @@
       "embeddingInputChars": 22634,
       "embeddingTimeMs": 109200,
       "embeddingUnknownTokenCalls": 67,
-      "firstEffectiveEdit": null,
+      "firstEffectiveEdit": {
+        "requestOrdinal": 20,
+        "patchSha256": "ddab8d4d510e0dabe72cda3551d52fb90fa5ce100c8b50b9b52364c53285a96c",
+        "supportedBy": "Official scoring of the first nonempty saved patch",
+        "cumulativeKnownTokens": 323757
+      },
       "unchangedPatchIdenticalCommandRepeats": 0,
       "commands": [
         {

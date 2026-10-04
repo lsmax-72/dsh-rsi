@@ -1,0 +1,50 @@
+{
+  "instanceId": "django__django-11119",
+  "status": "GRADED",
+  "resolved": true,
+  "officialReport": {
+    "django__django-11119": {
+      "patch_is_None": false,
+      "patch_exists": true,
+      "patch_successfully_applied": true,
+      "resolved": true,
+      "tests_status": {
+        "FAIL_TO_PASS": {
+          "success": [
+            "test_autoescape_off (template_tests.test_engine.RenderToStringTest)"
+          ],
+          "failure": []
+        },
+        "PASS_TO_PASS": {
+          "success": [
+            "test_cached_loader_priority (template_tests.test_engine.LoaderTests)",
+            "test_loader_priority (template_tests.test_engine.LoaderTests)",
+            "test_origin (template_tests.test_engine.LoaderTests)",
+            "test_basic_context (template_tests.test_engine.RenderToStringTest)",
+            "test_multiple_engines_configured (template_tests.test_engine.GetDefaultTests)",
+            "test_no_engines_configured (template_tests.test_engine.GetDefaultTests)",
+            "test_single_engine_configured (template_tests.test_engine.GetDefaultTests)"
+          ],
+          "failure": []
+        },
+        "FAIL_TO_FAIL": {
+          "success": [],
+          "failure": []
+        },
+        "PASS_TO_FAIL": {
+          "success": [],
+          "failure": []
+        }
+      }
+    }
+  },
+  "method": "official-run-instance",
+  "runId": "rsi-score-fc8229e4e8",
+  "patchBytes": 479,
+  "patchSha256": "ddab8d4d510e0dabe72cda3551d52fb90fa5ce100c8b50b9b52364c53285a96c",
+  "testOutputSha256": "22284d836e40eb13fbe34ac20ba8b3f8c0e815a4e725fe253bdb0f108b7b7950",
+  "swebenchVersion": "3.0.0",
+  "verifiedSourceFiles": 50,
+  "modelRequests": 0,
+  "limitation": "Score for one saved patch only. Missing reports require independent fault classification; no paired-effect claim."
+}
