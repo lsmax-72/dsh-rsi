@@ -1,0 +1,219 @@
+{
+  "status": "NATIVE_SKILL_INPUT_AND_PREDECLARED_TASK_FOUR_RELEVANCE_AUDITED",
+  "recordedAt": "2026-10-04T19:59:51.565927+00:00",
+  "frozenRevision": "619baad55159699b073e9be12c24861b33e418d4",
+  "freezeSha256": "29b0f161ca5f75017dfa4814e2e0e6435cda152bcb9ae2297310b3d3ef03eb3d",
+  "firstSkillTranscriptCoverage": {
+    "status": "PASS_EXACT_NATIVE_TRANSCRIPT_COVERAGE_AUDIT",
+    "jobId": "pilot-django__django-11848-task:1",
+    "sourceMessages": 133,
+    "fullTranscriptUtf16Chars": 85572,
+    "actualPromptUtf16Chars": 40196,
+    "nativeHeadChars": 8000,
+    "nativeTailChars": 32000,
+    "nativeTranscriptExactlyMatchesActualModelPromptSuffix": true,
+    "removedUtf16Chars": 45572,
+    "fullTranscriptSha256": "a7b2f40e70bb400e4474782aa530525586c4c4c5b25413d4ba01f9156502474f",
+    "actualPromptSha256": "1e6aa12b7590fd8498700db94904d7c5b80c20c287db0a8d7a67dd67bb119237",
+    "roleCounts": {
+      "user": {
+        "total": 1,
+        "fullyRemoved": 0,
+        "partial": 0
+      },
+      "assistant": {
+        "total": 40,
+        "fullyRemoved": 20,
+        "partial": 0
+      },
+      "tool_call": {
+        "total": 46,
+        "fullyRemoved": 23,
+        "partial": 0
+      },
+      "tool_result": {
+        "total": 46,
+        "fullyRemoved": 22,
+        "partial": 2
+      }
+    },
+    "testSummaryMessageCoverage": [
+      {
+        "index": 63,
+        "role": "tool_result",
+        "serializedChars": 1840,
+        "start": 42511,
+        "end": 44351,
+        "fullyRetained": false,
+        "fullyRemoved": true,
+        "partial": false,
+        "testSummaryLines": [
+          "FAILED (errors=6)"
+        ]
+      },
+      {
+        "index": 69,
+        "role": "tool_result",
+        "serializedChars": 1085,
+        "start": 46675,
+        "end": 47760,
+        "fullyRetained": false,
+        "fullyRemoved": true,
+        "partial": false,
+        "testSummaryLines": [
+          "FAILED (errors=1)"
+        ]
+      },
+      {
+        "index": 75,
+        "role": "tool_result",
+        "serializedChars": 330,
+        "start": 50128,
+        "end": 50458,
+        "fullyRetained": false,
+        "fullyRemoved": true,
+        "partial": false,
+        "testSummaryLines": [
+          "FAILED (failures=5)"
+        ]
+      },
+      {
+        "index": 93,
+        "role": "tool_result",
+        "serializedChars": 330,
+        "start": 58300,
+        "end": 58630,
+        "fullyRetained": true,
+        "fullyRemoved": false,
+        "partial": false,
+        "testSummaryLines": [
+          "FAILED (failures=5)"
+        ]
+      },
+      {
+        "index": 117,
+        "role": "tool_result",
+        "serializedChars": 224,
+        "start": 75020,
+        "end": 75244,
+        "fullyRetained": true,
+        "fullyRemoved": false,
+        "partial": false,
+        "testSummaryLines": [
+          "FAILED (failures=3)"
+        ]
+      },
+      {
+        "index": 129,
+        "role": "tool_result",
+        "serializedChars": 2124,
+        "start": 80410,
+        "end": 82534,
+        "fullyRetained": true,
+        "fullyRemoved": false,
+        "partial": false,
+        "testSummaryLines": [
+          "FAILED (failures=3)"
+        ]
+      }
+    ],
+    "newModelRequests": 0,
+    "scorerOrGoldRead": false,
+    "productionCodeOrAssetsChanged": false,
+    "limit": "This proves literal input coverage, not why the model produced a contradictory algorithm. Missing middle evidence is not presumed to be successful evidence."
+  },
+  "coverageArtifactSha256": "20633c0d2cf6452313c191a24fa5303bea798bf6e1a874a3224a854c5a9ed188",
+  "nativeSkillExtractorSha256": "59925d8c3bc1b0e80edae12b0e7c3671bf54baa5f2bc5f6fc58360e665c66711",
+  "retainedFailureSummaryCount": 3,
+  "removedFailureSummaryCount": 3,
+  "observedPassingTestSummaryCount": 0,
+  "interpretation": "The native transcript is literally head/tail truncated. Three FAILED summaries are still fully visible, so the contradictory reference algorithm cannot be attributed solely to not seeing failure. Coverage does not establish why the model made this error.",
+  "taskFourFirstRequestReview": {
+    "status": "PREDECLARED_TASK_FOUR_MEMORY_RELEVANCE_REVIEW",
+    "reviewedAt": "2026-10-04T19:58:38.558215+00:00",
+    "fixedSampling": "Task 4 first actual request, first four Memory refs, before its official grade",
+    "actualRequestCaptureSha256": "b97c857a4dfc4f97d93869511bb8b6127409158f335a3e90f410357ec749f9ee",
+    "question": "Migration serializer should serialize Enum defaults by stable member name rather than translatable member value",
+    "priorNativeHeadMatches": [
+      {
+        "id": "m_1791129416393_1046cc20",
+        "version": 0,
+        "nativeSourceSession": "pilot-django__django-11848-task",
+        "priorNativeHeadAndDeliveredBodyMatch": true,
+        "bodyChars": 111
+      },
+      {
+        "id": "m_1791130721590_aeed230e",
+        "version": 2,
+        "nativeSourceSession": "pilot-django__django-11551-task",
+        "priorNativeHeadAndDeliveredBodyMatch": true,
+        "bodyChars": 280
+      },
+      {
+        "id": "m_1791129416392_7e8669cf",
+        "version": 1,
+        "nativeSourceSession": "pilot-django__django-11848-task",
+        "priorNativeHeadAndDeliveredBodyMatch": true,
+        "bodyChars": 283
+      },
+      {
+        "id": "m_1791129416393_41252505",
+        "version": 0,
+        "nativeSourceSession": "pilot-django__django-11848-task",
+        "priorNativeHeadAndDeliveredBodyMatch": true,
+        "bodyChars": 128
+      }
+    ],
+    "labels": [
+      {
+        "id": "m_1791129416393_1046cc20",
+        "label": "partial",
+        "reason": "The generic Django tests/runtests.py entry can transfer; HTTP module selection and python -m django.test are not a validated migration-serializer recipe."
+      },
+      {
+        "id": "m_1791130721590_aeed230e",
+        "label": "unrelated",
+        "reason": "ModelAdmin descriptor lookup and E108 checks do not solve enum default migration serialization by stable member name; shared repository/tests alone is insufficient relevance."
+      },
+      {
+        "id": "m_1791129416392_7e8669cf",
+        "label": "unrelated",
+        "reason": "HTTP rfc850 two-digit year conversion supplies no enum-name serialization or translation-stability mechanism."
+      },
+      {
+        "id": "m_1791129416393_41252505",
+        "label": "unrelated",
+        "reason": "HTTP date boundary test edits do not identify the migration serializer behavior or enum translation regression checks."
+      }
+    ],
+    "direct": 0,
+    "partial": 1,
+    "unrelated": 3,
+    "sourceVersionAndBodyMatch": true,
+    "catalogEntries": [
+      {
+        "name": "rsi-django-admin-e108-list-display-descriptor",
+        "description": "修复 Django admin 启动时 _check_list_display_item 对\"仅实例可访问\"描述符（如 PositionField）误报 admin.E108 的问题，用 dir() 替代 hasattr()，附验证命令与陷阱。"
+      },
+      {
+        "name": "rsi-django-two-digit-year-rfc7231",
+        "description": "按 RFC 7231 的两位年份（\"最近 50 年\"）规则修复 django.utils.http.parse_http_date 的年份推断逻辑与配套测试，附调试经验。"
+      }
+    ],
+    "skillBodyObservedInFirstRequest": false,
+    "taskFourScorerOrGoldRead": false,
+    "realModelRequestsByReader": 0,
+    "newAssetOrLearningWrites": false,
+    "closedSourceRestoreAndRequestReconstructionStillToVerify": true,
+    "decisionInfluence": "Body delivery observed; no causal or decision influence established by this first-request sample",
+    "scoreFieldLimit": "score=0 is the native SQLite ref default, not a measured similarity value"
+  },
+  "readerSha256": {
+    "audit-skill-transcript-coverage.mjs": "765f3d35ffb11418ee962818571c4f9df6520de713f00d89d169c6c1a6c20be6",
+    "review-fixed-consumer-four.py": "3db9d05eb364e54e1df19dd59aac80a91fc8764b75a2421248a78e6fad8d9b02"
+  },
+  "newModelRequests": 0,
+  "scorerOrGoldReadForTheseAudits": false,
+  "productionCodeOrAssetsChanged": false,
+  "fullSequenceEffectClaim": false
+}
