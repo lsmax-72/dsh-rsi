@@ -1,5 +1,5 @@
 {
-  "status": "PROPOSED_AWAITING_BUDGET_CONFIRMATION",
+  "status": "AUTHORIZED_FOR_CORRECTED_DEVELOPMENT_PILOT",
   "recordedAt": "2026-10-04T04:35:13.643098+00:00",
   "basis": "Existing fixed 12-call /900-second attempt is closed as OUTPUT_TRUNCATED; do not overwrite or extend it. Corrected history contains five original segments, requiring at least ten L1/Skill calls before scene/persona/tool loops.",
   "historyCutoffExclusive": 182,
@@ -36,5 +36,6 @@
     "Paired user-cluster summary refuses silent missing-user exclusion",
     "Generic caller-contract and validation-coverage guidance appended after unchanged native Skill prompt"
   ],
-  "numericBudgetQuestionAndModelUnchanged": true
+  "numericBudgetQuestionAndModelUnchanged": true,
+  "authorization": "User: \u7ee7\u7eed\uff0c\u8fd9\u79cd\u53ef\u4ee5\u4f60\u81ea\u5df1\u5224\u65ad (2026-10-04 Asia/Shanghai); bounded development budget adjustments may be judged autonomously and recorded."
 }

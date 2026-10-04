@@ -1,0 +1,63 @@
+{
+  "status": "PREREGISTERED_BEFORE_DISPATCH",
+  "recordedAt": "2026-10-04T15:16:13.382522+08:00",
+  "basis": "Existing fixed 12-call /900-second attempt is closed as OUTPUT_TRUNCATED; do not overwrite or extend it. Corrected history contains five original segments, requiring at least ten L1/Skill calls before scene/persona/tool loops.",
+  "historyCutoffExclusive": 182,
+  "questionIds": [
+    "acd74206-37dc-4756-94a8-b99a395d9a21",
+    "f546a74f-54de-40d0-9d88-8b0e30467d7b"
+  ],
+  "historySha256": "eeb336ef1029bdd8818a0a503b589dcb51bb249be5511729b6645f779ebddb37",
+  "model": "qwen3.8-27b",
+  "outputMaxTokensPerRequest": 4096,
+  "foregroundDispatchesPerQuestion": 6,
+  "foregroundWallSecondsPerQuestion": 120,
+  "newLearningDispatchLimit": 30,
+  "newLearningWindowSeconds": 1800,
+  "originalBudgetUnchanged": true,
+  "originalAttemptKnownTokens": 102780,
+  "nativeBacklogContractRestored": true,
+  "nativeImportBoundaries": [
+    0,
+    47,
+    78,
+    109,
+    154
+  ],
+  "noHistoryRemoved": true,
+  "answersScorerOnly": true,
+  "nativeAlgorithmUnchanged": true,
+  "embeddingRealLocalAndReportedSeparately": true,
+  "independentEffectClaim": false,
+  "formalUsersAndProgrammingSequenceNotStarted": true,
+  "driverSha256": "cdf6aad7570fa739189a9a368c90f8679feaa63bbfcc668bacbeb6575714fa23",
+  "additionalOfflinePreparation": [
+    "Preserve partial native answers and grade with unchanged official method; termination remains separate",
+    "Paired user-cluster summary refuses silent missing-user exclusion",
+    "Generic caller-contract and validation-coverage guidance appended after unchanged native Skill prompt"
+  ],
+  "numericBudgetQuestionAndModelUnchanged": true,
+  "authorization": "User: \u7ee7\u7eed\uff0c\u8fd9\u79cd\u53ef\u4ee5\u4f60\u81ea\u5df1\u5224\u65ad (2026-10-04 Asia/Shanghai); bounded development budget adjustments may be judged autonomously and recorded.",
+  "developmentOnly": true,
+  "runDirectory": ".artifacts/personamem-pilot-20261004/rsi-corrected-1",
+  "baselineDirectory": ".artifacts/personamem-pilot-20261004/baseline",
+  "baselineReused": true,
+  "baselineReuseReason": "Same exact historical text, cutoff, role projection, questions, model and six calls /120 seconds per question. Previous baseline finished in one call each; scoring-wrapper health correction leaves its 2/2 unchanged.",
+  "gatewayRequestLimit": 42,
+  "foregroundTotalLimit": 12,
+  "learningDailyCallBudget": 30,
+  "learningQuietSeconds": 45,
+  "sourceFilesSha256": {
+    "src/local-core.ts": "27889eb66e1eeccfd16b336b537185d070cad40c6004ebfdb14ed811356f8a9a",
+    "src/runtime.ts": "1798c5da8da14ed07a15ce9c18e59661bb06b2a57f5d0a2c62b2539acb0f69a6",
+    "scripts/probe-runner.py": "871848c7012402bf1481ac639f1dd3890e2c16dcbe4efa7d2d9f1a7bb1b82af3",
+    "scripts/personamem-pilot-task.mjs": "cdf6aad7570fa739189a9a368c90f8679feaa63bbfcc668bacbeb6575714fa23",
+    "scripts/personamem-history.mjs": "b72eecb46d810ad7a2d01724b8c0b361358568446480ea7b842c043f25b39906"
+  },
+  "publicInputSha256": "6d81fc391cf8409633ead223ab9c2e503f878c013cc44e1aa7bb327a89e04f02",
+  "failedOriginalRetained": true,
+  "allFailedAndInterruptedCostsIncluded": true,
+  "questionsNeverLearningInput": true,
+  "scorerOnlyAnswers": true,
+  "automaticExpansionIfFailure": false
+}

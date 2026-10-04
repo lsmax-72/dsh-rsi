@@ -133,7 +133,9 @@ def main():
         learning_limit=pool.reserve(prefix,learning_limit)
         driver['config']['learningDispatchLimit']=learning_limit
         (output/'budget-reservation.json').write_text(json.dumps({'leaseId':prefix,'quota':learning_limit,'pool':pool.snapshot()},indent=2))
-    relay_limit=min(args.request_limit,args.dispatch_limit+learning_limit)
+    # Persona limits apply per question; the relay sees the sum of both question budgets.
+    foreground_limit=args.dispatch_limit*(len(public['questions']) if args.persona_input else 1)
+    relay_limit=min(args.request_limit,foreground_limit+learning_limit)
     containers = []
     started = False
     exported = False
