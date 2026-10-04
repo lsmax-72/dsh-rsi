@@ -22,6 +22,7 @@ try {
   assert.ok(review.systemPrompt.includes('target about 1500 characters'));
   assert.ok(review.systemPrompt.includes('native skill_files_write resources'));
   assert.ok(review.systemPrompt.includes('completed turn alone are not execution evidence'));
+  assert.ok(review.systemPrompt.includes('Separate observed evidence from proposed validation'));
   await core.extractMemories({sessionKey:'fixture-source',sessionId:'fixture-source',messages:[{id:'claim-only',role:'assistant',content:'所有测试都通过了。',timestamp:Date.now()}]});
   assert.deepEqual(result.candidates,[]);
   const l1=calls.find(p=>p.taskId==='l1-extraction');assert.ok(l1.systemPrompt.includes('assistant-reported/unverified'));assert.ok(l1.prompt.includes('所有测试都通过了'));

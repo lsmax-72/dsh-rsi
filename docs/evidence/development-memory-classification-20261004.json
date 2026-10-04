@@ -1,0 +1,49 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-03T23:53:36.154Z",
+  "method": "One native L1 development replay into fresh assets; no task solver, Skill review, scorer input or effect claim.",
+  "sourceMessages": 31,
+  "storedCount": 1,
+  "records": [
+    {
+      "id": "m_1791071615533_fd88505e",
+      "content": "用户（开发者）在 2026-10-03 要求 AI 在 Django 代码库中实现 ModelAdmin.get_inlines() 钩子，目的是允许根据 request 或 model instance 动态设置 inlines，避免手动重写 get_inline_instances 中的循环代码",
+      "type": "episodic",
+      "priority": 90,
+      "scene_name": "用户（开发者）要求 AI 在 Django 框架中实现 ModelAdmin 的 get_inlines() 钩子功能",
+      "source_message_ids": [
+        "859397da-d6dd-4f95-8037-4a49e359942b"
+      ],
+      "metadata": {
+        "activity_start_time": "2026-10-03T23:26:44Z"
+      },
+      "timestamps": [
+        "2026-10-03T23:53:35.616Z"
+      ],
+      "createdAt": "2026-10-03T23:53:35.616Z",
+      "updatedAt": "2026-10-03T23:53:35.616Z",
+      "version": 0,
+      "sessionKey": "development-source-review",
+      "sessionId": "development-source-review",
+      "taskId": "",
+      "teamId": "default",
+      "userId": "default",
+      "agentId": "default"
+    }
+  ],
+  "oneOffRules": [],
+  "realModelRequests": 1,
+  "knownTokens": 8071,
+  "unknownUsage": 0,
+  "importedSourceLogExactlyReconstructable": true,
+  "scopeDataDir": "/private/tmp/dsh-rsi-memory-review-20261004-2/assets/scopes/58cc897c3fbb272b86e2983f",
+  "preservedFirstAttempt": {
+    "status": "ERROR",
+    "error": "Model stream did not complete successfully",
+    "requests": 1,
+    "classification": "OUTPUT_TRUNCATED",
+    "knownTokens": 10841,
+    "configIssue": "Missing model reasoningEfforts mapping; corrected to the existing experiment provider config, no model/output budget change."
+  },
+  "bothAttemptsKnownTokens": 18912
+}
