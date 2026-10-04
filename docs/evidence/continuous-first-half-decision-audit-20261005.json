@@ -1,0 +1,167 @@
+{
+  "status": "FIRST_HALF_FIXED_SAMPLE_DECISION_EVIDENCE_AUDIT",
+  "recordedAt": "2026-10-04T20:27:09.933218+00:00",
+  "frozenRevision": "619baad55159699b073e9be12c24861b33e418d4",
+  "reviewConductedAfterScoresKnown": true,
+  "originalRelevanceLabelsAssignedBeforeThoseScores": true,
+  "diagnosticsSha256": "e5e0854170a3e0137a1b32dba7ce5dbda9097a3101db33f9924935a139b845e5",
+  "additionalModelOrScorerCalls": 0,
+  "rawLedgersOrAssetsChanged": false,
+  "decisionCausalityProven": false,
+  "fullSequenceEffectClaim": false,
+  "tasks": [
+    {
+      "instanceId": "django__django-11551",
+      "samplePosition": 2,
+      "fixedMemoryReviewSha256": "65aa587674e3abe93f7151216cf54e67bcf5cbcb68fac804d1d4f954bc393752",
+      "firstActualRequestAlreadyContainsGenericTestEntry": true,
+      "matchingHistoricalMemoryRefs": [
+        {
+          "id": "m_1791129416393_1046cc20",
+          "version": 0,
+          "content": "AI 在 2026 年 10 月 4 日尝试通过 python -m django.test 和 python tests/runtests.py 命令运行 utils_tests.test_http 测试模块以验证修改。"
+        }
+      ],
+      "evidenceLevel": "CONCORDANT_BUT_CAUSALITY_UNPROVEN",
+      "interpretation": "The generic framework entry is present before RSI executes it; baseline does not execute that entry and instead uses temporary probes. This difference alone cannot establish asset causality. No literal current-task remedy or observed Skill body can be attributed to these commands.",
+      "noMatchingSkillBodyObserved": true,
+      "avoidablyRepeatedErrorSupportedByTheseAssets": null,
+      "limit": "The saved records establish input and commands. They do not prove why the agent chose them or that historical assets improved the choice.",
+      "rsiActualTestEntryInvocations": [
+        {
+          "requestOrdinal": 5,
+          "command": "cd /workspace && python tests/runtests.py --failfast -v 1 contrib.admin.tests.AdminChecksTests.test_list_display 2>&1 | tail -20",
+          "patchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sourceResultMessageId": "d5869bed-845b-4ece-8933-3eff15f67ace",
+          "sourceEventSeq": 39
+        },
+        {
+          "requestOrdinal": 6,
+          "command": "cd /workspace && python tests/runtests.py admin.tests.AdminChecksTests 2>&1 | tail -10",
+          "patchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sourceResultMessageId": "544dd6cd-f994-46db-9f01-93e5ab247011",
+          "sourceEventSeq": 44
+        },
+        {
+          "requestOrdinal": 16,
+          "command": "cd /workspace/tests && python runtests.py modeladmin.tests.test_checks.ListDisplayTests -v 2 2>&1 | tail -20",
+          "patchSha256": "093aa062415050d683319df367afd70d022b8e328e4d5e49e6c24d793ed1850d",
+          "sourceResultMessageId": "372aa388-dede-49b1-9494-1d7be3307d3f",
+          "sourceEventSeq": 94
+        },
+        {
+          "requestOrdinal": 17,
+          "command": "cd /workspace/tests && python runtests.py modeladmin.test_checks.ListDisplayTests -v 2 2>&1 | tail -15",
+          "patchSha256": "093aa062415050d683319df367afd70d022b8e328e4d5e49e6c24d793ed1850d",
+          "sourceResultMessageId": "747c6e94-4d99-41c6-ae6b-c85d47fb61a0",
+          "sourceEventSeq": 99
+        },
+        {
+          "requestOrdinal": 20,
+          "command": "cd /workspace/tests && python runtests.py modeladmin.test_checks.ListDisplayTests -v 2 2>&1 | tail -20",
+          "patchSha256": "d7e2997f264b11b1bb453d75944f4a498bad4fb870ad0aad132c6e86b3f2f848",
+          "sourceResultMessageId": "d5495aac-40d5-44f1-b3b3-dc614103835d",
+          "sourceEventSeq": 114
+        },
+        {
+          "requestOrdinal": 23,
+          "command": "cd /workspace/tests && python runtests.py modeladmin.test_checks.ListDisplayTests -v 2 2>&1 | tail -20",
+          "patchSha256": "6c3df6e0d2d59b186975cea1152acefd34b03e178ce7ab166c5b2db137b0fd58",
+          "sourceResultMessageId": "aba66eb3-a70f-4b03-831e-5e734d6a0327",
+          "sourceEventSeq": 129
+        },
+        {
+          "requestOrdinal": 31,
+          "command": "cd /workspace/tests && python runtests.py modeladmin.test_checks.ListDisplayTests -v 2 2>&1 | tail -15",
+          "patchSha256": "47b9bbeb7e78ac862cdd786f27991ec95a9e5f958e5b9cb19b594e5243001495",
+          "sourceResultMessageId": "66b77fe9-75d9-4fd7-ad34-fa8ee04194fb",
+          "sourceEventSeq": 169
+        },
+        {
+          "requestOrdinal": 32,
+          "command": "cd /workspace/tests && python runtests.py modeladmin.test_checks 2>&1 | tail -6 && python runtests.py admin_checks admin_views 2>&1 | tail -6",
+          "patchSha256": "47b9bbeb7e78ac862cdd786f27991ec95a9e5f958e5b9cb19b594e5243001495",
+          "sourceResultMessageId": "f4356bcf-e076-43ef-ac9f-412d3deb5b84",
+          "sourceEventSeq": 174
+        },
+        {
+          "requestOrdinal": 33,
+          "command": "cd /workspace/tests && python runtests.py modeladmin 2>&1 | tail -4; python runtests.py admin_checks 2>&1 | grep -E \"^(Ran|OK|FAILED)\"; python runtests.py admin_views 2>&1 | grep -E \"^(Ran|OK|FAILED)\"",
+          "patchSha256": "47b9bbeb7e78ac862cdd786f27991ec95a9e5f958e5b9cb19b594e5243001495",
+          "sourceResultMessageId": "c81556ae-33ba-4c38-a5d7-24c2aebc93f9",
+          "sourceEventSeq": 179
+        },
+        {
+          "requestOrdinal": 34,
+          "command": "cd /workspace/tests && python runtests.py modeladmin 2>&1 | grep -E \"^(Ran|OK|FAILED)\"",
+          "patchSha256": "47b9bbeb7e78ac862cdd786f27991ec95a9e5f958e5b9cb19b594e5243001495",
+          "sourceResultMessageId": "4183314e-13ff-481f-a4b8-cf2963cdd474",
+          "sourceEventSeq": 184
+        }
+      ],
+      "baselineActualTestEntryInvocationOrdinals": []
+    },
+    {
+      "instanceId": "django__django-11815",
+      "samplePosition": 4,
+      "fixedMemoryReviewSha256": "5542f372d9e77db43e6a5888213e64bccc1da4c0e74dc20694722d45f2fef17e",
+      "firstActualRequestAlreadyContainsGenericTestEntry": true,
+      "matchingHistoricalMemoryRefs": [
+        {
+          "id": "m_1791129416393_1046cc20",
+          "version": 0,
+          "content": "AI 在 2026 年 10 月 4 日尝试通过 python -m django.test 和 python tests/runtests.py 命令运行 utils_tests.test_http 测试模块以验证修改。"
+        }
+      ],
+      "evidenceLevel": "CONCORDANT_BUT_CAUSALITY_UNPROVEN",
+      "interpretation": "The generic framework entry is present before RSI executes it; baseline also executes the same entry without assets. No literal current-task remedy or observed Skill body can be attributed to these commands.",
+      "noMatchingSkillBodyObserved": true,
+      "avoidablyRepeatedErrorSupportedByTheseAssets": null,
+      "limit": "The saved records establish input and commands. They do not prove why the agent chose them or that historical assets improved the choice.",
+      "rsiActualTestEntryInvocations": [
+        {
+          "requestOrdinal": 32,
+          "command": "cd /workspace && python tests/runtests.py migrations.test_writer --parallel 1 2>&1 | tail -5",
+          "patchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "sourceResultMessageId": "3d9a257f-31dd-4554-b90a-a8de985557c5",
+          "sourceEventSeq": 172
+        },
+        {
+          "requestOrdinal": 38,
+          "command": "cd /workspace && python tests/runtests.py migrations.test_writer 2>&1 | tail -15",
+          "patchSha256": "e337d501a50c3d202439455102250ce86f86d0641123e67c32aff730c9b265b6",
+          "sourceResultMessageId": "705ffbe5-5f13-4b09-a8b0-4d2d04caa17c",
+          "sourceEventSeq": 203
+        },
+        {
+          "requestOrdinal": 39,
+          "command": "cd /workspace && python tests/runtests.py migrations.test_writer 2>&1 | grep -B2 -A8 \"FAIL:\" | head -60",
+          "patchSha256": "e337d501a50c3d202439455102250ce86f86d0641123e67c32aff730c9b265b6",
+          "sourceResultMessageId": "cebf2665-f44d-4ad8-824e-bd3ef8ddba81",
+          "sourceEventSeq": 208
+        },
+        {
+          "requestOrdinal": 40,
+          "command": "cd /workspace && git stash && python tests/runtests.py migrations.test_writer 2>&1 | tail -8 && git stash pop",
+          "patchSha256": "e337d501a50c3d202439455102250ce86f86d0641123e67c32aff730c9b265b6",
+          "sourceResultMessageId": "a899ec51-076b-4047-bc43-57e545dacf84",
+          "sourceEventSeq": 213
+        }
+      ],
+      "baselineActualTestEntryInvocationOrdinals": [
+        10,
+        11,
+        14,
+        15,
+        16,
+        18,
+        28,
+        29,
+        33,
+        34,
+        35
+      ]
+    }
+  ],
+  "fullArtifactSha256": "4a1b41d3cbfe5d38f8be938159e5088fd91bde319a64a3ef500b3f84abca0a0b"
+}
