@@ -1,0 +1,589 @@
+{
+  "status": "INCOMPLETE_WITHHOLD_FULL_PAIRED_ESTIMATE",
+  "frozenRevision": "63d06cc7f1fe8ed8623210a3094762b23485c540",
+  "freezeSha256": "d3f2e157199f72fffd496fdac07045356d5b4023c5537d9688f88235291354bf",
+  "plannedUsers": 8,
+  "questionsPerUser": 4,
+  "completePairedUsers": [
+    "6",
+    "2",
+    "10",
+    "13"
+  ],
+  "savedResults": {
+    "status": "INCOMPLETE_WITHHOLD_FULL_PAIRED_ESTIMATE",
+    "users": [
+      {
+        "personaId": "6",
+        "arms": [
+          {
+            "arm": "baseline",
+            "runnerReturnCode": 0,
+            "runnerStatus": "COMPLETED",
+            "scores": [
+              {
+                "questionId": "dbbd6663-a17f-4b84-8579-6d39ad99c738",
+                "correct": true,
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "c9877982faf1210833e1a4f08d1fbee60abad9688d7050ffa820ffc59a373c35"
+              },
+              {
+                "questionId": "53bb55a3-2ca8-4ab5-a590-f8b68f491128",
+                "correct": false,
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "5b7ded7e455ac482bb8ae6f1b4122ede2e2d8229d1244288df14b9a4f5cc65dc"
+              },
+              {
+                "questionId": "fe2e91a8-fd23-4ea7-a3f1-722a0396712d",
+                "correct": false,
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "0e20119bf366f58581526a90695d476f1c2ba1021da68c15b63c64c69364a026"
+              },
+              {
+                "questionId": "b8e89a15-dbb5-4309-868a-3755bcb6b5da",
+                "correct": true,
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "5141fb0f5ab6e08bf3d4e41386c2dcb2cc4ba48ed952051daa0458b103d4877a"
+              }
+            ],
+            "accuracy": 0.5,
+            "knownTokens": 120626,
+            "unknownActualUsage": 0,
+            "foregroundTokens": 120626,
+            "backgroundTokens": 0,
+            "gatewayLedgerMatches": true
+          },
+          {
+            "arm": "rsi",
+            "runnerReturnCode": 0,
+            "runnerStatus": "COMPLETED",
+            "scores": [
+              {
+                "questionId": "dbbd6663-a17f-4b84-8579-6d39ad99c738",
+                "correct": true,
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "56f09e51c9f1c5909fe474db0518fe4a9626a73eb2ac1c658bec53842e7004ba"
+              },
+              {
+                "questionId": "53bb55a3-2ca8-4ab5-a590-f8b68f491128",
+                "correct": false,
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "94d614fb03b826cd8d374d24786a2cdc73e42b718338729d96f86033b96bd2af"
+              },
+              {
+                "questionId": "fe2e91a8-fd23-4ea7-a3f1-722a0396712d",
+                "correct": false,
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "b9ade41f8019a09c4e76915edfbda5ef7cf34a2824d6fb16bc5e40b9f9206cfb"
+              },
+              {
+                "questionId": "b8e89a15-dbb5-4309-868a-3755bcb6b5da",
+                "correct": true,
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "61afd0fcc02c1bc24008054426fa0770a06d9ec0ea07da9c2ac86aca9c63f750"
+              }
+            ],
+            "accuracy": 0.5,
+            "knownTokens": 520238,
+            "unknownActualUsage": 0,
+            "foregroundTokens": 203886,
+            "backgroundTokens": 316352,
+            "gatewayLedgerMatches": true
+          }
+        ]
+      },
+      {
+        "personaId": "2",
+        "arms": [
+          {
+            "arm": "baseline",
+            "runnerReturnCode": 0,
+            "runnerStatus": "COMPLETED",
+            "scores": [
+              {
+                "questionId": "4e673ae2-aedb-4e12-83c9-9cb17e6b2711",
+                "correct": true,
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "87e327ed31e6e7a0d2e18ac4c319e9168cc8972cfdac8ab5a523632d7e8293ab"
+              },
+              {
+                "questionId": "ff92b10b-5eaa-4cc7-8a97-2e392059a52a",
+                "correct": false,
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "95a69b05118af3e5a44df506fbcb0b7feee14a03d719d786c72378866a66659b"
+              },
+              {
+                "questionId": "14f4861a-612b-462b-9b6b-2d9f0f903be3",
+                "correct": true,
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "2ea57e42817cc7c2945074ef9480dd9577b5051c4fd6c2ba54c6cce5fd57e01e"
+              },
+              {
+                "questionId": "f0147ccb-bc31-4c48-a31b-b93cef0681ba",
+                "correct": false,
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "5f18c2881015b2759a1b1ea0fa60dd6ffd550ce1c16ac65ff535993a7d3c8d89"
+              }
+            ],
+            "accuracy": 0.5,
+            "knownTokens": 86755,
+            "unknownActualUsage": 0,
+            "foregroundTokens": 86755,
+            "backgroundTokens": 0,
+            "gatewayLedgerMatches": true
+          },
+          {
+            "arm": "rsi",
+            "runnerReturnCode": 0,
+            "runnerStatus": "COMPLETED",
+            "scores": [
+              {
+                "questionId": "4e673ae2-aedb-4e12-83c9-9cb17e6b2711",
+                "correct": true,
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "1498663a5a1c1a0ef48de105c2862fc34488a5b796540b42ed89eb105b579152"
+              },
+              {
+                "questionId": "ff92b10b-5eaa-4cc7-8a97-2e392059a52a",
+                "correct": true,
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "cbf1babf004bb475bed7799c519cdfb6fc9ce0d59494386e09602ca2f6bc20bf"
+              },
+              {
+                "questionId": "14f4861a-612b-462b-9b6b-2d9f0f903be3",
+                "correct": true,
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "4e0baedcb6fab35e51b5013b7936a4a8648bf7ffd8f28ca285276c19324f923e"
+              },
+              {
+                "questionId": "f0147ccb-bc31-4c48-a31b-b93cef0681ba",
+                "correct": false,
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "d59e3bfc57ef261fb703638e144a03a70ccd8ed44aae2612abb4cd7466be554f"
+              }
+            ],
+            "accuracy": 0.75,
+            "knownTokens": 385417,
+            "unknownActualUsage": 0,
+            "foregroundTokens": 153232,
+            "backgroundTokens": 232185,
+            "gatewayLedgerMatches": true
+          }
+        ]
+      },
+      {
+        "personaId": "10",
+        "arms": [
+          {
+            "arm": "baseline",
+            "runnerReturnCode": 0,
+            "runnerStatus": "COMPLETED",
+            "scores": [
+              {
+                "questionId": "35dae3c4-7bd6-4f65-af6e-747d7d326556",
+                "correct": false,
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "9ad229d51d09e8348abf51c540738f01dcd724d5eec2fb8003cd55694ff89286"
+              },
+              {
+                "questionId": "7c339c29-79db-4ec4-85f1-a11dae5dbdf4",
+                "correct": true,
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "9f1817151bf0d3ba330d8a2ec1c90fc90e5c123de314955a7de6a9b0a3f2cdc3"
+              },
+              {
+                "questionId": "e48cb6ad-1629-4107-befb-7f2c3ce4e65d",
+                "correct": true,
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "5eed329096c384df8d5245379a67cb9e23a4e64637c3730650bcc71d513882d2"
+              },
+              {
+                "questionId": "2b969ce1-cf22-4f80-af89-f42e57ad7c49",
+                "correct": true,
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "1f0d0b0a68232403b545f52aed85faee4c4461f5ca52a93b7a9727596f2b081a"
+              }
+            ],
+            "accuracy": 0.75,
+            "knownTokens": 124916,
+            "unknownActualUsage": 0,
+            "foregroundTokens": 124916,
+            "backgroundTokens": 0,
+            "gatewayLedgerMatches": true
+          },
+          {
+            "arm": "rsi",
+            "runnerReturnCode": 0,
+            "runnerStatus": "COMPLETED",
+            "scores": [
+              {
+                "questionId": "35dae3c4-7bd6-4f65-af6e-747d7d326556",
+                "correct": false,
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "cd0f543a0f33cf01e292ce58f2ee6a5c7be5204e40807c52a6c29943923eb489"
+              },
+              {
+                "questionId": "7c339c29-79db-4ec4-85f1-a11dae5dbdf4",
+                "correct": true,
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "6adbfb5f4e52b07137f0805934acf68ddb1612643e06e1fd2009547f842bbbdf"
+              },
+              {
+                "questionId": "e48cb6ad-1629-4107-befb-7f2c3ce4e65d",
+                "correct": true,
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "06297830c9948cc7975d1db23f80b9b56b4cfc3a7ebfb21ad8c5596bfb9fcc61"
+              },
+              {
+                "questionId": "2b969ce1-cf22-4f80-af89-f42e57ad7c49",
+                "correct": true,
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "69591dc39f9808e3d9552d8d43f691c3ca53aa99cb53d94a99e206e65c4a1fcb"
+              }
+            ],
+            "accuracy": 0.75,
+            "knownTokens": 457067,
+            "unknownActualUsage": 0,
+            "foregroundTokens": 176143,
+            "backgroundTokens": 280924,
+            "gatewayLedgerMatches": true
+          }
+        ]
+      },
+      {
+        "personaId": "13",
+        "arms": [
+          {
+            "arm": "baseline",
+            "runnerReturnCode": 0,
+            "runnerStatus": "COMPLETED",
+            "scores": [
+              {
+                "questionId": "f7b31f4b-e088-4a2e-a505-1e3cd7426e9e",
+                "correct": false,
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "607f834adb0fa7cabe8131ebc76949e77de584dca3737878519b1a2d09dd5721"
+              },
+              {
+                "questionId": "4534d8e3-44fc-4f72-9316-59a88ebd9e42",
+                "correct": true,
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "e92a614fb7ccfad515d9c9a42b113b2f60b0fa252363c7dae63c4f91dfc84d55"
+              },
+              {
+                "questionId": "43436dbb-4b3e-4f1d-a2eb-fa61b16935f8",
+                "correct": true,
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "8ebe1a6d94d34736c2be5f1f9dc2f93846a6253f73ba8a39018fa318e07d8585"
+              },
+              {
+                "questionId": "43653af1-207b-4de7-b29c-df5c9e29ead8",
+                "correct": true,
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "d986ea80797c104ccacdf6b98423c36af59ea901b0a7502cef9e3f58c491f4c9"
+              }
+            ],
+            "accuracy": 0.75,
+            "knownTokens": 116111,
+            "unknownActualUsage": 0,
+            "foregroundTokens": 116111,
+            "backgroundTokens": 0,
+            "gatewayLedgerMatches": true
+          },
+          {
+            "arm": "rsi",
+            "runnerReturnCode": 0,
+            "runnerStatus": "COMPLETED",
+            "scores": [
+              {
+                "questionId": "f7b31f4b-e088-4a2e-a505-1e3cd7426e9e",
+                "correct": true,
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "54684c198c935043c6d05d29e39adc8eb1a7d3d80507b07b6907cec04e959e77"
+              },
+              {
+                "questionId": "4534d8e3-44fc-4f72-9316-59a88ebd9e42",
+                "correct": true,
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "10972c12357e28eb6253470d902dcd1b6af951a447600e21efff2fc79e91f306"
+              },
+              {
+                "questionId": "43436dbb-4b3e-4f1d-a2eb-fa61b16935f8",
+                "correct": true,
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "2f0029177bad5d9ca2b9f07681bbfb1ec34d2d0c9ec557632a3f728da9f7d9f8"
+              },
+              {
+                "questionId": "43653af1-207b-4de7-b29c-df5c9e29ead8",
+                "correct": true,
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "e519d7ace203ea16b70f5e0e27f2fe140f3ca6504e6aa3e2a4717154e7f61a9a"
+              }
+            ],
+            "accuracy": 1.0,
+            "knownTokens": 664269,
+            "unknownActualUsage": 0,
+            "foregroundTokens": 306193,
+            "backgroundTokens": 358076,
+            "gatewayLedgerMatches": true
+          }
+        ]
+      },
+      {
+        "personaId": "5",
+        "arms": [
+          {
+            "arm": "baseline",
+            "runnerReturnCode": 0,
+            "runnerStatus": "COMPLETED",
+            "scores": [
+              {
+                "questionId": "f9a80fab-b8e6-4522-8484-0752aa2bc7aa",
+                "correct": false,
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "5cf3e052cb794b27b43d639a8083daf9ab231cd4b2931827e63df402f9ef52c7"
+              },
+              {
+                "questionId": "8e77a1eb-94be-451f-8c6e-db50537a602e",
+                "correct": true,
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "83d295df9e4c49ee6b98d734a65a3daacb7489c8917fa4d793600b2328c4c198"
+              },
+              {
+                "questionId": "b4a5fcbd-e1be-4679-8bd5-92f9374c171c",
+                "correct": true,
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "35225b502c2487a03164e063aedde9875b3ecdad830886b4e4f3985927715bc2"
+              },
+              {
+                "questionId": "3e4cc77a-0434-4dd4-a89a-de7c34c5826e",
+                "correct": false,
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "427d2033fba53d134a9b23abc8266a412ae518aea31cae8b68964a1ab67d8299"
+              }
+            ],
+            "accuracy": 0.5,
+            "knownTokens": 126996,
+            "unknownActualUsage": 0,
+            "foregroundTokens": 126996,
+            "backgroundTokens": 0,
+            "gatewayLedgerMatches": true
+          },
+          {
+            "arm": "rsi",
+            "runnerReturnCode": 1,
+            "runnerStatus": "ERROR",
+            "scores": [],
+            "accuracy": null,
+            "knownTokens": 17543,
+            "unknownActualUsage": 0,
+            "foregroundTokens": 0,
+            "backgroundTokens": 17543,
+            "gatewayLedgerMatches": true
+          }
+        ]
+      },
+      {
+        "personaId": "9",
+        "arms": []
+      },
+      {
+        "personaId": "4",
+        "arms": []
+      },
+      {
+        "personaId": "12",
+        "arms": []
+      }
+    ],
+    "plannedUsers": 8,
+    "knownTokens": 2619938,
+    "unknownActualUsage": 0,
+    "officialScorerControlsPassed": 3,
+    "scoresReturnedToLearning": false,
+    "smallSampleLimit": "Eight correlated user clusters; not the full benchmark or a universal causal guarantee."
+  },
+  "sourceIsolation": {
+    "status": "PASS",
+    "closedUserChecks": [
+      {
+        "personaId": "6",
+        "sources": [
+          "persona-6-history"
+        ],
+        "questionSourcesAbsent": true,
+        "questionIsolationMatches": true,
+        "learningFrozenBeforeQuestions": true,
+        "nativeProfilesCompleteBeforeQuestions": true,
+        "isolationEvidenceSha256": "6c2a4b1e6fc01880a3f16ef2a82c1a7b7a1ecb9793dbb27b54db6b3f892101bc"
+      },
+      {
+        "personaId": "2",
+        "sources": [
+          "persona-2-history"
+        ],
+        "questionSourcesAbsent": true,
+        "questionIsolationMatches": true,
+        "learningFrozenBeforeQuestions": true,
+        "nativeProfilesCompleteBeforeQuestions": true,
+        "isolationEvidenceSha256": "94b5ba7b13fcaa67f9c83d1c7adc4a9a683e1400f3bffffc801269693187eed4"
+      },
+      {
+        "personaId": "10",
+        "sources": [
+          "persona-10-history"
+        ],
+        "questionSourcesAbsent": true,
+        "questionIsolationMatches": true,
+        "learningFrozenBeforeQuestions": true,
+        "nativeProfilesCompleteBeforeQuestions": true,
+        "isolationEvidenceSha256": "71965b5b978c2883385a8f27a190b4c150b06db68ff0a251c79d1f72f144fb81"
+      },
+      {
+        "personaId": "13",
+        "sources": [
+          "persona-13-history"
+        ],
+        "questionSourcesAbsent": true,
+        "questionIsolationMatches": true,
+        "learningFrozenBeforeQuestions": true,
+        "nativeProfilesCompleteBeforeQuestions": true,
+        "isolationEvidenceSha256": "163b7961e92cfd7149a6936f8db82e53fa7c076241a74c2c992648851e357f79"
+      }
+    ],
+    "realNewModelRequests": 0
+  },
+  "requestReconstruction": [
+    {
+      "personaId": "6",
+      "arm": "baseline",
+      "requestsReconstructed": 4,
+      "sha256": "614beea25f4adf68b716cd78f9469f741ad20d2cab74f513f4643d4907ab9fb6"
+    },
+    {
+      "personaId": "6",
+      "arm": "rsi",
+      "requestsReconstructed": 47,
+      "sha256": "72a37a703266feffb84bd476b1ed4484d398312dbdfbcc0b2741c2741d189242"
+    },
+    {
+      "personaId": "2",
+      "arm": "rsi",
+      "requestsReconstructed": 36,
+      "sha256": "25380c080122dcf4b10c7eada9cd155b8d96180a12808beefd91de1b5da8e56b"
+    },
+    {
+      "personaId": "2",
+      "arm": "baseline",
+      "requestsReconstructed": 4,
+      "sha256": "18942f057db36608c2f6cba9e9879f53ffdf64ad6bb5548bcc542509a41157a0"
+    },
+    {
+      "personaId": "10",
+      "arm": "baseline",
+      "requestsReconstructed": 4,
+      "sha256": "2a9d009d0d87761893a9b898e9f26bc3aeddb2d8e8aec9acc62b135cb8e0d2d0"
+    },
+    {
+      "personaId": "10",
+      "arm": "rsi",
+      "requestsReconstructed": 40,
+      "sha256": "010e4e0856a2b885366b28f42ba3f47fb9a60baff68a6b2045c0a776598116be"
+    },
+    {
+      "personaId": "13",
+      "arm": "rsi",
+      "requestsReconstructed": 52,
+      "sha256": "3d57151c355543d4e1840e72205e51cb77c51938d60cf930c126091b05b7deb7"
+    },
+    {
+      "personaId": "13",
+      "arm": "baseline",
+      "requestsReconstructed": 4,
+      "sha256": "a8e2d77a68e664b04fb9209fb82617d402b3c986f1a737f4fb445ff387ccd012"
+    },
+    {
+      "personaId": "5",
+      "arm": "baseline",
+      "requestsReconstructed": 4,
+      "sha256": "6b02245a27f9bd2e39a9d764f88861a694a7894f28c2eaafbff7f5b3bb3f49a0"
+    },
+    {
+      "personaId": "5",
+      "arm": "rsi",
+      "requestsReconstructed": 1,
+      "sha256": "983a9730f706518863948617e52b664d36f2fe48ae7378b60254fb28cb81aa90"
+    }
+  ],
+  "fixedReferenceSampling": {
+    "plannedRefs": 64,
+    "reviewedRefs": 32,
+    "labelCounts": {
+      "direct": 9,
+      "partial": 18,
+      "unrelated": 5
+    },
+    "reviewFileSha256": {
+      "6": "b28e4f5fb3acf0009f3ca8848eacb54243ab4dd2a7f91c075eae9c6244cd16bd",
+      "2": "00110fb23c4494b3357d69fcb310daf3d54208b8e4c9b788a46ff0af1171cb29",
+      "10": "e2182fcf909971dd28fb3b750f709ecc593749ebf9f809bc7e43e1d20dfdc06c",
+      "13": "d612b9338c85f3e4b36f7b2b4e9990de938145774e2ab9fefe4255affe4e0d37"
+    }
+  },
+  "failure": {
+    "personaId": "5",
+    "phase": "native-memory-extraction",
+    "code": "OUTPUT_TRUNCATED",
+    "streamFinish": "max-tokens",
+    "outputTokens": 4096,
+    "inputTokens": 13447,
+    "knownTokens": 17543,
+    "gatewayRequests": 1,
+    "foregroundRequests": 0,
+    "learningJsonSha256": "2ec3fccb5b99d41dab2aec436dd8cd43c3eae669ee0ee0daa8d56aa6995addb1",
+    "modelLedgerSha256": "2b7815a573ed7e839472abf6f37fb18bbe9a60444919876d0a435f158e4f5325",
+    "notServiceOrContextOverflow": true,
+    "retryPerformed": false,
+    "originalLimitsChanged": false,
+    "nativeShutdownOverwroteClosedJobStatus": "interrupted; original OUTPUT_TRUNCATED retained in pre-shutdown learning snapshot and source log"
+  },
+  "fullPairedEstimateWithheld": true,
+  "selectionBiasWarning": "Completed users are a prefix selected by native learning completion. Their observed accuracy cannot stand for the fixed eight-user cohort.",
+  "futureDisposition": "Preserve this attempt. Input import/output capacity must be repaired and verified in development before another learning study; examined users/questions are no longer unseen for optimization."
+}
