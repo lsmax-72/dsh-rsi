@@ -1,0 +1,164 @@
+{
+  "status": "PREPARED_AND_ZERO_DISPATCH_VERIFIED_NOT_FORMALLY_FROZEN",
+  "baselineHistoryInstalledFixture": {
+    "status": "PASS",
+    "ownPriorHistoryBytesExact": true,
+    "rsiAssetsAbsent": true,
+    "gatewayAbsent": true,
+    "policySha256": "9a37dff188b2a2eaf143dc2e797f60dfeacfe4dac7f4ceab82610de54aa5c06f",
+    "sourceSnapshotSha256": "df8c68e8b5202137dfc562245b0f1e8fe9eefa92fcf9fce5dec1a9c8643f403d"
+  },
+  "rsiSeedRestoreFixture": {
+    "status": "PASS_NATIVE_RSI_ASSET_AND_SOURCE_RESTORE",
+    "realModelRequests": 0,
+    "fixtureResponsesOnly": true,
+    "sourceSessionsExact": true,
+    "requiredSourceAndLearningSessions": 10,
+    "initialMemoryCount": 1,
+    "initialSkillCount": 1,
+    "seedDailyBudget": 20,
+    "fixtureDailyBudget": 20,
+    "continuousProtocolDailyBudget160StillToFreeze": true,
+    "priorMismatchFixturePreserved": "/private/tmp/dsh-rsi-continuous-fixture-rsi-carry",
+    "productionCoreChanged": false
+  },
+  "controllerEntry": {
+    "status": "PASS_ZERO_DISPATCH_CONTROLLER_ENTRY",
+    "isolatedTemporaryGitFixture": true,
+    "sourceRuntimeProductionFilesUnchanged": true,
+    "positiveFreezeAndEightPinnedEnvironmentsValidated": true,
+    "dirtyCheckoutBlockedBeforePoolOrTask": true,
+    "realModelRequests": 0,
+    "nativeTaskRunsStarted": 0,
+    "fixtureFrozenRevision": "d093a84b31223001bc11adaf63d90683d718b8b2"
+  },
+  "nativeEnvironmentPreflights": [
+    {
+      "instanceId": "django__django-11551",
+      "status": "PASS_PUBLIC_TREE_VERSION_DATE",
+      "taskImage": "sha256:170bf21103e6cbe977df939385189d9a3b2dfd846cc45f558e5c3ae15abd895f",
+      "observed": {
+        "tree": "4067b5171a44f6d559c6d44cda34338c75b73ecc",
+        "commitTime": "1786582999",
+        "djangoVersion": "3.0.dev20260813010319"
+      },
+      "realModelRequests": 0,
+      "network": "none",
+      "hostBinds": [],
+      "rootfsReadOnly": true,
+      "scope": "Exact public source initialization operations from native task driver; not a task solution or score."
+    },
+    {
+      "instanceId": "django__django-11740",
+      "status": "PASS_PUBLIC_TREE_VERSION_DATE",
+      "taskImage": "sha256:022ae47083056729245e8ac88a5cb0f22c031f94f54275285e2d6d3845afe333",
+      "observed": {
+        "tree": "65f310d34189ab338a608477aa384c447493a657",
+        "commitTime": "1786583048",
+        "djangoVersion": "3.0"
+      },
+      "realModelRequests": 0,
+      "network": "none",
+      "hostBinds": [],
+      "rootfsReadOnly": true,
+      "scope": "Exact public source initialization operations from native task driver; not a task solution or score."
+    },
+    {
+      "instanceId": "django__django-11790",
+      "status": "PASS_PUBLIC_TREE_VERSION_DATE",
+      "taskImage": "sha256:fbf999ef8c7a44d3069b7556462dbf6940ae1631daf40dc0bf607fd5db6ae844",
+      "observed": {
+        "tree": "616cc5cf3c5e7ab5043a4d0773e46698db77937e",
+        "commitTime": "1786583088",
+        "djangoVersion": "3.1"
+      },
+      "realModelRequests": 0,
+      "network": "none",
+      "hostBinds": [],
+      "rootfsReadOnly": true,
+      "scope": "Exact public source initialization operations from native task driver; not a task solution or score."
+    },
+    {
+      "instanceId": "django__django-11815",
+      "status": "PASS_PUBLIC_TREE_VERSION_DATE",
+      "taskImage": "sha256:fdf1a4b94996c3490b75c9c516375385e3b8588624255d1ec323cf1dadbf513d",
+      "observed": {
+        "tree": "8430cb2f3f1806789da2328fbfceba20942cede1",
+        "commitTime": "1786771356",
+        "djangoVersion": "3.1"
+      },
+      "realModelRequests": 0,
+      "network": "none",
+      "hostBinds": [],
+      "rootfsReadOnly": true,
+      "scope": "Exact public source initialization operations from native task driver; not a task solution or score."
+    },
+    {
+      "instanceId": "django__django-11848",
+      "status": "PASS_PUBLIC_TREE_VERSION_DATE",
+      "taskImage": "sha256:7155e37164684c18bc73523ee5865ef60e757e48679bd652ddf187975afcf9ff",
+      "observed": {
+        "tree": "523bee2a370238733dd0eb7883dbefccab44ca64",
+        "commitTime": "1786771386",
+        "djangoVersion": "3.1"
+      },
+      "realModelRequests": 0,
+      "network": "none",
+      "hostBinds": [],
+      "rootfsReadOnly": true,
+      "scope": "Exact public source initialization operations from native task driver; not a task solution or score."
+    },
+    {
+      "instanceId": "django__django-11880",
+      "status": "PASS_PUBLIC_TREE_VERSION_DATE",
+      "taskImage": "sha256:879d5f7860e77fbba81140187765010199ccb953d7d65e7ae6712c2c159b75ac",
+      "observed": {
+        "tree": "6966e9d3189249a2332a1352596058b57ad96452",
+        "commitTime": "1786583118",
+        "djangoVersion": "3.1"
+      },
+      "realModelRequests": 0,
+      "network": "none",
+      "hostBinds": [],
+      "rootfsReadOnly": true,
+      "scope": "Exact public source initialization operations from native task driver; not a task solution or score."
+    },
+    {
+      "instanceId": "django__django-11999",
+      "status": "PASS_PUBLIC_TREE_VERSION_DATE",
+      "taskImage": "sha256:b497489d496e8e584c8e42a7eb87c9b090ade0c416989d80bc89984c4821b479",
+      "observed": {
+        "tree": "8dae32f550d93a832d6ddfd137fa7d25f78e1297",
+        "commitTime": "1786771424",
+        "djangoVersion": "3.1"
+      },
+      "realModelRequests": 0,
+      "network": "none",
+      "hostBinds": [],
+      "rootfsReadOnly": true,
+      "scope": "Exact public source initialization operations from native task driver; not a task solution or score."
+    },
+    {
+      "instanceId": "django__django-12262",
+      "status": "PASS_PUBLIC_TREE_VERSION_DATE",
+      "taskImage": "sha256:0ff8892168baa887cc0faf549b8b32896513b14a4b491c9383008d53c15cfc9f",
+      "observed": {
+        "tree": "88307fafa4610ef0c958cab7d18d723d63d5f495",
+        "commitTime": "1786583262",
+        "djangoVersion": "3.1"
+      },
+      "realModelRequests": 0,
+      "network": "none",
+      "hostBinds": [],
+      "rootfsReadOnly": true,
+      "scope": "Exact public source initialization operations from native task driver; not a task solution or score."
+    }
+  ],
+  "realModelRequests": 0,
+  "formalCodingTasksStarted": false,
+  "limitations": [
+    "RSI restore fixture reuses a prior20-call development state; formal160-call protocol starts fresh and is still to freeze.",
+    "The controller validation used a separate temporary Git fixture; actual checkout validation remains necessary after commit.",
+    "Offline first-effective-snapshot grading is implemented but has not run on the new sequence."
+  ]
+}

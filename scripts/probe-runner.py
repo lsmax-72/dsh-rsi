@@ -24,13 +24,15 @@ def verify_seed(assets, sessions):
     # Validate only provenance and frozen input bytes; learning stays in the native core.
     hashes={kind:{str(file.relative_to(directory)):hashlib.sha256(file.read_bytes()).hexdigest()
         for file in sorted(directory.rglob('*')) if file.is_file()}
-        for kind,directory in [('assets',assets),('sessions',sessions)]}
+        for kind,directory in [('assets',assets),('sessions',sessions)] if directory is not None}
     stored={}
     for file in sessions.rglob('session.v4.jsonl'):
         with file.open() as handle: header=json.loads(handle.readline())
         if header.get('type')!='session' or header.get('version')!=4 or header['id'] in stored:
             raise ValueError('Invalid or duplicate source session')
         stored[header['id']]=str(file.relative_to(sessions))
+    if assets is None:
+        return {'requiredSessionIds':sorted(stored),'inputSha256':{'sessions':hashes['sessions']}}
     db=sqlite3.connect((assets/'rsi-state.sqlite').as_uri()+'?mode=ro',uri=True)
     try: sources={row[0] for row in db.execute('SELECT id FROM sources')}
     finally: db.close()
@@ -60,6 +62,7 @@ def main():
     parser.add_argument('--learning-dispatch-limit',type=int,help='New background streams for this run, independent of historical daily usage')
     parser.add_argument('--learning-pool',type=Path,help='Explicitly initialized host experiment pool, never mounted into task containers')
     parser.add_argument('--interrupt-checkpoint', action='store_true', help='Fixture-only SIGKILL after tool edit and durable request ledger')
+    parser.add_argument('--baseline-history',type=Path,help='Continuous study only: previous baseline official logs, with no RSI assets or grading files')
     parser.add_argument('--seed-assets', type=Path, help='Copy an experiment-owned frozen asset store; never a personal profile')
     parser.add_argument('--seed-sessions',type=Path,help='Matching experiment-owned official session directory for source reconstruction')
     parser.add_argument('--phases', type=Path, help='JSON list of named prompts for a small preflight only')
@@ -78,6 +81,7 @@ def main():
     if args.formal and (args.fixture or args.instance=='preflight' or not args.expected_tree or not args.expected_version): parser.error('Formal runs require real task ID and frozen environment checks')
     if args.formal and args.arm=='rsi' and not args.learning_pool: parser.error('Formal RSI requires a durable learning pool')
     if not re.fullmatch(r'[a-zA-Z0-9_-]+',args.instance): parser.error('Invalid task ID')
+    if args.baseline_history and (args.arm!='baseline' or args.seed_assets or args.seed_sessions or args.persona_input or args.profile_recovery or (not args.formal and not args.fixture)): parser.error('Baseline raw history requires its own continuous task arm and no assets')
     if args.seed_sessions and not args.seed_assets: parser.error('Source sessions require matching asset snapshot')
     if args.seed_assets and not args.seed_sessions: parser.error('Asset snapshots require matching official source sessions')
     if args.fixture_learning and (not args.fixture or args.arm!='rsi'): parser.error('Fixture learning requires --fixture --arm rsi')
@@ -199,6 +203,10 @@ def main():
                 shutil.copy2(embedding_model,root/'embedding.gguf')
                 dockerfile += 'COPY embedding.gguf /opt/rsi/embedding.gguf\n'
             dockerfile += 'USER 1000:1000\n'
+            if args.baseline_history:
+                shutil.copytree(args.baseline_history.resolve(),root/'seed-sessions')
+                dockerfile += 'COPY --chown=1000:1000 seed-sessions /opt/seed-sessions\n'
+                (output/'source-snapshot.json').write_text(json.dumps(verify_seed(None,root/'seed-sessions'),indent=2))
             if args.seed_assets:
                 shutil.copytree(args.seed_assets.resolve(),root/'seed-assets')
                 dockerfile += 'COPY --chown=1000:1000 seed-assets /opt/seed-assets\n'
@@ -220,7 +228,8 @@ def main():
                 'dsh-rsi-pilot2:gateway','python3','/opt/rsi/scripts/model-gateway.py'],text=True).strip()
             containers.append(gateway)
             command('docker','network','connect','bridge',gateway)
-        startup = ('cp -a /opt/seed-assets /state/assets && mkdir -p /state/home && cp -a /opt/seed-sessions /state/home/sessions && ' if args.seed_assets else '')
+        startup = ('cp -a /opt/seed-assets /state/assets && ' if args.seed_assets else '')
+        startup += ('mkdir -p /state/home && cp -a /opt/seed-sessions /state/home/sessions && ' if args.seed_assets or args.baseline_history else '')
         startup += 'exec dsh --profile sdk-minimal --patch /opt/rsi/scripts/pilot.json'
         cid = subprocess.check_output(['docker','create','--platform','linux/amd64','--init','--network',network,*policy,
             '--mount',f'type=volume,source={volume},target=/state','-e','QWEN_API_KEY=EMPTY',image,'sh','-c',startup],text=True).strip()
@@ -235,7 +244,7 @@ def main():
             'dispatchLimit':args.dispatch_limit,'learningCallBudget':args.learning_call_budget,'learningDispatchLimit':learning_limit, 'fixtureLearning':args.fixture_learning,
             'wallSecondsPerPhase':args.wall_seconds,'settleSecondsPerPhase':args.settle_seconds,
             'embeddingModelSha256':model_sha if embedding_model else None,'embeddingProvider':'native-local' if embedding_model else None,
-            'formalBenchmark':args.formal or bool(args.persona_protocol),'personaProtocolSha256':hashlib.sha256(args.persona_protocol.read_bytes()).hexdigest() if args.persona_protocol else None,'instanceId':args.instance, 'sourceSessionsRestored':bool(args.seed_sessions), 'effectivePatch':patch},indent=2))
+            'formalBenchmark':args.formal or bool(args.persona_protocol),'personaProtocolSha256':hashlib.sha256(args.persona_protocol.read_bytes()).hexdigest() if args.persona_protocol else None,'instanceId':args.instance, 'sourceSessionsRestored':bool(args.seed_sessions or args.baseline_history),'baselineRawHistoryRestored':bool(args.baseline_history), 'effectivePatch':patch},indent=2))
         phase_count = len(driver['config'].get('phases',[{}]))
         until = time.monotonic() + phase_count*(args.wall_seconds+args.settle_seconds)+90
         killed = False
