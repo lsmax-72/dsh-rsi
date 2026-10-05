@@ -1,0 +1,102 @@
+{
+  "status": "TERMINAL_DEVELOPMENT_QUALITY_NOT_REACHED",
+  "observedAt": "2026-10-05T13:11:55.101390+00:00",
+  "methodRevision": "73c446a4ae32d6d6c63d56c8ca58197a13429c3f",
+  "sourcePlanSha256": "164bed59ec8934e64b4a056175e87062e0c8a7b8a8e02c6ecb2cd141a614823c",
+  "actualCalls": 4,
+  "knownInputTokens": 48689,
+  "knownOutputTokens": 4140,
+  "knownTotalTokens": 52829,
+  "unknownActualUsage": 1,
+  "allActualCallsDurablyReconstructed": true,
+  "actualFinishReasons": [
+    "tool-calls",
+    "tool-calls",
+    "tool-calls",
+    "aborted"
+  ],
+  "sourceCoverage": {
+    "exactNativeFullSourceSuffix": true,
+    "nativeProductionPrefixPreserved": true,
+    "nativeProductionPrefixSha256": "0ed83c6534e4688d72cc45fc6844b6e2fddf4e892adba9f7c08db654fb425938",
+    "sourceMessages": 64,
+    "fullTranscriptUtf16Chars": 34919,
+    "noNativeHeadTailTruncation": true,
+    "allActualDurableInputsReconstructed": true,
+    "actualRequests": 4
+  },
+  "partialAbortedOutput": [
+    {
+      "eventSeq": 29,
+      "chunks": 7,
+      "uncommittedToolArgumentDeltaChars": 39,
+      "nativeUsageZeroOrMissing": true,
+      "retainedRawNativeSessionSha256": "68d7d088e49c702774f906e915e4f166e282f6d2c2b28516fb3d1459ef08479c"
+    }
+  ],
+  "observedToolCalls": [
+    {
+      "step": 1,
+      "name": "skill_list",
+      "argumentKeys": []
+    },
+    {
+      "step": 2,
+      "name": "skill_list",
+      "argumentKeys": [
+        "query"
+      ]
+    },
+    {
+      "step": 3,
+      "name": "skill_create",
+      "argumentKeys": [
+        "content",
+        "name"
+      ]
+    },
+    {
+      "step": 3,
+      "name": "skill_create",
+      "argumentKeys": [
+        "name"
+      ]
+    }
+  ],
+  "storedHeads": [
+    {
+      "scope": "95936c3a976647b10ba66706",
+      "id": "skl-cA7B5s8ZhlKy",
+      "name": "rsi-offline-task-baseline-discipline",
+      "version": 1,
+      "bodyUnicodeCodepoints": 1414,
+      "markdownUnicodeCodepoints": 1531,
+      "bodySha256": "1179f4dc7cb94fb3cb3c00ca21ef785d6b63eb60dc515db3617a265301262d61",
+      "manifest": [],
+      "bodyMatchesHistoricalRetrievedSkillExactly": true,
+      "hasEvidenceSection": false,
+      "targetFixExperienceGenerated": false
+    }
+  ],
+  "resourceWriteCallsObserved": 0,
+  "modelOutputCapReachedAtStep": 3,
+  "step3OutputTokens": 4096,
+  "secondSiblingCreateMissingContent": true,
+  "configuredNativeRunnerTimeoutMs": 180000,
+  "declaredOuterWallMaxSeconds": 240,
+  "actualWallSeconds": 182.48,
+  "terminalReturnCode": 1,
+  "localEmbeddingTokenUsage": null,
+  "taskSolverCalls": 0,
+  "taskCommandsExecuted": 0,
+  "scorerRead": false,
+  "consumerCalls": 0,
+  "overallQualityPassed": false,
+  "interpretation": "Full source and native prefix delivered, but review aborted before a target-fix Skill or native resource was completed. One compact generic protocol-style head persisted. This does not validate per-check fact attribution or resource offload. No automatic rescue or additional consumer.",
+  "scope": "Current factory on a complete legacy development source, not a new task produced by current protocol-separated runtime.",
+  "sourceAndPayloadPreserved": true,
+  "oldFormalDataUnchanged": true,
+  "localEmbeddingCalls": 0,
+  "localEmbeddingInputChars": 0,
+  "localEmbeddingTimeMs": 0
+}
