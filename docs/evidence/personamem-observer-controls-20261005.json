@@ -1,0 +1,74 @@
+{
+  "status": "PASS_PERSONAMEM_OBSERVER_CONTROLS",
+  "driverSha256": "ec7dee60d85329c6fadfbf39bc210983fb23b07f9af981d13512301f3512779e",
+  "controls": [
+    {
+      "kind": "stop",
+      "total": 20,
+      "status": "RETURNED",
+      "knownUsage": true
+    },
+    {
+      "kind": "tool-calls",
+      "total": 20,
+      "status": "RETURNED",
+      "knownUsage": true
+    },
+    {
+      "kind": "stop",
+      "total": 0,
+      "status": "RETURNED",
+      "knownUsage": false
+    },
+    {
+      "kind": "aborted",
+      "total": 0,
+      "status": "INCOMPLETE",
+      "knownUsage": false
+    },
+    {
+      "kind": "max-tokens",
+      "total": null,
+      "status": "INCOMPLETE",
+      "knownUsage": false
+    },
+    {
+      "kind": "error",
+      "total": -1,
+      "status": "INCOMPLETE",
+      "knownUsage": false
+    },
+    {
+      "kind": null,
+      "total": null,
+      "status": "INCOMPLETE",
+      "knownUsage": false
+    },
+    {
+      "kind": "stop",
+      "total": null,
+      "status": "RETURNED",
+      "knownUsage": false
+    },
+    {
+      "kind": "stop",
+      "total": null,
+      "status": "RETURNED",
+      "knownUsage": false
+    },
+    {
+      "kind": "stop",
+      "total": "20",
+      "status": "RETURNED",
+      "knownUsage": false
+    }
+  ],
+  "transportErrorPreserved": true,
+  "partialTextRetained": true,
+  "knownTokens": 40,
+  "unknownUsageEntries": 9,
+  "fixtureStreamInvocations": 11,
+  "realModelRequests": 0,
+  "persistenceRestorationFixture": true,
+  "scope": "Only observer finish/usage/partial-output accounting; native durable-log proof is recorded separately."
+}

@@ -1,0 +1,26 @@
+{
+  "status": "PASS_READ_ONLY_ORIGINAL_COST_AUDIT",
+  "studies": [
+    {
+      "study": "personamem-independent-20261004",
+      "originalResultSha256Unchanged": "6ab0259228af6f2a0f2eceb024be727064e1c2fe94d0b65233dae3d6258897d6",
+      "correctedOfflineCopy": "/var/folders/6j/wwwr135s4zq17mj4pt3n2hdr0000gn/T/dsh-rsi-persona-offline-cost-_3vd6wp9/results.json",
+      "status": "INCOMPLETE_WITHHOLD_FULL_PAIRED_ESTIMATE",
+      "knownTokens": 2619938,
+      "unknownActualUsage": 0,
+      "officialScorerControlsPassed": 3,
+      "fullPairedEstimateStillWithheld": true
+    },
+    {
+      "study": "personamem-fresh-independent-20261004",
+      "originalResultSha256Unchanged": "08ac3d73280a90c8f5e2d16c7258dd161b987e2500f207a5548a6fb6d4ac3513",
+      "correctedOfflineCopy": "/var/folders/6j/wwwr135s4zq17mj4pt3n2hdr0000gn/T/dsh-rsi-persona-offline-cost-uk4ypmrm/results.json",
+      "status": "INCOMPLETE_WITHHOLD_FULL_PAIRED_ESTIMATE",
+      "knownTokens": 1473900,
+      "unknownActualUsage": 1,
+      "officialScorerControlsPassed": 3,
+      "fullPairedEstimateStillWithheld": true
+    }
+  ],
+  "realModelRequests": 0
+}

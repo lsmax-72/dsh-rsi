@@ -1,8 +1,13 @@
 #!/usr/bin/env python3
 """Coordinate frozen independent users; all learning stays in the native plugin."""
-import argparse,ast,hashlib,json,os,random,re,subprocess,sys
+import argparse,ast,hashlib,json,math,os,random,re,subprocess,sys
 from datetime import datetime,timezone
 from pathlib import Path
+
+def known_usage(row):
+    # An all-zero interrupted adapter receipt is not evidence of free upstream generation.
+    value=(row.get('usage') or {}).get('totalTokens')
+    return isinstance(value,(int,float)) and not isinstance(value,bool) and math.isfinite(value) and value>0
 
 def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 def write(path,value):
@@ -37,9 +42,9 @@ def summarize(root,freeze,scorer,official_source):
             scores=[{'questionId':q['questionId'],'correct':bool(grader.extract_answer(q['response'],keys[q['questionId']])[0]),'completed':(q.get('stopReason') or {}).get('kind')=='completed','answerAvailable':bool(q['response'].strip()),'responseSha256':hashlib.sha256(q['response'].encode()).hexdigest()} for q in rows]
             receipt=json.loads((folder/'receipt.json').read_text()) if (folder/'receipt.json').exists() else {}
             if receipt:assert not receipt.get('fixture') and receipt.get('formalPersonaMemEvaluation'),'Only real frozen PersonaMem runs may enter an independent report'
-            known=sum(r['usage']['totalTokens'] for r in requests if r.get('usage'));missing=sum(not r.get('usage') for r in requests);total+=known;unknown+=missing
+            known=sum(r['usage']['totalTokens'] for r in requests if known_usage(r));missing=sum(not known_usage(r) for r in requests);total+=known;unknown+=missing
             if (folder/'import.json').exists():histories.append(json.loads((folder/'import.json').read_text())['historySha256'])
-            user['arms'].append({'arm':arm,'runnerReturnCode':record.get('returncode'),'runnerStatus':receipt.get('status'),'scores':scores,'accuracy':sum(q['correct'] for q in scores)/len(scores) if len(scores)==freeze['questionCountPerUser'] else None,'knownTokens':known,'unknownActualUsage':missing,'foregroundTokens':sum(r['usage']['totalTokens'] for r in requests if r.get('usage') and r['phase']!='learning'),'backgroundTokens':sum(r['usage']['totalTokens'] for r in requests if r.get('usage') and r['phase']=='learning'),'gatewayLedgerMatches':True})
+            user['arms'].append({'arm':arm,'runnerReturnCode':record.get('returncode'),'runnerStatus':receipt.get('status'),'scores':scores,'accuracy':sum(q['correct'] for q in scores)/len(scores) if len(scores)==freeze['questionCountPerUser'] else None,'knownTokens':known,'unknownActualUsage':missing,'foregroundTokens':sum(r['usage']['totalTokens'] for r in requests if known_usage(r) and r['phase']!='learning'),'backgroundTokens':sum(r['usage']['totalTokens'] for r in requests if known_usage(r) and r['phase']=='learning'),'gatewayLedgerMatches':True})
         assert len(set(histories))<=1,'Paired user history changed'
         users.append(user)
     complete=all(len(u['arms'])==2 and all(a['accuracy'] is not None and a['runnerReturnCode']==0 and a['runnerStatus']=='COMPLETED' for a in u['arms']) for u in users)
