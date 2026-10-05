@@ -110,3 +110,5 @@
 [实际命令与来源回执](evidence/continuous-first-half-decision-audit-20261005.json)与完整本地输出保留；本次无新增模型、评分或资产写入，不改变后四题方法。
 
 框架命令计数另已纠正：只有可识别的实际框架执行才计入，读取源码、列目录和--help不算测试执行。第二题基线原7次runtests提及全部是读取，框架执行数为0，但其临时Python测试仍保留；第二题启用组10条命令实际调用入口。第四题基线排除帮助请求后10条命令调用入口。旧回执和已知/未知费用不变，候选执行不能证明通过或覆盖充分。见[框架执行与提及核对](evidence/continuous-framework-execution-audit-20261005.json)。
+
+公开输出读取已覆盖全部16组的明确框架命令和临时Python执行：第二题基线的临时测试FAILED摘要不再因“框架执行数0”而遗漏；第三题第37次公开探查的三条MISMATCH及FAILURES PRESENT已逐字保留。异常可能属于预期分支或设置失败，打印OK也不能独立证明覆盖充分，解析器不自动输出质量通过。原始输出和来源消息ID/事件序号保持，见[临时探查输出验收](evidence/continuous-custom-probe-output-audit-20261005.json)。

@@ -1,0 +1,48 @@
+{
+  "status": "PASS_REAL_CUSTOM_PROBES_NOT_OMITTED",
+  "analysisReaderSha256": "279a8e3236f052129feef1b902584d39ee3fba0567620455f05119de7c4d4079",
+  "fullArtifactSha256": "29d3665b703a531013e7667a06f8e9ce789dd2b786cd3092792c8a145bda2769",
+  "savedArms": 16,
+  "exampleSecondTaskBaseline": {
+    "instanceId": "django__django-11551",
+    "arm": "baseline",
+    "executionCandidateCommands": 14,
+    "commandsWithFailureSummaries": 3,
+    "commandsWithOkaySummaries": 0,
+    "commandsWithCaseMismatches": 0
+  },
+  "exampleThirdTaskRsi": {
+    "instanceId": "django__django-12262",
+    "arm": "rsi",
+    "executionCandidateCommands": 21,
+    "commandsWithFailureSummaries": 0,
+    "commandsWithOkaySummaries": 0,
+    "commandsWithCaseMismatches": 1
+  },
+  "thirdTaskPostEditCaseMismatches": {
+    "requestOrdinal": 37,
+    "command": "cd /workspace && python - <<'EOF'\nimport sys\nsys.path.insert(0, '/tmp')\nfrom django.conf import settings\nsettings.configure(\n    TEMPLATES=[{\n        'BACKEND': 'django.template.backends.django.DjangoTemplates',\n        'DIRS': ['/tmp'],\n        'APP_DIRS': False,\n        'OPTIONS': {'libraries': {'testlib': 'mytags.testlib'}},\n    }],\n)\nimport django; django.setup()\nfrom django.template import Template, Context\n\ncases = [\n    (\"A no-kw default\", '{% load testlib %}{% hello %}', 'hello world'),\n    (\"B kw w/ default\", '{% load testlib %}{% hello greeting=\"hi\" %}', 'hi world'),\n    (\"C dup kw\", '{% load testlib %}{% hi greeting=\"hi\" greeting=\"hello\" %}', \"'hi' received multiple values for keyword argument 'greeting'\"),\n    (\"D missing kw\", '{% load testlib %}{% hi %}', \"'hi' did not receive value(s) for the argument(s): 'greeting'\"),\n    (\"E kw w/o default\", '{% load testlib %}{% hi greeting=\"yo\" %}', 'yo world'),\n    (\"F bad kw\", '{% load testlib %}{% hi nope=\"x\" %}', \"'hi' received unexpected keyword argument 'nope'\"),\n    (\"G incl kw w/ default\", '{% load testlib %}{% inc greeting=\"yo\" %}', 'INCL: yo world'),\n    (\"H incl dup kw\", '{% load testlib %}{% inc greeting=\"yo\" greeting=\"zz\" %}', \"'inc' received multiple values for keyword argument 'greeting'\"),\n    (\"I incl bad kw\", '{% load testlib %}{% inc nope=\"x\" %}', \"'inc' received unexpected keyword argument 'nope'\"),\n]\nok = True\nfor name, src, expected in cases:\n    try:\n        out = Template(src).render(Context()).strip()\n        status = \"OK\" if out == expected else \"MISMATCH\"\n        print(name, status, \"->\", repr(out))\n    except Exception as e:\n        status = \"OK\" if expected in str(e) else \"MISMATCH\"\n        print(name, status, \"->\", type(e).__name__, e)\n    ok = ok and status == \"OK\"\nprint(\"ALL OK\" if ok else \"FAILURES PRESENT\")\nEOF",
+    "patchSha256": "6952335898b6ca9898a4396c41c2cf250d8abb905a0165ea240e47e8feff48ed",
+    "executionKind": "custom_python_candidate",
+    "sourceResultMessageId": "fbc613d8-5c2e-4fe5-b871-407f342c0357",
+    "sourceEventSeq": 199,
+    "failureSummaryLines": [],
+    "okaySummaryLines": [],
+    "caseMismatchLines": [
+      "B kw w/ default MISMATCH -> TemplateSyntaxError 'hello' received unexpected keyword argument 'greeting'",
+      "G incl kw w/ default MISMATCH -> TemplateSyntaxError 'inc' received unexpected keyword argument 'greeting'",
+      "H incl dup kw MISMATCH -> TemplateSyntaxError 'inc' received unexpected keyword argument 'greeting'"
+    ],
+    "printedAllOkay": false,
+    "printedFailuresPresent": true,
+    "exceptionLines": [],
+    "observedNonzeroExitCode": null,
+    "noRecognizedOutcome": false,
+    "qualityConclusion": "NOT_ESTABLISHED_BY_OUTPUT_PARSING",
+    "limit": "Literal saved output only. Exceptions may be expected, setup can fail before the target, and printed success does not establish adequate coverage."
+  },
+  "modelOrScorerCalls": 0,
+  "originalLogsOrAssetsChanged": false,
+  "frozenProducerUnchanged": true,
+  "limit": "A literal-output inventory, not test adequacy or quality. Separate source reads/help from framework execution; retain custom Python outcomes and unclassified/setup/expected exceptions."
+}
