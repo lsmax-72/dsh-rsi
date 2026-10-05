@@ -1,0 +1,473 @@
+{
+  "status": "SAVED_FOREGROUND_SESSION_LOOKUP_AUDIT",
+  "sourceRunsSha256": "d4dbabe12c5ae07a33d4e6a96320eb48638393708743d449d7749f726852e029",
+  "privateEvidenceSha256": "8bf366849ab74574df075b7a57465e4835fe32a4622d09ef2d07c134128e6fcc",
+  "readerSha256": "4b10c3a326a1dbb997fedd16933d0b3eed7aa37ab2d95de4d4431e12f02b2717",
+  "savedArms": 16,
+  "tasks": [
+    {
+      "instanceId": "django__django-11848",
+      "arm": "baseline",
+      "foregroundSessionIds": [
+        "pilot-django__django-11848-task"
+      ],
+      "hasPreviousOwnState": false,
+      "requestFileSha256": "61da1ac5812c7cbe2d4a73496c286db4aa990dd5e5c925cd3a35d55e5e2a75ac",
+      "toolFileSha256": "228aa0689e09f9f9a8ba1842d5ceab84669c1d2d41e243022eed9d76e0b58275",
+      "foregroundToolCounts": {
+        "bash": 17,
+        "grep": 3,
+        "read": 4,
+        "glob": 1,
+        "edit": 3
+      },
+      "logLookupCommands": 6,
+      "explicitCurrentTargetCommands": 4,
+      "explicitOtherTargetCommands": 0
+    },
+    {
+      "instanceId": "django__django-11848",
+      "arm": "rsi",
+      "foregroundSessionIds": [
+        "pilot-django__django-11848-task"
+      ],
+      "hasPreviousOwnState": false,
+      "requestFileSha256": "dbdcbf2df69532c8f952a583b68e20b91bb3535d569df4456f51645233be8451",
+      "toolFileSha256": "f415a8c91a43e5b4e46ac9cdcf7fd1fa6877a825732bea3f0832d2b4b69b872e",
+      "foregroundToolCounts": {
+        "bash": 27,
+        "grep": 4,
+        "read": 6,
+        "edit": 9
+      },
+      "logLookupCommands": 6,
+      "explicitCurrentTargetCommands": 4,
+      "explicitOtherTargetCommands": 0
+    },
+    {
+      "instanceId": "django__django-11551",
+      "arm": "rsi",
+      "foregroundSessionIds": [
+        "pilot-django__django-11551-task"
+      ],
+      "hasPreviousOwnState": true,
+      "requestFileSha256": "85b25b1313e502048b39181cca7f9fb15b7ced4d296c4d0e0ff434cee98f3276",
+      "toolFileSha256": "9d37629cd4b285b08d2a16b94c68fb245d782e553fdef0de05a3c5fb8389c153",
+      "foregroundToolCounts": {
+        "bash": 27,
+        "grep": 2,
+        "read": 4,
+        "edit": 5
+      },
+      "logLookupCommands": 2,
+      "explicitCurrentTargetCommands": 0,
+      "explicitOtherTargetCommands": 0
+    },
+    {
+      "instanceId": "django__django-11551",
+      "arm": "baseline",
+      "foregroundSessionIds": [
+        "pilot-django__django-11551-task"
+      ],
+      "hasPreviousOwnState": true,
+      "requestFileSha256": "90099c462f1eb974b24a1cc0dd9504a8752952cfd20e39fa39bba4c120debc5f",
+      "toolFileSha256": "bb53ff583fc3f4db5e6ad5cc1d8c76754f91771e46a1b234b554ea55f148dcd7",
+      "foregroundToolCounts": {
+        "bash": 27,
+        "grep": 2,
+        "read": 6,
+        "run_code": 2,
+        "edit": 4,
+        "write": 2
+      },
+      "logLookupCommands": 2,
+      "explicitCurrentTargetCommands": 0,
+      "explicitOtherTargetCommands": 0
+    },
+    {
+      "instanceId": "django__django-12262",
+      "arm": "baseline",
+      "foregroundSessionIds": [
+        "pilot-django__django-12262-task"
+      ],
+      "hasPreviousOwnState": true,
+      "requestFileSha256": "ce9a4bc59f2518937ce788cc87c680284d6c80e7ccf2faafa156966c6d18362e",
+      "toolFileSha256": "0a40716080dc760c75f378e8935bb3507a14f10e8ea234ab334960b6a9d5b5ac",
+      "foregroundToolCounts": {
+        "bash": 19,
+        "grep": 2,
+        "read": 7,
+        "write": 1,
+        "edit": 12
+      },
+      "logLookupCommands": 0,
+      "explicitCurrentTargetCommands": 0,
+      "explicitOtherTargetCommands": 0
+    },
+    {
+      "instanceId": "django__django-12262",
+      "arm": "rsi",
+      "foregroundSessionIds": [
+        "pilot-django__django-12262-task"
+      ],
+      "hasPreviousOwnState": true,
+      "requestFileSha256": "68fa34dae056a6fa229beeb9f51e92fbe01365beb9013b6e681c2b13d909fe53",
+      "toolFileSha256": "c852698d2d0035ab7f67c1fb632062b4a88e357a0e6a25e183a43a8675a5be15",
+      "foregroundToolCounts": {
+        "bash": 38,
+        "read": 2,
+        "edit": 1
+      },
+      "logLookupCommands": 1,
+      "explicitCurrentTargetCommands": 0,
+      "explicitOtherTargetCommands": 0
+    },
+    {
+      "instanceId": "django__django-11815",
+      "arm": "rsi",
+      "foregroundSessionIds": [
+        "pilot-django__django-11815-task"
+      ],
+      "hasPreviousOwnState": true,
+      "requestFileSha256": "0925cb7d44dbcaa35311652b1e3c87279d9b5a0767ef8d35dbf86d75631e2a6e",
+      "toolFileSha256": "2d322d9a1b82c8497567de8401cc4a8d58b461f03c4bddba07c6797cfd234db6",
+      "foregroundToolCounts": {
+        "bash": 21,
+        "grep": 4,
+        "read": 10,
+        "run_code": 1,
+        "edit": 4
+      },
+      "logLookupCommands": 9,
+      "explicitCurrentTargetCommands": 1,
+      "explicitOtherTargetCommands": 4
+    },
+    {
+      "instanceId": "django__django-11815",
+      "arm": "baseline",
+      "foregroundSessionIds": [
+        "pilot-django__django-11815-task"
+      ],
+      "hasPreviousOwnState": true,
+      "requestFileSha256": "51db16b8ff1cfa68ff89e83e5b8b0df5b62bf62fc3b9277a20bd2d4515dc7265",
+      "toolFileSha256": "a3d80d831daaa87fe16a569336a64260b7aa4e67a6673d1fdb09f4f86d8b6e0e",
+      "foregroundToolCounts": {
+        "bash": 28,
+        "grep": 3,
+        "read": 6,
+        "edit": 8
+      },
+      "logLookupCommands": 0,
+      "explicitCurrentTargetCommands": 0,
+      "explicitOtherTargetCommands": 0
+    },
+    {
+      "instanceId": "django__django-11880",
+      "arm": "baseline",
+      "foregroundSessionIds": [
+        "pilot-django__django-11880-task"
+      ],
+      "hasPreviousOwnState": true,
+      "requestFileSha256": "3c047561169c2f4ebd10232511efe7ec10b72f8ebfc381065e53a2e8622ae195",
+      "toolFileSha256": "9ebea368e054bcf67bd006e8834bed0423d0dcd3842f9d661c1b89ef9c2b789b",
+      "foregroundToolCounts": {
+        "bash": 29,
+        "read": 5,
+        "grep": 4,
+        "edit": 5
+      },
+      "logLookupCommands": 5,
+      "explicitCurrentTargetCommands": 0,
+      "explicitOtherTargetCommands": 1
+    },
+    {
+      "instanceId": "django__django-11880",
+      "arm": "rsi",
+      "foregroundSessionIds": [
+        "pilot-django__django-11880-task"
+      ],
+      "hasPreviousOwnState": true,
+      "requestFileSha256": "addf5a24582f6815b9cf7a31a0dc946b9e55536f88794679d884cace6e148efa",
+      "toolFileSha256": "6bfff613ea6003c12c02e9c04935fbf809b17ed62e32457e77040d71e99279a9",
+      "foregroundToolCounts": {
+        "bash": 16,
+        "read": 5,
+        "grep": 4,
+        "edit": 1
+      },
+      "logLookupCommands": 0,
+      "explicitCurrentTargetCommands": 0,
+      "explicitOtherTargetCommands": 0
+    },
+    {
+      "instanceId": "django__django-11790",
+      "arm": "rsi",
+      "foregroundSessionIds": [
+        "pilot-django__django-11790-task"
+      ],
+      "hasPreviousOwnState": true,
+      "requestFileSha256": "8e135d593bcd5208296b6b400726575b4046c617bf315f203979b68059e26a63",
+      "toolFileSha256": "17593783249e36959cc0e3ec1f58d31af81d55716424c04802a12d540c244111",
+      "foregroundToolCounts": {
+        "bash": 17,
+        "grep": 13,
+        "read": 16
+      },
+      "logLookupCommands": 6,
+      "explicitCurrentTargetCommands": 4,
+      "explicitOtherTargetCommands": 2
+    },
+    {
+      "instanceId": "django__django-11790",
+      "arm": "baseline",
+      "foregroundSessionIds": [
+        "pilot-django__django-11790-task"
+      ],
+      "hasPreviousOwnState": true,
+      "requestFileSha256": "f21f30cad582b73584a3c8f6acd88bcf87142ac18ed20cee90c0e6b75a8e06d4",
+      "toolFileSha256": "02d05e3907d0dc5c6d8b0416a65c3172892c8f0416dcb5a2f84b24f45eee383d",
+      "foregroundToolCounts": {
+        "bash": 40
+      },
+      "logLookupCommands": 5,
+      "explicitCurrentTargetCommands": 2,
+      "explicitOtherTargetCommands": 1
+    },
+    {
+      "instanceId": "django__django-11999",
+      "arm": "baseline",
+      "foregroundSessionIds": [
+        "pilot-django__django-11999-task"
+      ],
+      "hasPreviousOwnState": true,
+      "requestFileSha256": "37f35e0585dfd5c60dde964e1286a3525ecc727cc73067c4b1505bf05f6202f6",
+      "toolFileSha256": "ab75945008adf99447d7a1f165fc4d9e82434cb8b03aacbaf18a121d09eca959",
+      "foregroundToolCounts": {
+        "bash": 28,
+        "read": 8,
+        "edit": 11,
+        "grep": 2
+      },
+      "logLookupCommands": 7,
+      "explicitCurrentTargetCommands": 2,
+      "explicitOtherTargetCommands": 1
+    },
+    {
+      "instanceId": "django__django-11999",
+      "arm": "rsi",
+      "foregroundSessionIds": [
+        "pilot-django__django-11999-task"
+      ],
+      "hasPreviousOwnState": true,
+      "requestFileSha256": "4efa16c0f0c8b69c3cbccd7c4ab2a6229237b132650f8ad3b17b2a02c79161ff",
+      "toolFileSha256": "79c067842e47cae3ab70dbb999741f779002c313721dc501056298681407a25f",
+      "foregroundToolCounts": {
+        "bash": 24,
+        "read": 4,
+        "run_code": 1,
+        "edit": 7,
+        "write": 1
+      },
+      "logLookupCommands": 1,
+      "explicitCurrentTargetCommands": 0,
+      "explicitOtherTargetCommands": 0
+    },
+    {
+      "instanceId": "django__django-11740",
+      "arm": "rsi",
+      "foregroundSessionIds": [
+        "pilot-django__django-11740-task"
+      ],
+      "hasPreviousOwnState": true,
+      "requestFileSha256": "ffb9d6b0473cd63244e83cb32e21614266d7a5f18af6ac34bb9a752400c2694e",
+      "toolFileSha256": "10d4e6bda8bfd0c22d0b37b25a5f53bda627f51ea15737a11de96b7984c33a16",
+      "foregroundToolCounts": {
+        "bash": 46,
+        "grep": 1
+      },
+      "logLookupCommands": 11,
+      "explicitCurrentTargetCommands": 6,
+      "explicitOtherTargetCommands": 0
+    },
+    {
+      "instanceId": "django__django-11740",
+      "arm": "baseline",
+      "foregroundSessionIds": [
+        "pilot-django__django-11740-task"
+      ],
+      "hasPreviousOwnState": true,
+      "requestFileSha256": "c76a66c5b3aa41ab14948c67a223fecb3b08073a7b5a3ee789e04b4975a2cf4a",
+      "toolFileSha256": "c464c44f7cd5d484880b965327465180d839fd656323a537e50f70f71209d399",
+      "foregroundToolCounts": {
+        "bash": 35,
+        "grep": 1,
+        "run_code": 3,
+        "read": 2,
+        "edit": 2
+      },
+      "logLookupCommands": 11,
+      "explicitCurrentTargetCommands": 0,
+      "explicitOtherTargetCommands": 8
+    }
+  ],
+  "explicitCurrentExamples": [
+    {
+      "instanceId": "django__django-11848",
+      "requestOrdinal": 4,
+      "callId": "call_4f4e8a50c6384cd19a75f9c8",
+      "explicitCurrentSessionTargets": [
+        "pilot-django__django-11848-task"
+      ],
+      "description": "查看先前会话日志开头",
+      "sourceMessageId": "e4258373-25f6-4fc1-96b0-01d8eaa7af0c",
+      "sourceEventSeq": 35,
+      "literalOutputExcerpt": "{\"type\":\"session\",\"version\":4,\"id\":\"pilot-django__django-11848-task\",\"createdAt\":1791129049547,\"cwd\":\"/workspace\",\"isSeeded\":false,\"delegationDepth\":0}\n{\"type\":\"agent/inbox/spliced\",\"seq\":0,\"time\":1791129049556,\"data\":{\"target\":\"next-step\",\"start\":0,\"inserted\":[{\"source\":{\"kind\":\"benchmark-protocol\",\"form\":\"instructions\"},\"content\":[{\"type\":\"text\","
+    },
+    {
+      "instanceId": "django__django-11848",
+      "requestOrdinal": 5,
+      "callId": "call_63e9f74074ee45a09747d9fa",
+      "explicitCurrentSessionTargets": [
+        "pilot-django__django-11848-task"
+      ],
+      "description": "提取先前会话文本片段",
+      "sourceMessageId": "7ef6f4e7-96d1-45f8-a7a3-a27893bd38b4",
+      "sourceEventSeq": 40,
+      "literalOutputExcerpt": "\"text\":\"    The three formats allowed by the RFC are accepted, even if only the first\"\n\"text\":\"    one is still in widespread use.\"\n\"text\":\"\"\n\"text\":\"    Return an integer expressed in seconds since the epoch, in UTC.\"\n\"text\":\"    \\\"\n\"text\":\"    # email.utils.parsedate() does the job for RFC1123 dates; unfortunately\"\n\"text\":\"    # RFC7231 makes it "
+    },
+    {
+      "instanceId": "django__django-11848",
+      "requestOrdinal": 9,
+      "callId": "call_a0b1b6a739fd42b1a56123a4",
+      "explicitCurrentSessionTargets": [
+        "pilot-django__django-11848-task"
+      ],
+      "description": "查看先前会话日志结尾",
+      "sourceMessageId": "4110f56c-571c-4823-a973-44462514ab71",
+      "sourceEventSeq": 64,
+      "literalOutputExcerpt": "('\\\"etag\\\"'), '\\\"etag\\\"')  # quoted\"},{\"number\":307,\"text\":\"        self.assertEqual(quote_etag('W/\\\"etag\\\"'), 'W/\\\"etag\\\"')  # quoted, weak\"},{\"number\":308,\"text\":\"\"},{\"number\":309,\"text\":\"\"},{\"number\":310,\"text\":\"class HttpDateProcessingTests(unittest.TestCase):\"},{\"number\":311,\"text\":\"    def test_http_date(self):\"},{\"number\":312,\"text\":\"       "
+    },
+    {
+      "instanceId": "django__django-11790",
+      "requestOrdinal": 16,
+      "callId": "call_ecc98db11a1a4bb89469967f",
+      "explicitCurrentSessionTargets": [
+        "pilot-django__django-11790-task"
+      ],
+      "description": "Show user messages in candidate sessions",
+      "sourceMessageId": "8eb8dd06-c1df-4757-b9e6-28212821c07c",
+      "sourceEventSeq": 104,
+      "literalOutputExcerpt": "==================== pilot-django__django-11790-task/session.v4.jsonl\n==================== pilot-django__django-11880-task/session.v4.jsonl\n"
+    },
+    {
+      "instanceId": "django__django-11790",
+      "requestOrdinal": 17,
+      "callId": "call_58aa5cd04080453db0ad0d42",
+      "explicitCurrentSessionTargets": [
+        "pilot-django__django-11790-task"
+      ],
+      "description": "Inspect session jsonl structure",
+      "sourceMessageId": "2d7f3967-4c75-48b3-8556-584546974b71",
+      "sourceEventSeq": 109,
+      "literalOutputExcerpt": "{\"type\":\"session\",\"version\":4,\"id\":\"pilot-django__django-11790-task\",\"createdAt\":1791146673649,\"cwd\":\"/workspace\",\"isSeeded\":false,\"delegationDepth\":0}\n{\"type\":\"agent/inbox/spliced\",\"seq\":0,\"time\":1791146673735,\"data\":{\"target\":\"next-step\",\"start\":0,\"inserted\":[{\"source\":{\"kind\":\"benchmark-protocol\",\"form\":\"instructions\"},\"content\":[{\"type\":\"text\","
+    },
+    {
+      "instanceId": "django__django-11790",
+      "requestOrdinal": 18,
+      "callId": "call_0975b2e52e4d4571a5484068",
+      "explicitCurrentSessionTargets": [
+        "pilot-django__django-11790-task"
+      ],
+      "description": "Dump tool calls from 11790 prior session",
+      "sourceMessageId": "3678cab3-6f69-43e7-9860-489fb6336ae6",
+      "sourceEventSeq": 114,
+      "literalOutputExcerpt": "CALL bash \"{\\\"command\\\":\\\"ls /workspace && cat /workspace/django/__init__.py | head -20 && which python && python -c \\\\\\\"import django; print(django.get_version())\\\\\\\"\\\",\\\"description\\\":\\\"Verify workspace and python/django environment\\\"}\"\n  RES {\"turn\": 1, \"step\": 1, \"message\": {\"role\": \"tool\", \"source\": {\"kind\": \"tool\", \"callId\": \"call_b7ff3d9f1d0"
+    },
+    {
+      "instanceId": "django__django-11740",
+      "requestOrdinal": 24,
+      "callId": "call_6e1c9f97c27141afb672dd12",
+      "explicitCurrentSessionTargets": [
+        "pilot-django__django-11740-task"
+      ],
+      "description": "Inspect first line of 11740 session",
+      "sourceMessageId": "ac836243-06d3-44bf-92de-fb813c1e4b0e",
+      "sourceEventSeq": 146,
+      "literalOutputExcerpt": "{\"type\": \"session\", \"version\": 4, \"id\": \"pilot-django__django-11740-task\", \"createdAt\": 1791149466540, \"cwd\": \"/workspace\", \"isSeeded\": false, \"delegationDepth\": 0}\n"
+    },
+    {
+      "instanceId": "django__django-11740",
+      "requestOrdinal": 25,
+      "callId": "call_ffe88224767244aabc2b891d",
+      "explicitCurrentSessionTargets": [
+        "pilot-django__django-11740-task"
+      ],
+      "description": "Scan 11740 session messages",
+      "sourceMessageId": "5d094ea0-1843-428a-a3d6-b27a62d24800",
+      "sourceEventSeq": 151,
+      "literalOutputExcerpt": "(no output)"
+    },
+    {
+      "instanceId": "django__django-11740",
+      "requestOrdinal": 26,
+      "callId": "call_f215c45774d84964b1f1aa85",
+      "explicitCurrentSessionTargets": [
+        "pilot-django__django-11740-task"
+      ],
+      "description": "Inspect jsonl record types",
+      "sourceMessageId": "c791e4bd-3b1a-4262-9f1b-3967d42c30a5",
+      "sourceEventSeq": 156,
+      "literalOutputExcerpt": "1 session ['createdAt', 'cwd', 'delegationDepth', 'id', 'isSeeded', 'type', 'version']\n2 agent/inbox/spliced ['data', 'seq', 'time', 'type']\n3 agent/inbox/spliced ['data', 'seq', 'time', 'type']\n4 turn/start ['data', 'seq', 'time', 'type']\n5 agent/inbox/spliced ['data', 'seq', 'time', 'type']\n6 agent/inbox/spliced ['data', 'seq', 'time', 'type']\nto"
+    },
+    {
+      "instanceId": "django__django-11740",
+      "requestOrdinal": 27,
+      "callId": "call_9b80c240c88e4bcab978e778",
+      "explicitCurrentSessionTargets": [
+        "pilot-django__django-11740-task"
+      ],
+      "description": "Dump inbox/spliced contents of 11740",
+      "sourceMessageId": "b12bdc8f-0178-4c54-a206-a4344680a58f",
+      "sourceEventSeq": 161,
+      "literalOutputExcerpt": "INBOX: {\"target\": \"next-step\", \"start\": 0, \"inserted\": [{\"source\": {\"kind\": \"benchmark-protocol\", \"form\": \"instructions\"}, \"content\": [{\"type\": \"text\", \"text\": \"修复以下 Django 仓库问题。工作区为 /workspace，测试环境已离线准备，python 来自官方 testbed 环境。先验证环境，再运行聚焦测试，保留失败原因。禁止联网检索答案。完成后用中文说明修改、测试及局限。连续任务中，本组先前执行的原始会话日志位于 /state/home\nINBOX: {\"target\": \"next-turn\", \"start\": 0,"
+    },
+    {
+      "instanceId": "django__django-11740",
+      "requestOrdinal": 28,
+      "callId": "call_041212675814464aa52e813a",
+      "explicitCurrentSessionTargets": [
+        "pilot-django__django-11740-task"
+      ],
+      "description": "Count record types and show outbox in 11740",
+      "sourceMessageId": "10746484-d6b8-41c5-9a0c-de09a3e45433",
+      "sourceEventSeq": 166,
+      "literalOutputExcerpt": "Counter({'tool/call': 34, 'tool/result': 34, 'step/start': 28, 'assistant/message': 27, 'step/end': 27, 'user/message': 5, 'agent/inbox/spliced': 4, 'session': 1, 'turn/start': 1, 'system/message': 1, 'request/header': 1, 'request/context': 1, 'session/title': 1})\n"
+    },
+    {
+      "instanceId": "django__django-11740",
+      "requestOrdinal": 29,
+      "callId": "call_6803036580fa463c9dbac7fa",
+      "explicitCurrentSessionTargets": [
+        "pilot-django__django-11740-task"
+      ],
+      "description": "Show assistant messages in 11740 session",
+      "sourceMessageId": "2244f75c-864a-4da5-abe4-13776751894f",
+      "sourceEventSeq": 171,
+      "literalOutputExcerpt": "USER: {\"source\": {\"kind\": \"benchmark-protocol\", \"form\": \"instructions\"}, \"content\": [{\"type\": \"text\", \"text\": \"修复以下 Django 仓库问题。工作区为 /workspace，测试环境已离线准备，python 来自官方 testbed 环境。先验证环境，再运行聚焦测试，保留失败原因。禁止联网检索答案。完成后用中文说明修改、测试及局限。连续任务中，本组先前执行的原始会话日志位于 /state/home/sessions，可用文件读取工具查阅。\"}], \"role\": \"user\", \"id\": \"\nUSER: {\"source\": {\"kind\": \"user\"}, \"content"
+    }
+  ],
+  "armLogLookupCounts": {
+    "baseline": 36,
+    "rsi": 36
+  },
+  "notes": [
+    "两组均36条前台日志相关工具记录；显式当前会话目标包括列表、探查、失败及正文读取，不能全部算有效回忆或多余排查。",
+    "首题两组没有先前历史，仍读取当前会话；RSI第6/8题查看当前会话，不能据此单独归因插件。",
+    "第6/8题RSI前台没有edit/write工具调用，最终未通过；共现不是失败因果证明。",
+    "通配路径可能覆盖当前和先前日志；不根据目标字符串猜测读取成功。",
+    "后续改进应为两组提供相同的已关闭自身历史位置及原生日志读取方式，本轮冻结不修改。"
+  ],
+  "modelOrScorerCalls": 0,
+  "frozenMethodsOrAssetsChanged": false,
+  "qualityOrCausalityClaim": false
+}
