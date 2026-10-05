@@ -1,0 +1,49 @@
+{
+  "kind": "one-current-native-empty-asset-development-task",
+  "instanceId": "django__django-11163",
+  "methodCommit": "580c22ab7e764a78fc95d62c7d621aaf2b9927b2",
+  "model": "qwen3.8-27b",
+  "provider": "qwen",
+  "thinking": false,
+  "upstream": "http://10.195.214.152:8100/v1",
+  "publicInputSha256": "10bf9c0c0c224b08e36c6ee7cb88686759a9fe99e478f8e29ee7ce4a1e66e9e3",
+  "taskImage": "sha256:dc9970697dbea4bbfa1db2548d8451b90b95f1b092ceac772f785292ff9633a7",
+  "expectedTree": "4c221e3aba9030ab459871106740934193ce1118",
+  "expectedVersion": "3.0.dev20260813010030",
+  "baselineDate": "@1786582830 +0000",
+  "sourceRevision": "original public base; no seed assets or sessions",
+  "budgets": {
+    "foregroundCalls": 20,
+    "backgroundCalls": 12,
+    "gatewayCalls": 32,
+    "foregroundWallSeconds": 600,
+    "learningObservationSeconds": 300,
+    "foregroundMaxOutputTokens": 8192,
+    "backgroundMaxOutputTokens": 4096,
+    "nativeBackgroundTimeoutMs": 180000,
+    "nativeSkillMaxIterations": 16,
+    "outerMaximumSeconds": 990,
+    "retryCount": 0
+  },
+  "nativeDefaultSkillSourceWindow": {
+    "headChars": 8000,
+    "tailChars": 32000
+  },
+  "automaticBodyLimitUnicode": 1500,
+  "assetLanguage": "zh-CN",
+  "output": "/Users/lsmax/Coder/dsh-rsi/.artifacts/current-empty-development-20261006/run-11163",
+  "tasks": 1,
+  "pairedBaseline": false,
+  "independentBlindAccuracyClaim": false,
+  "scoringPolicy": "At most one clean official grading of the saved final patch after shutdown; no grader results or gold/test patches reach learning. No model rescue.",
+  "acceptance": [
+    "Actual empty initial asset store and native default capture/process",
+    "Protocol excluded from retrieval query and learning; actual durable model input reconstruction",
+    "Separate actual tool outcomes, source evidence and proposed validation; no unsupported success summary",
+    "If native Skill is generated: body<=1500 Unicode, evidence/content audit, resources and relative references/version receipts if present",
+    "Record foreground/background/all known tokens, unknown actual usage, incomplete finish; local embedding count/time and token unavailability"
+  ],
+  "nullPolicy": "No generated Skill is inconclusive content validation, not quality pass; incomplete native jobs retained. Resource chain fixture success cannot replace actual generation.",
+  "oldFrozenTrialsChanged": false,
+  "modelRequestsBeforePlan": 0
+}
