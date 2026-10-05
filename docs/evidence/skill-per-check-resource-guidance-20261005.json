@@ -1,0 +1,60 @@
+{
+  "status": "PASS",
+  "realProviderRequests": 0,
+  "taskCommandsExecuted": 0,
+  "fixtureRunnerCalls": 3,
+  "nativeSkillRuntimeJobsCompleted": 3,
+  "sourceMessages": 123,
+  "fullTranscriptUtf16Chars": 96154,
+  "sourcePayloadSha256": "e5afa06c0221c357be853d673042616a05d20efb504622bdd8b5452b460e7f79",
+  "cases": [
+    {
+      "name": "default",
+      "effectiveNativeHeadChars": 8000,
+      "effectiveNativeTailChars": 32000,
+      "criticalSignatureOccurrences": 0,
+      "exactNativeSuffix": true,
+      "configurationSnapshotPreserved": true,
+      "promptSha256": "91c9b4f71e65acc641acbe036bd4eb6fc1b585d0dfdb06ff9f9e17b4be8fa974",
+      "systemSha256": "33d770bde1aa929db0a5e7a7959d98df814cabe967b4abdf9839cbfb754196ac"
+    },
+    {
+      "name": "expanded",
+      "effectiveNativeHeadChars": 40000,
+      "effectiveNativeTailChars": 64000,
+      "criticalSignatureOccurrences": 4,
+      "exactNativeSuffix": true,
+      "configurationSnapshotPreserved": true,
+      "promptSha256": "eaf37e00b8a806647f0f93ca03bb57c265c1786bdfad15fd369f1283fdcc7245",
+      "systemSha256": "33d770bde1aa929db0a5e7a7959d98df814cabe967b4abdf9839cbfb754196ac"
+    },
+    {
+      "name": "partial",
+      "effectiveNativeHeadChars": 10000,
+      "effectiveNativeTailChars": 32000,
+      "criticalSignatureOccurrences": 0,
+      "exactNativeSuffix": true,
+      "configurationSnapshotPreserved": true,
+      "promptSha256": "2adf1a16753622b3ba95fc395a8ebde27ded0bb8b42b54f75c4dc124a11019d8",
+      "systemSha256": "33d770bde1aa929db0a5e7a7959d98df814cabe967b4abdf9839cbfb754196ac"
+    }
+  ],
+  "invalidStartupControlsRejectedBeforeStateCreation": 8,
+  "unconfiguredNativeDefaultsRetained": true,
+  "configuredWindowVisibleInSnapshotAndDiagnostics": true,
+  "nativeFormatterUnchanged": true,
+  "nativeProductionPromptPrefixPreserved": true,
+  "nativeProductionPromptPrefixSha256": "0ed83c6534e4688d72cc45fc6844b6e2fddf4e892adba9f7c08db654fb425938",
+  "perCheckEvidenceAndResourceWriteGuidanceDelivered": true,
+  "limitation": "Actual Runtime.process and native SkillExtractor are exercised; core lookup, completed Memory stages and model/encoding use explicit fixtures. Not a model quality or effect benchmark.",
+  "restart": {
+    "status": "PASS",
+    "restoredCompletedJobs": 3,
+    "configurationRevalidated": true,
+    "modelRequests": 0
+  },
+  "hostVersion": "0.2.0-rc.2",
+  "checkedAt": "2026-10-05T13:04:26.005547+00:00",
+  "isolatedHome": true,
+  "diagnostics": []
+}

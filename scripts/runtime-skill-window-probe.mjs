@@ -4,6 +4,7 @@ import {join} from 'node:path';
 import {createHash} from 'node:crypto';
 import {openLocalCore} from '../lib/local-core.js';
 import {fixtureEmbedding} from './fixture-embedding.mjs';
+import {SKILL_REVIEW_PROMPT} from '../lib/core-entry.js';
 export const name='runtime-skill-window-probe';
 export const inject=['rsi'];
 export function apply(ctx,config){
@@ -37,6 +38,7 @@ export function apply(ctx,config){
         const head=entry.window?.headChars??8000,tail=entry.window?.tailChars??32000;
         const expected=full.length<=head+tail?full:`${full.slice(0,head)}\n\n... [truncated ${full.length-head-tail} chars] ...\n\n${full.slice(-tail)}`;
         assert.ok(calls[0].prompt.endsWith(expected));assert.equal(runtime.state.usage().calls,0);
+        assert.ok(calls[0].systemPrompt.startsWith(SKILL_REVIEW_PROMPT));assert.ok(calls[0].systemPrompt.includes('mixed pass/fail variants'));assert.ok(calls[0].systemPrompt.includes('1500 Unicode characters'));assert.ok(calls[0].systemPrompt.includes('use its returned skill_id/version for skill_files_write'));
         outputs.push({name:entry.name,effectiveNativeHeadChars:head,effectiveNativeTailChars:tail,criticalSignatureOccurrences:calls[0].prompt.split(signature).length-1,exactNativeSuffix:true,configurationSnapshotPreserved:true,promptSha256:createHash('sha256').update(calls[0].prompt).digest('hex'),systemSha256:createHash('sha256').update(calls[0].systemPrompt).digest('hex')});
       }finally{core?.close();runtime.state.close();}
     }
@@ -45,7 +47,7 @@ export function apply(ctx,config){
     for(const [i,window] of invalid.entries()){
       const path=join(config.root,'invalid-'+i);assert.throws(()=>new Constructor(ctx,{skillTranscriptWindow:window},path),e=>e.code==='INVALID_CONFIG');await assert.rejects(access(join(path,'rsi-state.sqlite')));
     }
-    const result={status:'PASS',realProviderRequests:0,taskCommandsExecuted:0,fixtureRunnerCalls:3,nativeSkillRuntimeJobsCompleted:3,sourceMessages:payload.messages.length,fullTranscriptUtf16Chars:full.length,sourcePayloadSha256:createHash('sha256').update(await readFile(process.env.RSI_WINDOW_SOURCE_PAYLOAD)).digest('hex'),cases:outputs,invalidStartupControlsRejectedBeforeStateCreation:invalid.length,unconfiguredNativeDefaultsRetained:true,configuredWindowVisibleInSnapshotAndDiagnostics:true,nativeFormatterAndSystemPromptUnchanged:true,limitation:'Actual Runtime.process and native SkillExtractor are exercised; core lookup, completed Memory stages and model/encoding use explicit fixtures. Not a model quality or effect benchmark.'};
+    const result={status:'PASS',realProviderRequests:0,taskCommandsExecuted:0,fixtureRunnerCalls:3,nativeSkillRuntimeJobsCompleted:3,sourceMessages:payload.messages.length,fullTranscriptUtf16Chars:full.length,sourcePayloadSha256:createHash('sha256').update(await readFile(process.env.RSI_WINDOW_SOURCE_PAYLOAD)).digest('hex'),cases:outputs,invalidStartupControlsRejectedBeforeStateCreation:invalid.length,unconfiguredNativeDefaultsRetained:true,configuredWindowVisibleInSnapshotAndDiagnostics:true,nativeFormatterUnchanged:true,nativeProductionPromptPrefixPreserved:true,nativeProductionPromptPrefixSha256:createHash('sha256').update(SKILL_REVIEW_PROMPT).digest('hex'),perCheckEvidenceAndResourceWriteGuidanceDelivered:true,limitation:'Actual Runtime.process and native SkillExtractor are exercised; core lookup, completed Memory stages and model/encoding use explicit fixtures. Not a model quality or effect benchmark.'};
     await writeFile(join(config.root,'result.json'),JSON.stringify(result));console.log(JSON.stringify(result));process.exit(0);
   }catch(error){console.error(error.stack);process.exit(1);}finally{clearInterval(alive);}},0);return()=>{clearInterval(alive);clearTimeout(timer);};});
 }
