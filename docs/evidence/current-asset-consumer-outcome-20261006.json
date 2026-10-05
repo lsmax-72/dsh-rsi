@@ -1,0 +1,157 @@
+{
+  "status": "PASS_CURRENT_NATIVE_BODY_DELIVERY_AND_HISTORICAL_EXECUTION_BOUNDARY_WITH_CONTENT_LIMITS",
+  "methodCommit": "580c22a",
+  "sourceOutcomeCommit": "c37fc8e",
+  "planCommit": "1a2b4f6",
+  "model": "qwen3.8-27b",
+  "actualForegroundCalls": 5,
+  "actualBackgroundCalls": 0,
+  "knownChatTokens": 49509,
+  "unknownActualUsage": 0,
+  "stopReason": {
+    "kind": "completed"
+  },
+  "consumerWallMs": 60917,
+  "durableReconstruction": {
+    "requests": 5,
+    "allMatch": true
+  },
+  "nativeAssetDelivery": {
+    "skillBodyChars": 1435,
+    "skillRequests": [
+      2,
+      3,
+      4,
+      5
+    ],
+    "memoryRequests": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "firstRefs": [
+      {
+        "kind": "dsh-rsi",
+        "form": "memory",
+        "refs": [
+          {
+            "scope": "c52ddf65534b7b4603508435",
+            "memories": [
+              {
+                "content": "用户指出 Django 项目中 model_to_dict() 函数存在 Bug：当传入空列表 (fields=[]) 时应返回空字典，但当前逻辑错误地返回了所有字段，并建议将 django/forms/models.py 中的条件 'if fields and f.name not in fields' 修正为 'if fields is not None and f.name not in fields'。",
+                "score": 0,
+                "type": "episodic",
+                "id": "m_1791219751888_880103cb",
+                "version": 0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "dsh-rsi",
+        "form": "asset-guidance"
+      }
+    ],
+    "fullRawMemoryDelivered": true,
+    "fullRawSkillDelivered": true,
+    "modelRequests": 5
+  },
+  "sourceSkillVersion": 1,
+  "sourceSkillMarkdownSha256": "adca0cd9306a2de54bd12855bebc9a7775454829cc1981484efe51395041e6fc",
+  "toolCalls": [
+    {
+      "name": "skill",
+      "callId": "call_822f602f57cf440b89809cd5",
+      "args": {
+        "name": "rsi-django-testsuite-workflow"
+      },
+      "isError": false,
+      "phase": "consumer",
+      "requestOrdinal": 1,
+      "observedAt": 1791220626720,
+      "patchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "rsi_conversation_search",
+      "callId": "call_adfaa4a954834be6885e33d4",
+      "args": {
+        "query": "model_to_dict fields 空列表 runtests ModelToDictTests 测试结果"
+      },
+      "isError": false,
+      "phase": "consumer",
+      "requestOrdinal": 2,
+      "observedAt": 1791220628825,
+      "patchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "rsi_conversation_search",
+      "callId": "call_2d320cde738f4031b9d9d3b7",
+      "args": {
+        "query": "AttributeError has no attribute ModelFormTests FAILED errors=1 测试失败 结果"
+      },
+      "isError": false,
+      "phase": "consumer",
+      "requestOrdinal": 3,
+      "observedAt": 1791220631260,
+      "patchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "rsi_profile_read",
+      "callId": "call_b93003e775c649cda7c78e1e",
+      "args": {
+        "query": "/state/assets/scopes/c52ddf65534b7b4603508435/profile/profiles/team%3Adefault%7Cagent%3Adefault/scene_blocks/Django-源码与Bug修复.md"
+      },
+      "isError": false,
+      "phase": "consumer",
+      "requestOrdinal": 4,
+      "observedAt": 1791220634552,
+      "patchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "sourceHashes": {
+    "seedAssetsSha256": {
+      "files": 22,
+      "allHashesUnchanged": true
+    },
+    "seedSessionsSha256": {
+      "files": 14,
+      "allHashesUnchanged": true
+    }
+  },
+  "noAgentCommandsTestsOrEdits": true,
+  "patchBytes": 0,
+  "graderFilesCopied": false,
+  "consumerLearningCalls": 0,
+  "newEmbedding": {
+    "calls": 2,
+    "inputChars": 362,
+    "durationMs": 3806,
+    "unknownTokenCalls": 2,
+    "imported24CallsExcluded": true
+  },
+  "responseSha256": "9940ae5afd86a82951479d504246bdc7d4f9a78addcb142443e96a8b51352d56",
+  "historicalBoundary": {
+    "callsSourceSession": "pilot-django__django-11163-task",
+    "explicitCurrentNoExecution": true,
+    "historicalFailedChecksNotCalledPassing": true
+  },
+  "observedDecisionInfluence": [
+    "Called native skill on first request, matching host catalog rather than supplied name",
+    "Used learned tests directory and class-discovery rule; cited historical Evidence failures",
+    "Used Memory fields=None/[] distinction and attributed correction to source session"
+  ],
+  "unverifiedDecisionExamples": [
+    "Suggested concrete tests under ModelToDictTests while source new methods were actually added in ModelFormBaseTest; requires source check, not a validated runnable target",
+    "Attributed sed1125-1175 inspection to finding condition; that output actually covers a different part of models.py",
+    "Absolute ever/not tested phrasing can overstate the accessible source boundary; separate official grader result was intentionally unavailable"
+  ],
+  "contentAccuracyComplete": false,
+  "realGeneratedResourceConsumption": false,
+  "resourceScriptsExecuted": false,
+  "formalOrCausalEffectClaim": false,
+  "namedSkillManuallyInjected": false,
+  "limitation": "Read-only positive control intentionally requests asset use. Context delivery and historical/current separation pass; detailed recommended test targets and timeline are imperfect. No claim of spontaneous transfer or full content accuracy."
+}
