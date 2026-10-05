@@ -31,14 +31,24 @@ def verify_seed(assets, sessions):
         if header.get('type')!='session' or header.get('version')!=4 or header['id'] in stored:
             raise ValueError('Invalid or duplicate source session')
         stored[header['id']]=str(file.relative_to(sessions))
+    # The coordinator supplies closed own-state only; include task paths, never learning logs or scores.
+    prior_tasks=[]
+    for session_id,relative_path in sorted(stored.items()):
+        if not re.fullmatch(r'pilot-django__django-\d+-task',session_id): continue
+        if relative_path != f'--workspace--/{session_id}/session.v4.jsonl':
+            raise ValueError('Unexpected restored task log path')
+        boundaries=[json.loads(line)['type'] for line in (sessions/relative_path).read_text().splitlines() if json.loads(line).get('type') in ['turn/start','turn/end']]
+        if not boundaries or boundaries[-1]!='turn/end':
+            raise ValueError('Restored task log is not closed')
+        prior_tasks.append({'sessionId':session_id,'relativePath':relative_path})
     if assets is None:
-        return {'requiredSessionIds':sorted(stored),'inputSha256':{'sessions':hashes['sessions']}}
+        return {'requiredSessionIds':sorted(stored),'inputSha256':{'sessions':hashes['sessions']},'priorTaskLogs':prior_tasks}
     db=sqlite3.connect((assets/'rsi-state.sqlite').as_uri()+'?mode=ro',uri=True)
     try: sources={row[0] for row in db.execute('SELECT id FROM sources')}
     finally: db.close()
     required=sources|{json.loads(file.read_text())['sessionId'] for file in (assets/'learning-runs').glob('*.json')}
     if required-set(stored): raise ValueError('Asset snapshot is missing official source/learning sessions')
-    return {'sourceSessionIds':sorted(sources),'requiredSessionIds':sorted(required),'inputSha256':hashes}
+    return {'sourceSessionIds':sorted(sources),'requiredSessionIds':sorted(required),'inputSha256':hashes,'priorTaskLogs':prior_tasks}
 
 
 def main():
@@ -192,7 +202,6 @@ def main():
             shutil.copy2(project/'scripts/audit-session-requests.mjs',root/'audit-session-requests.mjs')
             shutil.copy2(project/'scripts/task-input.mjs',root/'task-input.mjs')
             # Only public problem metadata already present in the prepared task image is reused.
-            (root/'pilot.json').write_text(json.dumps(patch,ensure_ascii=False))
             shutil.copy2(project/'package.json',root/'package.json')
             shutil.copy2(project/'package-lock.json',root/'package-lock.json')
             dockerfile = f'FROM {args.image}\nUSER root\nCOPY package.json package-lock.json /opt/rsi/\nRUN cd /opt/rsi && npm ci --ignore-scripts\nCOPY lib /opt/rsi/lib\nCOPY pilot-task.mjs audit-session-requests.mjs task-input.mjs pilot.json /opt/rsi/scripts/\nENV NODE_LLAMA_CPP_GPU=false\n'
@@ -206,14 +215,18 @@ def main():
             if args.baseline_history:
                 shutil.copytree(args.baseline_history.resolve(),root/'seed-sessions')
                 dockerfile += 'COPY --chown=1000:1000 seed-sessions /opt/seed-sessions\n'
-                (output/'source-snapshot.json').write_text(json.dumps(verify_seed(None,root/'seed-sessions'),indent=2))
+                seed=verify_seed(None,root/'seed-sessions')
+                driver['config']['priorTaskLogs']=seed['priorTaskLogs']
+                (output/'source-snapshot.json').write_text(json.dumps(seed,indent=2))
             if args.seed_assets:
                 shutil.copytree(args.seed_assets.resolve(),root/'seed-assets')
                 dockerfile += 'COPY --chown=1000:1000 seed-assets /opt/seed-assets\n'
                 shutil.copytree(args.seed_sessions.resolve(),root/'seed-sessions')
                 dockerfile += 'COPY --chown=1000:1000 seed-sessions /opt/seed-sessions\n'
                 seed=verify_seed(root/'seed-assets',root/'seed-sessions')
+                driver['config']['priorTaskLogs']=seed['priorTaskLogs']
                 (output/'source-snapshot.json').write_text(json.dumps(seed,indent=2))
+            (root/'pilot.json').write_text(json.dumps(patch,ensure_ascii=False))
             (root/'Dockerfile').write_text(dockerfile)
             with (output/'build.log').open('w') as log:
                 command('docker','build','--platform','linux/amd64','-t',image,str(root),stdout=log,stderr=subprocess.STDOUT)

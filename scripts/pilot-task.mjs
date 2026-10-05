@@ -6,7 +6,7 @@ import {execFileSync} from 'node:child_process';
 import {LlmAdapter, createUserMessage} from '@deepseek-ai/dsh-llm';
 import {auditRequests} from './audit-session-requests.mjs';
 import {Session} from '@deepseek-ai/dsh-session';
-import {taskProtocol} from './task-input.mjs';
+import {taskProtocol,taskHistoryGuidance} from './task-input.mjs';
 
 export const name = 'rsi-pilot-task';
 export const inject = ['llm', 'agents', 'sessions', 'sessionPersistence', 'skills', 'tools'];
@@ -155,10 +155,11 @@ export function apply(ctx, config) {
           if (phase.resetWorkspace) {git('reset','--hard','HEAD');git('clean','-fdx');}
           const phaseStartedAt=Date.now();
           const id = 'pilot-' + config.instanceId + '-' + phase.name;
+          const protocol=phase.protocol===taskProtocol?phase.protocol+'\n'+taskHistoryGuidance(id,config.priorTaskLogs??[]):phase.protocol;
           const handle = await ctx.agents.create({sessionId:id, meta:{cwd:'/workspace'},
             agentOptions:{provider:config.fixture?'pilot-fixture':'qwen', model:config.fixture?'fixture':'qwen3.8-27b', maxTokens:8192}});
           deadline = setTimeout(()=>handle.agent.cancel({kind:'hook',reason:'Pilot wall time limit reached'}),wallTimeMs);
-          if(phase.protocol)handle.agent.inject(createUserMessage({source:{kind:'benchmark-protocol',form:'instructions'},content:[{type:'text',text:phase.protocol}]}));
+          if(protocol)handle.agent.inject(createUserMessage({source:{kind:'benchmark-protocol',form:'instructions'},content:[{type:'text',text:protocol}]}));
           handle.agent.followup(createUserMessage({source:{kind:'user'},content:[{type:'text',text:phase.prompt}]}));
           await handle.agent.whenIdle(); await ctx.sessions.flush(handle.agent.session); clearTimeout(deadline); patch();
           durable(dir + '/prediction-' + phase.name + '.patch',git('diff','--cached','--binary','HEAD'));

@@ -1,0 +1,362 @@
+{
+  "status": "PRODUCER_HISTORY_TARGET_REPAIR_OFFLINE_VERIFIED",
+  "savedOwnRawHistorySeedsChecked": 14,
+  "savedOwnRawHistoryOriginalHashesUnchanged": true,
+  "rows": [
+    {
+      "instanceId": "django__django-11551",
+      "arm": "rsi",
+      "priorTaskCount": 1,
+      "priorTaskLogs": [
+        {
+          "sessionId": "pilot-django__django-11848-task",
+          "relativePath": "--workspace--/pilot-django__django-11848-task/session.v4.jsonl"
+        }
+      ],
+      "originalRawSessionHashesPreserved": true
+    },
+    {
+      "instanceId": "django__django-11551",
+      "arm": "baseline",
+      "priorTaskCount": 1,
+      "priorTaskLogs": [
+        {
+          "sessionId": "pilot-django__django-11848-task",
+          "relativePath": "--workspace--/pilot-django__django-11848-task/session.v4.jsonl"
+        }
+      ],
+      "originalRawSessionHashesPreserved": true
+    },
+    {
+      "instanceId": "django__django-12262",
+      "arm": "baseline",
+      "priorTaskCount": 2,
+      "priorTaskLogs": [
+        {
+          "sessionId": "pilot-django__django-11551-task",
+          "relativePath": "--workspace--/pilot-django__django-11551-task/session.v4.jsonl"
+        },
+        {
+          "sessionId": "pilot-django__django-11848-task",
+          "relativePath": "--workspace--/pilot-django__django-11848-task/session.v4.jsonl"
+        }
+      ],
+      "originalRawSessionHashesPreserved": true
+    },
+    {
+      "instanceId": "django__django-12262",
+      "arm": "rsi",
+      "priorTaskCount": 2,
+      "priorTaskLogs": [
+        {
+          "sessionId": "pilot-django__django-11551-task",
+          "relativePath": "--workspace--/pilot-django__django-11551-task/session.v4.jsonl"
+        },
+        {
+          "sessionId": "pilot-django__django-11848-task",
+          "relativePath": "--workspace--/pilot-django__django-11848-task/session.v4.jsonl"
+        }
+      ],
+      "originalRawSessionHashesPreserved": true
+    },
+    {
+      "instanceId": "django__django-11815",
+      "arm": "rsi",
+      "priorTaskCount": 3,
+      "priorTaskLogs": [
+        {
+          "sessionId": "pilot-django__django-11551-task",
+          "relativePath": "--workspace--/pilot-django__django-11551-task/session.v4.jsonl"
+        },
+        {
+          "sessionId": "pilot-django__django-11848-task",
+          "relativePath": "--workspace--/pilot-django__django-11848-task/session.v4.jsonl"
+        },
+        {
+          "sessionId": "pilot-django__django-12262-task",
+          "relativePath": "--workspace--/pilot-django__django-12262-task/session.v4.jsonl"
+        }
+      ],
+      "originalRawSessionHashesPreserved": true
+    },
+    {
+      "instanceId": "django__django-11815",
+      "arm": "baseline",
+      "priorTaskCount": 3,
+      "priorTaskLogs": [
+        {
+          "sessionId": "pilot-django__django-11551-task",
+          "relativePath": "--workspace--/pilot-django__django-11551-task/session.v4.jsonl"
+        },
+        {
+          "sessionId": "pilot-django__django-11848-task",
+          "relativePath": "--workspace--/pilot-django__django-11848-task/session.v4.jsonl"
+        },
+        {
+          "sessionId": "pilot-django__django-12262-task",
+          "relativePath": "--workspace--/pilot-django__django-12262-task/session.v4.jsonl"
+        }
+      ],
+      "originalRawSessionHashesPreserved": true
+    },
+    {
+      "instanceId": "django__django-11880",
+      "arm": "baseline",
+      "priorTaskCount": 4,
+      "priorTaskLogs": [
+        {
+          "sessionId": "pilot-django__django-11551-task",
+          "relativePath": "--workspace--/pilot-django__django-11551-task/session.v4.jsonl"
+        },
+        {
+          "sessionId": "pilot-django__django-11815-task",
+          "relativePath": "--workspace--/pilot-django__django-11815-task/session.v4.jsonl"
+        },
+        {
+          "sessionId": "pilot-django__django-11848-task",
+          "relativePath": "--workspace--/pilot-django__django-11848-task/session.v4.jsonl"
+        },
+        {
+          "sessionId": "pilot-django__django-12262-task",
+          "relativePath": "--workspace--/pilot-django__django-12262-task/session.v4.jsonl"
+        }
+      ],
+      "originalRawSessionHashesPreserved": true
+    },
+    {
+      "instanceId": "django__django-11880",
+      "arm": "rsi",
+      "priorTaskCount": 4,
+      "priorTaskLogs": [
+        {
+          "sessionId": "pilot-django__django-11551-task",
+          "relativePath": "--workspace--/pilot-django__django-11551-task/session.v4.jsonl"
+        },
+        {
+          "sessionId": "pilot-django__django-11815-task",
+          "relativePath": "--workspace--/pilot-django__django-11815-task/session.v4.jsonl"
+        },
+        {
+          "sessionId": "pilot-django__django-11848-task",
+          "relativePath": "--workspace--/pilot-django__django-11848-task/session.v4.jsonl"
+        },
+        {
+          "sessionId": "pilot-django__django-12262-task",
+          "relativePath": "--workspace--/pilot-django__django-12262-task/session.v4.jsonl"
+        }
+      ],
+      "originalRawSessionHashesPreserved": true
+    },
+    {
+      "instanceId": "django__django-11790",
+      "arm": "rsi",
+      "priorTaskCount": 5,
+      "priorTaskLogs": [
+        {
+          "sessionId": "pilot-django__django-11551-task",
+          "relativePath": "--workspace--/pilot-django__django-11551-task/session.v4.jsonl"
+        },
+        {
+          "sessionId": "pilot-django__django-11815-task",
+          "relativePath": "--workspace--/pilot-django__django-11815-task/session.v4.jsonl"
+        },
+        {
+          "sessionId": "pilot-django__django-11848-task",
+          "relativePath": "--workspace--/pilot-django__django-11848-task/session.v4.jsonl"
+        },
+        {
+          "sessionId": "pilot-django__django-11880-task",
+          "relativePath": "--workspace--/pilot-django__django-11880-task/session.v4.jsonl"
+        },
+        {
+          "sessionId": "pilot-django__django-12262-task",
+          "relativePath": "--workspace--/pilot-django__django-12262-task/session.v4.jsonl"
+        }
+      ],
+      "originalRawSessionHashesPreserved": true
+    },
+    {
+      "instanceId": "django__django-11790",
+      "arm": "baseline",
+      "priorTaskCount": 5,
+      "priorTaskLogs": [
+        {
+          "sessionId": "pilot-django__django-11551-task",
+          "relativePath": "--workspace--/pilot-django__django-11551-task/session.v4.jsonl"
+        },
+        {
+          "sessionId": "pilot-django__django-11815-task",
+          "relativePath": "--workspace--/pilot-django__django-11815-task/session.v4.jsonl"
+        },
+        {
+          "sessionId": "pilot-django__django-11848-task",
+          "relativePath": "--workspace--/pilot-django__django-11848-task/session.v4.jsonl"
+        },
+        {
+          "sessionId": "pilot-django__django-11880-task",
+          "relativePath": "--workspace--/pilot-django__django-11880-task/session.v4.jsonl"
+        },
+        {
+          "sessionId": "pilot-django__django-12262-task",
+          "relativePath": "--workspace--/pilot-django__django-12262-task/session.v4.jsonl"
+        }
+      ],
+      "originalRawSessionHashesPreserved": true
+    },
+    {
+      "instanceId": "django__django-11999",
+      "arm": "baseline",
+      "priorTaskCount": 6,
+      "priorTaskLogs": [
+        {
+          "sessionId": "pilot-django__django-11551-task",
+          "relativePath": "--workspace--/pilot-django__django-11551-task/session.v4.jsonl"
+        },
+        {
+          "sessionId": "pilot-django__django-11790-task",
+          "relativePath": "--workspace--/pilot-django__django-11790-task/session.v4.jsonl"
+        },
+        {
+          "sessionId": "pilot-django__django-11815-task",
+          "relativePath": "--workspace--/pilot-django__django-11815-task/session.v4.jsonl"
+        },
+        {
+          "sessionId": "pilot-django__django-11848-task",
+          "relativePath": "--workspace--/pilot-django__django-11848-task/session.v4.jsonl"
+        },
+        {
+          "sessionId": "pilot-django__django-11880-task",
+          "relativePath": "--workspace--/pilot-django__django-11880-task/session.v4.jsonl"
+        },
+        {
+          "sessionId": "pilot-django__django-12262-task",
+          "relativePath": "--workspace--/pilot-django__django-12262-task/session.v4.jsonl"
+        }
+      ],
+      "originalRawSessionHashesPreserved": true
+    },
+    {
+      "instanceId": "django__django-11999",
+      "arm": "rsi",
+      "priorTaskCount": 6,
+      "priorTaskLogs": [
+        {
+          "sessionId": "pilot-django__django-11551-task",
+          "relativePath": "--workspace--/pilot-django__django-11551-task/session.v4.jsonl"
+        },
+        {
+          "sessionId": "pilot-django__django-11790-task",
+          "relativePath": "--workspace--/pilot-django__django-11790-task/session.v4.jsonl"
+        },
+        {
+          "sessionId": "pilot-django__django-11815-task",
+          "relativePath": "--workspace--/pilot-django__django-11815-task/session.v4.jsonl"
+        },
+        {
+          "sessionId": "pilot-django__django-11848-task",
+          "relativePath": "--workspace--/pilot-django__django-11848-task/session.v4.jsonl"
+        },
+        {
+          "sessionId": "pilot-django__django-11880-task",
+          "relativePath": "--workspace--/pilot-django__django-11880-task/session.v4.jsonl"
+        },
+        {
+          "sessionId": "pilot-django__django-12262-task",
+          "relativePath": "--workspace--/pilot-django__django-12262-task/session.v4.jsonl"
+        }
+      ],
+      "originalRawSessionHashesPreserved": true
+    },
+    {
+      "instanceId": "django__django-11740",
+      "arm": "rsi",
+      "priorTaskCount": 7,
+      "priorTaskLogs": [
+        {
+          "sessionId": "pilot-django__django-11551-task",
+          "relativePath": "--workspace--/pilot-django__django-11551-task/session.v4.jsonl"
+        },
+        {
+          "sessionId": "pilot-django__django-11790-task",
+          "relativePath": "--workspace--/pilot-django__django-11790-task/session.v4.jsonl"
+        },
+        {
+          "sessionId": "pilot-django__django-11815-task",
+          "relativePath": "--workspace--/pilot-django__django-11815-task/session.v4.jsonl"
+        },
+        {
+          "sessionId": "pilot-django__django-11848-task",
+          "relativePath": "--workspace--/pilot-django__django-11848-task/session.v4.jsonl"
+        },
+        {
+          "sessionId": "pilot-django__django-11880-task",
+          "relativePath": "--workspace--/pilot-django__django-11880-task/session.v4.jsonl"
+        },
+        {
+          "sessionId": "pilot-django__django-11999-task",
+          "relativePath": "--workspace--/pilot-django__django-11999-task/session.v4.jsonl"
+        },
+        {
+          "sessionId": "pilot-django__django-12262-task",
+          "relativePath": "--workspace--/pilot-django__django-12262-task/session.v4.jsonl"
+        }
+      ],
+      "originalRawSessionHashesPreserved": true
+    },
+    {
+      "instanceId": "django__django-11740",
+      "arm": "baseline",
+      "priorTaskCount": 7,
+      "priorTaskLogs": [
+        {
+          "sessionId": "pilot-django__django-11551-task",
+          "relativePath": "--workspace--/pilot-django__django-11551-task/session.v4.jsonl"
+        },
+        {
+          "sessionId": "pilot-django__django-11790-task",
+          "relativePath": "--workspace--/pilot-django__django-11790-task/session.v4.jsonl"
+        },
+        {
+          "sessionId": "pilot-django__django-11815-task",
+          "relativePath": "--workspace--/pilot-django__django-11815-task/session.v4.jsonl"
+        },
+        {
+          "sessionId": "pilot-django__django-11848-task",
+          "relativePath": "--workspace--/pilot-django__django-11848-task/session.v4.jsonl"
+        },
+        {
+          "sessionId": "pilot-django__django-11880-task",
+          "relativePath": "--workspace--/pilot-django__django-11880-task/session.v4.jsonl"
+        },
+        {
+          "sessionId": "pilot-django__django-11999-task",
+          "relativePath": "--workspace--/pilot-django__django-11999-task/session.v4.jsonl"
+        },
+        {
+          "sessionId": "pilot-django__django-12262-task",
+          "relativePath": "--workspace--/pilot-django__django-12262-task/session.v4.jsonl"
+        }
+      ],
+      "originalRawSessionHashesPreserved": true
+    }
+  ],
+  "unclosedTurnControlRejected": true,
+  "coldHistoryAndExactCurrentPathControlsPassed": true,
+  "pathTraversalAndLearningSessionControlsRejected": true,
+  "bothArmsSameGuidanceFunction": true,
+  "nativeEventFormatUsed": true,
+  "guidanceSourceKind": "benchmark-protocol",
+  "existingLearningExclusionPreserved": true,
+  "newModelOrScorerCalls": 0,
+  "oldFreezeOrAssetsChanged": false,
+  "effectClaim": false,
+  "scope": "Verified raw history manifest construction; native asset state is not re-validated by these controls.",
+  "limitation": "Saved-input and no-dispatch controls; fresh real-task behavior with new guidance remains unmeasured.",
+  "nativeContentShapeChecksOnAll16OwnTaskLogs": {
+    "user/message": 55,
+    "assistant/message": 604,
+    "tool/result": 648
+  },
+  "nativeAssistantAndToolContentPath": "data.message.content",
+  "nativeUserContentPath": "data.content"
+}
