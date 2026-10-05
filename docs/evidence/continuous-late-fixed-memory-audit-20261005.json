@@ -1,0 +1,157 @@
+{
+  "status": "ALL_PREDECLARED_MEMORY_SAMPLE_POSITIONS_CAPTURED",
+  "recordedAt": "2026-10-05T03:12:59.073373+00:00",
+  "samplePositions": [
+    2,
+    4,
+    6,
+    8
+  ],
+  "lateClosedReviews": [
+    {
+      "status": "PREDECLARED_CLOSED_MEMORY_RELEVANCE_REVIEW",
+      "reviewedAt": "2026-10-05T03:12:59.043151+00:00",
+      "taskPosition": 6,
+      "instanceId": "django__django-11790",
+      "fixedSampling": "First actual task request, first four memory references; predeclared before the sequence",
+      "relevanceLabelsAssignedAfterScoreKnown": true,
+      "reasonForLateReview": "Codex approval quota temporarily prevented live capture/review; saved exact first request preserves the sampling unit",
+      "actualRequestCaptureSha256": "1ee605085168b87e23d51c8ff365f3de2cc103a3bbed7dcaa59d787eb037614b",
+      "priorNativeHeadMatches": [
+        {
+          "id": "m_1791145728939_d74ce841",
+          "version": 0,
+          "nativeSourceSession": "pilot-django__django-11880-task",
+          "priorNativeHeadAndDeliveredBodyMatch": true
+        },
+        {
+          "id": "m_1791143799260_0988060a",
+          "version": 0,
+          "nativeSourceSession": "pilot-django__django-12262-task",
+          "priorNativeHeadAndDeliveredBodyMatch": true
+        },
+        {
+          "id": "m_1791129416392_7e8669cf",
+          "version": 1,
+          "nativeSourceSession": "pilot-django__django-11848-task",
+          "priorNativeHeadAndDeliveredBodyMatch": true
+        },
+        {
+          "id": "m_1791130721590_aeed230e",
+          "version": 2,
+          "nativeSourceSession": "pilot-django__django-11551-task",
+          "priorNativeHeadAndDeliveredBodyMatch": true
+        }
+      ],
+      "labels": [
+        {
+          "id": "m_1791145728939_d74ce841",
+          "label": "partial",
+          "reason": "Prior Form Field deep-copy work shares the form field lifecycle, but error_messages copying does not supply username max_length/widget attrs propagation."
+        },
+        {
+          "id": "m_1791143799260_0988060a",
+          "label": "unrelated",
+          "reason": "Template-tag keyword-only parsing does not address AuthenticationForm username maxlength."
+        },
+        {
+          "id": "m_1791129416392_7e8669cf",
+          "label": "unrelated",
+          "reason": "HTTP two-digit-year conversion does not supply form widget maxlength behavior."
+        },
+        {
+          "id": "m_1791130721590_aeed230e",
+          "label": "unrelated",
+          "reason": "ModelAdmin descriptor E108 lookup is a different field-validation mechanism from login form HTML attrs."
+        }
+      ],
+      "direct": 0,
+      "partial": 1,
+      "unrelated": 3,
+      "actualBodySourceVersionAndReconstructionVerified": true,
+      "newAssetOrLearningWrites": false,
+      "realModelRequestsByReader": 0,
+      "decisionCausalityClaim": false,
+      "scoreFieldLimit": "Native SQLite default score=0 is not measured zero similarity."
+    },
+    {
+      "status": "PREDECLARED_CLOSED_MEMORY_RELEVANCE_REVIEW",
+      "reviewedAt": "2026-10-05T03:12:59.073119+00:00",
+      "taskPosition": 8,
+      "instanceId": "django__django-11740",
+      "fixedSampling": "First actual task request, first four memory references; predeclared before the sequence",
+      "relevanceLabelsAssignedAfterScoreKnown": true,
+      "reasonForLateReview": "Codex approval quota temporarily prevented live capture/review; saved exact first request preserves the sampling unit",
+      "actualRequestCaptureSha256": "694aabf74a2ba2cb9a78e24de7df0b8e4fc65e6f64b2fb1073ec97ae12b3eb2d",
+      "priorNativeHeadMatches": [
+        {
+          "id": "m_1791148560531_0dc7043b",
+          "version": 0,
+          "nativeSourceSession": "pilot-django__django-11999-task",
+          "priorNativeHeadAndDeliveredBodyMatch": true
+        },
+        {
+          "id": "m_1791144110936_c7312a91",
+          "version": 0,
+          "nativeSourceSession": "pilot-django__django-11815-task",
+          "priorNativeHeadAndDeliveredBodyMatch": true
+        },
+        {
+          "id": "m_1791145728939_d74ce841",
+          "version": 0,
+          "nativeSourceSession": "pilot-django__django-11880-task",
+          "priorNativeHeadAndDeliveredBodyMatch": true
+        },
+        {
+          "id": "m_1791129416392_7e8669cf",
+          "version": 1,
+          "nativeSourceSession": "pilot-django__django-11848-task",
+          "priorNativeHeadAndDeliveredBodyMatch": true
+        }
+      ],
+      "labels": [
+        {
+          "id": "m_1791148560531_0dc7043b",
+          "label": "unrelated",
+          "reason": "get_FIELD_display overriding/MRO does not describe migration dependency creation when a UUIDField becomes ForeignKey."
+        },
+        {
+          "id": "m_1791144110936_c7312a91",
+          "label": "partial",
+          "reason": "Enum serialization is within migrations and its test setup can transfer; member-value/name formatting supplies no dependency graph or relation-alteration remedy."
+        },
+        {
+          "id": "m_1791145728939_d74ce841",
+          "label": "unrelated",
+          "reason": "Form Field error_messages copying does not identify cross-app migration dependencies."
+        },
+        {
+          "id": "m_1791129416392_7e8669cf",
+          "label": "unrelated",
+          "reason": "HTTP date conversion is unrelated to relation migrations."
+        }
+      ],
+      "direct": 0,
+      "partial": 1,
+      "unrelated": 3,
+      "actualBodySourceVersionAndReconstructionVerified": true,
+      "newAssetOrLearningWrites": false,
+      "realModelRequestsByReader": 0,
+      "decisionCausalityClaim": false,
+      "scoreFieldLimit": "Native SQLite default score=0 is not measured zero similarity."
+    }
+  ],
+  "earlierReviewsBeforeScores": [
+    2,
+    4
+  ],
+  "labelsAfterScores": [
+    6,
+    8
+  ],
+  "fixedFirstRequestSelectionUnchanged": true,
+  "allPriorNativeBodyAndVersionMatches": true,
+  "modelOrScorerRequests": 0,
+  "assetsOrFrozenMethodsChanged": false,
+  "blindReviewClaimForAllSamples": false
+}
