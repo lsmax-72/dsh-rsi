@@ -1,0 +1,31 @@
+{
+  "status": "PASS_NATIVE_SKILL_WINDOW_DELEGATION_AND_SOURCE_COVERAGE",
+  "jobId": "pilot-django__django-12262-task:1",
+  "sourceMessages": 123,
+  "sourcePayloadSha256": "94875a2ee128a526fe8c9d07b68db751d49d188882aeb17572fb64b9b9ada5d8",
+  "fullTranscriptUtf16Chars": 96154,
+  "fullTranscriptSha256": "f531fcdd33d089570ccd00821bffa6495cd1c596f4bf28cae341f0a41f481289",
+  "defaultNativeHeadChars": 8000,
+  "defaultNativeTailChars": 32000,
+  "defaultMatchesSavedActualPromptSuffix": true,
+  "defaultCriticalSignatureOccurrences": 0,
+  "developmentWindow": {
+    "headChars": 40000,
+    "tailChars": 64000
+  },
+  "expandedTranscriptExactlyComplete": true,
+  "expandedCriticalSignatureOccurrences": 4,
+  "criticalSourceMessageCount": 2,
+  "systemPromptIdenticalAcrossWindows": true,
+  "nativeProductionPromptPrefixSha256": "0ed83c6534e4688d72cc45fc6844b6e2fddf4e892adba9f7c08db654fb425938",
+  "buildCoreModuleSha256": "44dca58b5d78dfc4ef5db2cf739d17993d5467a964b5b4fe13fd90e46bc69cb8",
+  "invalidLimitControlsRejected": 6,
+  "sourceSelectionAlgorithmRewritten": false,
+  "realModelOrScorerRequests": 0,
+  "fixtureRunnerInvocations": 2,
+  "embeddingTestDouble": true,
+  "productionDefaultsChanged": false,
+  "oldAssetsOrFreezeChanged": false,
+  "qualityOrEffectClaim": false,
+  "limitation": "Native input delivery is verified. Larger-window model capacity, generated content quality, compactness and consumer decisions still require bounded real validation."
+}

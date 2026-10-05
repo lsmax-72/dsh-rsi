@@ -1,0 +1,54 @@
+import assert from 'node:assert/strict';
+import {DatabaseSync} from 'node:sqlite';
+import {readFile,readdir,writeFile,copyFile,mkdtemp,rm} from 'node:fs/promises';
+import {dirname,join} from 'node:path';
+import {pathToFileURL,fileURLToPath} from 'node:url';
+import {createHash} from 'node:crypto';
+
+const repo=process.env.RSI_PROBE_PROJECT??dirname(dirname(fileURLToPath(import.meta.url)));
+const run=process.argv[2],output=process.argv[3],jobId=process.argv[4];
+assert.ok(run&&output&&jobId,'Saved run, new output and original job ID are required');
+const sha=s=>createHash('sha256').update(s).digest('hex');
+const index=await readFile(join(repo,'lib/index.js'),'utf8');
+const match=index.match(/import\s*\{([^}]*\bopenLocalCore\b[^}]*)\}\s*from\s*"([^"]+)"/);
+assert.ok(match,'Use the existing build that exports the native core factory');
+const modulePath=join(repo,'lib',match[2]);
+const {openLocalCore}=await import(pathToFileURL(modulePath));
+const {SKILL_REVIEW_PROMPT}=await import(pathToFileURL(join(repo,'lib/core-entry.js')));
+const {fixtureEmbedding}=await import(pathToFileURL(join(repo,'scripts/fixture-embedding.mjs')));
+const temp=await mkdtemp('/private/tmp/dsh-rsi-native-window-probe-');
+let core;
+try {
+  const sourceDir=join(run,'state/assets');
+  for(const name of await readdir(sourceDir))if(/^rsi-state\.sqlite(?:-(?:wal|shm))?$/.test(name))await copyFile(join(sourceDir,name),join(temp,name));
+  const db=new DatabaseSync(join(temp,'rsi-state.sqlite'),{readOnly:true});
+  const job=db.prepare('SELECT payload FROM jobs WHERE id=?').get(jobId);assert.ok(job);db.close();
+  const payload=JSON.parse(job.payload);
+  const full=payload.messages.map(m=>`<<past-${m.role}>>\n${m.content}`).join('\n\n')+'\n\n<<end-of-transcript>>\nAbove is the past conversation to review. Now decide, and respond only per the output contract in the system prompt.';
+  const signature='params, varargs, varkw, defaults, kwonly, kwonly_defaults, _ = getfullargspec(unwrap(func))';
+  assert.equal(payload.messages.filter(m=>m.role==='tool_result'&&m.content.includes(signature)).length,2);
+  const calls=[];
+  // Capture the genuine native request without invoking a provider or running task tools.
+  const runner={run:async params=>{calls.push(structuredClone({...params,tools:undefined}));return 'Nothing to save.';}};
+  const logger={info(){},debug(){},warn(){},error(){}};
+  core=await openLocalCore(join(temp,'core'),runner,logger,fixtureEmbedding());
+  const input={team_id:'window-audit',user_id:'local-user',agent_id:'local-agent',session_id:payload.sessionId,task_id:jobId,messages:payload.messages,reason:`记录的轮次结果：${JSON.stringify(payload.reason)}`};
+  const defaults=core.createSkillExtractor('zh-CN');
+  await defaults.extract(input);
+  const expanded=core.createSkillExtractor('zh-CN',{headChars:40000,tailChars:64000});
+  await expanded.extract(input);
+  assert.equal(calls.length,2);
+  const oldCut=full.length<=40000?full:`${full.slice(0,8000)}\n\n... [truncated ${full.length-40000} chars] ...\n\n${full.slice(-32000)}`;
+  assert.ok(calls[0].prompt.endsWith(oldCut));assert.ok(calls[1].prompt.endsWith(full));
+  assert.equal(calls[0].prompt.includes(signature),false);assert.equal(calls[1].prompt.split(signature).length-1,full.split(signature).length-1);
+  assert.ok(calls.every(c=>c.systemPrompt.startsWith(SKILL_REVIEW_PROMPT)));
+  assert.equal(calls[0].systemPrompt,calls[1].systemPrompt);
+  const pilots=await readdir(join(run,'state/pilot'));
+  const ledger=JSON.parse(await readFile(join(run,'state/pilot',pilots[0],'model-requests.json'),'utf8'));
+  const text=m=>m.content.filter(b=>b.type==='text').map(b=>b.text).join('\n');
+  assert.ok(ledger.some(r=>r.phase==='learning'&&r.messages.some(m=>m.role==='system'&&text(m).startsWith(SKILL_REVIEW_PROMPT))&&r.messages.some(m=>m.role==='user'&&text(m).endsWith(oldCut))));
+  for(const bad of [{headChars:0},{tailChars:-1},{headChars:1.5},{tailChars:'64000'},{headChars:NaN},{maxTokens:99999}])assert.throws(()=>core.createSkillExtractor('zh-CN',bad),/Skill 来源窗口/);
+  const result={status:'PASS_NATIVE_SKILL_WINDOW_DELEGATION_AND_SOURCE_COVERAGE',jobId,sourceMessages:payload.messages.length,sourcePayloadSha256:sha(job.payload),fullTranscriptUtf16Chars:full.length,fullTranscriptSha256:sha(full),defaultNativeHeadChars:8000,defaultNativeTailChars:32000,defaultMatchesSavedActualPromptSuffix:true,defaultCriticalSignatureOccurrences:0,developmentWindow:{headChars:40000,tailChars:64000},expandedTranscriptExactlyComplete:true,expandedCriticalSignatureOccurrences:full.split(signature).length-1,criticalSourceMessageCount:2,systemPromptIdenticalAcrossWindows:true,nativeProductionPromptPrefixSha256:sha(SKILL_REVIEW_PROMPT),buildCoreModuleSha256:sha(await readFile(modulePath)),invalidLimitControlsRejected:6,sourceSelectionAlgorithmRewritten:false,realModelOrScorerRequests:0,fixtureRunnerInvocations:2,embeddingTestDouble:true,productionDefaultsChanged:false,oldAssetsOrFreezeChanged:false,qualityOrEffectClaim:false,limitation:'Native input delivery is verified. Larger-window model capacity, generated content quality, compactness and consumer decisions still require bounded real validation.'};
+  await writeFile(output,JSON.stringify(result,null,2)+'\n',{flag:'wx'});
+  console.log(JSON.stringify(result));
+} finally {core?.close();await rm(temp,{recursive:true,force:true});}
