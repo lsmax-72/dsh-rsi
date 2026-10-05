@@ -1,0 +1,7 @@
+{
+  "status": "ERROR",
+  "error": "ENOENT: no such file or directory, lstat '/workspace'",
+  "actualRequests": 0,
+  "knownTokens": 0,
+  "unknownActualUsage": 0
+}

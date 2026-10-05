@@ -1,0 +1,55 @@
+{
+  "status": "PREREGISTERED_BEFORE_DISPATCH",
+  "recordedAt": "2026-10-05T03:53:21.135239+00:00",
+  "purpose": "Native development source-window review of existing failed source; no solver, no effect score, no case-specific correction injected.",
+  "model": "qwen3.8-27b",
+  "reportedServiceContextWindow": 262144,
+  "nativeCallsMax": 6,
+  "wallSeconds": 240,
+  "outputMaxTokensPerCall": 4096,
+  "nativeTranscriptWindow": {
+    "headChars": 40000,
+    "tailChars": 64000
+  },
+  "attemptsMax": 1,
+  "automaticRetry": false,
+  "sourceJobId": "pilot-django__django-12262-task:1",
+  "sourceMessages": 123,
+  "sourceLogSha256": "072a85cc78d2caf3b6ea1fb1f6c244f5c91e4757d347a40fe35d1b78d40382cb",
+  "sourcePayloadSha256": "e5afa06c0221c357be853d673042616a05d20efb504622bdd8b5452b460e7f79",
+  "originalRawPayloadSha256": "94875a2ee128a526fe8c9d07b68db751d49d188882aeb17572fb64b9b9ada5d8",
+  "startingSkillHeads": [
+    {
+      "id": "skl-C3ahj64rVZmT",
+      "name": "django-two-digit-year-rfc7231",
+      "version": 1,
+      "bodySha256": "90494f53a61d36f51e785694ce49a88b9a65fcba1bd8cd3eee7280be4649e658"
+    },
+    {
+      "id": "skl-LxDrXv4BfT96",
+      "name": "django-admin-e108-list-display-descriptor",
+      "version": 1,
+      "bodySha256": "6d3ce8a0308b54d9b7e55ce0b9afa514b0ef03fe4d4b94ace86be0538f87255c"
+    }
+  ],
+  "samePriorTwoNativeSkillsPreserved": true,
+  "originalUsageJobsMemoryProfilesNotCopied": true,
+  "startingAssets": "Own earlier two Skill heads and resources only; fresh runtime usage/job/memory state.",
+  "isolatedHomeAndTemporaryCopiedAssets": true,
+  "taskCommandsOrSolverCallsAllowed": 0,
+  "gradingOrOfficialAnswersInput": false,
+  "independentEffectClaim": false,
+  "reviewPluginSha256": "337a60e88cbcbfe04bb61a5da56a6991f86ef156552386b784714b3b2d354608",
+  "coreFactorySourceSha256": "e3c81b7e71809ba7d7d20d4ed570cd89146d9c48eb4bd38ae99cea8b7c80ce25",
+  "buildIndexSha256": "c5c03d94a0db155cbdaf0e3364e56b0c11fdc29754268f3298a5c5123e1bab12",
+  "patchSha256": "6211d51a9951f00d4e1822177104f126de1ad43c5730466bb0755f17145a056f",
+  "qualityGates": [
+    "Exact native full-source suffix and both critical source records delivered",
+    "All model inputs reconstructed from new durable sessions",
+    "Actual input/output/full token usage, failures and unknowns retained",
+    "Observed signatures and failed public checks attributed correctly",
+    "Body length, resource references and actual native files reviewed"
+  ],
+  "authorization": "Previously authorized autonomous bounded development validation and sending isolated task logs to configured qwen service; formal freezes and budgets remain unchanged.",
+  "limitation": "One diagnostic development attempt after source-task scoring; not a new blind task or causal window comparison."
+}

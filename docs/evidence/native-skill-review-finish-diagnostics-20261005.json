@@ -1,0 +1,37 @@
+{
+  "status": "PASS_NATIVE_REVIEW_FINISH_DIAGNOSTICS",
+  "reviewPluginSha256": "f664e31a6913d970a7005e7617d70b6e200af9d62ba964e77f00884fad39e8ee",
+  "finishControls": [
+    {
+      "kind": "stop",
+      "status": "RETURNED"
+    },
+    {
+      "kind": "tool-calls",
+      "status": "RETURNED"
+    },
+    {
+      "kind": "error",
+      "status": "INCOMPLETE"
+    },
+    {
+      "kind": "aborted",
+      "status": "INCOMPLETE"
+    },
+    {
+      "kind": "max-tokens",
+      "status": "INCOMPLETE"
+    },
+    {
+      "kind": null,
+      "status": "INCOMPLETE"
+    }
+  ],
+  "thrownTransportErrorRetained": true,
+  "taskSolverSessionRejectedBeforeDispatch": true,
+  "realModelRequests": 0,
+  "fixtureStreamInvocations": 7,
+  "sessionPersistenceFixture": true,
+  "productionBridgeChanged": false,
+  "probeSha256": "1baff22cc404954b08da524482e08ed62b6464bd545b2d4468b214e515aa19f1"
+}

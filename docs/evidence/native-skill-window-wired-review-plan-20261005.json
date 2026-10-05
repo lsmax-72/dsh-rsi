@@ -1,0 +1,99 @@
+{
+  "status": "PREREGISTERED_ONE_NATIVE_GENERATION_ATTEMPT",
+  "recordedAt": "2026-10-05T11:22:50.021896+00:00",
+  "purpose": "Native development source-window review of existing failed source; no solver, no effect score, no case-specific correction injected.",
+  "model": "qwen3.8-27b",
+  "reportedServiceContextWindow": 262144,
+  "nativeCallsMax": 5,
+  "wallSeconds": 240,
+  "outputMaxTokensPerCall": 4096,
+  "nativeTranscriptWindow": {
+    "headChars": 40000,
+    "tailChars": 64000
+  },
+  "attemptsMax": 1,
+  "automaticRetry": false,
+  "sourceJobId": "pilot-django__django-12262-task:1",
+  "sourceMessages": 123,
+  "sourceLogSha256": "072a85cc78d2caf3b6ea1fb1f6c244f5c91e4757d347a40fe35d1b78d40382cb",
+  "sourcePayloadSha256": "e5afa06c0221c357be853d673042616a05d20efb504622bdd8b5452b460e7f79",
+  "originalRawPayloadSha256": "94875a2ee128a526fe8c9d07b68db751d49d188882aeb17572fb64b9b9ada5d8",
+  "startingSkillHeads": [
+    {
+      "id": "skl-C3ahj64rVZmT",
+      "name": "django-two-digit-year-rfc7231",
+      "version": 1,
+      "bodySha256": "90494f53a61d36f51e785694ce49a88b9a65fcba1bd8cd3eee7280be4649e658"
+    },
+    {
+      "id": "skl-LxDrXv4BfT96",
+      "name": "django-admin-e108-list-display-descriptor",
+      "version": 1,
+      "bodySha256": "6d3ce8a0308b54d9b7e55ce0b9afa514b0ef03fe4d4b94ace86be0538f87255c"
+    }
+  ],
+  "samePriorTwoNativeSkillsPreserved": "Bodies, names, version-one content and resources preserved via native API; local IDs remapped to actual temporary workspace.",
+  "originalUsageJobsMemoryProfilesNotCopied": true,
+  "startingAssets": "Own earlier two Skill heads and resources only; fresh runtime usage/job/memory state.",
+  "isolatedHomeAndTemporaryCopiedAssets": true,
+  "taskCommandsOrSolverCallsAllowed": 0,
+  "gradingOrOfficialAnswersInput": false,
+  "independentEffectClaim": false,
+  "reviewPluginSha256": "337a60e88cbcbfe04bb61a5da56a6991f86ef156552386b784714b3b2d354608",
+  "coreFactorySourceSha256": "e3c81b7e71809ba7d7d20d4ed570cd89146d9c48eb4bd38ae99cea8b7c80ce25",
+  "buildIndexSha256": "c5c03d94a0db155cbdaf0e3364e56b0c11fdc29754268f3298a5c5123e1bab12",
+  "patchSha256": "b3dc7411bbeb12869bf37e177d618b2eb6a38a30100bcc0c33ff9905316f6651",
+  "qualityGates": [
+    "Exact native full-source suffix and both critical source records delivered",
+    "All model inputs reconstructed from new durable sessions",
+    "Actual input/output/full token usage, failures and unknowns retained",
+    "Observed signatures and failed public checks attributed correctly",
+    "Body length, resource references and actual native files reviewed"
+  ],
+  "authorization": "Previously authorized autonomous bounded development validation and sending isolated task logs to configured qwen service; formal freezes and budgets remain unchanged.",
+  "limitation": "One diagnostic development attempt after source-task scoring; not a new blind task or causal window comparison.",
+  "previousPreparationRoot": "/private/tmp/dsh-rsi-native-window-review-corrected-20261005",
+  "previousPreparationError": "ENOENT: no such file or directory, lstat '/workspace'",
+  "previousActualModelCalls": 0,
+  "totalModelCallsAcrossPreparationAndAttemptMax": 6,
+  "physicalWorkspace": "/private/tmp/dsh-rsi-native-window-review-corrected-20261005/workspace",
+  "preparationCorrection": "A real workspace directory is required by the existing workspace resolver. Preserve zero-call receipt; fix temporary scope using native create, no source/answer edits, no model retry or increased call cap.",
+  "root": "/private/tmp/dsh-rsi-native-window-review-wired-20261005",
+  "previousLocalStreamAttempts": 1,
+  "previousConfirmedUpstreamGenerationRequests": 0,
+  "totalLocalStreamAttemptsAcrossPreparationsAndGenerationMax": 6,
+  "actualGenerationAttemptsMax": 1,
+  "startingNativeScopeAndIdsPreserved": {
+    "scope": "b1aa4b4aa1656d87e4f0a1ab",
+    "copies": [
+      {
+        "sourceId": "skl-LxDrXv4BfT96",
+        "targetId": "skl-WLqovbU37Dvy",
+        "name": "django-admin-e108-list-display-descriptor",
+        "version": 1,
+        "bodySha256": "6d3ce8a0308b54d9b7e55ce0b9afa514b0ef03fe4d4b94ace86be0538f87255c",
+        "nativeResources": 0
+      },
+      {
+        "sourceId": "skl-C3ahj64rVZmT",
+        "targetId": "skl-oUTIhtyYF8jd",
+        "name": "django-two-digit-year-rfc7231",
+        "version": 1,
+        "bodySha256": "90494f53a61d36f51e785694ce49a88b9a65fcba1bd8cd3eee7280be4649e658",
+        "nativeResources": 0
+      }
+    ],
+    "modelCalls": 0,
+    "sourceBodiesOrResourcesChanged": false,
+    "idsAssignedByNativeCreate": true
+  },
+  "credentialSource": "Inherited placeholder EMPTY per existing isolated run convention; no personal credentials",
+  "gateway": {
+    "originalSha256": "626873384609d8b50f989aa255e5757545bd0cf5c7345063dc41e2c6b2058869",
+    "temporarySha256": "ab28cce28dfba556686b6a00d9939e5628dbef662a8e802bea59f95fb6446e0e",
+    "onlyChange": "Bind existing relay to 127.0.0.1:48175",
+    "upstream": "http://10.195.214.152:8100/v1",
+    "actualRequestLimit": 5
+  },
+  "consumerCallsIncluded": false
+}

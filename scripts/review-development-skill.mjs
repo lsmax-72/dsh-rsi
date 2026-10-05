@@ -9,9 +9,10 @@ export function apply(ctx,config){
  const save=()=>writeFile(join(config.root,'review-requests.json'),JSON.stringify(requests,null,2));
  ctx.on('llm/stream',async function*(options,next){
   assert.ok(requests.length<config.callLimit,'Fixed native Skill review budget exceeded');
+  assert.ok(options.sessionId.startsWith('rsi-'),'Native review must not dispatch a task solver');
   const handle=await ctx.sessionPersistence.open(options.sessionId,'read');const saved=await handle.read();const restored=Session.fromRestore(options.sessionId,saved.events,handle.header,handle.inheritedEventCount,saved.eventState);await handle.close();assert.deepEqual([...restored.deriveMessages()],options.messages,'Skill model input differs from the durable log');
   const row={sessionId:options.sessionId,messages:structuredClone(options.messages),usage:null,status:'DISPATCHING',inputReconstructed:true};requests.push(row);await save();
-  try{for await(const chunk of next()){if(chunk.type==='usage'){row.usage=chunk.usage;await save();}yield chunk;}row.status='RETURNED';}catch(error){row.status='ERROR';row.error=error.message;throw error;}finally{await save();}
+  try{for await(const chunk of next()){if(chunk.type==='usage'){row.usage=chunk.usage;await save();}if(chunk.type==='finish')row.finishReason=structuredClone(chunk.reason);yield chunk;}row.status=['stop','tool-calls'].includes(row.finishReason?.kind)?'RETURNED':'INCOMPLETE';}catch(error){row.status='ERROR';row.error=error.message;throw error;}finally{await save();}
  });
  ctx.effect(()=>{const alive=setInterval(()=>{},1000),wall=setTimeout(()=>ctx.rsi.runtime.abort.abort(new Error('Fixed development Skill review wall budget expired')),240000),timer=setTimeout(async()=>{let receipt;try{
   await ctx.rsi.ready;
