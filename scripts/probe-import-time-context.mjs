@@ -1,0 +1,32 @@
+import assert from 'node:assert/strict';
+import {mkdtemp,rm,writeFile,readFile} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
+import {fileURLToPath} from 'node:url';
+import {openLocalCore} from '../lib/local-core.js';
+import {fixtureEmbedding} from './fixture-embedding.mjs';
+const output=process.argv[2];assert.ok(output,'New receipt path required');
+const root=await mkdtemp('/private/tmp/dsh-rsi-time-context-'),calls=[];
+const runner={async run(params){calls.push(structuredClone({...params,tools:undefined}));return '[]';}};
+const logger={info(){},warn(){},error(){},debug(){}};
+let core;
+try {
+  core=await openLocalCore(root,runner,logger,fixtureEmbedding());
+  const timestamp=Date.UTC(2026,9,5),messages=Array.from({length:26},(_,i)=>({id:`source-${i}`,role:i%2?'assistant':'user',content:i===25?'用户明确说活动发生在2020年5月1日，保留原文的确切日期。':`历史记录${i}：用户上周末参加了社区园艺活动，但这里没有原始消息日期。`,timestamp:timestamp+i}));
+  const extract=(rows,key)=>core.extractMemories({sessionKey:key,sessionId:key,messages:rows});
+  await extract(messages,'normal');
+  await extract(messages.map((m,i)=>i===25?m:{...m,timestampKind:'imported-unknown'}),'mixed-import');
+  await extract(messages.map(m=>({...m,timestampKind:'unsupported'})),'unsupported-marker');
+  assert.equal(calls.length,3);const [normal,mixed,unsupported]=calls;
+  assert.equal(normal.prompt,mixed.prompt);assert.equal(normal.prompt,unsupported.prompt);
+  assert.ok(!normal.systemPrompt.includes('Historical time provenance'));assert.equal(normal.systemPrompt,unsupported.systemPrompt);
+  const prefix=mixed.systemPrompt.split('\nHistorical time provenance')[0];assert.equal(prefix,normal.systemPrompt);
+  const ids=JSON.parse(mixed.systemPrompt.match(/Historical time provenance for message IDs (\[[^\n]*?\]):/)[1]);
+  const visible=messages.filter(m=>mixed.prompt.includes(`[${m.id}]`));
+  assert.deepEqual(ids,visible.filter(m=>m.id!=='source-25').map(m=>m.id));assert.ok(ids.length>0&&ids.length<25);
+  assert.ok(!ids.includes('source-0')&&!mixed.prompt.includes('[source-0]'),'Native window drops earlier sources; annotation must not reintroduce them');
+  assert.ok(mixed.prompt.includes('2020年5月1日'));assert.ok(!ids.includes('source-25'));
+  assert.ok(mixed.systemPrompt.includes('Preserve explicit dates in source prose'));
+  assert.ok(visible.every(m=>mixed.prompt.includes(new Date(m.timestamp).toISOString())),'Native timestamp formatter stays unchanged');
+  const receipt={status:'PASS_NATIVE_TIME_CONTEXT_BOUNDARIES',nativeSourceWindowAndUserPromptUnchanged:true,normalAndUnsupportedMarkerSystemPromptsIdentical:true,existingProductionSystemPromptPrefixUnchanged:true,unknownTimeIdsOnlyActuallyDelivered:true,mixedCurrentSourceExcludedFromUnknownIds:true,explicitSourceDatePreserved:true,nativeTimestampFormatAndValuesPreserved:true,sourceMessages:messages.length,nativeVisibleSourceMessages:visible.length,annotatedIds:ids,realModelRequests:0,fixtureRunnerCalls:calls.length,embeddingTestDouble:true,generatedDateQualityClaim:false,probeSha256:createHash('sha256').update(await readFile(fileURLToPath(import.meta.url))).digest('hex')};
+  await writeFile(output,JSON.stringify(receipt,null,2)+'\n',{flag:'wx'});console.log(JSON.stringify(receipt));
+}finally{core?.close();await rm(root,{recursive:true,force:true});}

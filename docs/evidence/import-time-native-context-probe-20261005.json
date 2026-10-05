@@ -1,0 +1,39 @@
+{
+  "status": "PASS_NATIVE_TIME_CONTEXT_BOUNDARIES",
+  "nativeSourceWindowAndUserPromptUnchanged": true,
+  "normalAndUnsupportedMarkerSystemPromptsIdentical": true,
+  "existingProductionSystemPromptPrefixUnchanged": true,
+  "unknownTimeIdsOnlyActuallyDelivered": true,
+  "mixedCurrentSourceExcludedFromUnknownIds": true,
+  "explicitSourceDatePreserved": true,
+  "nativeTimestampFormatAndValuesPreserved": true,
+  "sourceMessages": 26,
+  "nativeVisibleSourceMessages": 15,
+  "annotatedIds": [
+    "source-11",
+    "source-12",
+    "source-13",
+    "source-14",
+    "source-15",
+    "source-16",
+    "source-17",
+    "source-18",
+    "source-19",
+    "source-20",
+    "source-21",
+    "source-22",
+    "source-23",
+    "source-24"
+  ],
+  "realModelRequests": 0,
+  "fixtureRunnerCalls": 3,
+  "embeddingTestDouble": true,
+  "generatedDateQualityClaim": false,
+  "probeSha256": "daba656a413303a2e85556806a76902054d218c2b37f3d46959000f4ce058c27",
+  "sourceSha256": {
+    "src/runtime.ts": "0e23f501fb6fa1adac54b43d257b8a1d375cff70f596d3d4465e54cc4dc26856",
+    "src/local-core.ts": "d2991ac99396db6258a52922f7c8a58c61627800c5074b3c210396f21e6450b0",
+    "scripts/personamem-history.mjs": "6908901cf74e6601f660c3c7e60b83c8b413bd1595d639d128211b79a7aae2fb",
+    "scripts/personamem-import-probe.mjs": "3b9e436e900ec62ff60ecc6da89059b2f94b8b053f9dd03952244c0a6fd982e7"
+  }
+}

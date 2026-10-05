@@ -146,11 +146,12 @@ export class Runtime {
         if (!['completed','error','max-tokens','blocked'].includes(event.data.reason.kind)) continue;
         const trace = events.slice(start,index+1);
         if (!trace.some((e:any) => e.type === 'user/message' && e.data.source?.kind === 'user')) continue;
+        // Imported historical messages retain the log clock for cursors, with its provenance attached.
         const messages: any[] = [];
         for (const e of trace) {
-          if (e.type === 'user/message' && e.data.source?.kind === 'user') messages.push({ id:e.data.id,role:'user',content:text(e.data),timestamp:new Date(e.time).toISOString() });
+          if (e.type === 'user/message' && e.data.source?.kind === 'user') messages.push({ id:e.data.id,role:'user',content:text(e.data),timestamp:new Date(e.time).toISOString(),...(e.data.source?.timestampKind==='imported-unknown'?{timestampKind:'imported-unknown'}:{}) });
           if (e.type === 'assistant/message') {
-            messages.push({ id:e.data.message.id,role:'assistant',content:text(e.data.message),timestamp:new Date(e.time).toISOString() });
+            messages.push({ id:e.data.message.id,role:'assistant',content:text(e.data.message),timestamp:new Date(e.time).toISOString(),...(e.data.message.source?.timestampKind==='imported-unknown'?{timestampKind:'imported-unknown'}:{}) });
           }
           if (e.type === 'tool/call') messages.push({role:'tool_call',content:JSON.stringify(e.data),timestamp:new Date(e.time).toISOString()});
           if (e.type === 'tool/result') {

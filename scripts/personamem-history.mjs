@@ -19,13 +19,14 @@ export async function appendPersonaHistory(session,history,{systemBoundaries=fal
       turn++;turnBoundaries.push(index);append('turn/start',{turn});append('step/start',{turn,step:1});
     }
     assert.ok(['system','user','assistant'].includes(row.role));assert.equal(typeof row.content,'string');
+    // Event time remains the real import clock; the dataset supplies no historical message time.
     const content=[{type:'text',text:row.content}];let message;
     if(row.role==='user'){
-      message=createUserMessage({content,source:{kind:'user',dataset:'PersonaMem-v1',datasetIndex:index}});
+      message=createUserMessage({content,source:{kind:'user',dataset:'PersonaMem-v1',datasetIndex:index,timestampKind:'imported-unknown'}});
       append('user/message',message,{surfaceOp:'append'});
     }else if(row.role==='assistant'){
       // Dataset responses are imported evidence, never attributed to the current qwen route.
-      message=createAssistantMessage({content,source:{provider:'dataset',model:'PersonaMem-v1'}});
+      message=createAssistantMessage({content,source:{provider:'dataset',model:'PersonaMem-v1',timestampKind:'imported-unknown'}});
       append('assistant/message',{turn,step:1,message,stream:[]},{surfaceOp:'append'});
     }else{
       message=createSystemMessage(row.content);

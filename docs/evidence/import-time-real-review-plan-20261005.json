@@ -1,0 +1,49 @@
+{
+  "status": "PREREGISTERED_ONE_IMPORT_TIME_DEVELOPMENT_BATCH",
+  "recordedAt": "2026-10-05T11:48:41.953985+00:00",
+  "purpose": "Check generic historical time provenance in native L1 extraction after the confirmed import-clock semantic gap; development only.",
+  "model": "qwen3.8-27b",
+  "sourcePublicInputSha256": "dea518743a5b0fd4cf9bd6fa2af0a6099a49f2589698fd90b6e42a38ec2407fd",
+  "sourceHistoryOnlySha256": "c49b8c8cf6c1ce720ea49dce0e52ad61f1f0487463c96f9333c9c204f3805326",
+  "historyMessages": 152,
+  "sourceTurn": 1,
+  "batchStart": 20,
+  "nativeNewLimit": 10,
+  "nativeBackgroundLimit": 5,
+  "reasonForBatch": "Replay the original batch containing the audited unsupported running-club calendar claim. The user and task are development data, not a blind case.",
+  "startingMemoryOrSkillsCopied": false,
+  "newActualModelCallsMax": 1,
+  "actualGenerationAttemptsMax": 1,
+  "wallSeconds": 180,
+  "outputMaxTokens": 4096,
+  "automaticRetry": false,
+  "additionalConsumerOrTaskSolvers": 0,
+  "officialAnswersOrScorerInput": false,
+  "fullStudyResumeOrBudgetIncrease": false,
+  "originalIncompletePersonaMemUnchanged": true,
+  "nativePromptFormatterAndAlgorithmUnchanged": true,
+  "qualityReview": [
+    "All source IDs, source prose, timestamp markers and model inputs reconstructed from fresh durable sessions",
+    "Exact native ten-new/five-background subset and native source prompt retained",
+    "Keep known/unknown usage and wire attempts",
+    "Review generated calendar claims against source prose; no dates hardcoded in prompt",
+    "Do not claim effect, full-cohort completion or unique causal improvement"
+  ],
+  "sourceSha256": {
+    "src/runtime.ts": "0e23f501fb6fa1adac54b43d257b8a1d375cff70f596d3d4465e54cc4dc26856",
+    "src/local-core.ts": "d2991ac99396db6258a52922f7c8a58c61627800c5074b3c210396f21e6450b0",
+    "scripts/personamem-history.mjs": "6908901cf74e6601f660c3c7e60b83c8b413bd1595d639d128211b79a7aae2fb",
+    "scripts/review-development-memory.mjs": "427f75f204527532c2d71bf63816c9990dea0a46ca442c7b34d169df1e4865b0"
+  },
+  "buildIndexSha256": "1dc9be361531a078da897f03509b84da947f3680a49709d382455564b3ada9fd",
+  "patchSha256": "278112a7b3997b92250b473cddc3dd7847d4b72d6f2e5039399149300eb2f190",
+  "gateway": {
+    "originalSha256": "626873384609d8b50f989aa255e5757545bd0cf5c7345063dc41e2c6b2058869",
+    "temporarySha256": "f21fd523d85a94555f706a22915afcb1adcc78572b388d02661bcfa50d469e58",
+    "onlyChange": "Bind temporary relay to 127.0.0.1:48176",
+    "upstream": "http://10.195.214.152:8100/v1",
+    "requestLimit": 1
+  },
+  "credentialSource": "Existing QWEN_API_KEY=EMPTY isolated-run convention",
+  "authorization": "Existing permission for bounded autonomous development and isolated logs to the configured qwen service."
+}

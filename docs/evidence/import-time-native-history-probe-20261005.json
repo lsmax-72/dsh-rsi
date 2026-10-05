@@ -1,0 +1,45 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-05T11:47:18.050Z",
+  "importedMessages": 152,
+  "rawMemoryMessages": 147,
+  "turnBoundaries": [
+    0,
+    41,
+    64,
+    87,
+    130
+  ],
+  "nativeImportedJobs": 5,
+  "historyCutoffExclusive": 152,
+  "historySha256": "ccd6441d2ee0e5caa1fb10b788e8a731d8f9fd9ec1299258d023fb107338024b",
+  "durableHistoryExactlyReconstructed": true,
+  "nativeTurnEndCapture": true,
+  "nativeL0Record": true,
+  "fixtureChatCalls": 25,
+  "historySystemNodesNormalizedAway": [
+    0,
+    41,
+    64,
+    87,
+    130
+  ],
+  "historyAfterExplicitSystemBackgroundAdaptation": true,
+  "foregroundFixtureCalls": 2,
+  "realModelRequests": 0,
+  "answersProvided": false,
+  "importedTimeSourceMessages": 147,
+  "timeProvenanceRestoredAndCaptured": true,
+  "nativeEventTimeAndCaptureCursorPreserved": true,
+  "actualNativeExtractionAnnotatedIds": 147,
+  "extractionCallsWithTimeProvenance": 18,
+  "liveTurnTimeOriginUnchanged": true,
+  "allFixtureDispatchInputsDurablyReconstructed": true,
+  "limitation": "Native import fixture only; All historical text is preserved in the adapted answering request; system backgrounds become labelled historical user context. Real model capacity still requires verification.",
+  "sourceSha256": {
+    "src/runtime.ts": "0e23f501fb6fa1adac54b43d257b8a1d375cff70f596d3d4465e54cc4dc26856",
+    "src/local-core.ts": "d2991ac99396db6258a52922f7c8a58c61627800c5074b3c210396f21e6450b0",
+    "scripts/personamem-history.mjs": "6908901cf74e6601f660c3c7e60b83c8b413bd1595d639d128211b79a7aae2fb",
+    "scripts/personamem-import-probe.mjs": "3b9e436e900ec62ff60ecc6da89059b2f94b8b053f9dd03952244c0a6fd982e7"
+  }
+}
