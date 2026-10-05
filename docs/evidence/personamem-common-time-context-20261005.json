@@ -1,0 +1,179 @@
+{
+  "status": "PASS_BOTH_ARMS_COMMON_HISTORY_CONTEXT",
+  "fullOfficialHistoryProbe": {
+    "status": "PASS",
+    "checkedAt": "2026-10-05T12:41:00.786Z",
+    "importedMessages": 152,
+    "rawMemoryMessages": 147,
+    "turnBoundaries": [
+      0,
+      41,
+      64,
+      87,
+      130
+    ],
+    "nativeImportedJobs": 5,
+    "historyCutoffExclusive": 152,
+    "historySha256": "ccd6441d2ee0e5caa1fb10b788e8a731d8f9fd9ec1299258d023fb107338024b",
+    "durableHistoryExactlyReconstructed": true,
+    "nativeTurnEndCapture": true,
+    "nativeL0Record": true,
+    "fixtureChatCalls": 25,
+    "historySystemNodesNormalizedAway": [
+      0,
+      41,
+      64,
+      87,
+      130
+    ],
+    "historyAfterExplicitSystemBackgroundAdaptation": true,
+    "foregroundFixtureCalls": 2,
+    "commonHistoricalTimeNotePresent": true,
+    "commonHistoryContextSha256": "94abf2099349c4e81e7ee3a7fa11a064325c333e5bdb6b71ab57c878e9ea83c5",
+    "commonHistoryContextImplementation": "same helper imported by actual baseline/RSI driver",
+    "realModelRequests": 0,
+    "answersProvided": false,
+    "importedTimeSourceMessages": 147,
+    "timeProvenanceRestoredAndCaptured": true,
+    "nativeEventTimeAndCaptureCursorPreserved": true,
+    "actualNativeExtractionAnnotatedIds": 147,
+    "extractionCallsWithTimeProvenance": 18,
+    "liveTurnTimeOriginUnchanged": true,
+    "allFixtureDispatchInputsDurablyReconstructed": true,
+    "limitation": "Native import fixture only; All historical text is preserved in the adapted answering request; system backgrounds become labelled historical user context. Real model capacity still requires verification."
+  },
+  "fourQuestionActualDriverFixtures": [
+    {
+      "arm": "baseline",
+      "receipt": {
+        "status": "COMPLETED",
+        "developmentPilot": true,
+        "formalPersonaMemEvaluation": false,
+        "arm": "baseline",
+        "fixture": true,
+        "personaId": "16",
+        "questionIds": [
+          "d2c42ca1-5b3a-48b4-b3cc-ea27b9bed8e3",
+          "2747972e-07b2-461d-9acb-a8495bfef4c2",
+          "ec9c7628-9919-4234-b7b8-b90eda49cec5",
+          "ffe01d3c-de5c-4c67-b2db-e4983dfc6abc"
+        ],
+        "historyCutoffExclusive": 5,
+        "historySha256": "6be067bce9156a39ccee710c7fda870a473a2938903cda085aca941bf36f984b",
+        "foregroundRequests": 4,
+        "learningRequests": 0,
+        "knownTokens": 80,
+        "unknownActualUsage": 0,
+        "answersProvided": false,
+        "completeHistoryInBothArms": true,
+        "commonHistoricalTimeNote": true,
+        "historicalContextSha256": "0d011e1ab67c3364c8e6f3a8640756be6fb5fa18dd97713075524e73d2be5cd4",
+        "roleProjection": "Historical system backgrounds are labelled producer context; not identical to official standalone roles",
+        "accuracy": null
+      },
+      "answerChecks": [
+        {
+          "questionId": "d2c42ca1-5b3a-48b4-b3cc-ea27b9bed8e3",
+          "requests": 1,
+          "allHistoricalTextPresent": true,
+          "commonHistoricalTimeNotePresent": true,
+          "historicalContextSha256": "0d011e1ab67c3364c8e6f3a8640756be6fb5fa18dd97713075524e73d2be5cd4"
+        },
+        {
+          "questionId": "2747972e-07b2-461d-9acb-a8495bfef4c2",
+          "requests": 1,
+          "allHistoricalTextPresent": true,
+          "commonHistoricalTimeNotePresent": true,
+          "historicalContextSha256": "0d011e1ab67c3364c8e6f3a8640756be6fb5fa18dd97713075524e73d2be5cd4"
+        },
+        {
+          "questionId": "ec9c7628-9919-4234-b7b8-b90eda49cec5",
+          "requests": 1,
+          "allHistoricalTextPresent": true,
+          "commonHistoricalTimeNotePresent": true,
+          "historicalContextSha256": "0d011e1ab67c3364c8e6f3a8640756be6fb5fa18dd97713075524e73d2be5cd4"
+        },
+        {
+          "questionId": "ffe01d3c-de5c-4c67-b2db-e4983dfc6abc",
+          "requests": 1,
+          "allHistoricalTextPresent": true,
+          "commonHistoricalTimeNotePresent": true,
+          "historicalContextSha256": "0d011e1ab67c3364c8e6f3a8640756be6fb5fa18dd97713075524e73d2be5cd4"
+        }
+      ],
+      "actualDurableDispatchesVerified": 4,
+      "nativeLearningSettled": null,
+      "questionLearningIsolation": null,
+      "isolationPolicySha256": "13bc4c74a07abce3942b9d6c9550f64c5293b59ed24738695bc98754372eb5f0",
+      "realModelRequests": 0
+    },
+    {
+      "arm": "rsi",
+      "receipt": {
+        "status": "COMPLETED",
+        "developmentPilot": true,
+        "formalPersonaMemEvaluation": false,
+        "arm": "rsi",
+        "fixture": true,
+        "personaId": "16",
+        "questionIds": [
+          "d2c42ca1-5b3a-48b4-b3cc-ea27b9bed8e3",
+          "2747972e-07b2-461d-9acb-a8495bfef4c2",
+          "ec9c7628-9919-4234-b7b8-b90eda49cec5",
+          "ffe01d3c-de5c-4c67-b2db-e4983dfc6abc"
+        ],
+        "historyCutoffExclusive": 5,
+        "historySha256": "6be067bce9156a39ccee710c7fda870a473a2938903cda085aca941bf36f984b",
+        "foregroundRequests": 4,
+        "learningRequests": 2,
+        "knownTokens": 120,
+        "unknownActualUsage": 0,
+        "answersProvided": false,
+        "completeHistoryInBothArms": true,
+        "commonHistoricalTimeNote": true,
+        "historicalContextSha256": "0d011e1ab67c3364c8e6f3a8640756be6fb5fa18dd97713075524e73d2be5cd4",
+        "roleProjection": "Historical system backgrounds are labelled producer context; not identical to official standalone roles",
+        "accuracy": null
+      },
+      "answerChecks": [
+        {
+          "questionId": "d2c42ca1-5b3a-48b4-b3cc-ea27b9bed8e3",
+          "requests": 1,
+          "allHistoricalTextPresent": true,
+          "commonHistoricalTimeNotePresent": true,
+          "historicalContextSha256": "0d011e1ab67c3364c8e6f3a8640756be6fb5fa18dd97713075524e73d2be5cd4"
+        },
+        {
+          "questionId": "2747972e-07b2-461d-9acb-a8495bfef4c2",
+          "requests": 1,
+          "allHistoricalTextPresent": true,
+          "commonHistoricalTimeNotePresent": true,
+          "historicalContextSha256": "0d011e1ab67c3364c8e6f3a8640756be6fb5fa18dd97713075524e73d2be5cd4"
+        },
+        {
+          "questionId": "ec9c7628-9919-4234-b7b8-b90eda49cec5",
+          "requests": 1,
+          "allHistoricalTextPresent": true,
+          "commonHistoricalTimeNotePresent": true,
+          "historicalContextSha256": "0d011e1ab67c3364c8e6f3a8640756be6fb5fa18dd97713075524e73d2be5cd4"
+        },
+        {
+          "questionId": "ffe01d3c-de5c-4c67-b2db-e4983dfc6abc",
+          "requests": 1,
+          "allHistoricalTextPresent": true,
+          "commonHistoricalTimeNotePresent": true,
+          "historicalContextSha256": "0d011e1ab67c3364c8e6f3a8640756be6fb5fa18dd97713075524e73d2be5cd4"
+        }
+      ],
+      "actualDurableDispatchesVerified": 6,
+      "nativeLearningSettled": true,
+      "questionLearningIsolation": true,
+      "isolationPolicySha256": "015b903d4c61deed2faf9d761b6d66fca3d6581d870de7c97526b7be17110883",
+      "realModelRequests": 0
+    }
+  ],
+  "sameBothArmHistoryAndTimeContext": true,
+  "realModelRequests": 0,
+  "fixtureChatAndEncodingNotQualityEvidence": true,
+  "scope": "Full 152-message official import fixture; paired actual four-question driver uses only a five-message development prefix and explicit fixture adapter, no model capacity or accuracy claim."
+}

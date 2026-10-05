@@ -4,7 +4,7 @@ import {mkdirSync,writeFileSync,renameSync,openSync,fsyncSync,closeSync} from 'n
 import {createHash} from 'node:crypto';
 import {createUserMessage,LlmAdapter} from '@deepseek-ai/dsh-llm';
 import {Session} from '@deepseek-ai/dsh-session';
-import {appendPersonaHistory} from './personamem-history.mjs';
+import {appendPersonaHistory,personaHistoryContext,importedHistoryTimeNote} from './personamem-history.mjs';
 export const name='personamem-pilot-task';
 export const inject=['llm','agents','sessions','sessionPersistence','tools','skills'];
 
@@ -54,14 +54,13 @@ export function apply(ctx,config){
         assert.equal(snapshot.layers[snapshot.workspace.id].L0,input.history.filter(m=>m.role!=='system').length);
       }
       let frozenLearning;if(rsi){const s=await rsi.request('snapshot',{cwd:'/workspace'});frozenLearning={jobs:s.jobs.map(j=>j.id).sort(),sources:[...new Set(s.jobs.map(v=>v.sourceSessionId))].sort(),layers:s.layers};}
-      const backgrounds=input.history.map((row,index)=>({...row,index})).filter(row=>row.role==='system');
       for(const q of input.questions){phase=q.id;questionCalls=0;const id='persona-'+input.personaId+'-question-'+q.id;
         const handle=await ctx.agents.create({sessionId:id,meta:{cwd:'/workspace'},seed:imported.events,agentOptions});
-        handle.agent.inject(createUserMessage({source:{kind:'personamem-history',form:'recall',sessionId:seed.id},content:[{type:'text',text:'Original system backgrounds in this public history, in historical order (indices refer to the imported log):\n'+backgrounds.map(row=>`[Historical system at original index ${row.index}]\n${row.content}`).join('\n\n')}]}));
+        handle.agent.inject(createUserMessage({source:{kind:'personamem-history',form:'recall',sessionId:seed.id},content:[{type:'text',text:personaHistoryContext(input.history)}]}));
         handle.agent.inject(createUserMessage({source:{kind:'benchmark-protocol',form:'instructions'},content:[{type:'text',text:q.protocol}]}));
         const start=Date.now();deadline=setTimeout(()=>handle.agent.cancel({kind:'hook',reason:'Persona pilot wall time limit'}),config.wallTimeMs);
         handle.agent.followup(createUserMessage({source:{kind:'user'},content:[{type:'text',text:q.question+'\n\n'+q.options}]}));await handle.agent.whenIdle();await ctx.sessions.flush(handle.agent.session);clearTimeout(deadline);
-        const sent=requests.find(r=>r.sessionId===id);assert.ok(sent,'No model dispatch; inspect the saved native turn/end reason for '+id);const visible=sent.messages.flatMap(m=>m.content).filter(b=>b.type==='text').map(b=>b.text).join('\n');assert.ok(input.history.every(m=>visible.includes(m.content)),'Baseline/RSI lost historical text');
+        const sent=requests.find(r=>r.sessionId===id);assert.ok(sent,'No model dispatch; inspect the saved native turn/end reason for '+id);const visible=sent.messages.flatMap(m=>m.content).filter(b=>b.type==='text').map(b=>b.text).join('\n');assert.ok(input.history.every(m=>visible.includes(m.content)),'Baseline/RSI lost historical text');assert.ok(visible.includes(personaHistoryContext(input.history)),'Common historical time context missing from actual answering request');
         const reader=await ctx.sessionPersistence.open(id,'read');const saved=await reader.read();await reader.close();
         const reason=saved.events.filter(e=>e.type==='turn/end').at(-1)?.data.reason;
         // Native aborted outputs live in assistant/attempt, not deriveMessages(). Preserve the emitted text.
@@ -71,10 +70,10 @@ export function apply(ctx,config){
           const committed=[...handle.agent.session.deriveMessages()].filter(m=>m.role==='assistant'&&!imported.messageIds.includes(m.id)).at(-1);assert.ok(committed);
           assert.equal(response,committed.content.filter(b=>b.type==='text').map(b=>b.text).join('\n'),'Saved output differs from the native committed response');
         }
-        answers.push({questionId:q.id,personaId:input.personaId,sessionId:id,response,responseOrigin:'last native model text blocks, including aborted attempts',answerAvailable:!!response.trim(),stopReason:reason,requests:questionCalls,wallMs:Date.now()-start,allHistoricalTextPresent:true});durable('answers.json',answers);
+        answers.push({questionId:q.id,personaId:input.personaId,sessionId:id,response,responseOrigin:'last native model text blocks, including aborted attempts',answerAvailable:!!response.trim(),stopReason:reason,requests:questionCalls,wallMs:Date.now()-start,allHistoricalTextPresent:true,commonHistoricalTimeNotePresent:visible.includes(importedHistoryTimeNote),historicalContextSha256:createHash('sha256').update(personaHistoryContext(input.history)).digest('hex')});durable('answers.json',answers);
       }
       if(rsi){const s=await rsi.request('snapshot',{cwd:'/workspace'});const after={jobs:s.jobs.map(j=>j.id).sort(),sources:[...new Set(s.jobs.map(v=>v.sourceSessionId))].sort(),layers:s.layers};assert.deepEqual(after,frozenLearning,'Question sessions contaminated the frozen learning snapshot');durable('question-isolation.json',{matches:true,before:frozenLearning,after});}
-      receipt={status:'COMPLETED',developmentPilot:!config.personaFormal,formalPersonaMemEvaluation:!!config.personaFormal,arm:config.arm,fixture:!!config.fixture,personaId:input.personaId,questionIds:input.questions.map(q=>q.id),historyCutoffExclusive:input.historyCutoffExclusive,historySha256:createHash('sha256').update(JSON.stringify(input.history)).digest('hex'),foregroundRequests:front,learningRequests:back,knownTokens:requests.reduce((sum,r)=>sum+(r.usage?.totalTokens??0),0),unknownActualUsage:requests.filter(r=>!r.usage).length,answersProvided:false,completeHistoryInBothArms:true,roleProjection:'Historical system backgrounds are labelled producer context; not identical to official standalone roles',accuracy:null};
+      receipt={status:'COMPLETED',developmentPilot:!config.personaFormal,formalPersonaMemEvaluation:!!config.personaFormal,arm:config.arm,fixture:!!config.fixture,personaId:input.personaId,questionIds:input.questions.map(q=>q.id),historyCutoffExclusive:input.historyCutoffExclusive,historySha256:createHash('sha256').update(JSON.stringify(input.history)).digest('hex'),foregroundRequests:front,learningRequests:back,knownTokens:requests.reduce((sum,r)=>sum+(r.usage?.totalTokens??0),0),unknownActualUsage:requests.filter(r=>!r.usage).length,answersProvided:false,completeHistoryInBothArms:true,commonHistoricalTimeNote:true,historicalContextSha256:createHash('sha256').update(personaHistoryContext(input.history)).digest('hex'),roleProjection:'Historical system backgrounds are labelled producer context; not identical to official standalone roles',accuracy:null};
     }catch(error){receipt={status:'ERROR',developmentPilot:!config.personaFormal,formalPersonaMemEvaluation:!!config.personaFormal,fixture:!!config.fixture,classification:'UNCLASSIFIED_NOT_TASK_FAIL',error:error.message,foregroundRequests:front,learningRequests:back,knownTokens:requests.reduce((sum,r)=>sum+(r.usage?.totalTokens??0),0),unknownActualUsage:requests.filter(r=>!r.usage).length};}
     finally{clearTimeout(deadline);await ctx.root.fiber.dispose();save();durable('receipt.json',receipt);console.log(JSON.stringify(receipt));process.exit(receipt.status==='COMPLETED'?0:1);}
   },0);return()=>{clearInterval(alive);clearTimeout(timer);};});

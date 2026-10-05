@@ -1,6 +1,15 @@
 import assert from 'node:assert/strict';
 import {createAssistantMessage,createSystemMessage,createUserMessage} from '@deepseek-ai/dsh-llm';
 
+// Shared producer context for both arms. The source dataset has no message timestamps.
+export const importedHistoryTimeNote='Original source message times are unknown. Native session event times are import/recording metadata only; do not use them or the current runtime date as calendar anchors for events in the historical text. Preserve dates explicitly present in source prose. Otherwise keep relative time wording without inferring an absolute date.';
+
+export function personaHistoryContext(history) {
+  const backgrounds=history.map((row,index)=>({...row,index})).filter(row=>row.role==='system');
+  return importedHistoryTimeNote+'\n\nOriginal system backgrounds in this public history, in historical order (indices refer to the imported log):\n'
+    +backgrounds.map(row=>`[Historical system at original index ${row.index}]\n${row.content}`).join('\n\n');
+}
+
 /** Import public history as native events; this performs no model dispatch or asset write. */
 export async function appendPersonaHistory(session,history,{systemBoundaries=false}={}) {
   const events=[],append=(...args)=>{const event=session.append(...args);events.push(event);return event;};
