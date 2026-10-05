@@ -1,0 +1,444 @@
+{
+  "status": "AUDITED_PREPARED_NOT_FROZEN_NOT_DISPATCHED",
+  "checkedAt": "2026-10-05T12:54:59.640385+00:00",
+  "studies": [
+    {
+      "study": "personamem-independent-20261004",
+      "freezeSha256": "d3f2e157199f72fffd496fdac07045356d5b4023c5537d9688f88235291354bf",
+      "users": [
+        {
+          "personaId": "6",
+          "priorRegistered": true,
+          "nativeRecords": 2,
+          "actualGatewayCalls": 51,
+          "nativeStreamEntries": 51,
+          "runArtifacts": [
+            "persona-6-baseline",
+            "persona-6-baseline.runner.log",
+            "persona-6-rsi",
+            "persona-6-rsi.runner.log"
+          ],
+          "publicInputSha256": "51d749d34dbe3b56c164be4804f582342730bb66470a51d1a54193b130617ae9"
+        },
+        {
+          "personaId": "2",
+          "priorRegistered": true,
+          "nativeRecords": 2,
+          "actualGatewayCalls": 40,
+          "nativeStreamEntries": 40,
+          "runArtifacts": [
+            "persona-2-baseline",
+            "persona-2-baseline.runner.log",
+            "persona-2-rsi",
+            "persona-2-rsi.runner.log"
+          ],
+          "publicInputSha256": "fce35755870aa9e9399a18d49f45a405f754f5f123fca9841593dacadb99549f"
+        },
+        {
+          "personaId": "10",
+          "priorRegistered": true,
+          "nativeRecords": 2,
+          "actualGatewayCalls": 44,
+          "nativeStreamEntries": 44,
+          "runArtifacts": [
+            "persona-10-baseline",
+            "persona-10-baseline.runner.log",
+            "persona-10-rsi",
+            "persona-10-rsi.runner.log"
+          ],
+          "publicInputSha256": "d055d364e0e9d67f37191bbb3e258779e8595e668312e9fbb4831553f22bcf76"
+        },
+        {
+          "personaId": "13",
+          "priorRegistered": true,
+          "nativeRecords": 2,
+          "actualGatewayCalls": 56,
+          "nativeStreamEntries": 56,
+          "runArtifacts": [
+            "persona-13-baseline",
+            "persona-13-baseline.runner.log",
+            "persona-13-rsi",
+            "persona-13-rsi.runner.log"
+          ],
+          "publicInputSha256": "d4301f5ac80fcb0fa2a18e19f17734a9e19ac850ef10ab96ddfc5099132d7ee5"
+        },
+        {
+          "personaId": "5",
+          "priorRegistered": true,
+          "nativeRecords": 2,
+          "actualGatewayCalls": 5,
+          "nativeStreamEntries": 5,
+          "runArtifacts": [
+            "persona-5-baseline",
+            "persona-5-baseline.runner.log",
+            "persona-5-rsi",
+            "persona-5-rsi.runner.log"
+          ],
+          "publicInputSha256": "fba181e417981028ce616f90d270ffb55e2c83a2182d813596a4d92a2dfa9231"
+        },
+        {
+          "personaId": "9",
+          "priorRegistered": true,
+          "nativeRecords": 0,
+          "actualGatewayCalls": 0,
+          "nativeStreamEntries": 0,
+          "runArtifacts": [],
+          "publicInputSha256": "f7492183f2478258793c0ef4bbcf2656fa7d5569d43c6b2cd5c69489d264eb2f"
+        },
+        {
+          "personaId": "4",
+          "priorRegistered": true,
+          "nativeRecords": 0,
+          "actualGatewayCalls": 0,
+          "nativeStreamEntries": 0,
+          "runArtifacts": [],
+          "publicInputSha256": "0582d05028b52aea5d76028cf813301b29bdb6dc02668aabb83d5c1aa4569ec4"
+        },
+        {
+          "personaId": "12",
+          "priorRegistered": true,
+          "nativeRecords": 0,
+          "actualGatewayCalls": 0,
+          "nativeStreamEntries": 0,
+          "runArtifacts": [],
+          "publicInputSha256": "e2f9c3c9928191c963e6e2a9b4f61a9b0582d1f18d36499b48a73e97967bcc7f"
+        }
+      ],
+      "actualGatewayCalls": 196,
+      "preservationHashes": {
+        ".artifacts/personamem-independent-20261004/freeze.json": "d3f2e157199f72fffd496fdac07045356d5b4023c5537d9688f88235291354bf",
+        ".artifacts/personamem-independent-20261004/runs.json": "c195d2a15a123bad148630fa910101c77a3feb8110f1cc4138e2352952eb8736",
+        ".artifacts/personamem-independent-20261004/results.json": "6ab0259228af6f2a0f2eceb024be727064e1c2fe94d0b65233dae3d6258897d6",
+        ".artifacts/personamem-independent-20261004/public/persona-6.json": "51d749d34dbe3b56c164be4804f582342730bb66470a51d1a54193b130617ae9",
+        ".artifacts/personamem-independent-20261004/persona-6-baseline/gateway.log": "d0f60dd29d6adfcde0db8d8b7c69459e7147485adc3530ac6b250ac95c99e603",
+        ".artifacts/personamem-independent-20261004/persona-6-baseline/state/pilot/persona-6/model-requests.json": "c82b1c8bb647ff7af194981c50aacb71c0235ae5dc69fd3cee2d076088524bfd",
+        ".artifacts/personamem-independent-20261004/persona-6-rsi/gateway.log": "2b4b6753e573435070c1447cff553d73c70ece32ea7eeb370ce7b3b64d1a0192",
+        ".artifacts/personamem-independent-20261004/persona-6-rsi/state/pilot/persona-6/model-requests.json": "7f32cfd43a9ce0cce49629047ea0bef4a6a3d554d34205bcc9f01e3e0f05148a",
+        ".artifacts/personamem-independent-20261004/public/persona-2.json": "fce35755870aa9e9399a18d49f45a405f754f5f123fca9841593dacadb99549f",
+        ".artifacts/personamem-independent-20261004/persona-2-baseline/gateway.log": "20dc1df0d876d5f1ea41c905af62aecb9194964d0ba9896bc28bdb2ba6642a4b",
+        ".artifacts/personamem-independent-20261004/persona-2-baseline/state/pilot/persona-2/model-requests.json": "e8293e71d34dc1e78e40fe1362596ba8e3e33223d515c6a071ec3f8cc2e3b1e5",
+        ".artifacts/personamem-independent-20261004/persona-2-rsi/gateway.log": "f4620a5643a5fcefbd6daf7913d7027784c70236f51607ed7ea79aca12d62ef9",
+        ".artifacts/personamem-independent-20261004/persona-2-rsi/state/pilot/persona-2/model-requests.json": "0599bfab8fd56880a65aa0f107fbca411c3b589ac57deb224cea02456ecd844f",
+        ".artifacts/personamem-independent-20261004/public/persona-10.json": "d055d364e0e9d67f37191bbb3e258779e8595e668312e9fbb4831553f22bcf76",
+        ".artifacts/personamem-independent-20261004/persona-10-baseline/gateway.log": "f10284391be7d3d6ae18c7b3a6a4ffb573b0f9095af3ad7ea7495cc27ec46b97",
+        ".artifacts/personamem-independent-20261004/persona-10-baseline/state/pilot/persona-10/model-requests.json": "d10adf43cbb91076f03239cb97dc6487f104401b19394ed4a27fbe1bc337492f",
+        ".artifacts/personamem-independent-20261004/persona-10-rsi/gateway.log": "b7b5433b30f0952444bdd4b7b98cdcf01341079a6bae38f86b1cd60d0f8a157e",
+        ".artifacts/personamem-independent-20261004/persona-10-rsi/state/pilot/persona-10/model-requests.json": "1a2582e2291fc4cc4e9b1d4f802aa6a9bc1c8e5efe41dc34b2d7de81ab767969",
+        ".artifacts/personamem-independent-20261004/public/persona-13.json": "d4301f5ac80fcb0fa2a18e19f17734a9e19ac850ef10ab96ddfc5099132d7ee5",
+        ".artifacts/personamem-independent-20261004/persona-13-baseline/gateway.log": "ce06c0f5cc6eeac45519102383c4b8a6aaa97dbb037f1324182f872447f1546c",
+        ".artifacts/personamem-independent-20261004/persona-13-baseline/state/pilot/persona-13/model-requests.json": "3975ce56e4a6e48afca2150b7c2db51ee086e33b711436f477ac86523e2239d1",
+        ".artifacts/personamem-independent-20261004/persona-13-rsi/gateway.log": "ebec816073044ca12c7e4b8608cd9041a20fb1cc96216f4986e5402c8a28619e",
+        ".artifacts/personamem-independent-20261004/persona-13-rsi/state/pilot/persona-13/model-requests.json": "e99cf468772f5672159c10a6ca9f3a2ed4c62dd922f93eae4ebe857fa9e0e9e8",
+        ".artifacts/personamem-independent-20261004/public/persona-5.json": "fba181e417981028ce616f90d270ffb55e2c83a2182d813596a4d92a2dfa9231",
+        ".artifacts/personamem-independent-20261004/persona-5-baseline/gateway.log": "d1db3f8be72f7db9b8a0ea4390cc02b0052b3a125851f3873ed3c6cb1a05938e",
+        ".artifacts/personamem-independent-20261004/persona-5-baseline/state/pilot/persona-5/model-requests.json": "4aa239a9cdd517d3415dd2847f5656ec4a0ddba220e3c0d5d1d02767853dade7",
+        ".artifacts/personamem-independent-20261004/persona-5-rsi/gateway.log": "492dcae784d98324ace2c466414a3b2f7370d26aeb1727742450417d16a637bd",
+        ".artifacts/personamem-independent-20261004/persona-5-rsi/state/pilot/persona-5/model-requests.json": "2b7815a573ed7e839472abf6f37fb18bbe9a60444919876d0a435f158e4f5325",
+        ".artifacts/personamem-independent-20261004/public/persona-9.json": "f7492183f2478258793c0ef4bbcf2656fa7d5569d43c6b2cd5c69489d264eb2f",
+        ".artifacts/personamem-independent-20261004/public/persona-4.json": "0582d05028b52aea5d76028cf813301b29bdb6dc02668aabb83d5c1aa4569ec4",
+        ".artifacts/personamem-independent-20261004/public/persona-12.json": "e2f9c3c9928191c963e6e2a9b4f61a9b0582d1f18d36499b48a73e97967bcc7f"
+      }
+    },
+    {
+      "study": "personamem-fresh-independent-20261004",
+      "freezeSha256": "61773090c494ee8d74c79c0f8fb38ccaf82d3537e33dfe551127f6cebfe25ecf",
+      "users": [
+        {
+          "personaId": "16",
+          "priorRegistered": true,
+          "nativeRecords": 2,
+          "actualGatewayCalls": 76,
+          "nativeStreamEntries": 76,
+          "runArtifacts": [
+            "persona-16-baseline",
+            "persona-16-baseline.runner.log",
+            "persona-16-rsi",
+            "persona-16-rsi.runner.log"
+          ],
+          "publicInputSha256": "dea518743a5b0fd4cf9bd6fa2af0a6099a49f2589698fd90b6e42a38ec2407fd"
+        },
+        {
+          "personaId": "18",
+          "priorRegistered": true,
+          "nativeRecords": 2,
+          "actualGatewayCalls": 71,
+          "nativeStreamEntries": 71,
+          "runArtifacts": [
+            "persona-18-baseline",
+            "persona-18-baseline.runner.log",
+            "persona-18-rsi",
+            "persona-18-rsi.runner.log"
+          ],
+          "publicInputSha256": "929fb3d5176068d7f45c8984ae242a2268a90df72e4ec0e38200cfb84cce0149"
+        },
+        {
+          "personaId": "8",
+          "priorRegistered": true,
+          "nativeRecords": 2,
+          "actualGatewayCalls": 11,
+          "nativeStreamEntries": 11,
+          "runArtifacts": [
+            "persona-8-baseline",
+            "persona-8-baseline.runner.log",
+            "persona-8-rsi",
+            "persona-8-rsi.runner.log"
+          ],
+          "publicInputSha256": "f0ca6773358c6842176170f425b1046963b06c6c4609d14a686e4cc9c6845631"
+        },
+        {
+          "personaId": "14",
+          "priorRegistered": true,
+          "nativeRecords": 0,
+          "actualGatewayCalls": 0,
+          "nativeStreamEntries": 0,
+          "runArtifacts": [],
+          "publicInputSha256": "64e2c0586cb2aab6abf37a29d01405bfd6309b1edffff6d3f167bce6e1cf2351"
+        },
+        {
+          "personaId": "3",
+          "priorRegistered": true,
+          "nativeRecords": 0,
+          "actualGatewayCalls": 0,
+          "nativeStreamEntries": 0,
+          "runArtifacts": [],
+          "publicInputSha256": "88353a13c148e3cbb7aed4436f505d2c77520116292bceb9cef78820d61d1a5c"
+        },
+        {
+          "personaId": "17",
+          "priorRegistered": true,
+          "nativeRecords": 0,
+          "actualGatewayCalls": 0,
+          "nativeStreamEntries": 0,
+          "runArtifacts": [],
+          "publicInputSha256": "455fa98d3237c5b3e555b6734c16cb22d97696fdbd8ae44276588bcb1302a9d3"
+        },
+        {
+          "personaId": "19",
+          "priorRegistered": true,
+          "nativeRecords": 0,
+          "actualGatewayCalls": 0,
+          "nativeStreamEntries": 0,
+          "runArtifacts": [],
+          "publicInputSha256": "a389ef9d644d1e484ca2e79ad0e3c9fa958dcf86b7ee6e1fe0c2963292e3c850"
+        },
+        {
+          "personaId": "15",
+          "priorRegistered": true,
+          "nativeRecords": 0,
+          "actualGatewayCalls": 0,
+          "nativeStreamEntries": 0,
+          "runArtifacts": [],
+          "publicInputSha256": "23b76c1ab6cddada2861305583c029da5263d44f51d3ecf0d80ee0c8e167b14a"
+        }
+      ],
+      "actualGatewayCalls": 158,
+      "preservationHashes": {
+        ".artifacts/personamem-fresh-independent-20261004/freeze.json": "61773090c494ee8d74c79c0f8fb38ccaf82d3537e33dfe551127f6cebfe25ecf",
+        ".artifacts/personamem-fresh-independent-20261004/runs.json": "dad20b084e3d6a4a29951657dee501dcef956ad0fb8ebf9666ec2ce874cdae80",
+        ".artifacts/personamem-fresh-independent-20261004/results.json": "08ac3d73280a90c8f5e2d16c7258dd161b987e2500f207a5548a6fb6d4ac3513",
+        ".artifacts/personamem-fresh-independent-20261004/public/persona-16.json": "dea518743a5b0fd4cf9bd6fa2af0a6099a49f2589698fd90b6e42a38ec2407fd",
+        ".artifacts/personamem-fresh-independent-20261004/persona-16-baseline/gateway.log": "ecea88936c01b7127df003de65d7fbd8cca4691131b8389ac96d1953c37db24f",
+        ".artifacts/personamem-fresh-independent-20261004/persona-16-baseline/state/pilot/persona-16/model-requests.json": "3a26ca0c05d5c97e5fe6e318aa1b131f7aab05b1715f5a95ca5646bcde31010e",
+        ".artifacts/personamem-fresh-independent-20261004/persona-16-rsi/gateway.log": "be193d325f02bd4db025d9eb2428b887409c46a259f26b4d49e239d9ce233d29",
+        ".artifacts/personamem-fresh-independent-20261004/persona-16-rsi/state/pilot/persona-16/model-requests.json": "99285b7ae36a4e4aa6fa130760c52e07eeafdf7c7db4beea5a76c51f87aac100",
+        ".artifacts/personamem-fresh-independent-20261004/public/persona-18.json": "929fb3d5176068d7f45c8984ae242a2268a90df72e4ec0e38200cfb84cce0149",
+        ".artifacts/personamem-fresh-independent-20261004/persona-18-baseline/gateway.log": "3810b99fb7f28c048785de4f5846c7c931e81e1133f0cc8fcdf63035a0b2e801",
+        ".artifacts/personamem-fresh-independent-20261004/persona-18-baseline/state/pilot/persona-18/model-requests.json": "ddd68ec43e14d81b9ce7df47cd71334d8f2b3731e56cf778f03a7ee616596df0",
+        ".artifacts/personamem-fresh-independent-20261004/persona-18-rsi/gateway.log": "181047bb69cc765a7e74af18c24a3a35adc09302da9ad58766871528c7900916",
+        ".artifacts/personamem-fresh-independent-20261004/persona-18-rsi/state/pilot/persona-18/model-requests.json": "467d01f3ad206a24e70cd1c38dc0335fe058ad13e9d8a72e312d5b1f80958597",
+        ".artifacts/personamem-fresh-independent-20261004/public/persona-8.json": "f0ca6773358c6842176170f425b1046963b06c6c4609d14a686e4cc9c6845631",
+        ".artifacts/personamem-fresh-independent-20261004/persona-8-baseline/gateway.log": "a87388866b13466d1a2d83c76a198f0c0c477168f718c3c8e8304543293f2270",
+        ".artifacts/personamem-fresh-independent-20261004/persona-8-baseline/state/pilot/persona-8/model-requests.json": "b26efcfc98df4d34f18b3ad21a951daf4a5b2aebda7dcd58015a4c6b90b52daf",
+        ".artifacts/personamem-fresh-independent-20261004/persona-8-rsi/gateway.log": "0ef4102cce9293a639cb6d258fff322592bee30c1beee1b243a4bfa89f2f5274",
+        ".artifacts/personamem-fresh-independent-20261004/persona-8-rsi/state/pilot/persona-8/model-requests.json": "fc568f53eab4bc570fa4e851220e9ad110a1d791f0f8df9e61f5adff025a17e2",
+        ".artifacts/personamem-fresh-independent-20261004/public/persona-14.json": "64e2c0586cb2aab6abf37a29d01405bfd6309b1edffff6d3f167bce6e1cf2351",
+        ".artifacts/personamem-fresh-independent-20261004/public/persona-3.json": "88353a13c148e3cbb7aed4436f505d2c77520116292bceb9cef78820d61d1a5c",
+        ".artifacts/personamem-fresh-independent-20261004/public/persona-17.json": "455fa98d3237c5b3e555b6734c16cb22d97696fdbd8ae44276588bcb1302a9d3",
+        ".artifacts/personamem-fresh-independent-20261004/public/persona-19.json": "a389ef9d644d1e484ca2e79ad0e3c9fa958dcf86b7ee6e1fe0c2963292e3c850",
+        ".artifacts/personamem-fresh-independent-20261004/public/persona-15.json": "23b76c1ab6cddada2861305583c029da5263d44f51d3ecf0d80ee0c8e167b14a"
+      }
+    }
+  ],
+  "unusedPriorRegisteredCases": [
+    {
+      "study": "personamem-independent-20261004",
+      "personaId": "9",
+      "contextId": "28249d3fb6f594de0bf9a6708d5eb4ea140c4f157ffbf51dfeeb413452ef0291",
+      "cutoffExclusive": 150,
+      "questionIds": [
+        "a719edb3-a43f-4792-b820-fb45293c4e19",
+        "b502d7dc-2345-41a3-8a22-0fb9ff719c9e",
+        "b35349e0-993b-452a-bb5e-67668833b39b",
+        "436e377a-98ba-44fc-809c-1743bbf4e033"
+      ],
+      "historyMessages": 150,
+      "historyChars": 131374,
+      "historySegments": 5,
+      "questionTypes": [
+        "recall_user_shared_facts",
+        "recalling_the_reasons_behind_previous_updates",
+        "generalizing_to_new_scenarios",
+        "generalizing_to_new_scenarios"
+      ],
+      "publicInputSha256": "f7492183f2478258793c0ef4bbcf2656fa7d5569d43c6b2cd5c69489d264eb2f"
+    },
+    {
+      "study": "personamem-independent-20261004",
+      "personaId": "4",
+      "contextId": "ea6147f6dc11130b410e00146e314d9370b7fff04f994639c4a3d46ce1255e64",
+      "cutoffExclusive": 115,
+      "questionIds": [
+        "8c6f3412-d822-4131-9a51-184e6da3f476",
+        "bd39c6a3-3ebb-4f12-a9b5-f690ebdf5bca",
+        "8dbe465c-85ad-4663-a517-da7b86418cde",
+        "64e6edb1-2675-4bec-bac5-ac3cffb7a36c"
+      ],
+      "historyMessages": 115,
+      "historyChars": 106719,
+      "historySegments": 4,
+      "questionTypes": [
+        "generalizing_to_new_scenarios",
+        "recall_user_shared_facts",
+        "recalling_facts_mentioned_by_the_user",
+        "recalling_the_reasons_behind_previous_updates"
+      ],
+      "publicInputSha256": "0582d05028b52aea5d76028cf813301b29bdb6dc02668aabb83d5c1aa4569ec4"
+    },
+    {
+      "study": "personamem-independent-20261004",
+      "personaId": "12",
+      "contextId": "97c532a381a079396499e11df92f6b69c99bc3ce999e2aff2c81aedea4b4c45d",
+      "cutoffExclusive": 181,
+      "questionIds": [
+        "194ce23e-d6d7-46f9-99b0-a0eba223a0ee",
+        "a64ba818-abee-404e-9a38-f440b74bcca7",
+        "8be28bb6-049f-4735-8957-a15234c138f4",
+        "cb4799ed-15e8-4dda-a716-b81fa1d6d9da"
+      ],
+      "historyMessages": 181,
+      "historyChars": 164041,
+      "historySegments": 6,
+      "questionTypes": [
+        "suggest_new_ideas",
+        "recall_user_shared_facts",
+        "recall_user_shared_facts",
+        "generalizing_to_new_scenarios"
+      ],
+      "publicInputSha256": "e2f9c3c9928191c963e6e2a9b4f61a9b0582d1f18d36499b48a73e97967bcc7f"
+    },
+    {
+      "study": "personamem-fresh-independent-20261004",
+      "personaId": "14",
+      "contextId": "357073b65588cc3017575f7f4dde34dac5d5e0cd376ac2fc1fb693f216e0878b",
+      "cutoffExclusive": 183,
+      "questionIds": [
+        "a30c10c5-145a-49b0-b3d5-1479bf3c6797",
+        "e86a1aad-0117-4021-9c68-f923f4111d5f",
+        "8d52f6de-0bc5-4cac-8873-ca57060186b3",
+        "4b742ee7-077d-4cce-9c27-51dfe81fcdc4"
+      ],
+      "historyMessages": 183,
+      "historyChars": 161650,
+      "historySegments": 6,
+      "questionTypes": [
+        "suggest_new_ideas",
+        "recalling_the_reasons_behind_previous_updates",
+        "recall_user_shared_facts",
+        "provide_preference_aligned_recommendations"
+      ],
+      "publicInputSha256": "64e2c0586cb2aab6abf37a29d01405bfd6309b1edffff6d3f167bce6e1cf2351"
+    },
+    {
+      "study": "personamem-fresh-independent-20261004",
+      "personaId": "3",
+      "contextId": "aa95cf5880d83a73bb98512a07a64fb873fb24d9dac2bb1862f7c00008632260",
+      "cutoffExclusive": 159,
+      "questionIds": [
+        "9c209ff7-a6a8-48d8-ab38-e0b8aa2aaef7",
+        "945fb104-45bd-457f-a9a8-19620159e47d",
+        "d3767473-d464-42c1-9ead-7a61d922f120",
+        "a966820a-8b42-4ec9-8427-958468f98d3b"
+      ],
+      "historyMessages": 159,
+      "historyChars": 143915,
+      "historySegments": 5,
+      "questionTypes": [
+        "recall_user_shared_facts",
+        "provide_preference_aligned_recommendations",
+        "recall_user_shared_facts",
+        "recall_user_shared_facts"
+      ],
+      "publicInputSha256": "88353a13c148e3cbb7aed4436f505d2c77520116292bceb9cef78820d61d1a5c"
+    },
+    {
+      "study": "personamem-fresh-independent-20261004",
+      "personaId": "17",
+      "contextId": "40027b883505bfc53148a5b86c418f9374c3bdd49ebd5160d8f6901cfca51d06",
+      "cutoffExclusive": 180,
+      "questionIds": [
+        "5e856191-b76f-47ec-b5a4-f04893d8a313",
+        "59eb073a-174e-4115-aa22-b40eb447b1a2",
+        "9ac098cd-a109-412a-ad1a-ad90f2f8a6d3",
+        "f0f1c22f-ab86-4d6f-a017-6cdb7f5e88f4"
+      ],
+      "historyMessages": 180,
+      "historyChars": 164084,
+      "historySegments": 6,
+      "questionTypes": [
+        "suggest_new_ideas",
+        "recalling_the_reasons_behind_previous_updates",
+        "generalizing_to_new_scenarios",
+        "recalling_the_reasons_behind_previous_updates"
+      ],
+      "publicInputSha256": "455fa98d3237c5b3e555b6734c16cb22d97696fdbd8ae44276588bcb1302a9d3"
+    },
+    {
+      "study": "personamem-fresh-independent-20261004",
+      "personaId": "19",
+      "contextId": "947ec42fcf5d327ccb9640332b5fabe4b7a25acc46be08b925861fa0c6e8eaf0",
+      "cutoffExclusive": 152,
+      "questionIds": [
+        "0441a1ba-0d67-47a1-a910-00306910a6e3",
+        "d6d4a4e8-96c4-4b72-bdd3-204b44ec1826",
+        "fcfde00b-be10-4c52-922d-85cf7ae9f556",
+        "28200b70-034f-4c0c-bde7-21754136740d"
+      ],
+      "historyMessages": 152,
+      "historyChars": 134560,
+      "historySegments": 5,
+      "questionTypes": [
+        "suggest_new_ideas",
+        "recalling_facts_mentioned_by_the_user",
+        "recalling_the_reasons_behind_previous_updates",
+        "provide_preference_aligned_recommendations"
+      ],
+      "publicInputSha256": "a389ef9d644d1e484ca2e79ad0e3c9fa958dcf86b7ee6e1fe0c2963292e3c850"
+    },
+    {
+      "study": "personamem-fresh-independent-20261004",
+      "personaId": "15",
+      "contextId": "5f9be905f1374d0906caf04903eebe4f027af9d3d36acd2fef957928864bd8e6",
+      "cutoffExclusive": 150,
+      "questionIds": [
+        "0034a537-925f-448b-b275-eae07f3d9ae5",
+        "4b803069-7679-411e-8310-d885e6ed1e7d",
+        "d0b826d3-9805-416c-a8a8-343ffe1c9098",
+        "29c557de-15e3-43c5-b416-de5d4f1845e5"
+      ],
+      "historyMessages": 150,
+      "historyChars": 122667,
+      "historySegments": 4,
+      "questionTypes": [
+        "recall_user_shared_facts",
+        "recall_user_shared_facts",
+        "recall_user_shared_facts",
+        "recall_user_shared_facts"
+      ],
+      "publicInputSha256": "23b76c1ab6cddada2861305583c029da5263d44f51d3ecf0d80ee0c8e167b14a"
+    }
+  ],
+  "selectionBasis": "No native run record, no task-arm directory or runner log, no wire/native dispatch in either preserved cohort. Preserve prior question IDs, cutoffs and exact public bytes; no answer or outcome used for selection.",
+  "populationPolicyChange": "Allow prior-registered unexecuted users rather than excluding all frozen users. Not never-registered users; no failed case retried or replaced in its original cohort.",
+  "scope": "The two preserved cohorts only; public data is not secret, model-training exposure cannot be proved absent.",
+  "newRealModelRequests": 0
+}
