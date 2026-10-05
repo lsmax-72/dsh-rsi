@@ -11,6 +11,7 @@ const replacements = {
   [join(source, 'utils/clean-context-runner.ts')]: join(root, 'adapters/required-runner.ts'),
   [join(source, 'core/report/factory.ts')]: join(root, 'adapters/local-observability.ts'),
   [join(source, 'core/report/obs-logger.ts')]: join(root, 'adapters/local-obs-logger.ts'),
+  [join(source, 'core/skill/skill-format.ts')]: join(root, 'adapters/skill-format.ts'),
 };
 await build({
   entryPoints: ['src/index.ts', 'src/core-entry.ts', 'src/model-bridge.ts', 'src/local-core.ts','src/rpc-contract.ts'],
@@ -18,7 +19,7 @@ await build({
   banner:{js:'import { createRequire as __rsiCreateRequire } from \"node:module\"; const require = __rsiCreateRequire(import.meta.url);'},
   format: 'esm', platform: 'node', target: 'node24', packages: 'external', sourcemap: true,
   plugins: [{ name: 'local-host-seams', setup(b) {
-    b.onResolve({ filter: /clean-context-runner\.js$|factory\.js$|obs-logger\.js$/ }, args => {
+    b.onResolve({ filter: /clean-context-runner\.js$|factory\.js$|obs-logger\.js$|skill-format\.js$/ }, args => {
       const target = join(args.resolveDir, args.path).replace(/\.js$/, '.ts');
       return replacements[target] ? { path: replacements[target] } : undefined;
     });

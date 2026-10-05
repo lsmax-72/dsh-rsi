@@ -235,6 +235,10 @@ docs/          需求、实现边界、评测协议与运行证据
 
 当前 Chat Memory 使用原生 SQLite FTS5、向量检索与 RRF；Skill 保留原生 BM25。默认本地向量模型为 embeddinggemma-300m-qat Q8_0（768 维），首次需下载约 329 MB；离线使用时通过插件配置 `embedding: {provider: "local", modelPath: "/绝对路径/embeddinggemma-300m-qat-Q8_0.gguf"}` 指定已下载文件。编码失败显式报错，首次模型加载及历史索引重建可能延长插件启动时间。2026-10-04 装配审计还确认了 Skill 生产提示词替换、画像触发缺失、资产分页遗漏、上下文截断和错误重试接线问题，见 [能力装配审计与隔离复现](docs/native-capability-audit-20261004.md)，最新修复状态见 [修复进度](docs/native-capability-repairs.md)。七类装配问题已逐项修复并保存接入回执；新增原生依赖的 Linux/macOS/Windows 安装检查全部通过。接入验收不等于效果改善；首轮实验结果对应此前适配版。构建成功也不代表通过了整个复用库的类型检查。来源、固定文件及许可见 [核心清单](vendor/core/manifest.json)、[界面清单](vendor/panel/manifest.json)、[核心许可](vendor/core/LICENSE)和[界面许可](vendor/panel/LICENSE)。
 
+### 自动提炼 Skill 的正文预算
+
+自动提炼的 Skill 正文最多1500个 Unicode 码点，长脚本和详细资料使用原生资源文件并相对引用。超长写入返回原生错误供模型修正，不截断内容；人工编辑沿用原生限制。当前通过写入、资源、版本及安装版链路夹具验收，尚未证明真实模型生成质量或成本改善，见[适配与验证边界](docs/skill-review-body-budget-20261006.md)。
+
 ### Skill 来源窗口
 
 插件配置可传 `skillTranscriptWindow: {headChars: 40000, tailChars: 64000}`，直接使用原生截取参数；未配置仍为8k/32k。这与Chat Memory召回预算分别设置，重新加载插件后生效。来源更长会增加输入token，需确认所选模型容量；当前配置覆盖值可在snapshot及诊断中查看。非法参数在学习前拒绝，不静默回退。配置接线已通过夹具验证，较大窗口的单次真实提炼仍有内容错误，不能称为质量或效果提升，见[来源窗口与实测边界](docs/skill-source-window-development-20261005.md)。

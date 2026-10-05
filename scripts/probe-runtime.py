@@ -15,7 +15,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--dsh', default=shutil.which('dsh') or '/Applications/DeepSeek Harness.app/Contents/Resources/runtime/cli/bin/dsh')
     parser.add_argument('--output', type=Path)
-    parser.add_argument('--probe',default='runtime-probe.mjs',choices=['runtime-probe.mjs','runtime-batch-probe.mjs','runtime-skill-window-probe.mjs'],help='Reuse the isolated native host for the selected fixture')
+    parser.add_argument('--probe',default='runtime-probe.mjs',choices=['runtime-probe.mjs','runtime-batch-probe.mjs','runtime-skill-window-probe.mjs','runtime-skill-budget-probe.mjs'],help='Reuse the isolated native host for the selected fixture')
     args = parser.parse_args()
     cli = Path(args.dsh).expanduser().resolve()
     project = Path(__file__).resolve().parent.parent
