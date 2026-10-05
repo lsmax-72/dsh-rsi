@@ -1,0 +1,200 @@
+{
+  "status": "CONFIRMED_IMPORT_TIME_PROVENANCE_GAP_NOT_REPAIRED",
+  "originalFreezeSha256": "61773090c494ee8d74c79c0f8fb38ccaf82d3537e33dfe551127f6cebfe25ecf",
+  "historyLogSha256": "e8814ef7c02bbf88e489d4eb806fccb17e006e4976c599da59a2af71d22c8c28",
+  "assetExportSha256": "ab13dab7670bd485499d164e11814a95b8a0e5ccbe8da56c1af0854618fc012c",
+  "requestsSha256": "99285b7ae36a4e4aa6fa130760c52e07eeafdf7c7db4beea5a76c51f87aac100",
+  "samples": [
+    {
+      "memoryId": "m_1791123459499_a8b4056b",
+      "content": "用户在2026年10月4日尝试参加跑步俱乐部后决定退出，因为俱乐部内部过于强调竞争，导致用户感到压力并产生自我怀疑，不符合其对支持性社群的预期。",
+      "metadata": {
+        "activity_start_time": "2026-10-04T00:00:00Z",
+        "activity_end_time": "2026-10-04T23:59:59Z"
+      },
+      "sourceEvidence": [
+        {
+          "messageId": "e0481923-7556-4b44-915f-afaffb923031",
+          "datasetIndex": 27,
+          "sourceText": "User: I tried joining a running club, but quickly realized it wasn't the right fit. Initially, I was drawn to the idea of being part of a community, sharing a common interest in running, and pushing my limits alongside others. However, as soon as I attended the first few sessions, I could feel the competitiveness in the air, which was surprising and somewhat disheartening. Instead of feeling motivated, I found myself stressed and constantly comparing my abilities to those of more seasoned runners. I expected a supportive environment, but instead, it felt more like a race to keep up rather than a fun group activity – a sentiment that left me questioning my decision to join in the first place.",
+          "sourceContains2026": false,
+          "nativeEventRecordedTimeMs": 1791123281520,
+          "actualExtractionRequestOrdinals": [
+            4,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "memoryId": "m_1791123515917_8599bf6c",
+      "content": "用户（用户）在2026年10月4日参加了一场政策倡导会议，因感到自己处于专家环境中如同局外人而感到不知所措和紧张。",
+      "metadata": {
+        "activity_start_time": "2026-10-04T14:14:41.521Z",
+        "activity_end_time": "2026-10-04T14:14:41.521Z"
+      },
+      "sourceEvidence": [
+        {
+          "messageId": "a188da61-3b2c-4b3d-8620-ce12682a0f3e",
+          "datasetIndex": 33,
+          "sourceText": "User: I attended a policy advocacy meeting too. It was a gathering filled with passionate voices trying to influence change, and yet it felt like I was an outsider looking in. The atmosphere was charged with energy, and I could sense the urgency in the discussions, but it left me feeling a bit lost. I struggled to find my footing among individuals who seemed so knowledgeable and confident about their positions. It’s quite intimidating when you're in a room full of experts and advocates who have probably spent years honing their skills and mastering their subject matter.",
+          "sourceContains2026": false,
+          "nativeEventRecordedTimeMs": 1791123281521,
+          "actualExtractionRequestOrdinals": [
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "memoryId": "m_1791123865791_8d61f38d",
+      "content": "用户在参与社区种植与园艺项目后，所在的园艺俱乐部于2026年9月26日至27日（上周末）举办了第一次收获后的聚餐活动，展示用新鲜蔬菜制作的各种菜肴。这一活动延续了用户通过种植照料获得成就感、建立社交网络及促进社区协作的体验，进一步增强了其对自然与健康生活的连接感。",
+      "metadata": {
+        "activity_start_time": "2026-09-26T00:00:00Z",
+        "activity_end_time": "2026-09-27T23:59:59Z"
+      },
+      "sourceEvidence": [
+        {
+          "messageId": "768ad4c2-2e2c-4bda-812a-19625d461b33",
+          "datasetIndex": 75,
+          "sourceText": "User: And I joined a local gardening club, where we’re growing herbs and vegetables for community kitchens. It’s been really rewarding to support local needs, seeing how our efforts can directly impact families and individuals in our area who might be struggling to access fresh produce. The camaraderie among club members has also been a delightful bonus, as we share tips and experiences that enhance our gardening skills and create a sense of community. Just last weekend, we had a potluck to celebrate our first harvest, showcasing the variety of culinary creations that can be made from our freshly picked vegetables. It feels incredible to be part of something that not only thrives on nurturing plants but also fosters relationships and offers assistance to those in need.",
+          "sourceContains2026": false,
+          "nativeEventRecordedTimeMs": 1791123281527,
+          "actualExtractionRequestOrdinals": [
+            26
+          ]
+        }
+      ]
+    },
+    {
+      "memoryId": "m_1791123865791_30ba8051",
+      "content": "用户于2026-10-04曾因复杂的术语和数据造成精神负担而决定停止订阅医学期刊。但随后，用户重新订阅了一种风格更吸引人的医疗期刊，以弥补与医疗社区脱节的感觉，并重新激起了对医学进步的热情。",
+      "metadata": {},
+      "sourceEvidence": [
+        {
+          "messageId": "b3e757d4-3802-4257-8c6b-4e833550f749",
+          "datasetIndex": 81,
+          "sourceText": "User: I've even resubscribed to a curated medical journal! I found one that presents articles in a much more engaging way, which sparked my interest once again. The incorporation of recent research findings alongside practical applications made the content feel both relevant and approachable. I had been feeling somewhat disconnected from the medical community, but now, with these articles, I feel as if I'm catching up on the advancements that are happening. It’s reassuring to see how health topics are evolving and how I can incorporate new knowledge into my own life. It’s like rediscovering a passion that had been lying dormant for too long.",
+          "sourceContains2026": false,
+          "nativeEventRecordedTimeMs": 1791123281528,
+          "actualExtractionRequestOrdinals": [
+            26,
+            34
+          ]
+        }
+      ]
+    },
+    {
+      "memoryId": "m_1791124105745_02c9ff8c",
+      "content": "用户（患者）在2026年10月04日左右前往附近的自然保护区徒步，通过欣赏自然景色和呼吸新鲜空气来放松身心，重新充能并减轻日常生活的纷扰。",
+      "metadata": {
+        "activity_start_time": "2026-10-04T14:14:41.530Z",
+        "activity_end_time": "2026-10-04T14:14:41.530Z"
+      },
+      "sourceEvidence": [
+        {
+          "messageId": "d6d4758c-9518-4199-a7b9-5e209b6c2ba8",
+          "datasetIndex": 100,
+          "sourceText": "Patient: I hiked in a nearby nature reserve to unwind and recharge. Being in nature is so refreshing. The way the sunlight filters through the leaves really creates a magical atmosphere that lifts my spirits. It's almost as if the rustling leaves and chirping birds are creating a symphony, a reminder of the beauty in the world around us. I couldn't help but take a deep breath, inhaling the fresh air, which seemed to cleanse my mind and body of the clutter of daily life. The trails were peaceful, and I felt like I could walk forever, losing track of time as I connected with the environment.",
+          "sourceContains2026": false,
+          "nativeEventRecordedTimeMs": 1791123281530,
+          "actualExtractionRequestOrdinals": [
+            40
+          ]
+        }
+      ]
+    },
+    {
+      "memoryId": "m_1791124215714_7efedbf9",
+      "content": "用户（患者）在2026年10月04日左右参加了一场团体治疗工作坊（包含游戏治疗game therapy环节）。由于活动氛围激烈且人群拥挤，加上主观上觉得与周围参与者的社交联结薄弱（disconnected），用户感觉自己更像是观察者而非活跃参与者，对此产生了自我怀疑。整体经历让用户感到压力、孤立且精疲力竭，反而使其对康复历程感到更加困惑且无益。",
+      "metadata": {},
+      "sourceEvidence": [
+        {
+          "messageId": "1830e12c-9ac8-4557-bec2-7330f96b8eaf",
+          "datasetIndex": 128,
+          "sourceText": "Patient: Lastly, I participated in a game therapy session, but I felt disconnected from that activity. It was an intriguing setting that usually fosters collaboration and engagement among participants. However, during this session, I found it difficult to connect with the people around me or the activity itself. The games felt somewhat alien, as if I was merely an observer rather than an active participant. I wonder if my feelings of disconnection stem from something deeper within me or if it was simply a mismatch between my personal interests and the activities being presented.",
+          "sourceContains2026": false,
+          "nativeEventRecordedTimeMs": 1791123281531,
+          "actualExtractionRequestOrdinals": [
+            45
+          ]
+        }
+      ]
+    },
+    {
+      "memoryId": "m_1791124291490_a923c53f",
+      "content": "用户（User）在2026年参加了多次医疗模拟活动（包括由当地医院组织的互动工作坊），旨在提升专业技能并建立实际应用信心。在体验了为患者设计的互动场景后，用户表示该经历改变了对医疗模拟的认知，认为其兼具教育与赋能作用。",
+      "metadata": {
+        "activity_start_time": "2026-01-01T00:00:00Z",
+        "activity_end_time": "2026-10-04T14:14:41Z"
+      },
+      "sourceEvidence": [
+        {
+          "messageId": "e8d1cecb-5249-4f2f-b602-9118a7e883a5",
+          "datasetIndex": 133,
+          "sourceText": "User: I have attended multiple medical simulation events this year. Each event has provided a unique opportunity to practice skills in a controlled yet realistic setting, allowing for meaningful interactions and immediate feedback from experienced professionals. These experiences not only reinforced theoretical knowledge but also inspired confidence in my ability to apply these skills in real medical situations. The diversity of scenarios presented at each event helped illustrate various challenges that can arise in medical practice. Overall, it has been a very enriching journey that I am eager to continue pursuing.",
+          "sourceContains2026": false,
+          "nativeEventRecordedTimeMs": 1791123281533,
+          "actualExtractionRequestOrdinals": [
+            50
+          ]
+        }
+      ]
+    },
+    {
+      "memoryId": "m_1791124357286_9748e6c1",
+      "content": "用户曾担任协调员，组织并参与了一场专门针对缺乏医疗资源社区的公益健康博览会。在该博览会中，用户负责协助组织社区外展活动、设立信息展位，并帮助开发了新的心理健康意识项目，借此接触专业人士深入了解心理健康议题。此外，用户在2026年10月04日左右参与了相关的心理健康慈善活动，通过服务社区、与其他志愿者及专业人士交流，提升了自我价值感与对心理健康议题的认同。",
+      "metadata": {},
+      "sourceEvidence": [
+        {
+          "messageId": "25fa50ea-8a67-4335-9e5c-2fb833d5cd4d",
+          "datasetIndex": 141,
+          "sourceText": "User: I also volunteered to coordinate a health fair dedicated to underserved communities. This experience allowed me to engage directly with individuals who often face significant barriers to accessing healthcare services. It felt fulfilling to make a strong impact in areas that often lack support, such as those where health disparities are prevalent due to economic factors. Knowing that my efforts could potentially save lives or improve the quality of living for others brought a profound sense of purpose to my work. It was inspiring to see the community come together and respond positively, demonstrating the power of collective action and dedication towards a common goal.",
+          "sourceContains2026": false,
+          "nativeEventRecordedTimeMs": 1791123281533,
+          "actualExtractionRequestOrdinals": [
+            52
+          ]
+        }
+      ]
+    },
+    {
+      "memoryId": "m_1791124402087_6acabedd",
+      "content": "用户在2026年10月4日完成了社区大学提供的应用解剖学课程，该课程聚焦整体身体理解，探讨身体各系统的动态互动及压力对生理功能的影响。这一经历印证了用户最初因传统解剖学难度过高而退缩后，通过应用导向方式重新接触该领域的成功转变，也标志着用户对学科兴趣的深化。",
+      "metadata": {
+        "activity_start_time": "2026-10-04T00:00:00Z",
+        "activity_end_time": "2026-10-04T23:59:59Z"
+      },
+      "sourceEvidence": [
+        {
+          "messageId": "fc040492-ea44-49d8-8302-beede6d958bc",
+          "datasetIndex": 151,
+          "sourceText": "User: On a positive note, I completed an anatomy course that focused on holistic body understanding. This course really delved into how every system in the body interacts in a dynamic way, revealing the interconnectedness of our physical wellbeing. Learning about topics such as how stress affects bodily functions and the importance of muscle function for overall health was particularly enlightening. It also sparked my interest in exploring further topics like nutrition and lifestyle choices that can promote holistic health. I found that the holistic perspective not only made the information more relatable but also inspired me to share my newfound knowledge with others to promote wellness in my community.",
+          "sourceContains2026": false,
+          "nativeEventRecordedTimeMs": 1791123281533,
+          "actualExtractionRequestOrdinals": [
+            54
+          ]
+        }
+      ]
+    }
+  ],
+  "samplePolicy": "All saved user-16 Memory heads containing 2026 and mapping to a public imported user message. Post-outcome development review; not blinded relevance labels.",
+  "nativeInstructions": {
+    "system": "尽量基于消息的 timestamp 推算绝对时间",
+    "user": "务必结合 timestamp 推算时间",
+    "originalPromptSourceSha256": "4a443a170a5c6d754c8212728a2fa23b1d1f647d49f960b7e10b6a6cc5761816"
+  },
+  "hostChain": [
+    "Official imported history rows have no source timestamps; appendPersonaHistory creates current native log events.",
+    "captureStored maps event.time into message.timestamp.",
+    "Native formatter displays that timestamp and requests absolute-time inference.",
+    "Generated saved Memory heads contain calendar claims absent from their referenced source prose."
+  ],
+  "importantDistinction": "Actual native event times and cursor ordering are correct log metadata. Their meaning as historical event anchors is not established. Keep them for capture; mark imported time provenance rather than replacing cursor timestamps.",
+  "directCausalProof": false,
+  "realModelOrScorerRequests": 0,
+  "officialAnswersRead": false,
+  "originalStudyChanged": false,
+  "nextNecessaryAdapter": "Persist generic imported-time provenance in native source events, preserve it into native extraction inputs and constrain imported-date inference through the existing runner seam. Do not hardcode a PersonaMem date or mutate the native formatter/algorithm."
+}
