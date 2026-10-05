@@ -21,3 +21,25 @@
 结论：来源漏失已定位且原生参数可恢复完整交付；仍不能证明遗漏是内容错误的唯一原因。内容质量门槛失败，不派发消费者、不追加风格重试、不把该资产纳入正式冻结。后续开发重点应是通用证据归属与自然资源拆分，不能针对该题写答案提示。开发观察器现额外保存finish reason，正常iterator结束也不能掩盖error/aborted/max-tokens；本地调用计数仍需独立派发账本核对。
 
 完成状态记录用[零模型探针](evidence/native-skill-review-finish-diagnostics-20261005.json)核对：stop/tool-calls正常，error/aborted/max-tokens/缺失finish均未完成；抛出错误保留，任务求解会话在派发前拒绝。该探针使用明确标记的持久层夹具，不是生产日志重建证明；真实日志重建证据来自上文5次请求。
+
+## 运行时配置透传
+
+此前40k/64k只由开发入口调用工厂，Runtime.process未接参数。现在插件config可传skillTranscriptWindow，初始化复制并校验，只允许原生headChars/tailChars的正整数；未配置仍保持原生8k/32k。后续修改调用方的原config对象不会改变已启动运行时。非法配置在创建状态库及任何学习请求前以INVALID_CONFIG拒绝，不进入原生重试循环。snapshot返回配置覆盖值（空对象表示原生默认），每次Skill阶段诊断记录configured_window和source_messages。
+
+例如，已确认容量的服务可以配置：
+
+```json
+{
+  "skillTranscriptWindow": { "headChars": 40000, "tailChars": 64000 }
+}
+```
+
+这是插件配置，不是记忆召回正文预算；需要重新加载插件才能生效。字符窗口也不是token容量保证，较大的来源会增加每个提炼请求的输入成本。原生字符截取算法仍会丢弃超出窗口的中间部分；不得把窗口配置称为任意长历史完整覆盖。没有自动改用户配置、生产默认或旧冻结。
+
+[已安装宿主探针](evidence/production-skill-window-wiring-20261005.json)运行真实Runtime.process与原生SkillExtractor，回放同一123消息/96,154 UTF-16字符来源。默认、40k/64k、仅head=10k三组均逐字匹配原生截取；关键签名分别0/4/0，system prompt相同。3个持久作业及重启恢复、8个非法配置负例、快照和诊断均通过。core lookup、已完成Memory阶段、模型/编码均显式使用夹具，真实模型0；不是完整学习流水线、内容质量或效果验收。
+
+## 资源产出的预算诊断
+
+原生skill_create只接name/content，资源必须在获得skill_id后经skill_files_write写入，并使用返回的expected_version。上一真实开发复核5次调用依次为库列表、旧Skill正文、关键词查询、创建、总结；按这条已观察路径再完成一次资源写入及总结至少需6次调用。模型可选择更少查阅或不同路径，因此不能证明所有5次预算都无法产生资源，也不能把资源缺失全归因于预算。已有其他自然来源仍有正文过长/无资源，限制继续保留。
+
+后续资源验证应在新预登记中明确工具步骤所需额度及全部token；不得追补原5次复核或改写其失败结论。当前生产原生提炼默认16轮，仍被宿主设置和总调用预算约束；本次未扩大任何已有预算，未进行追加真实风格复核。

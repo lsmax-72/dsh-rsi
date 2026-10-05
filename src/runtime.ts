@@ -2,7 +2,7 @@ import { AsyncLocalStorage } from 'node:async_hooks';
 import { mkdir, writeFile, rm, readdir } from 'node:fs/promises';
 import { join,relative,resolve,isAbsolute } from 'node:path';
 import { DshModelRunner } from './model-bridge.js';
-import { openLocalCore } from './local-core.js';
+import { openLocalCore,validateSkillTranscriptWindow } from './local-core.js';
 import { MemoryPipelineManager, parseSkillFile, buildFtsQuery, shouldExtractL1 } from './core-entry.js';
 import { copyResources,versionResources } from './resources.js';
 import { State, workspace, type Settings } from './state.js';
@@ -21,6 +21,7 @@ const retryableJob = (job:any) => job.status === 'failed' && job.stages.failure?
 /** Host adaptation: durable work, physical scopes, budgets and official consumers. */
 export class Runtime {
   readonly state: State;
+  readonly skillTranscriptWindow: {headChars?:number;tailChars?:number};
   readonly abort = new AbortController();
   readonly context = new AsyncLocalStorage<any>();
   readonly cores = new Map<string,Promise<any>>();
@@ -34,6 +35,7 @@ export class Runtime {
   invalidate = () => {};
   captureQueue: Promise<any> = Promise.resolve();
   constructor(readonly ctx: any, readonly config: any, readonly directory: string, readonly suppliedEmbedding?:any) {
+    this.skillTranscriptWindow=validateSkillTranscriptWindow(config.skillTranscriptWindow);
     this.state = new State(directory, config.settings);
   }
   tracked<T>(promise: Promise<T>): Promise<T> { this.active.add(promise); void promise.finally(() => this.active.delete(promise)).catch(() => {}); return promise; }
@@ -212,7 +214,8 @@ export class Runtime {
             stages.memory={stored:progress.stored};this.state.updateJob(job.id,'running',stages);
           }
           if (!stages.skills) {
-            const result = await core.createSkillExtractor(this.state.settings().language).extract({...ids(scope),session_id:sessionId,task_id:job.id,messages:job.payload.messages,reason:`记录的轮次结果：${JSON.stringify(job.payload.reason)}`});
+            diagnosticEvent('INFO','rsi.skill.review.window',{configured_window:this.skillTranscriptWindow,source_messages:job.payload.messages.length});
+            const result = await core.createSkillExtractor(this.state.settings().language,this.skillTranscriptWindow).extract({...ids(scope),session_id:sessionId,task_id:job.id,messages:job.payload.messages,reason:`记录的轮次结果：${JSON.stringify(job.payload.reason)}`});
             stages.skills={candidates:result.candidates}; this.state.updateJob(job.id,'running',stages);
           }
           diagnosticEvent('INFO','rsi.learning.completed',{memory_stored:stages.memory?.stored,skill_candidates:stages.skills?.candidates?.length});
@@ -307,7 +310,7 @@ export class Runtime {
       memory.push(...(await core.readMemories()).map((row:any) => ({...row,scope})));
       skills.push(...(await listAllSkills(core.skills,ids(scope))).items.map((row:any) => ({...row,scope,visibleName:visibleName(row.name),disabled:this.state.disabled(scope,row.skill_id)})));
     }
-    return {workspace:entry,settings:this.state.settings(),usage:this.state.usage(),memory,skills,layers,jobs:this.state.jobs(entry.id).map(({payload,...job}:any) => ({...job,sourceSessionId:payload.sessionId,reason:payload.reason})),workspaces:this.state.db.prepare("SELECT value FROM kv WHERE key LIKE 'scope:%'").all().map(row => JSON.parse(row.value as string).cwd).filter((value,index,array) => array.indexOf(value) === index),nativeProfiles,profilePending:!!this.state.get(`profile-invalid:${entry.id}`)||!!this.state.get('profile-invalid:global'),nativePipelines:[...this.pipelines].filter(([scope])=>scope===entry.id).map(([scope,pipeline])=>({scope,queues:pipeline.getQueueSizes(),sessions:pipeline.getSessionKeys().map(sessionKey=>({sessionKey,...pipeline.getSessionState(sessionKey)}))}))};
+    return {workspace:entry,settings:this.state.settings(),skillTranscriptWindow:this.skillTranscriptWindow,usage:this.state.usage(),memory,skills,layers,jobs:this.state.jobs(entry.id).map(({payload,...job}:any) => ({...job,sourceSessionId:payload.sessionId,reason:payload.reason})),workspaces:this.state.db.prepare("SELECT value FROM kv WHERE key LIKE 'scope:%'").all().map(row => JSON.parse(row.value as string).cwd).filter((value,index,array) => array.indexOf(value) === index),nativeProfiles,profilePending:!!this.state.get(`profile-invalid:${entry.id}`)||!!this.state.get('profile-invalid:global'),nativePipelines:[...this.pipelines].filter(([scope])=>scope===entry.id).map(([scope,pipeline])=>({scope,queues:pipeline.getQueueSizes(),sessions:pipeline.getSessionKeys().map(sessionKey=>({sessionKey,...pipeline.getSessionState(sessionKey)}))}))};
   }
   async request(operation:string,payload:any) {
     if (!payload || typeof payload !== 'object' || Array.isArray(payload)) throw new Error('请求格式无效');

@@ -11,6 +11,13 @@ import {
   performAutoRecall, parseConfig, writeMemory, buildFtsQuery, readSceneIndex, parseSceneBlock,
 } from './core-entry.js';
 
+/** Validate host configuration before any learning dispatch; source selection remains native. */
+export function validateSkillTranscriptWindow(value:any={}) {
+  if(!value || typeof value!=='object' || Array.isArray(value))throw Object.assign(new Error('Skill 来源窗口必须是原生参数对象'),{code:'INVALID_CONFIG'});
+  for(const [key,limit] of Object.entries(value))if(!['headChars','tailChars'].includes(key) || !Number.isSafeInteger(limit) || Number(limit)<=0)throw Object.assign(new Error('Skill 来源窗口必须使用原生正整数字符上限'),{code:'INVALID_CONFIG'});
+  return Object.freeze({...value}) as {headChars?:number;tailChars?:number};
+}
+
 /** Each physical scope owns its native asset stores; no team service is mounted. */
 export async function openLocalCore(dataDir: string, runner: any, logger: any, suppliedEmbedding?:any) {
   await mkdir(dataDir, { recursive: true });
@@ -70,8 +77,8 @@ export async function openLocalCore(dataDir: string, runner: any, logger: any, s
       },
       createSkillExtractor(language = 'zh-CN', transcriptWindow: {headChars?:number;tailChars?:number} = {}) {
         // Delegate source coverage to the native extractor; omitted limits retain its defaults.
-        for(const [key,value] of Object.entries(transcriptWindow))if(!['headChars','tailChars'].includes(key) || !Number.isSafeInteger(value) || Number(value)<=0)throw new Error('Skill 来源窗口必须使用原生正整数字符上限');
-        return new SkillExtractor({ core: skills, runner, logger, prefixSkillsLimit: 20, ...transcriptWindow,
+        const window=validateSkillTranscriptWindow(transcriptWindow);
+        return new SkillExtractor({ core: skills, runner, logger, prefixSkillsLimit: 20, ...window,
           systemPrompt: `${SKILL_REVIEW_PROMPT}\nWrite asset prose in ${language}; preserve code, commands, paths and API identifiers.\nKeep a general SOP concise (target about 1500 characters); retain its trigger, decisions and failure branches. Put long scripts, examples and fixtures in native skill_files_write resources and reference them in the body; do not truncate essential task-specific knowledge. State success only when supported by observed tool results in this transcript, with the command/check and result. Assistant plans, claims and a completed turn alone are not execution evidence. Label failures, partial checks and unverified claims explicitly; they can still yield reusable skills. Separate observed evidence from proposed validation. Include an Evidence section with executed commands/checks and their observed results, or explicitly say no execution validation was observed. Proposed commands belong in Validation, and unexecuted broader changes must not be presented as proven workflow. Preserve caller argument contracts from observed signatures. Reading or editing a callsite does not prove that replacing all matching attribute accesses is required or safe. Keep unverified cross-callsite changes as hypotheses with targeted validation, not mandatory SOP steps. A passing check supports only the behaviors it covers. Preserve executable identifiers and calling expressions exactly as observed; translated or rewritten code is unverified unless executed. Keep runnable reproduction and test examples in native skill_files_write resources, with only short references and observed outcomes in the main body. Label consequences inferred from static source inspection as inferred; they are not observed execution failures. Retrieved Skill/Memory Evidence sections are historical source claims, not current command/test execution results. Name execution evidence as source-session evidence and distinguish retrieval tools from execution tools. Write headings and frontmatter description in the configured asset language. Do not copy the harness execution protocol as learned user preferences.` });
       },
       async record(input:any) {

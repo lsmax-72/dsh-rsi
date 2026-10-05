@@ -4,7 +4,7 @@
 
 dsh-rsi 是面向 DeepSeek Harness（dsh）的单用户、本地自动学习插件。它从会话中提炼 Chat Memory 和 Skill，在后续任务中召回相关记忆、加载适用技能，并提供集成在插件详情页里的资产管理界面。
 
-当前为开发版本：本地安装、管理页及真实模型下的记忆与Skill正文消费已通过小型验收。首轮配对结果见[历史报告](docs/formal-results-20261003.md)；原生能力修复后的[推进路线](docs/rsi-roadmap-20261004.md)另行记录。PersonaMem预演两组均2/2，只说明这一个开发用户上的接入与答题通过；通用Skill过长和资源拆分仍是已知限制，新独立效果实验尚未开始。
+当前为开发版本：本地安装、管理页及真实模型下的记忆与Skill正文消费已通过小型验收。修复后的[8题连续学习实验](docs/continuous-learning-outcome-20261005.md)已完成，基线5/8、启用组3/8，启用组已知聊天token多约38%，另有1次未知用量和未提供token的本地嵌入；目前未观察到效果优势。PersonaMem单用户预演两组均2/2，两轮8用户实验未完成，不能发布完整用户分组效果。Skill过长、资源拆分及内容事实仍有限制。首轮适配版数据见[历史报告](docs/formal-results-20261003.md)，最新边界见[推进路线](docs/rsi-roadmap-20261004.md)。
 
 [产品定位](#产品定位) · [项目架构](#项目架构) · [工作流程](#工作流程) · [管理页面](#管理页面) · [工作区与存储](#工作区与存储) · [安装与开始使用](#安装与开始使用) · [验证状态](#验证状态) · [开发与贡献](#开发与贡献)
 
@@ -234,6 +234,10 @@ docs/          需求、实现边界、评测协议与运行证据
 核心固定为修订 `e09899c2136fb6bc27ecc68505e32bdb637cdfa8` 的源码文件，数量以核心清单为准；界面固定复用 10 个文件，其中文件树和对应样式从原详情页提取。构建前核对逐文件 SHA-256。必要适配留在 `adapters/` 与 `src/`，没有平行重写提炼、召回或版本系统。
 
 当前 Chat Memory 使用原生 SQLite FTS5、向量检索与 RRF；Skill 保留原生 BM25。默认本地向量模型为 embeddinggemma-300m-qat Q8_0（768 维），首次需下载约 329 MB；离线使用时通过插件配置 `embedding: {provider: "local", modelPath: "/绝对路径/embeddinggemma-300m-qat-Q8_0.gguf"}` 指定已下载文件。编码失败显式报错，首次模型加载及历史索引重建可能延长插件启动时间。2026-10-04 装配审计还确认了 Skill 生产提示词替换、画像触发缺失、资产分页遗漏、上下文截断和错误重试接线问题，见 [能力装配审计与隔离复现](docs/native-capability-audit-20261004.md)，最新修复状态见 [修复进度](docs/native-capability-repairs.md)。七类装配问题已逐项修复并保存接入回执；新增原生依赖的 Linux/macOS/Windows 安装检查全部通过。接入验收不等于效果改善；首轮实验结果对应此前适配版。构建成功也不代表通过了整个复用库的类型检查。来源、固定文件及许可见 [核心清单](vendor/core/manifest.json)、[界面清单](vendor/panel/manifest.json)、[核心许可](vendor/core/LICENSE)和[界面许可](vendor/panel/LICENSE)。
+
+### Skill 来源窗口
+
+插件配置可传 `skillTranscriptWindow: {headChars: 40000, tailChars: 64000}`，直接使用原生截取参数；未配置仍为8k/32k。这与Chat Memory召回预算分别设置，重新加载插件后生效。来源更长会增加输入token，需确认所选模型容量；当前配置覆盖值可在snapshot及诊断中查看。非法参数在学习前拒绝，不静默回退。配置接线已通过夹具验证，较大窗口的单次真实提炼仍有内容错误，不能称为质量或效果提升，见[来源窗口与实测边界](docs/skill-source-window-development-20261005.md)。
 
 ### 开发检查
 
