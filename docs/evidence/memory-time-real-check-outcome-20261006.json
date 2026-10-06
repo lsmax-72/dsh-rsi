@@ -1,0 +1,125 @@
+{
+  "status": "SINGLE_BATCH_DATE_CONTENT_PASS_OTHER_QUALITY_LIMIT_REMAINS",
+  "recordedAt": "2026-10-06T03:50:50.888295+00:00",
+  "dispatchRevision": "d7e5b9a312a78dd69bf82b2266a304897e7a0076",
+  "policyRevision": "268bdce",
+  "planSha256": "4bc1ca08c4c0083f295a1973511d62fce19ff1a9a8d24f923ef2ec998b081597",
+  "actualCalls": 1,
+  "knownChatTokens": 5224,
+  "inputTokens": 4115,
+  "outputTokens": 1109,
+  "unknownActualChatUsage": 0,
+  "wallSeconds": 33.767,
+  "storedL1": 5,
+  "allInputReconstructed": true,
+  "sourceProseAndNativeVisibleWindowPreserved": true,
+  "unknownRecordingTimeLabelsDelivered": 10,
+  "allFrozenFilesUnchangedDuringCheck": true,
+  "storedRecordChecks": [
+    {
+      "assetId": "m_1791258532280_2c62a1c0",
+      "contentSha256": "d7c16f29855af29e6a1ff4291e8e3f4450d4554e7e632b01342c5ec1e2daf32e",
+      "bodyChars": 68,
+      "sourceIds": [
+        "4c052c66-4404-44cc-946f-ee2bed9e7031",
+        "e00e8ca4-33d7-49c4-936b-0335da4d52d3",
+        "c2c2ac24-66ec-48c1-9a93-ceb292be92b9"
+      ],
+      "sourceRoles": [
+        "user",
+        "user",
+        "user"
+      ],
+      "noInventedAbsoluteCalendarClaim": true,
+      "exportMatchesNativeResult": true,
+      "sceneStillUsesAiNarrator": true
+    },
+    {
+      "assetId": "m_1791258532280_de037c8e",
+      "contentSha256": "248b360e495571e6fa75bdf90261e3bdbbb0790eeade956e4ed468032785b969",
+      "bodyChars": 87,
+      "sourceIds": [
+        "b82d218e-0e64-4e43-b718-ac8aa7bfb715"
+      ],
+      "sourceRoles": [
+        "user"
+      ],
+      "noInventedAbsoluteCalendarClaim": true,
+      "exportMatchesNativeResult": true,
+      "sceneStillUsesAiNarrator": true
+    },
+    {
+      "assetId": "m_1791258532280_bb4abe2c",
+      "contentSha256": "35dd3cb734a436bddb104fd7497d19426fed613b2d6974ce0498a084e2b3e92d",
+      "bodyChars": 68,
+      "sourceIds": [
+        "e00e8ca4-33d7-49c4-936b-0335da4d52d3"
+      ],
+      "sourceRoles": [
+        "user"
+      ],
+      "noInventedAbsoluteCalendarClaim": true,
+      "exportMatchesNativeResult": true,
+      "sceneStillUsesAiNarrator": true
+    },
+    {
+      "assetId": "m_1791258532280_6ad8b8cc",
+      "contentSha256": "5913264c280218308c68c6da3cf111522cc76be0d9f3c33fe3892ddf9b3a0a52",
+      "bodyChars": 69,
+      "sourceIds": [
+        "de648cf4-223b-4c67-8ece-db1d59ef0121"
+      ],
+      "sourceRoles": [
+        "user"
+      ],
+      "noInventedAbsoluteCalendarClaim": true,
+      "exportMatchesNativeResult": true,
+      "sceneStillUsesAiNarrator": true
+    },
+    {
+      "assetId": "m_1791258532280_1262c524",
+      "contentSha256": "8b97adc8b3f17c7401694d5070e4aca43b515f446e8c08e58964ae3a89814c18",
+      "bodyChars": 84,
+      "sourceIds": [
+        "c2c2ac24-66ec-48c1-9a93-ceb292be92b9"
+      ],
+      "sourceRoles": [
+        "user"
+      ],
+      "noInventedAbsoluteCalendarClaim": true,
+      "exportMatchesNativeResult": true,
+      "sceneStillUsesAiNarrator": true
+    }
+  ],
+  "embedding": {
+    "calls": 5,
+    "inputChars": 376,
+    "timeMs": 155,
+    "tokenUsage": null
+  },
+  "manualSourceAssessment": "Five records supported by this batch user prose: emotional/artistic music taste, ukulele group learning, commercial podcast departure, dance class, documentary-to-biography shift. Exact content correspondence is a development review, not causal benefit.",
+  "limits": [
+    "All5 records retain AI-narrator scene name despite host rule; scene naming quality not passed.",
+    "Fresh library and previous scene not copied; only one extraction, no actual conflict merger or Skill generation under new provenance policy.",
+    "No consumers/scorer/commands or native capture L0 indexing tested by this direct extraction check.",
+    "One sample cannot establish general date/hallucination reliability; explicit fixture dates and scope tests are separate evidence."
+  ],
+  "newTaskSolverCalls": 0,
+  "newConsumerCalls": 0,
+  "newTaskCommands": 0,
+  "originalFormalStudyResumed": false,
+  "evidenceHashes": {
+    "/private/tmp/dsh-rsi-memory-time-check-b-20261006/gateway.log": "492dcae784d98324ace2c466414a3b2f7370d26aeb1727742450417d16a637bd",
+    "/private/tmp/dsh-rsi-memory-time-check-b-20261006/plan.json": "4bc1ca08c4c0083f295a1973511d62fce19ff1a9a8d24f923ef2ec998b081597",
+    "/private/tmp/dsh-rsi-memory-time-check-b-20261006/plan-unsealed.json": "ab8c6a86ae55021458b6d5d04d302cf28f0a44e0fca0034faf5c9c0eb00ab630",
+    "/private/tmp/dsh-rsi-memory-time-check-b-20261006/run.log": "c8baff411e8af6762b78ee862476b5f0ab949b024f830a55bd2dd079fd69036d",
+    "/private/tmp/dsh-rsi-memory-time-check-b-20261006/review-receipt.json": "e93d9e42d37bc651f2d28f1632d07d4bc52354c258e82fad5fd5154c8d2d1c0b",
+    "/private/tmp/dsh-rsi-memory-time-check-b-20261006/source-session.jsonl": "d968e9c4b5bfc32c090a101be2676cb89ee680f6e61613dea67af8afaad6d8d1",
+    "/private/tmp/dsh-rsi-memory-time-check-b-20261006/relay.py": "ef1485b7225ee22fd3de4f10f44e010d9d05cc6933f7d2f623a4f677ef4b7e1a",
+    "/private/tmp/dsh-rsi-memory-time-check-b-20261006/source-batch.json": "a1f2b68597029812a3f2b93d2c12a42693c85159f0fba0506310db77bf3e5506",
+    "/private/tmp/dsh-rsi-memory-time-check-b-20261006/review-assets.json": "1816847f7a08ad8b1b1d10d224a59f5c0f31e5a3c692d41f0161af183e17e524",
+    "/private/tmp/dsh-rsi-memory-time-check-b-20261006/terminal.json": "ce042d690044c43a99d1c51ebd3b6c9c579beae3371814f83c2d721cfb3ff571",
+    "/private/tmp/dsh-rsi-memory-time-check-b-20261006/review-requests.json": "c1909cda0cb57db3e27b417c7c5be21e877b8ab92169d335c540596c916499a7",
+    "/private/tmp/dsh-rsi-memory-time-check-b-20261006/patch.json": "39afc21bd0926fc7ac697fc0ea23dc2089b952d079a560fc9b96fd3f7ec3e477"
+  }
+}
