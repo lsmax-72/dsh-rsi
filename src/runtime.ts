@@ -1,5 +1,5 @@
 import { AsyncLocalStorage } from 'node:async_hooks';
-import { mkdir, writeFile, rm, readdir } from 'node:fs/promises';
+import { mkdir, writeFile, rm, readdir, rename } from 'node:fs/promises';
 import { join,relative,resolve,isAbsolute } from 'node:path';
 import { DshModelRunner } from './model-bridge.js';
 import { openLocalCore,validateSkillTranscriptWindow } from './local-core.js';
@@ -49,6 +49,12 @@ export class Runtime {
           if (this.stopping || this.blockedScopes.has(scope)) return Promise.reject(new Error('插件正在关闭'));
           const settings = this.state.settings();
           const origin = this.context.getStore();
+          let record:any,recordPath:string,profileKey:string;
+          const saveOutcome=async()=>{
+            if(!record)return;
+            const temporary=recordPath+'.tmp';await writeFile(temporary,JSON.stringify(record)+'\n',{mode:0o600});await rename(temporary,recordPath);
+            if(profileKey && this.state.get(profileKey)?.sessionId===record.sessionId)this.state.set(profileKey,record);
+          };
           const bridge = new DshModelRunner(this.ctx, {
             cwd:cwd ?? this.config.cwd ?? this.directory,
             resolveRoute:() => { const route = this.route(scope); if (!route) throw Object.assign(new Error('尚无会话模型配置'), { code:'MISSING_ROUTE' }); return route; },
@@ -56,13 +62,22 @@ export class Runtime {
             language:() => origin?.language ?? this.state.settings().language,
             onSession:async (sessionId,taskId,sourceSessionId) => {
               const root = join(this.directory,'learning-runs'); await mkdir(root,{ recursive:true });
-              await writeFile(join(root,`${sessionId}.json`),JSON.stringify({ sessionId,taskId,sourceSessionId,jobId:origin?.jobId,scope,createdAt:Date.now() })+'\n',{ flag:'wx',mode:0o600 });
+              record={sessionId,taskId,sourceSessionId,jobId:origin?.jobId,scope,status:'running',createdAt:Date.now()};recordPath=join(root,`${sessionId}.json`);
+              await writeFile(recordPath,JSON.stringify(record)+'\n',{flag:'wx',mode:0o600});
+              const layer=taskId==='persona-generation'?'L3':taskId.startsWith('scene-extract-')?'L2':undefined;
+              if(layer){profileKey=`profile-call:${scope}:${layer}`;this.state.set(profileKey,{...record,layer});record.layer=layer;}
             },
             beforeRequest:(id,task) => this.state.reserve(id,scope,task,!!origin?.manual),
             afterRequest:(id,usage,status) => this.state.settle(id,usage,status),
           });
           return this.tracked(bridge.run({ ...params, sessionId:params.sessionId ?? origin?.sessionId, abortSignal:AbortSignal.any([this.abort.signal,...(params.abortSignal?[params.abortSignal]:[])]),
-            maxTokens:Math.min(params.maxTokens ?? settings.maxTokens,settings.maxTokens), maxIterations:Math.min(params.maxIterations ?? settings.maxIterations,settings.maxIterations),timeoutMs:Math.min(params.timeoutMs ?? settings.timeoutMs,settings.timeoutMs) }));
+            maxTokens:Math.min(params.maxTokens ?? settings.maxTokens,settings.maxTokens), maxIterations:Math.min(params.maxIterations ?? settings.maxIterations,settings.maxIterations),timeoutMs:Math.min(params.timeoutMs ?? settings.timeoutMs,settings.timeoutMs) }).then(async result=>{
+              if(record){record.status='completed';record.finishedAt=Date.now();await saveOutcome();}return result;
+            },async(error:any)=>{
+              if(record){record.status='failed';record.finishedAt=Date.now();record.error={code:error.code ?? 'UNCLASSIFIED',name:error.name,message:error.message};if(error.blockedDispatch)record.blockedDispatch=error.blockedDispatch;
+                try{await saveOutcome();}catch(auditError:any){record.evidencePersisted=false;record.auditError=auditError.message;if(profileKey && this.state.get(profileKey)?.sessionId===record.sessionId)this.state.set(profileKey,record);this.ctx.logger.error('后台失败证据保存失败：%s',auditError.message);}
+              }throw error;
+            }));
         },
       };
       this.embeddingPromise ??= this.suppliedEmbedding?Promise.resolve(this.suppliedEmbedding):createReadyEmbedding(this.config.embedding,this.directory,this.ctx.logger);
@@ -303,7 +318,8 @@ export class Runtime {
       memory.push(...(await core.readMemories()).map((row:any) => ({...row,scope})));
       skills.push(...(await listAllSkills(core.skills,ids(scope))).items.map((row:any) => ({...row,scope,visibleName:visibleName(row.name),disabled:this.state.disabled(scope,row.skill_id)})));
     }
-    return {workspace:entry,settings:this.state.settings(),skillTranscriptWindow:this.skillTranscriptWindow,usage:this.state.usage(),memory,skills,layers,jobs:this.state.jobs(entry.id).map(({payload,...job}:any) => ({...job,sourceSessionId:payload.sessionId,reason:payload.reason})),workspaces:this.state.db.prepare("SELECT value FROM kv WHERE key LIKE 'scope:%'").all().map(row => JSON.parse(row.value as string).cwd).filter((value,index,array) => array.indexOf(value) === index),nativeProfiles,profilePending:!!this.state.get(`profile-invalid:${entry.id}`)||!!this.state.get('profile-invalid:global'),nativePipelines:[...this.pipelines].filter(([scope])=>scope===entry.id).map(([scope,pipeline])=>({scope,queues:pipeline.getQueueSizes(),sessions:pipeline.getSessionKeys().map(sessionKey=>({sessionKey,...pipeline.getSessionState(sessionKey)}))}))};
+    const nativeProfileCalls=[entry.id,'global'].flatMap(scope=>['L2','L3'].map(layer=>this.state.get(`profile-call:${scope}:${layer}`)).filter(Boolean));
+    return {workspace:entry,settings:this.state.settings(),skillTranscriptWindow:this.skillTranscriptWindow,usage:this.state.usage(),memory,skills,layers,jobs:this.state.jobs(entry.id).map(({payload,...job}:any) => ({...job,sourceSessionId:payload.sessionId,reason:payload.reason})),workspaces:this.state.db.prepare("SELECT value FROM kv WHERE key LIKE 'scope:%'").all().map(row => JSON.parse(row.value as string).cwd).filter((value,index,array) => array.indexOf(value) === index),nativeProfiles,nativeProfileCalls,profilePending:!!this.state.get(`profile-invalid:${entry.id}`)||!!this.state.get('profile-invalid:global')||nativeProfiles.some(profile=>profile.trigger.should)||nativeProfileCalls.some(call=>call.status!=='completed'),nativePipelines:[...this.pipelines].filter(([scope])=>scope===entry.id).map(([scope,pipeline])=>({scope,queues:pipeline.getQueueSizes(),sessions:pipeline.getSessionKeys().map(sessionKey=>({sessionKey,...pipeline.getSessionState(sessionKey)}))}))};
   }
   async request(operation:string,payload:any) {
     if (!payload || typeof payload !== 'object' || Array.isArray(payload)) throw new Error('请求格式无效');

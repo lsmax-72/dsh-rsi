@@ -1,0 +1,68 @@
+{
+  "status": "PASS",
+  "realProviderRequests": 0,
+  "fixtureDispatches": 1,
+  "taskCommandsExecuted": 0,
+  "knownFixtureTokens": 20,
+  "unknownUsage": 0,
+  "proofs": [
+    {
+      "scope": "80de225cce5999c2712f17c3",
+      "sessionId": "rsi-1781b0b8-d923-4ae0-8bbb-2a3abde4a906",
+      "errorCode": "BUDGET_EXHAUSTED",
+      "blockedDispatch": {
+        "reason": "HOST_LEARNING_QUOTA",
+        "requestId": "rsi-1781b0b8-d923-4ae0-8bbb-2a3abde4a906:2",
+        "scope": "80de225cce5999c2712f17c3",
+        "task": "persona-generation",
+        "day": "2026-10-06",
+        "usedReservations": 1,
+        "callBudget": 1,
+        "observedAt": 1791288479649
+      },
+      "nativeJournalSha256": "1b672b3363155d9fe569d49114a3bfaa09b90ad8db2cf343153b68d8d3a9f84e",
+      "nativeTerminalErrorVerified": true
+    },
+    {
+      "scope": "global",
+      "sessionId": "rsi-0e6d3e7d-f589-408e-95ff-291175e873ac",
+      "errorCode": "BUDGET_EXHAUSTED",
+      "blockedDispatch": {
+        "reason": "HOST_LEARNING_QUOTA",
+        "requestId": "rsi-0e6d3e7d-f589-408e-95ff-291175e873ac:1",
+        "scope": "global",
+        "task": "persona-generation",
+        "day": "2026-10-06",
+        "usedReservations": 1,
+        "callBudget": 1,
+        "observedAt": 1791288479692
+      },
+      "nativeJournalSha256": "311d0586017242c3e4df9b45f435520e0e5205afcd94994def45b4848cb86174",
+      "nativeTerminalErrorVerified": true
+    }
+  ],
+  "checks": [
+    "existing-persona-does-not-mask-post-tool-quota-failure",
+    "first-request-quota-denial-has-zero-dispatch",
+    "structured-run-outcome-matches-snapshot",
+    "original-native-terminal-error-and-blocked-request-ID-match",
+    "only-actual-first-request-usage-counted",
+    "failure-checkpoint-and-pending-trigger-preserved",
+    "actual-request-reconstructs-from-native-prefix"
+  ],
+  "limitation": "Isolated installed-host fixture; no real profile-quality claim and no new experiment failure policy.",
+  "restart": {
+    "status": "PASS",
+    "requestsBeforeRecovery": 0,
+    "fixtureRecoveryRequests": 4,
+    "profileFailuresPreserved": 2,
+    "budgetEvidencePreserved": true,
+    "successfulNativeRecoveryClearsLatestFailure": true,
+    "profilePendingAfterRecovery": false,
+    "realProviderRequests": 0
+  },
+  "hostVersion": "0.2.0-rc.2",
+  "checkedAt": "2026-10-06T12:08:00.183581+00:00",
+  "isolatedHome": true,
+  "diagnostics": []
+}

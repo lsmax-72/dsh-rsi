@@ -73,7 +73,7 @@ export class State {
     const settings = this.settings(), day = new Date().toISOString().slice(0,10);
     if (!settings.enabled || (!settings.learningEnabled && !manual)) throw Object.assign(new Error('自动学习已暂停'), { code: 'LEARNING_PAUSED' });
     const used = this.db.prepare('SELECT COUNT(*) AS count FROM usage WHERE day=?').get(day)!.count as number;
-    if (used >= settings.dailyCallBudget) throw Object.assign(new Error('今日学习调用预算已用完'), { code: 'BUDGET_EXHAUSTED' });
+    if (used >= settings.dailyCallBudget) throw Object.assign(new Error('今日学习调用预算已用完'), { code: 'BUDGET_EXHAUSTED', blockedDispatch:{reason:'HOST_LEARNING_QUOTA',requestId:id,scope,task,day,usedReservations:used,callBudget:settings.dailyCallBudget,observedAt:Date.now()} });
     this.db.prepare("INSERT INTO usage(id,day,scope,task,status) VALUES (?,?,?,?,'dispatched')").run(id,day,scope,task);
   }
   settle(id: string, usage: any, status: string) { this.db.prepare('UPDATE usage SET status=?,input_tokens=?,output_tokens=?,total_tokens=? WHERE id=?').run(status,usage?.inputTokens ?? null,usage?.outputTokens ?? null,usage?.totalTokens ?? null,id); }
