@@ -1,0 +1,296 @@
+{
+  "status": "PREDECLARED_NATIVE_V2_PREEXPOSED_DEVELOPMENT_REPLICATION",
+  "recordedAt": "2026-10-06T13:59:03.947273+00:00",
+  "purpose": "Obtain the missing full eight-user product comparison under fixed learning/answer budgets after verified native-profile closure repair; disclose development exposure and all unsuccessful attempts, without seeking a positive result.",
+  "model": "qwen3.8-27b",
+  "selectionSeed": 20261004,
+  "selectionUsesOnlyPublicIdsCutoffsAndPoolMembership": true,
+  "officialAnswersNotUsedForSelection": true,
+  "persona": {
+    "eligibleUsers": [
+      "9",
+      "4",
+      "12",
+      "14",
+      "3",
+      "17",
+      "19",
+      "15"
+    ],
+    "selectedUsers": [
+      "9",
+      "4",
+      "12",
+      "14",
+      "3",
+      "17",
+      "19",
+      "15"
+    ],
+    "questionCountPerUser": 4,
+    "pairedQuestions": 32,
+    "modelAnswersPlanned": 64,
+    "cases": [
+      {
+        "personaId": "9",
+        "contextId": "28249d3fb6f594de0bf9a6708d5eb4ea140c4f157ffbf51dfeeb413452ef0291",
+        "cutoffExclusive": 150,
+        "questionIds": [
+          "a719edb3-a43f-4792-b820-fb45293c4e19",
+          "b502d7dc-2345-41a3-8a22-0fb9ff719c9e",
+          "b35349e0-993b-452a-bb5e-67668833b39b",
+          "436e377a-98ba-44fc-809c-1743bbf4e033"
+        ],
+        "historyMessages": 150,
+        "historyChars": 131374,
+        "historySegments": 5,
+        "questionTypes": [
+          "recall_user_shared_facts",
+          "recalling_the_reasons_behind_previous_updates",
+          "generalizing_to_new_scenarios",
+          "generalizing_to_new_scenarios"
+        ],
+        "publicInputSha256": "f7492183f2478258793c0ef4bbcf2656fa7d5569d43c6b2cd5c69489d264eb2f"
+      },
+      {
+        "personaId": "4",
+        "contextId": "ea6147f6dc11130b410e00146e314d9370b7fff04f994639c4a3d46ce1255e64",
+        "cutoffExclusive": 115,
+        "questionIds": [
+          "8c6f3412-d822-4131-9a51-184e6da3f476",
+          "bd39c6a3-3ebb-4f12-a9b5-f690ebdf5bca",
+          "8dbe465c-85ad-4663-a517-da7b86418cde",
+          "64e6edb1-2675-4bec-bac5-ac3cffb7a36c"
+        ],
+        "historyMessages": 115,
+        "historyChars": 106719,
+        "historySegments": 4,
+        "questionTypes": [
+          "generalizing_to_new_scenarios",
+          "recall_user_shared_facts",
+          "recalling_facts_mentioned_by_the_user",
+          "recalling_the_reasons_behind_previous_updates"
+        ],
+        "publicInputSha256": "0582d05028b52aea5d76028cf813301b29bdb6dc02668aabb83d5c1aa4569ec4"
+      },
+      {
+        "personaId": "12",
+        "contextId": "97c532a381a079396499e11df92f6b69c99bc3ce999e2aff2c81aedea4b4c45d",
+        "cutoffExclusive": 181,
+        "questionIds": [
+          "194ce23e-d6d7-46f9-99b0-a0eba223a0ee",
+          "a64ba818-abee-404e-9a38-f440b74bcca7",
+          "8be28bb6-049f-4735-8957-a15234c138f4",
+          "cb4799ed-15e8-4dda-a716-b81fa1d6d9da"
+        ],
+        "historyMessages": 181,
+        "historyChars": 164041,
+        "historySegments": 6,
+        "questionTypes": [
+          "suggest_new_ideas",
+          "recall_user_shared_facts",
+          "recall_user_shared_facts",
+          "generalizing_to_new_scenarios"
+        ],
+        "publicInputSha256": "e2f9c3c9928191c963e6e2a9b4f61a9b0582d1f18d36499b48a73e97967bcc7f"
+      },
+      {
+        "personaId": "14",
+        "contextId": "357073b65588cc3017575f7f4dde34dac5d5e0cd376ac2fc1fb693f216e0878b",
+        "cutoffExclusive": 183,
+        "questionIds": [
+          "a30c10c5-145a-49b0-b3d5-1479bf3c6797",
+          "e86a1aad-0117-4021-9c68-f923f4111d5f",
+          "8d52f6de-0bc5-4cac-8873-ca57060186b3",
+          "4b742ee7-077d-4cce-9c27-51dfe81fcdc4"
+        ],
+        "historyMessages": 183,
+        "historyChars": 161650,
+        "historySegments": 6,
+        "questionTypes": [
+          "suggest_new_ideas",
+          "recalling_the_reasons_behind_previous_updates",
+          "recall_user_shared_facts",
+          "provide_preference_aligned_recommendations"
+        ],
+        "publicInputSha256": "64e2c0586cb2aab6abf37a29d01405bfd6309b1edffff6d3f167bce6e1cf2351"
+      },
+      {
+        "personaId": "3",
+        "contextId": "aa95cf5880d83a73bb98512a07a64fb873fb24d9dac2bb1862f7c00008632260",
+        "cutoffExclusive": 159,
+        "questionIds": [
+          "9c209ff7-a6a8-48d8-ab38-e0b8aa2aaef7",
+          "945fb104-45bd-457f-a9a8-19620159e47d",
+          "d3767473-d464-42c1-9ead-7a61d922f120",
+          "a966820a-8b42-4ec9-8427-958468f98d3b"
+        ],
+        "historyMessages": 159,
+        "historyChars": 143915,
+        "historySegments": 5,
+        "questionTypes": [
+          "recall_user_shared_facts",
+          "provide_preference_aligned_recommendations",
+          "recall_user_shared_facts",
+          "recall_user_shared_facts"
+        ],
+        "publicInputSha256": "88353a13c148e3cbb7aed4436f505d2c77520116292bceb9cef78820d61d1a5c"
+      },
+      {
+        "personaId": "17",
+        "contextId": "40027b883505bfc53148a5b86c418f9374c3bdd49ebd5160d8f6901cfca51d06",
+        "cutoffExclusive": 180,
+        "questionIds": [
+          "5e856191-b76f-47ec-b5a4-f04893d8a313",
+          "59eb073a-174e-4115-aa22-b40eb447b1a2",
+          "9ac098cd-a109-412a-ad1a-ad90f2f8a6d3",
+          "f0f1c22f-ab86-4d6f-a017-6cdb7f5e88f4"
+        ],
+        "historyMessages": 180,
+        "historyChars": 164084,
+        "historySegments": 6,
+        "questionTypes": [
+          "suggest_new_ideas",
+          "recalling_the_reasons_behind_previous_updates",
+          "generalizing_to_new_scenarios",
+          "recalling_the_reasons_behind_previous_updates"
+        ],
+        "publicInputSha256": "455fa98d3237c5b3e555b6734c16cb22d97696fdbd8ae44276588bcb1302a9d3"
+      },
+      {
+        "personaId": "19",
+        "contextId": "947ec42fcf5d327ccb9640332b5fabe4b7a25acc46be08b925861fa0c6e8eaf0",
+        "cutoffExclusive": 152,
+        "questionIds": [
+          "0441a1ba-0d67-47a1-a910-00306910a6e3",
+          "d6d4a4e8-96c4-4b72-bdd3-204b44ec1826",
+          "fcfde00b-be10-4c52-922d-85cf7ae9f556",
+          "28200b70-034f-4c0c-bde7-21754136740d"
+        ],
+        "historyMessages": 152,
+        "historyChars": 134560,
+        "historySegments": 5,
+        "questionTypes": [
+          "suggest_new_ideas",
+          "recalling_facts_mentioned_by_the_user",
+          "recalling_the_reasons_behind_previous_updates",
+          "provide_preference_aligned_recommendations"
+        ],
+        "publicInputSha256": "a389ef9d644d1e484ca2e79ad0e3c9fa958dcf86b7ee6e1fe0c2963292e3c850"
+      },
+      {
+        "personaId": "15",
+        "contextId": "5f9be905f1374d0906caf04903eebe4f027af9d3d36acd2fef957928864bd8e6",
+        "cutoffExclusive": 150,
+        "questionIds": [
+          "0034a537-925f-448b-b275-eae07f3d9ae5",
+          "4b803069-7679-411e-8310-d885e6ed1e7d",
+          "d0b826d3-9805-416c-a8a8-343ffe1c9098",
+          "29c557de-15e3-43c5-b416-de5d4f1845e5"
+        ],
+        "historyMessages": 150,
+        "historyChars": 122667,
+        "historySegments": 4,
+        "questionTypes": [
+          "recall_user_shared_facts",
+          "recall_user_shared_facts",
+          "recall_user_shared_facts",
+          "recall_user_shared_facts"
+        ],
+        "publicInputSha256": "23b76c1ab6cddada2861305583c029da5263d44f51d3ecf0d80ee0c8e167b14a"
+      }
+    ],
+    "baselineRetainsSameFullCutoffHistory": true,
+    "sameHistoricalSystemRoleProjection": true,
+    "perUserAssetDirectoryIsolated": true,
+    "learningFrozenBeforeFirstQuestion": true,
+    "questionAnswersExcludedFromLearning": true,
+    "budgetProposal": {
+      "foregroundCallsPerQuestion": 6,
+      "wallSecondsPerQuestion": 120,
+      "maxOutputTokens": 4096,
+      "backgroundCallsPerUser": 80,
+      "learningWallSecondsPerUser": 2400,
+      "quietSeconds": 45,
+      "maximumActualGatewayCallsPerUserRsi": 104,
+      "maxConcurrentUsers": 1
+    },
+    "statistics": {
+      "accuracy": "Per-question counts and per-user macro accuracy",
+      "uncertainty": "Paired user-cluster bootstrap, 10000 draws, fixed seed",
+      "missingPlannedUser": "Withhold complete paired comparison; report coverage and cause",
+      "smallSampleLimit": "8 users give coarse intervals; not a full-benchmark or population guarantee",
+      "interpretation": "Descriptive paired user-cluster interval on a fixed preexposed development cohort; not an unseen-user generalization interval."
+    },
+    "sameHistoricalTimeExplanationBothArms": true
+  },
+  "remainingBeforeFreeze": [
+    "Current clean revision/source/build/image/model/scorer hash freeze",
+    "Zero-dispatch validation for both arms",
+    "Reachable unchanged qwen model service",
+    "Start learning with enough UTC-day headroom for the fixed learning window; otherwise wait before dispatch, never extend its budget"
+  ],
+  "qualityLimitsCarriedIntoEvaluation": [
+    "No current evidence of benefit; previous incomplete scores/negative coding results remain.",
+    "Source-time handling passed one synthetic sample; factual/inference conditions have input evidence but no post-change general quality guarantee.",
+    "Natural Skill relevance/body use and Memory fidelity remain measured limits, not perfect-quality preconditions.",
+    "Official answer extraction can mistake English article a for an option; report official scores, format diagnostics and native completion separately.",
+    "Known chat usage plus unknown receipts are reported; embedding tokens remain unavailable.",
+    "User-cluster intervals from eight preexposed users cannot establish independent population benefit."
+  ],
+  "realModelRequests": 0,
+  "formalEvaluationStarted": false,
+  "stagingOutput": "/Users/lsmax/Coder/dsh-rsi/.artifacts/personamem-native-v2-replication-20261006",
+  "authorizationContext": "Existing goal authorizes native repairs and fixed cohort continuation with isolated/public logs sent to configured qwen; no subject, model or budget expansion.",
+  "supersedesForNewDispatchOnly": {
+    "oldFreezeSha256": "0da4818f6c70674c53b654c16104d5e357f7606a010c89305d14b09f3ad4cdba",
+    "oldRevision": "68cf6ec396405edd857f46768c6dea5b9da48ee0",
+    "oldResultsRemainIncompleteUnchanged": true,
+    "sameEightUsersSameQuestionsSameCutoffsSamePublicBytes": true,
+    "populationExposure": "All eight identities/histories have been used for development. Method revisions used earlier observed artifacts/scores and the synthetic profile diagnostic. This is not an independent blind test. Untouched users 1/7/11 remain reserved.",
+    "selectionUsesNoNewAnswersOrOutcomes": "No changes to subjects, question IDs/order, public bytes, history cutoffs or model/number/time budgets based on results.",
+    "doesNotResumeOrReplaceOldCohorts": true,
+    "noAutomaticMethodCyclingAfterThisRun": "A new unclassified/infrastructure/capture failure stops scale-out, preserving all cost and missingness. Do not rescue, expand or silently restart."
+  },
+  "datasetProvenance": {
+    "githubRevision": "d07e6ade22e85e0e5d562247323a9c3e07553226",
+    "datasetRevision": "a8076d5608c93ba2a28983cd78aa99b01a163ae7",
+    "files": {
+      "questions_32k.csv": {
+        "url": "https://huggingface.co/datasets/bowen-upenn/PersonaMem-v1/resolve/a8076d5608c93ba2a28983cd78aa99b01a163ae7/questions_32k.csv",
+        "sha256": "cccd34cf53e0bc4d9536c04cff5ca045156d9a4e227e83327112482840bbc93c",
+        "bytes": 1305366
+      },
+      "shared_contexts_32k.jsonl": {
+        "url": "https://huggingface.co/datasets/bowen-upenn/PersonaMem-v1/resolve/a8076d5608c93ba2a28983cd78aa99b01a163ae7/shared_contexts_32k.jsonl",
+        "sha256": "217247ebfec9e8442fc53570c795ab69f21aad08745f7de78d9beab51b122d4a",
+        "bytes": 5613210
+      },
+      "inference_standalone_openai.py": {
+        "url": "https://raw.githubusercontent.com/bowen-upenn/PersonaMem/d07e6ade22e85e0e5d562247323a9c3e07553226/inference_standalone_openai.py",
+        "sha256": "7ef9efca3bed32052a014efceb4daffad181ea4c3bad4bbbcb8ffbe386a9a472",
+        "bytes": 11791
+      },
+      "LICENSE": {
+        "url": "https://raw.githubusercontent.com/bowen-upenn/PersonaMem/d07e6ade22e85e0e5d562247323a9c3e07553226/LICENSE",
+        "sha256": "5cad9808b882c275f91578fbd742e007830123dad1f532b7c48f260d53bb6a20",
+        "bytes": 1068
+      }
+    }
+  },
+  "cohortKind": "preexposed-development-replication",
+  "independenceClaim": false,
+  "learningFailurePolicy": "evaluate-closed-native-failure-v2",
+  "protocolChangeComparedWithPrevious": {
+    "newOptInPolicy": "evaluate-closed-native-failure-v2",
+    "nativeProfileErrorsAndQuotaReceiptsPersisted": true,
+    "actualLearningInputReplayedFromNativePrefixes": true,
+    "profileOnlyFailureMayFreezeWithoutFakeFailedJob": true,
+    "completeNativeRecallEntriesAndRecordingTimeLabels": true,
+    "profileTimeAndFactualProvenanceAppendedToNativePrefix": true,
+    "preferencePastCurrentExceptionsPreservedInNativeExtractionGuidance": true,
+    "pinnedOfficialScorerUnchanged": true,
+    "formatDiagnosticAndParserHealthDisclosedSeparately": true,
+    "actualOutcomesNotRetroactivelyChanged": true
+  }
+}
