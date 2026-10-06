@@ -26,7 +26,18 @@ try {
   const rows=JSON.parse(await readFile(root+'/fixture/model-requests.json','utf8')),row=rows.at(-1);assert.equal(row.status,status);assert.equal(row.finish?.kind,kind??undefined);assert.equal(row.responseBlocks['0'],'retained partial output');assert.equal(module.namespace.hasKnownPersonaUsage(row),known);
  }
  await assert.rejects(async()=>{for await(const _ of interceptor({sessionId:'persona-fixture',messages},async function*(){throw Error('observer transport fixture');})){};},/observer transport fixture/);
- const rows=JSON.parse(await readFile(root+'/fixture/model-requests.json','utf8'));assert.equal(rows.at(-1).status,'ERROR');assert.equal(rows.length,11);assert.equal(rows.filter(module.namespace.hasKnownPersonaUsage).length,2);
- const receipt={status:'PASS_PERSONAMEM_OBSERVER_CONTROLS',driverSha256:createHash('sha256').update(source).digest('hex'),controls:cases.map(([kind,total,status,known])=>({kind,total:Number.isFinite(total)?total:typeof total==='string'?total:null,status,knownUsage:known})),transportErrorPreserved:true,partialTextRetained:true,knownTokens:rows.reduce((n,r)=>n+(module.namespace.hasKnownPersonaUsage(r)?r.usage.totalTokens:0),0),unknownUsageEntries:rows.filter(r=>!module.namespace.hasKnownPersonaUsage(r)).length,fixtureStreamInvocations:11,realModelRequests:0,persistenceRestorationFixture:true,scope:'Only observer finish/usage/partial-output accounting; native durable-log proof is recorded separately.'};
+ const cancellationControls=[];
+ // A native question timeout closes the async generator before its post-loop assignment.
+ for(const [closeAfter,total,expectedStatus] of [['text-delta',null,'INCOMPLETE'],['usage',20,'INCOMPLETE'],['finish',null,'RETURNED']]){
+  let providerFinally=false;
+  const iterator=interceptor({sessionId:'persona-fixture',messages},async function*(){try{yield{type:'text-delta',index:0,text:'retained cancellation output'};if(total!==null)yield{type:'usage',usage:{totalTokens:total}};yield{type:'finish',reason:{kind:'stop'}};}finally{providerFinally=true;}});
+  while((await iterator.next()).value?.type!==closeAfter){}
+  await iterator.return();
+  const row=JSON.parse(await readFile(root+'/fixture/model-requests.json','utf8')).at(-1);
+  assert.ok(providerFinally);assert.equal(row.status,expectedStatus);assert.ok(row.finishedAt>=row.observedAt);assert.equal(row.responseBlocks['0'],'retained cancellation output');assert.equal(row.finish?.kind,closeAfter==='finish'?'stop':undefined);assert.equal(module.namespace.hasKnownPersonaUsage(row),total!==null);
+  cancellationControls.push({closeAfter,status:row.status,knownUsage:total!==null,finishedAtRecorded:true,providerGeneratorClosed:true});
+ }
+ const rows=JSON.parse(await readFile(root+'/fixture/model-requests.json','utf8'));assert.equal(rows[10].status,'ERROR');assert.equal(rows.length,14);assert.equal(rows.filter(module.namespace.hasKnownPersonaUsage).length,3);
+ const receipt={status:'PASS_PERSONAMEM_OBSERVER_CONTROLS',driverSha256:createHash('sha256').update(source).digest('hex'),controls:cases.map(([kind,total,status,known])=>({kind,total:Number.isFinite(total)?total:typeof total==='string'?total:null,status,knownUsage:known})),cancellationControls,transportErrorPreserved:true,partialTextRetained:true,knownTokens:rows.reduce((n,r)=>n+(module.namespace.hasKnownPersonaUsage(r)?r.usage.totalTokens:0),0),unknownUsageEntries:rows.filter(r=>!module.namespace.hasKnownPersonaUsage(r)).length,fixtureStreamInvocations:14,realModelRequests:0,persistenceRestorationFixture:true,scope:'Only observer finish/usage/partial-output accounting; native durable-log proof is recorded separately.'};
  await writeFile(output,JSON.stringify(receipt,null,2)+'\n',{flag:'wx'});console.log(JSON.stringify({status:receipt.status,knownTokens:receipt.knownTokens,unknownUsageEntries:receipt.unknownUsageEntries,realModelRequests:0}));
 }finally{await rm(root,{recursive:true,force:true});}

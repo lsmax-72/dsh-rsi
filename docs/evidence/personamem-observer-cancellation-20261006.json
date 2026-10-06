@@ -1,0 +1,97 @@
+{
+  "status": "PASS_PERSONAMEM_OBSERVER_CONTROLS",
+  "driverSha256": "48225468bbef2f0b59c3da76dfc76a621ed2b45b87b1a744050bc6ec2d4c081f",
+  "controls": [
+    {
+      "kind": "stop",
+      "total": 20,
+      "status": "RETURNED",
+      "knownUsage": true
+    },
+    {
+      "kind": "tool-calls",
+      "total": 20,
+      "status": "RETURNED",
+      "knownUsage": true
+    },
+    {
+      "kind": "stop",
+      "total": 0,
+      "status": "RETURNED",
+      "knownUsage": false
+    },
+    {
+      "kind": "aborted",
+      "total": 0,
+      "status": "INCOMPLETE",
+      "knownUsage": false
+    },
+    {
+      "kind": "max-tokens",
+      "total": null,
+      "status": "INCOMPLETE",
+      "knownUsage": false
+    },
+    {
+      "kind": "error",
+      "total": -1,
+      "status": "INCOMPLETE",
+      "knownUsage": false
+    },
+    {
+      "kind": null,
+      "total": null,
+      "status": "INCOMPLETE",
+      "knownUsage": false
+    },
+    {
+      "kind": "stop",
+      "total": null,
+      "status": "RETURNED",
+      "knownUsage": false
+    },
+    {
+      "kind": "stop",
+      "total": null,
+      "status": "RETURNED",
+      "knownUsage": false
+    },
+    {
+      "kind": "stop",
+      "total": "20",
+      "status": "RETURNED",
+      "knownUsage": false
+    }
+  ],
+  "cancellationControls": [
+    {
+      "closeAfter": "text-delta",
+      "status": "INCOMPLETE",
+      "knownUsage": false,
+      "finishedAtRecorded": true,
+      "providerGeneratorClosed": true
+    },
+    {
+      "closeAfter": "usage",
+      "status": "INCOMPLETE",
+      "knownUsage": true,
+      "finishedAtRecorded": true,
+      "providerGeneratorClosed": true
+    },
+    {
+      "closeAfter": "finish",
+      "status": "RETURNED",
+      "knownUsage": false,
+      "finishedAtRecorded": true,
+      "providerGeneratorClosed": true
+    }
+  ],
+  "transportErrorPreserved": true,
+  "partialTextRetained": true,
+  "knownTokens": 60,
+  "unknownUsageEntries": 11,
+  "fixtureStreamInvocations": 14,
+  "realModelRequests": 0,
+  "persistenceRestorationFixture": true,
+  "scope": "Only observer finish/usage/partial-output accounting; native durable-log proof is recorded separately."
+}
