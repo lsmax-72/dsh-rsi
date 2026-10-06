@@ -1,0 +1,320 @@
+{
+  "status": "COMPLETE_CLOSED_ASSET_AND_ACTUAL_LOAD_AUDIT",
+  "recordedAt": "2026-10-06T03:38:41.830296+00:00",
+  "freezeSha256": "aa56d9ec9c0a7ef715fd7c262461069762813380da1e55a7f0a170c127037091",
+  "realNewModelRequests": 0,
+  "allEightStoredHeadsReviewed": true,
+  "naturalSkillHeads": 5,
+  "storedHeadBodyChars": [
+    744,
+    685,
+    604,
+    793,
+    1378
+  ],
+  "actualLoads": 5,
+  "loadRelevanceCounts": {
+    "unrelated": 3,
+    "partial": 2
+  },
+  "skills": [
+    {
+      "personaId": 12,
+      "name": "movie-recommendation-user-profile",
+      "skillId": "skl-pqUeKJj3evps",
+      "closedVersion": 2,
+      "markdownChars": 844,
+      "bodyChars": 744,
+      "bodySha256": "1de2de0d22b423c1c9f2a67bb332a3ce4303298bdcef7aa33cef03376d100a6b",
+      "observedLoads": [],
+      "sourceExamples": [
+        {
+          "historyIndex": 156,
+          "role": "user",
+          "sha256": "24ec206d29e14e29a9dd3997403199ad8a0015cdffcf9224b0522a5d4b5d1902",
+          "excerpt": "User: I've been thinking about my movie preferences since we last talked. I've discovered that my tastes can shift dramatically depending on my mood, time, and even the season. For instance, while I once gravitated towar"
+        },
+        {
+          "historyIndex": 158,
+          "role": "user",
+          "sha256": "ce7fa131e469458ab05b4443afb2dc45aa329859faa23392e1607fa325ff4ddc",
+          "excerpt": "User: I used to love engaging in movie marathons, but after feeling overwhelmed by a recent marathon, I found it exhausting. The length of those sessions often left me drained both physically and mentally, as I would sit"
+        },
+        {
+          "historyIndex": 160,
+          "role": "user",
+          "sha256": "a0ed5ec9a797d49ed7bc53543042f56de4cad839c2bfe29cfd80b40223dd45a8",
+          "excerpt": "User: I also used to attend film festivals, but they felt too crowded and chaotic for my taste. The hustle and bustle of large crowds, combined with the excitement of film premieres, often made it difficult for me to tru"
+        },
+        {
+          "historyIndex": 164,
+          "role": "user",
+          "sha256": "ee98a3598fbd977f1bb4b556d30c194163cbacd51d41bd0d7e8f2e1e9f16a06e",
+          "excerpt": "User: And I decided to get creative again by making a fun fan trailer for an upcoming superhero film. I loved the process! It’s thrilling to bring characters to life in a new and exciting way, transforming their heroic j"
+        },
+        {
+          "historyIndex": 168,
+          "role": "user",
+          "sha256": "74bc9d183d184c12cb7a10d51ae5b79ff136fe48f5860bb8e93bc18b1898a04c",
+          "excerpt": "User: I also watched a foreign film recently, which I enjoyed thoroughly! It was refreshing after previously struggling with them. The experience was quite eye-opening, as I had been hesitant to engage with foreign films"
+        },
+        {
+          "historyIndex": 170,
+          "role": "user",
+          "sha256": "3c642d65f74df920445097b5433f43a1d44007df08ba70319312394ad55e8784",
+          "excerpt": "User: I’ve decided to stop participating in formal film critique groups. These groups, once a source of inspiration, gradually became places filled with a sense of obligation rather than genuine discussion. The atmospher"
+        },
+        {
+          "historyIndex": 174,
+          "role": "user",
+          "sha256": "7f99fe794ec672a40ac80cd0b29c9e0c440051793ec7c85737821dd1fd5770a1",
+          "excerpt": "User: I also reignited my interest in learning about film history after discovering a great podcast series on the subject. The way the podcast weaves together iconic films with the cultural contexts of their times has be"
+        }
+      ],
+      "sourceAndContentLimits": "Film profile retains supported preference reversals; body length alone does not establish coverage of every source claim.",
+      "selectionAssessment": "Four questions concern legal learning or games; movie skill not directly applicable. No loads is not broken injection.",
+      "annotationStage": "AFTER_SCORES_GENERATED",
+      "scorerExposureForThisCohort": true
+    },
+    {
+      "personaId": 14,
+      "name": "readable-refactor-preference",
+      "skillId": "skl-67yJbIELMMZ4",
+      "closedVersion": 1,
+      "markdownChars": 783,
+      "bodyChars": 685,
+      "bodySha256": "23e259e0154eb82e4432959edb8a73bf52eacc5afb084bee50c7c6666036b9e8",
+      "observedLoads": [
+        {
+          "questionId": "e86a1aad-0117-4021-9c68-f923f4111d5f",
+          "requestOrdinal": 68,
+          "name": "rsi-readable-refactor-preference",
+          "bodyChars": 685,
+          "bodySha256": "23e259e0154eb82e4432959edb8a73bf52eacc5afb084bee50c7c6666036b9e8",
+          "toolCallId": "call_313f20576dfe42f4a5a1e1ae",
+          "question": "I've been thinking about trying to write music reviews again. I miss expressing my thoughts on the music I love, but I'm still worried about the negative feedback I received before.",
+          "relevance": "unrelated",
+          "causalContributionEstablished": false
+        },
+        {
+          "questionId": "4b742ee7-077d-4cce-9c27-51dfe81fcdc4",
+          "requestOrdinal": 71,
+          "name": "rsi-readable-refactor-preference",
+          "bodyChars": 685,
+          "bodySha256": "23e259e0154eb82e4432959edb8a73bf52eacc5afb084bee50c7c6666036b9e8",
+          "toolCallId": "call_c8e84f2b16164b578bc7d44c",
+          "question": "I'm planning a cozy evening at home with a glass of wine and some music. Could you suggest an album that would make for the perfect soundtrack?",
+          "relevance": "unrelated",
+          "causalContributionEstablished": false
+        }
+      ],
+      "sourceExamples": [
+        {
+          "historyIndex": 169,
+          "role": "user",
+          "sha256": "b8e7182e8cedc049c1d5f77f111c675f4702cea931b9c2fa2c5bb866e978d963",
+          "excerpt": "I want to improve the modularity and readability of my code. The current structure seems cluttered, and I like functions that are small and clear."
+        },
+        {
+          "historyIndex": 172,
+          "role": "user",
+          "sha256": "0e251608a19973d6b4a6838b095633f83fd08bde201d0e6dc424a15d2cda1f61",
+          "excerpt": "This feels like it might be more complex and less readable. I want to keep things simple and straightforward. Can we stick to the main logic without over-complicating it?"
+        },
+        {
+          "historyIndex": 175,
+          "role": "user",
+          "sha256": "45d39b60afad654d02ce7765b2da4806e466016bf6420f7570a2dca1ad48ef76",
+          "excerpt": "Yes, that's better! I want the code to be readable and keep modularity without overly complicating things."
+        },
+        {
+          "historyIndex": 178,
+          "role": "user",
+          "sha256": "a46282e8a75c47aca13f08ce1f99580761714521bc225ef1a6a41777475fccaf",
+          "excerpt": "Excellent! I like how the functions are modular now. Let's see the final touches to enhance the overall code."
+        },
+        {
+          "historyIndex": 181,
+          "role": "user",
+          "sha256": "3018d1ed03172519822166e5eb3745870daf045a25d670b60366e8cc134cba70",
+          "excerpt": "Fantastic! I appreciate the attention to detail in enhancing readability and maintaining structure. Let's finalize this."
+        }
+      ],
+      "sourceAndContentLimits": "Readability/modularity preference supported by code conversation and explicit satisfaction; approval is not executed bug validation.",
+      "selectionAssessment": "Both observed loads occur on music review or music album questions; code refactoring is unrelated.",
+      "annotationStage": "AFTER_SCORES_GENERATED",
+      "scorerExposureForThisCohort": true
+    },
+    {
+      "personaId": 3,
+      "name": "lifestyle-social-conversation-mirroring",
+      "skillId": "skl-gaQ7l4KJvZWF",
+      "closedVersion": 1,
+      "markdownChars": 719,
+      "bodyChars": 604,
+      "bodySha256": "117d525399291110dafbf40b24b42638413d3c0d2babac1c4af9b519653b389d",
+      "observedLoads": [
+        {
+          "questionId": "945fb104-45bd-457f-a9a8-19620159e47d",
+          "requestOrdinal": 71,
+          "name": "rsi-lifestyle-social-conversation-mirroring",
+          "bodyChars": 604,
+          "bodySha256": "117d525399291110dafbf40b24b42638413d3c0d2babac1c4af9b519653b389d",
+          "toolCallId": "call_43ebf4196b6f46c0b8e7fbc0",
+          "question": "I'm looking for a fun way to spend my weekend and meet new people. Do you have any suggestions for an activity that might be a bit different but still lets me unwind and be creative?",
+          "relevance": "unrelated",
+          "causalContributionEstablished": false
+        },
+        {
+          "questionId": "d3767473-d464-42c1-9ead-7a61d922f120",
+          "requestOrdinal": 73,
+          "name": "rsi-lifestyle-social-conversation-mirroring",
+          "bodyChars": 604,
+          "bodySha256": "117d525399291110dafbf40b24b42638413d3c0d2babac1c4af9b519653b389d",
+          "toolCallId": "call_3420d44b388b4fcca973ee28",
+          "question": "I was at a bar the other day where they had a karaoke setup.",
+          "relevance": "partial",
+          "causalContributionEstablished": false
+        },
+        {
+          "questionId": "a966820a-8b42-4ec9-8427-958468f98d3b",
+          "requestOrdinal": 75,
+          "name": "rsi-lifestyle-social-conversation-mirroring",
+          "bodyChars": 604,
+          "bodySha256": "117d525399291110dafbf40b24b42638413d3c0d2babac1c4af9b519653b389d",
+          "toolCallId": "call_481e8af720564c908c982049",
+          "question": "The other day, I was thinking back to when I gave karaoke a try.",
+          "relevance": "partial",
+          "causalContributionEstablished": false
+        }
+      ],
+      "sourceExamples": [
+        {
+          "historyIndex": 142,
+          "role": "user",
+          "sha256": "c6ab22f5273b03fbbcf65ff68004562172e1ae361f478dc1e38f40acf41b9373",
+          "excerpt": "User: I also hosted a crafting-themed date night recently! It was a fantastic way to combine creativity with social interaction, and everyone seemed to really enjoy themselves. The atmosphere was filled with laughter and"
+        },
+        {
+          "historyIndex": 144,
+          "role": "user",
+          "sha256": "cf77c01e3deddabf77e09fea30af54e64d2f4cfbdde79ae8e2c2eff95629448b",
+          "excerpt": "User: I found myself skipping larger comedy shows, though. Initially, I was excited about attending these big events, but over time, I noticed a pattern of disappointment that was hard to ignore. The loud atmosphere, whi"
+        },
+        {
+          "historyIndex": 146,
+          "role": "user",
+          "sha256": "321ac143f4c9e1c460edf7c6c4f319a70e41e8571ee1a36215b2b3905670053a",
+          "excerpt": "User: To keep the adventurous spirit alive, I planned a series of thematic weekend getaways focusing on culinary experiences. These weekends promise to immerse me in diverse cultures, rich histories, and unique local cui"
+        },
+        {
+          "historyIndex": 148,
+          "role": "user",
+          "sha256": "8762efcac11e582765502dbef4805c872d8a3c30b4b421dbc7af5f340583bcd8",
+          "excerpt": "User: I switched my focus from fitness classes to joining a hiking club. This change was driven by my desire to find a more welcoming and interactive environment, something I felt was lacking in traditional fitness class"
+        },
+        {
+          "historyIndex": 150,
+          "role": "user",
+          "sha256": "4a044b789c24f13863c0d515c388f940f92634a7473dc1679c94412958d8b8c6",
+          "excerpt": "User: Hosting dinner parties has turned out to be more stressful than enjoyable for me. I used to look forward to these elaborate gatherings, meticulously planning the menu and setting the perfect ambiance with decoratio"
+        },
+        {
+          "historyIndex": 152,
+          "role": "user",
+          "sha256": "fc4b2797dd9857fffd9be086fd29e55a3de147f8647d427d34fbb78588b667ad",
+          "excerpt": "User: I realized that traveling for weekend getaways was getting too exhausting, and I often found myself returning home feeling more tired than when I left. The constant packing and unpacking became a chore, taking away"
+        },
+        {
+          "historyIndex": 154,
+          "role": "user",
+          "sha256": "d604b5087ac6d1ef8c369677e2c660665597ac837a026a6e4d1fd8db0677afd2",
+          "excerpt": "User: I rediscovered my joy in dance by participating in a charity Zumba event recently! It felt amazing to blend community spirit with fitness again. The atmosphere was electric, filled with people from all walks of lif"
+        },
+        {
+          "historyIndex": 156,
+          "role": "user",
+          "sha256": "91fabbcf4c89db81b076ee8dbb6a3f63cfeb841c29d369829289c75943a7ca83",
+          "excerpt": "User: I decided to give painting classes another shot. After joining a community art center, I found it more engaging than painting alone. Participating in a structured environment has infused my creative process with ne"
+        },
+        {
+          "historyIndex": 158,
+          "role": "user",
+          "sha256": "e6a0458e7a4870d5019855f900b643dadc63a2f3e7086df0873af2df41b4e878",
+          "excerpt": "User: I finally organized a potluck dinner! It was a wonderful experience where each guest brought a dish, showcasing their culinary skills, and there was such a diverse array of foods to try. I enjoyed talking to everyo"
+        }
+      ],
+      "sourceAndContentLimits": "Assistant consistently uses empathy, but user never explicitly requests that style, no-correction rule, length4-8sentences or always affirming choices. Absence of objection does not validate a durable user preference.",
+      "selectionAssessment": "One direct activity recommendation request loads no-advice mirroring skill then explicitly declines application; other two karaoke fact questions do not establish response-style instructions are useful.",
+      "annotationStage": "AFTER_SCORES_GENERATED",
+      "scorerExposureForThisCohort": true
+    },
+    {
+      "personaId": 19,
+      "name": "packing-for-short-trips",
+      "skillId": "skl-AYsVSrWhfxGu",
+      "closedVersion": 1,
+      "markdownChars": 875,
+      "bodyChars": 793,
+      "bodySha256": "1ba7c0118e9278ab6a0fadfdc73cf24cce1f39f0ea4c7ccdc4cf4a4c93ab4fa6",
+      "observedLoads": [],
+      "sourceExamples": [
+        {
+          "historyIndex": 23,
+          "role": "user",
+          "sha256": "a3ac9cd767c9ee3f034304a7c0a27ecc7c92e7119f3855482418e502cee3172f",
+          "excerpt": "User: Exactly. I realized that I had packed far too much for just a couple of days, thinking I needed every possible outfit for different occasions, when in reality, I only needed a few essentials. The whole process beca"
+        },
+        {
+          "historyIndex": 24,
+          "role": "assistant",
+          "sha256": "cf7efb6cbbb2b78a8623927e8da64a3c8efa682d6792724c558daf61b8e3d245",
+          "excerpt": "Assistant: Learning a new language can indeed be tough, as it often involves not just grasping vocabulary and grammar, but also getting familiar with the cultural nuances that accompany those phrases, which can be equall"
+        },
+        {
+          "historyIndex": 25,
+          "role": "user",
+          "sha256": "faa0edf4b906dbc3d424bb4c783e22949b83fad2c6cdf863b83016f93884a048",
+          "excerpt": "User: It would be incredibly helpful to receive some new packing strategies! I find that my last-minute trips often lead to a frenzy where I'm throwing items into my suitcase without any real thought. This hasty packing "
+        },
+        {
+          "historyIndex": 26,
+          "role": "assistant",
+          "sha256": "6fa35a6b240305072c94873c2cbc4afd9127c5136d5743cfc1d8a88f5430112f",
+          "excerpt": "Assistant: Packing can indeed be a bit tricky, especially when you're trying to get everything organized in a limited time frame! It's not uncommon for people to feel overwhelmed when faced with the task of packing, but "
+        },
+        {
+          "historyIndex": 46,
+          "role": "user",
+          "sha256": "58d4220d1d35988105563b912659ab83ea137fbb9dc060c46412a0d9e0a2c3f3",
+          "excerpt": "User: Absolutely! I also successfully managed to pack for a spontaneous overnight trip using a minimalist approach, which was quite liberating in itself. The thrill of packing light allows me to focus on the essentials i"
+        }
+      ],
+      "sourceAndContentLimits": "Packing pain and proposed generic tips are present; specific48h exclusion and20minute box are proposals, not verified results. Evidence says untested; body still makes strong absolute rules.",
+      "selectionAssessment": "Four questions concern self-reflection, Thai cooking, brochures and urban cultural experiences; packing skill not directly applicable.",
+      "annotationStage": "AFTER_SCORES_GENERATED",
+      "scorerExposureForThisCohort": true
+    },
+    {
+      "personaId": 15,
+      "name": "user-budgeting-style-preferences",
+      "skillId": "skl-qSHi3HbGtrRv",
+      "closedVersion": 3,
+      "markdownChars": 1480,
+      "bodyChars": 1378,
+      "bodySha256": "1356f61515cc27d9e98bcc4b3a11ddf6fa93aa027df1f537c30601280fb0f390",
+      "observedLoads": [],
+      "sourceExamples": [],
+      "sourceAndContentLimits": "Closedv3 retains unsupported2024-06 and outdated preferences because next update failed. Source itself contains reversals, not execution validation.",
+      "selectionAssessment": "No answering sessions due to learning failure; missing selection observation, not0relevance.",
+      "annotationStage": "AFTER_SCORES_GENERATED",
+      "scorerExposureForThisCohort": true
+    }
+  ],
+  "limits": [
+    "Fixed complete stored-head census, only actual observed loads; not an estimate of counterfactual utility.",
+    "All current closed heads below1500; length compliance does not establish sound preferences, relevance, reliable updates or useful decisions.",
+    "No resources were naturally saved in the original formal study; later isolated development resource is not attributed to original study.",
+    "User15 has no foreground observations; errors/missing values retained."
+  ]
+}

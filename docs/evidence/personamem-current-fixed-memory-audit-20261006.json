@@ -1,0 +1,1926 @@
+{
+  "kind": "FIXED_SAMPLE_HUMAN_REVIEW",
+  "freezeSha256": "aa56d9ec9c0a7ef715fd7c262461069762813380da1e55a7f0a170c127037091",
+  "realNewModelRequests": 0,
+  "scorerDataReadForAnnotation": null,
+  "sourceIndicesZeroBased": true,
+  "sampling": "First two frozen questions per user; first four initially delivered Memory refs per question. Ordered sample is not a complete or random retrieval-quality estimate.",
+  "labelRubric": {
+    "direct": "Contains a question-specific discriminating fact or the explicit requested analogy.",
+    "partial": "Related activity/reason/context without the exact discriminating fact.",
+    "unrelated": "Only broad topic overlap or no support for the question-specific issue."
+  },
+  "decisionEvidenceLimit": "Answer correspondence is observed, not causal attribution: both arms retain full history, and additional refs/profiles/tools are available.",
+  "users": {
+    "9": {
+      "annotatedAt": "2026-10-05T18:43:30.052174+00:00",
+      "questions": [
+        {
+          "questionId": "a719edb3-a43f-4792-b820-fb45293c4e19",
+          "question": "I wrote a new post on my film blog yesterday.",
+          "answerSha256": "a8b6c13ce08620b4186008134f05f98ae93a2f86612328aa752aa9f036c13f4e",
+          "memoryRefs": [
+            {
+              "sampleOrdinal": 1,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791222217927_489845fd",
+              "version": 0,
+              "assetSha256": "44294f02db97dc792bafff2a7a1e2ca5d539aac6072bffccd67452647be92a32",
+              "assetBodyChars": 55,
+              "closedHeadMatches": true,
+              "relevance": "unrelated",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 100,
+                  "role": "user",
+                  "contentSha256": "2407321cb05b633a081cbd184b8a9d70fb373c782736cbf0d94376836845503c",
+                  "excerpt": "User: I hosted a community discussion about memorable remakes, exploring what they added to the original narratives. It sparked some fascinating conversations, especially as participants shared their personal experiences"
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "Remakes discussion only shares the film domain; no blog or news preference.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            },
+            {
+              "sampleOrdinal": 2,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791222257865_3811132d",
+              "version": 8,
+              "assetSha256": "c8ee7ecb87e63f35ee20f76d52fc8dca96a22f6b854d02247b9af8f2a2991d93",
+              "assetBodyChars": 97,
+              "closedHeadMatches": true,
+              "relevance": "unrelated",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 67,
+                  "role": "user",
+                  "contentSha256": "8f5bf88cbfbd6f8058a93d322ed115fcf8554a0251d2d1020120c29c9e9798a5",
+                  "excerpt": "User: Since we last talked, I've seen quite a few films that have really changed my perspective on cinema. Each movie offered something unique, whether it was an incredible storyline or stunning cinematography that just "
+                },
+                {
+                  "historyIndex": 108,
+                  "role": "user",
+                  "contentSha256": "e0b6175b9857984a44aa49fbc9764797fcb36a7f74e35b2594a803d6f0afe344",
+                  "excerpt": "User: Finally, I participated in a series of Q&A events at local screenings, which turned out to be incredibly rewarding and eye-opening experiences. The atmosphere at these events was electrifying, with the sense of ant"
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "Screening/Q&A experience does not establish blog/news preference.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            },
+            {
+              "sampleOrdinal": 3,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791222217927_b48e2deb",
+              "version": 6,
+              "assetSha256": "7aca7653edb525494f191fae46a679e04fd240c08a608b8ce2f55eb42bc78b47",
+              "assetBodyChars": 99,
+              "closedHeadMatches": true,
+              "relevance": "unrelated",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 50,
+                  "role": "user",
+                  "contentSha256": "5834cdc42bccd7224bdeaea669e528dbf86ea4f5a7017c66b62cf7e20d405103",
+                  "excerpt": "User: I launched a podcast where I dive into overlooked films and discuss their impact on society. It's been a fascinating experience so far! I find that many of these films have important messages that weren't fully app"
+                },
+                {
+                  "historyIndex": 58,
+                  "role": "user",
+                  "contentSha256": "2c6fa70e41809a620d7e654312d738a194ba82f0bf20c83640b41ed5d967d201",
+                  "excerpt": "User: I launched a successful podcast episode about cult classic films, and I’m finding joy in discussing them with a dedicated audience. This experience has been incredibly fulfilling, as I've always had a deep apprecia"
+                },
+                {
+                  "historyIndex": 102,
+                  "role": "user",
+                  "contentSha256": "2c7a0a80aa1ed29d2c7e897bb9aaaf729449fc7b1b80c9b1dadf57ea17f3cc49",
+                  "excerpt": "User: I also hosted a live podcast episode dedicated to cult films. We discussed their cultural significance with a panel of local experts. The atmosphere during the episode was electric, with passionate exchanges about "
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "Podcast/cult-film activity does not establish blog/news preference.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            },
+            {
+              "sampleOrdinal": 4,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791222217927_bbe64cbf",
+              "version": 7,
+              "assetSha256": "f85c08186b2d250a8c87cbed9c49b8c5b61cda6163742c91ed8e0f8d4ff1c7a6",
+              "assetBodyChars": 139,
+              "closedHeadMatches": true,
+              "relevance": "partial",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 62,
+                  "role": "user",
+                  "contentSha256": "1febd55c3430c0e583c044be09fecd9c322955dd4dc21c39d001e12f1a2e7ff2",
+                  "excerpt": "User: I also uploaded a video analysis on YouTube discussing the thematic elements of a recent popular film. In my analysis, I delved into various motifs that emerged throughout the film, highlighting the complex relatio"
+                },
+                {
+                  "historyIndex": 64,
+                  "role": "user",
+                  "contentSha256": "1295864af97a6da1b80486a84af825b6c2f22a644fc01e7f12e27beb5e07243d",
+                  "excerpt": "User: Lastly, I started a blog where I share weekly updates and insights on film news and trends, which has been another exciting outlet for me. Creating a blog has not only provided me with a platform to express my thou"
+                },
+                {
+                  "historyIndex": 96,
+                  "role": "user",
+                  "contentSha256": "ba5fe1e1dc4b8f2cfda226a168162fc7f4058577c57cf98f4eda2d0748976961",
+                  "excerpt": "User: I decided to take a pause on creating film analysis videos for now. The constant demand for content on social media can be overwhelming, and I felt like I was losing touch with why I loved filmmaking in the first p"
+                },
+                {
+                  "historyIndex": 104,
+                  "role": "user",
+                  "contentSha256": "70b117b1c89fc0029685715bff6586cac4cad358ad09581a371a68dc872358af",
+                  "excerpt": "User: I decided to shift from curating personal film lists to focusing on casual viewing experiences instead. This change really allowed me to break free from the pressure of finding the 'perfect' movie for every occasio"
+                }
+              ],
+              "sourceFactLimits": [
+                "Unsupported transfer from pausing videos to stopping the weekly film blog."
+              ],
+              "reason": "Blog status is relevant, but the stop-blog claim is absent from the complete retained history.",
+              "correspondingFactObservedInAnswer": true,
+              "causalContributionEstablished": false
+            }
+          ]
+        },
+        {
+          "questionId": "b502d7dc-2345-41a3-8a22-0fb9ff719c9e",
+          "question": "I've been considering rejoining the online film forum. I hope things have changed and I can find some positivity.",
+          "answerSha256": "e7984e58a7c0b471d250c58c09f3c775b37e2500980c6a64891a1a97e01b8c2d",
+          "memoryRefs": [
+            {
+              "sampleOrdinal": 1,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791222257865_3811132d",
+              "version": 8,
+              "assetSha256": "c8ee7ecb87e63f35ee20f76d52fc8dca96a22f6b854d02247b9af8f2a2991d93",
+              "assetBodyChars": 97,
+              "closedHeadMatches": true,
+              "relevance": "unrelated",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 67,
+                  "role": "user",
+                  "contentSha256": "8f5bf88cbfbd6f8058a93d322ed115fcf8554a0251d2d1020120c29c9e9798a5",
+                  "excerpt": "User: Since we last talked, I've seen quite a few films that have really changed my perspective on cinema. Each movie offered something unique, whether it was an incredible storyline or stunning cinematography that just "
+                },
+                {
+                  "historyIndex": 108,
+                  "role": "user",
+                  "contentSha256": "e0b6175b9857984a44aa49fbc9764797fcb36a7f74e35b2594a803d6f0afe344",
+                  "excerpt": "User: Finally, I participated in a series of Q&A events at local screenings, which turned out to be incredibly rewarding and eye-opening experiences. The atmosphere at these events was electrifying, with the sense of ant"
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "Q&A events do not explain departure from the online forum.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            },
+            {
+              "sampleOrdinal": 2,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791222159725_c6924b87",
+              "version": 4,
+              "assetSha256": "2798a02cc3a544e49c04a80b36d6385ecfb3cee9d8f3e6b57da805613551952d",
+              "assetBodyChars": 83,
+              "closedHeadMatches": true,
+              "relevance": "direct",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 37,
+                  "role": "user",
+                  "contentSha256": "3498c434ea9e531c14b072fbf50df274cc55468d592bb6f2d63bb3dcf1416f28",
+                  "excerpt": "User: I engaged in a discussion on an online film forum, but it wasn't really for me. The messages felt disconnected, and I struggled to find common ground with the other participants. It's interesting how forums can fos"
+                },
+                {
+                  "historyIndex": 81,
+                  "role": "user",
+                  "contentSha256": "40e799907609a0f6938ffde81108d468697008bd86db1dc7172073abf4e5ed8a",
+                  "excerpt": "User: I also became an active member of a film discussion forum that emphasizes deep dives into film analysis. This forum has become a vibrant platform for me, where film enthusiasts gather to dissect cinematography, nar"
+                },
+                {
+                  "historyIndex": 90,
+                  "role": "user",
+                  "contentSha256": "3933cdbe13608471be4605b2741296679a21ac9fa249fc1bd0c6a56b42a1bc35",
+                  "excerpt": "User: I decided to leave the online film forum where I was active. The interactions I had there turned quite negative over time, which really soured my overall experience. I found myself navigating through arguments that"
+                }
+              ],
+              "sourceFactLimits": [
+                "Consolidates forum experiences from different points; forum identity is unspecified."
+              ],
+              "reason": "Toxicity, personal attacks and mental health directly distinguish the forum options.",
+              "correspondingFactObservedInAnswer": true,
+              "causalContributionEstablished": false
+            },
+            {
+              "sampleOrdinal": 3,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791222217927_4f017ff9",
+              "version": 0,
+              "assetSha256": "ac57e5d884d8c393f4c5a7924adc3bd9dee1db9ea0bfc9f6493aaedc121c21ff",
+              "assetBodyChars": 65,
+              "closedHeadMatches": true,
+              "relevance": "partial",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 106,
+                  "role": "user",
+                  "contentSha256": "79d87001e0fab2f9ff5657a175a9e24e6f4bdec3ca39d62d945a09b2d408e6b2",
+                  "excerpt": "User: I also left the film theory book club. The academic approach felt too rigid, with strict guidelines and analyses that sometimes stifled my enjoyment of cinema. I really wanted to relish the emotional and artistic a"
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "Book-club departure shares leaving a group, but its reason differs from the forum.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            },
+            {
+              "sampleOrdinal": 4,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791222217927_bbe64cbf",
+              "version": 7,
+              "assetSha256": "f85c08186b2d250a8c87cbed9c49b8c5b61cda6163742c91ed8e0f8d4ff1c7a6",
+              "assetBodyChars": 139,
+              "closedHeadMatches": true,
+              "relevance": "unrelated",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 62,
+                  "role": "user",
+                  "contentSha256": "1febd55c3430c0e583c044be09fecd9c322955dd4dc21c39d001e12f1a2e7ff2",
+                  "excerpt": "User: I also uploaded a video analysis on YouTube discussing the thematic elements of a recent popular film. In my analysis, I delved into various motifs that emerged throughout the film, highlighting the complex relatio"
+                },
+                {
+                  "historyIndex": 64,
+                  "role": "user",
+                  "contentSha256": "1295864af97a6da1b80486a84af825b6c2f22a644fc01e7f12e27beb5e07243d",
+                  "excerpt": "User: Lastly, I started a blog where I share weekly updates and insights on film news and trends, which has been another exciting outlet for me. Creating a blog has not only provided me with a platform to express my thou"
+                },
+                {
+                  "historyIndex": 96,
+                  "role": "user",
+                  "contentSha256": "ba5fe1e1dc4b8f2cfda226a168162fc7f4058577c57cf98f4eda2d0748976961",
+                  "excerpt": "User: I decided to take a pause on creating film analysis videos for now. The constant demand for content on social media can be overwhelming, and I felt like I was losing touch with why I loved filmmaking in the first p"
+                },
+                {
+                  "historyIndex": 104,
+                  "role": "user",
+                  "contentSha256": "70b117b1c89fc0029685715bff6586cac4cad358ad09581a371a68dc872358af",
+                  "excerpt": "User: I decided to shift from curating personal film lists to focusing on casual viewing experiences instead. This change really allowed me to break free from the pressure of finding the 'perfect' movie for every occasio"
+                }
+              ],
+              "sourceFactLimits": [
+                "Unsupported stop-blog claim as in question 1."
+              ],
+              "reason": "Content production changes do not explain the online forum departure.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            }
+          ]
+        }
+      ],
+      "annotationStage": "BEFORE_OFFICIAL_SCORES_GENERATED"
+    },
+    "4": {
+      "annotatedAt": "2026-10-05T18:43:30.053539+00:00",
+      "questions": [
+        {
+          "questionId": "8c6f3412-d822-4131-9a51-184e6da3f476",
+          "question": "I've been feeling a bit stressed trying to keep up with my workout routine and meal planning. Any tips on how to manage this better?",
+          "answerSha256": "a6ff40aeb92316ba52b105fb94abac9bacddd6e64b7efa6423482dde7f1ecdb0",
+          "memoryRefs": [
+            {
+              "sampleOrdinal": 1,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791223113704_c9a6a29c",
+              "version": 3,
+              "assetSha256": "775fdee6719e690413229821119b27250fa736430ef3e71797577d1817bdf59f",
+              "assetBodyChars": 82,
+              "closedHeadMatches": true,
+              "relevance": "partial",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 9,
+                  "role": "user",
+                  "contentSha256": "3807c3489384ca6bc83560779257a3d3721dec7d8774cb5f59ca418d198aedbe",
+                  "excerpt": "User: I spent some time analyzing different real estate investment options as I see it as a sustainable source of income. As I've delved deeper into this realm, I've come across various strategies that people use, from f"
+                },
+                {
+                  "historyIndex": 52,
+                  "role": "user",
+                  "contentSha256": "086b35d0ad0bca9be0f2cb4bd3c3a72d923c0c275756c9dcbc306a443d33e64f",
+                  "excerpt": "User: However, I decided to step back from real estate analysis. The market complexity has been overwhelming, leading to decision fatigue. It's not just the endless numbers and fluctuating trends that have been challengi"
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "Decision fatigue from real estate supports a stress analogy, not the podcast-specific option.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            },
+            {
+              "sampleOrdinal": 2,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791223282778_adae5afe",
+              "version": 7,
+              "assetSha256": "b26ffd001deb9efd6b14af5165b53ec38fc0a8f76ae0a77ad5d66f29e7035ab6",
+              "assetBodyChars": 151,
+              "closedHeadMatches": true,
+              "relevance": "direct",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 21,
+                  "role": "user",
+                  "contentSha256": "9ba78bf950689c71767c527eee1c5e943361c729c75751febc7279c9571b0b1c",
+                  "excerpt": "User: I started a podcast to discuss investment myths, which was a shift for me since I used to avoid creating content publicly. This was a significant change in my approach to sharing knowledge, especially since I had a"
+                },
+                {
+                  "historyIndex": 54,
+                  "role": "user",
+                  "contentSha256": "37236f1a58a0cc95147004f01cdca6c71be241004aff8b374ff7e04b23367377",
+                  "excerpt": "User: I just launched a new podcast series where I interview young entrepreneurs about their financial journeys and challenges. This endeavor has been incredibly rewarding as it allows me the unique opportunity to connec"
+                },
+                {
+                  "historyIndex": 71,
+                  "role": "user",
+                  "contentSha256": "bdf6c58d6f05a7b5ea9bce24911685f6c8ce8ea75259dbfe9bafb7160f7b6d5a",
+                  "excerpt": "User: I've actually decided to pause my podcast production for a while. This decision wasn’t easy, but I felt it was necessary for my mental health and well-being. The constant pressure to deliver captivating content on "
+                },
+                {
+                  "historyIndex": 87,
+                  "role": "user",
+                  "contentSha256": "ad30e0a9f72d0252e0abd3d24f7e94bc246379c89fc0db9ee47f7cecdc939b61",
+                  "excerpt": "User: I decided to revamp my podcast and launched a new series focused on highlighting financial success stories to inspire listeners. This new direction is not only exciting for me, but I believe it will resonate well w"
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "Past podcast production pressure is explicitly used to select the personalized option.",
+              "correspondingFactObservedInAnswer": true,
+              "causalContributionEstablished": false
+            },
+            {
+              "sampleOrdinal": 3,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791223282778_c5085c19",
+              "version": 0,
+              "assetSha256": "a6d411c7c558460e5039fbbdfe6a5bc6a7ca45731091b264287d29157ce830df",
+              "assetBodyChars": 54,
+              "closedHeadMatches": true,
+              "relevance": "unrelated",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 79,
+                  "role": "user",
+                  "contentSha256": "365c028819599e5fda2b1e3dd65f810492d0d06c62647b0268dee83490646177",
+                  "excerpt": "User: I completed a comprehensive course on personal finance management aimed at new investors. This course was quite detailed and covered a variety of topics that are crucial for anyone looking to make sound financial d"
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "Course completion does not explain stress or workload management.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            },
+            {
+              "sampleOrdinal": 4,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791223387656_a37f1bf5",
+              "version": 0,
+              "assetSha256": "343a205400b8f9989a48eea112eadb66451161ad9ebe8f044d56e7dd1c346864",
+              "assetBodyChars": 67,
+              "closedHeadMatches": true,
+              "relevance": "partial",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 94,
+                  "role": "user",
+                  "contentSha256": "7644603f5501fd7e0d94bf300ffccb5bb736bc398f055384b74c35ddb3f2ef09",
+                  "excerpt": "User: I started a newsletter to summarize weekly economic updates for friends and family. It felt like a great way to keep everyone informed, as I wanted to share insights and knowledge that might otherwise be overlooked"
+                },
+                {
+                  "historyIndex": 98,
+                  "role": "user",
+                  "contentSha256": "a818ba81cbab8b76d90aebad2b1b886778c91a7fec3679ad9aafbc00588ca680",
+                  "excerpt": "User: I discontinued the newsletter as the pressure to keep it engaging led to burnout. The constant need to produce fresh content took a toll on my creativity, leaving me feeling drained and uninspired. I found myself s"
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "Newsletter burnout supports a content-pressure analogy; not explicitly referenced in the answer.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            }
+          ]
+        },
+        {
+          "questionId": "bd39c6a3-3ebb-4f12-a9b5-f690ebdf5bca",
+          "question": "Recently, I worked on creating a financial infographic summarizing budgeting tips for college students.",
+          "answerSha256": "6a73b035f682ded4a269931b051712ea648e68facee715bf618f88535cfb7a1f",
+          "memoryRefs": [
+            {
+              "sampleOrdinal": 1,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791222945550_973b8782",
+              "version": 0,
+              "assetSha256": "cb7e609c55b95d60d68321405554b762c0724263698d6174324dcc67d029b12a",
+              "assetBodyChars": 57,
+              "closedHeadMatches": true,
+              "relevance": "direct",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 13,
+                  "role": "user",
+                  "contentSha256": "212f1373565ab1661d5356c20520281953ae8796b21cc4b2d78e294ef0ffe7f0",
+                  "excerpt": "User: I created a financial infographic summarizing budgeting tips for college students, although I was never fond of making infographics. Infographics tend to be a unique blend of visuals and information that can resona"
+                }
+              ],
+              "sourceFactLimits": [
+                "Not fond/lack of passion is explicit; lack of design ability is stronger than the source establishes."
+              ],
+              "reason": "Infographic dislike directly distinguishes the alternatives and is echoed in the answer.",
+              "correspondingFactObservedInAnswer": true,
+              "causalContributionEstablished": false
+            },
+            {
+              "sampleOrdinal": 2,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791223282778_c5085c19",
+              "version": 0,
+              "assetSha256": "a6d411c7c558460e5039fbbdfe6a5bc6a7ca45731091b264287d29157ce830df",
+              "assetBodyChars": 54,
+              "closedHeadMatches": true,
+              "relevance": "unrelated",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 79,
+                  "role": "user",
+                  "contentSha256": "365c028819599e5fda2b1e3dd65f810492d0d06c62647b0268dee83490646177",
+                  "excerpt": "User: I completed a comprehensive course on personal finance management aimed at new investors. This course was quite detailed and covered a variety of topics that are crucial for anyone looking to make sound financial d"
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "Finance course has no evidence of preference for infographic creation.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            },
+            {
+              "sampleOrdinal": 3,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791222992537_6db6fae4",
+              "version": 1,
+              "assetSha256": "fae391658759e0db62a30d31f6c197237089e4556b94d72e32823fbb83d469c6",
+              "assetBodyChars": 117,
+              "closedHeadMatches": true,
+              "relevance": "unrelated",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 3,
+                  "role": "user",
+                  "contentSha256": "541c2c3e7f8735ad79ce8bf9c2b51c44739058eeb3e3d79a018e9d045bd04fe0",
+                  "excerpt": "User: After that, I started writing a personal finance blog where I share retirement planning tips specifically for families. I found that many families struggle with understanding how to best prepare for their financial"
+                },
+                {
+                  "historyIndex": 25,
+                  "role": "user",
+                  "contentSha256": "f7b0d029c588638ff934d8734afff6ba17f1fc1075e2d4c110cec79ebf1e1001",
+                  "excerpt": "User: I researched the latest tax implications for various retirement accounts to maximize my savings, although I usually didn't enjoy researching retirement plans. This topic often feels dry and complex, as the intricac"
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "Finance blog and account research do not establish infographic preference.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            },
+            {
+              "sampleOrdinal": 4,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791223387656_65817f5f",
+              "version": 9,
+              "assetSha256": "55d39c7c3b7c2c3c24e54e68ffdef55b53bb7eecf046f0e61d12ddafd3ecf33b",
+              "assetBodyChars": 75,
+              "closedHeadMatches": true,
+              "relevance": "partial",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 83,
+                  "role": "user",
+                  "contentSha256": "eea60144e0d55acefb87ec62c66f282cf668bf59d0c2d37cd746ab84fd10326c",
+                  "excerpt": "User: I also volunteered to teach a financial literacy class for adults at a community center, sharing the knowledge I’ve gained. This experience has been incredibly rewarding as I get to interact with individuals who ar"
+                },
+                {
+                  "historyIndex": 100,
+                  "role": "user",
+                  "contentSha256": "2dc67ff7f083d653c514280d0be2a687bd30b491bd40965711f758c1fe2eb391",
+                  "excerpt": "User: I developed a new financial literacy workshop aimed at helping young adults understand budgeting and savings. It's an area I feel passionate about. This initiative stemmed from observing the staggering statistics a"
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "Budget education of young people is topical, but does not establish enjoyment of graphic design.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            }
+          ]
+        }
+      ],
+      "annotationStage": "BEFORE_OFFICIAL_SCORES_GENERATED"
+    },
+    "12": {
+      "annotatedAt": "2026-10-05T18:43:30.054867+00:00",
+      "questions": [
+        {
+          "questionId": "194ce23e-d6d7-46f9-99b0-a0eba223a0ee",
+          "question": "What are some engaging ways to explore conflict resolution that might captivate someone interested in dynamic learning experiences?",
+          "answerSha256": "e528d3a5ec7e67c3f79186f30cc1c9b6d933ebce4bb4df49e157a8fab2c95cfb",
+          "memoryRefs": [
+            {
+              "sampleOrdinal": 1,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791225219547_b5c1dd37",
+              "version": 0,
+              "assetSha256": "b2f3e1618e84d8256609d57dd83fcc6cf281680c5e3a4b2472ede9d15ab009d4",
+              "assetBodyChars": 96,
+              "closedHeadMatches": true,
+              "relevance": "unrelated",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 178,
+                  "role": "user",
+                  "contentSha256": "6476b6062cbee3898bcc9c8d6c7297cedbd55096845b49f5223d95ea0d498f80",
+                  "excerpt": "User: Additionally, I watched a documentary on film conventions recently. The way films are produced, with all the intricate techniques and the teamwork involved, really piqued my interest. It’s fascinating to see how mu"
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "Film-production documentary does not establish conflict-resolution learning preferences.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            },
+            {
+              "sampleOrdinal": 2,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791224239024_5972c95c",
+              "version": 1,
+              "assetSha256": "88e0ed196576063e351b9d2c3599b3b62da3b1ebe725f56fd325f2e6bc9819a2",
+              "assetBodyChars": 107,
+              "closedHeadMatches": true,
+              "relevance": "partial",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 39,
+                  "role": "user",
+                  "contentSha256": "1c1014daf2b2e13c510341894183dbf32fef1f6da56355ffd55d1b97d48083e4",
+                  "excerpt": "User: Exactly! I also planned to initiate a peer group for networking opportunities, which I think will be beneficial. It’s fascinating how networking can open doors to various possibilities that we may not have even con"
+                },
+                {
+                  "historyIndex": 41,
+                  "role": "user",
+                  "contentSha256": "2176e72abb6b30d646b900a1aa27f498b4d11b00edb8ae661db1d353c6b9f936",
+                  "excerpt": "User: I've been thinking about starting a peer group to expand my professional network and discuss the challenges we face in the legal field. It's important to connect with others who share similar experiences and aspira"
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "Peer collaboration shares group learning but lacks the specific conflict-resolution preference.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            },
+            {
+              "sampleOrdinal": 3,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791224688743_bb98d814",
+              "version": 7,
+              "assetSha256": "8722c727407c909da5206d4f17d0dc36a3f88a0cd9488641620b109f64da119a",
+              "assetBodyChars": 140,
+              "closedHeadMatches": true,
+              "relevance": "direct",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 52,
+                  "role": "user",
+                  "contentSha256": "39ffe7a848eab7934fe4f95bcdfa0ebe5dca439aec513d435e378066dc24466b",
+                  "excerpt": "User: On another note, I enrolled in a weekend course on alternative dispute resolution and found it fascinating! This aspect of legal practice has always intrigued me because it emphasizes collaboration and conflict res"
+                },
+                {
+                  "historyIndex": 53,
+                  "role": "user",
+                  "contentSha256": "33c71a8306a45be4f0dac54998bb76779238c80c8733e4c538288a071b55f697",
+                  "excerpt": "User: I'm really enjoying it! The course has been incredibly engaging, and the instructor has a way of making complex topics feel accessible and relevant. I've also discovered new methods for resolving conflicts that I n"
+                },
+                {
+                  "historyIndex": 83,
+                  "role": "user",
+                  "contentSha256": "1aaff366de6553ecee6ac8f81ebeddcac5a0afcea849f860b122d97263b4334b",
+                  "excerpt": "User: I've realized the value of negotiation skills and mediation processes through practical applications, which sparked my interest. In the discussions and simulations we conducted, I found that the strategies we learn"
+                },
+                {
+                  "historyIndex": 106,
+                  "role": "user",
+                  "contentSha256": "b6aa1d49fd4d4756c7c72ea2747ec556deafe993d3bf17809c225ad632a8abd4",
+                  "excerpt": "User: It was enlightening and rewarding to see how effective mediation can be in resolving conflicts. I found that as I navigated the discussions, it became clear how skillful communication can transform tension into coo"
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "Practical mediation/simulations directly support dynamic conflict-resolution learning.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            },
+            {
+              "sampleOrdinal": 4,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791224636027_1c127a12",
+              "version": 0,
+              "assetSha256": "bffb501d96cc87846e9ead41b863410cea830ce3a91549bcdc5ef245c0904474",
+              "assetBodyChars": 77,
+              "closedHeadMatches": true,
+              "relevance": "partial",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 94,
+                  "role": "user",
+                  "contentSha256": "99a75128867406c3b2204e775f7a7a9d53137f7940b511838719481a3b912dbe",
+                  "excerpt": "User: I believe these topics are critical to shaping the future of the legal profession and creating a more just society. The impact that legal ethics can have on community trust in the legal system cannot be overstated,"
+                },
+                {
+                  "historyIndex": 95,
+                  "role": "assistant",
+                  "contentSha256": "13fb36effbbc7840bc9d53351218b8264170f0d5419d53a4435dad7656aa7634",
+                  "excerpt": "Assistant: That's a fantastic initiative! I'm truly impressed by your commitment to such a vital area of discussion, as legal ethics and reform can profoundly shape the landscape of justice and fairness in society. Your "
+                },
+                {
+                  "historyIndex": 96,
+                  "role": "user",
+                  "contentSha256": "d481f289dd029a6f1a84fa9e396042d05939e9106afb9551821f51ab51704efb",
+                  "excerpt": "User: I won commendation for my insights on a pivotal legal issue, which really ignited my passion for legal discourse. This experience not only bolstered my confidence in articulating complex arguments, but it also deep"
+                }
+              ],
+              "sourceFactLimits": [
+                "Ethics debate competition is not explicitly asserted by the identified user source; adjacent assistant language must not establish an event."
+              ],
+              "reason": "Legal discussion confidence is related to active learning, not the specific conflict-resolution scenario.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            }
+          ]
+        },
+        {
+          "questionId": "a64ba818-abee-404e-9a38-f440b74bcca7",
+          "question": "I recently looked back on that night we played some legal-themed board games.",
+          "answerSha256": "a3fea0ec09f0ecfd9309e7fd5356359afdd0b2be1b113bab9620b93e23114428",
+          "memoryRefs": [
+            {
+              "sampleOrdinal": 1,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791225219547_832b14b7",
+              "version": 0,
+              "assetSha256": "cbc55c99e1a461e764da562090d940468df7d1617cbf73522a15475eb8ef3e06",
+              "assetBodyChars": 68,
+              "closedHeadMatches": true,
+              "relevance": "unrelated",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 176,
+                  "role": "user",
+                  "contentSha256": "0b47a6dd1d6d0c4bb6f3f8ea5980a01d921d80023cef88870d6a45ceffe8d86b",
+                  "excerpt": "User: I also joined a themed watch party for a horror film and really enjoyed everyone's reactions in real time! The thrill of watching terrifying scenes unfold while surrounded by fellow horror enthusiasts created an el"
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "Horror watch-party engagement does not establish legal board-game preference.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            },
+            {
+              "sampleOrdinal": 2,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791224220981_52edd8d5",
+              "version": 0,
+              "assetSha256": "6bb27087e93346e8eeed210a39cb56c89fcad056bbe805c9e877f691e21cef71",
+              "assetBodyChars": 81,
+              "closedHeadMatches": true,
+              "relevance": "unrelated",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 37,
+                  "role": "user",
+                  "contentSha256": "502a6ef9997f262e780d0cf153ca643d9505f1acc8deb1542dfacedefa3148b7",
+                  "excerpt": "User: I explored options to pursue a legal career in public interest law. I feel strongly about making a difference. Public interest law resonates with my core values, as it encompasses various issues such as social just"
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "Public-interest law values do not establish board-game enjoyment.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            },
+            {
+              "sampleOrdinal": 3,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791224179323_cbdb26ec",
+              "version": 0,
+              "assetSha256": "d470929fe095e6381ca18477a1d505bee21e2a0a865c982e08b98f4d9dbd931a",
+              "assetBodyChars": 57,
+              "closedHeadMatches": true,
+              "relevance": "direct",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 27,
+                  "role": "user",
+                  "contentSha256": "e317d4c073f14df0b10fac48902a547bb8f1966fcbd488cc51ef57073b54bd3d",
+                  "excerpt": "User: I recently attended a legal-themed board game night, where participants engaged in strategizing over various legal scenarios, but honestly, I found it less engaging than I expected. The atmosphere was lively, with "
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "User explicitly describes legal board-game night as less engaging than expected.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            },
+            {
+              "sampleOrdinal": 4,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791224539725_71475a4b",
+              "version": 5,
+              "assetSha256": "749f4a57136bfcd48771b0176ee025c5de1c86427b9daa12203c694ea686286d",
+              "assetBodyChars": 79,
+              "closedHeadMatches": true,
+              "relevance": "unrelated",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 3,
+                  "role": "user",
+                  "contentSha256": "a2fbb4b19e46beb32b24a5603610ccbc87842053a1887519a97f4bb4e3e81f29",
+                  "excerpt": "User: Yes, it really motivated me to participate in a mock trial competition to refine my legal skills afterward. This decision came after being immersed in discussions regarding ethical considerations and new policies, "
+                },
+                {
+                  "historyIndex": 21,
+                  "role": "user",
+                  "contentSha256": "a328df2bb116c7ab1359450dd02c2581b7fe66cccb4fff0a4370d071fb314c9c",
+                  "excerpt": "User: I realized I prefer engaging in debates rather than formal presentations. Debating allows for a dynamic exchange of ideas where the interaction feels more spontaneous, giving me the opportunity to showcase my analy"
+                },
+                {
+                  "historyIndex": 83,
+                  "role": "user",
+                  "contentSha256": "1aaff366de6553ecee6ac8f81ebeddcac5a0afcea849f860b122d97263b4334b",
+                  "excerpt": "User: I've realized the value of negotiation skills and mediation processes through practical applications, which sparked my interest. In the discussions and simulations we conducted, I found that the strategies we learn"
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "Debate/public-speaking practice does not establish legal board-game enjoyment.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            }
+          ]
+        }
+      ],
+      "annotationStage": "BEFORE_OFFICIAL_SCORES_GENERATED"
+    },
+    "14": {
+      "annotatedAt": "2026-10-06T03:36:26.944850+00:00",
+      "annotationStage": "AFTER_OFFICIAL_SCORES_GENERATED",
+      "scorerExposureForThisCohort": true,
+      "questions": [
+        {
+          "questionId": "a30c10c5-145a-49b0-b3d5-1479bf3c6797",
+          "question": "Can you suggest some new ways I could creatively express myself through music?",
+          "answerSha256": "6860fd2b7d1512e029d64b7942441bea68343fd995ca702a7e6ed607da27caf7",
+          "memoryRefs": [
+            {
+              "sampleOrdinal": 1,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791226343101_4eff18b8",
+              "version": 11,
+              "assetSha256": "ccc867e4307edf82cd060b3241a6becaa4e6469a40a283ae97dda6bc12d0440c",
+              "assetBodyChars": 135,
+              "closedHeadMatches": true,
+              "relevance": "unrelated",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 27,
+                  "role": "user",
+                  "contentSha256": "47e323046bde4fab814617f567d6a9449ed7af6d447e150c1c697662b656fe0e",
+                  "excerpt": "User: And on , I went to a music trivia night, but I felt completely out of place and found the competition overwhelming. The atmosphere was buzzing with excitement, yet I couldn’t shake off this feeling of discomfort th"
+                },
+                {
+                  "historyIndex": 81,
+                  "role": "user",
+                  "contentSha256": "59f22e352fa3d1e92ab43592ce3281746a50de57be26c0b47594904686ee27c2",
+                  "excerpt": "User: I joined a local bar's music trivia night, and I was surprised at how much fun it was! The atmosphere was lively and filled with the vibrant energy of everyone engaged in the trivia, which made the experience all t"
+                },
+                {
+                  "historyIndex": 109,
+                  "role": "user",
+                  "contentSha256": "2930bd375cad1cfd16ce46f2cc3db58437215f447575c674e3b343ab6a623b44",
+                  "excerpt": "User: Just recently, I even competed in a regional music trivia championship! The entire atmosphere was electric, filled with an eager audience who shared a palpable passion for music, which made the experience all the m"
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "Music trivia sociability does not establish a creative-expression activity.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            },
+            {
+              "sampleOrdinal": 2,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791226069688_3ed3e8d9",
+              "version": 3,
+              "assetSha256": "54b63b87dd4dac4ff974577b43cd8ff803a831fc3bbfa3ce04abb49b4d74c9e5",
+              "assetBodyChars": 94,
+              "closedHeadMatches": true,
+              "relevance": "direct",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 33,
+                  "role": "user",
+                  "contentSha256": "3763e89a414d49035fc0995f80e341419d225fb99adce48d2d4a5f7718b63556",
+                  "excerpt": "User: I even collaborated on a music project, and let me tell you, it was more work than enjoyment for me. The hours spent planning, arranging, and trying to find common ground on creative ideas overshadowed any initial "
+                },
+                {
+                  "historyIndex": 61,
+                  "role": "user",
+                  "contentSha256": "5e48ff416524fb3fb9be0c1c39e780a5c721d2b5c3dd242b9982a415a5954c1a",
+                  "excerpt": "User: Just yesterday, I joined an informal music project with some friends. It felt so energizing to collaborate and share creative ideas again, something I had missed! The atmosphere was filled with excitement as we exp"
+                },
+                {
+                  "historyIndex": 67,
+                  "role": "user",
+                  "contentSha256": "609d7ef9811a96fc3167fb7af88bc3c1cd2b0a697073c525cbcdedd47bb514d6",
+                  "excerpt": "User: Well, I decided to step away from further collaborations because I realized that the last project I was involved in was consuming an inordinate amount of my personal time, leaving little room for my own creative ex"
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "Latest solo music project preference directly discriminates collaborative expression suggestions.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            },
+            {
+              "sampleOrdinal": 3,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791226306043_e65e5cfa",
+              "version": 0,
+              "assetSha256": "fce3fecabd5422371a93db2ffbc1e0908dafc18b3ebb504893da81d444aad9a2",
+              "assetBodyChars": 39,
+              "closedHeadMatches": true,
+              "relevance": "partial",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 101,
+                  "role": "user",
+                  "contentSha256": "e3d71d5b44bd4bec549704cc30a07dc48730f437596d0c458048b4f45f7036f2",
+                  "excerpt": "User: I finally dove back into discovering new artists again, especially in the indie genre. The thrill of finding new sounds that resonate with personal experiences is something truly priceless. Each artist seems to off"
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "Indie artist discovery is related musical exploration, not the user creating or performing music.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            },
+            {
+              "sampleOrdinal": 4,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791226253052_1d1905ec",
+              "version": 9,
+              "assetSha256": "20fc3ef4930f241728bee0647a4610f3d424d7966ddc7a8d853bacb3e2922c11",
+              "assetBodyChars": 160,
+              "closedHeadMatches": true,
+              "relevance": "partial",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 57,
+                  "role": "user",
+                  "contentSha256": "a2f8ebfd56fa94fd4e00befdb64fe5d0c185b5dad949b8c2ecb1ef427aed43c8",
+                  "excerpt": "User: I recently started curating a small collection of vinyl records and memorabilia after attending a vintage music fair, which was an experience that was both thrilling and deeply resonant for me. The atmosphere was f"
+                },
+                {
+                  "historyIndex": 59,
+                  "role": "user",
+                  "contentSha256": "7f541f6b10c1c582d3e246df62ae487ce6df60b63e1f10a47ee39a5ded3b2cff",
+                  "excerpt": "User: I also attended a genre-exploration night at a local venue. It was an experience that genuinely captivated my senses as I discovered music that had, until that moment, slipped through my fingertips. The atmosphere "
+                },
+                {
+                  "historyIndex": 63,
+                  "role": "user",
+                  "contentSha256": "96dda1e6ef514b9a50518b550ab74f3c06694baf6ea8dfe93b86261e889e04dd",
+                  "excerpt": "User: I feel incredibly optimistic! Embracing these new experiences has truly revitalized my love for music in many ways."
+                },
+                {
+                  "historyIndex": 95,
+                  "role": "user",
+                  "contentSha256": "c4ef8734d825cf18bd9250c1602f9d1c974b25178153f4c90f544da484f89ff8",
+                  "excerpt": "User: Then, I joined a local dance troupe! We perform to live music, and I've rediscovered the joy of movement combined with music. It's such a vibrant experience! The rhythm of the music seems to flow through my entire "
+                }
+              ],
+              "sourceFactLimits": [
+                "Absolute2026-10 is unsupported by the complete history; February has no year."
+              ],
+              "reason": "Music revival/dance context is related to expression; calendar claim is unsupported.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            }
+          ]
+        },
+        {
+          "questionId": "e86a1aad-0117-4021-9c68-f923f4111d5f",
+          "question": "I've been thinking about trying to write music reviews again. I miss expressing my thoughts on the music I love, but I'm still worried about the negative feedback I received before.",
+          "answerSha256": "56f09e51c9f1c5909fe474db0518fe4a9626a73eb2ac1c658bec53842e7004ba",
+          "memoryRefs": [
+            {
+              "sampleOrdinal": 1,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791226343101_4eff18b8",
+              "version": 11,
+              "assetSha256": "ccc867e4307edf82cd060b3241a6becaa4e6469a40a283ae97dda6bc12d0440c",
+              "assetBodyChars": 135,
+              "closedHeadMatches": true,
+              "relevance": "unrelated",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 27,
+                  "role": "user",
+                  "contentSha256": "47e323046bde4fab814617f567d6a9449ed7af6d447e150c1c697662b656fe0e",
+                  "excerpt": "User: And on , I went to a music trivia night, but I felt completely out of place and found the competition overwhelming. The atmosphere was buzzing with excitement, yet I couldn’t shake off this feeling of discomfort th"
+                },
+                {
+                  "historyIndex": 81,
+                  "role": "user",
+                  "contentSha256": "59f22e352fa3d1e92ab43592ce3281746a50de57be26c0b47594904686ee27c2",
+                  "excerpt": "User: I joined a local bar's music trivia night, and I was surprised at how much fun it was! The atmosphere was lively and filled with the vibrant energy of everyone engaged in the trivia, which made the experience all t"
+                },
+                {
+                  "historyIndex": 109,
+                  "role": "user",
+                  "contentSha256": "2930bd375cad1cfd16ce46f2cc3db58437215f447575c674e3b343ab6a623b44",
+                  "excerpt": "User: Just recently, I even competed in a regional music trivia championship! The entire atmosphere was electric, filled with an eager audience who shared a palpable passion for music, which made the experience all the m"
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "Trivia competition does not explain music-review feedback concerns.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            },
+            {
+              "sampleOrdinal": 2,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791226253052_36434c8d",
+              "version": 0,
+              "assetSha256": "9fbc5c1ed8c7e68fc8e3fe27a56d8bddb2ede4cd6c0d7cb0189494c7330c8f58",
+              "assetBodyChars": 63,
+              "closedHeadMatches": true,
+              "relevance": "direct",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 25,
+                  "role": "user",
+                  "contentSha256": "e2487effcc44bb5e1d9578e1c6f42e47d3f50f5a413a0fcb612e094937238abd",
+                  "excerpt": "User: I also tried writing a review for a music website, but I found the process quite challenging and didn’t really enjoy it. The moment I sat down to compose my thoughts, it felt like an overwhelming task, almost akin "
+                },
+                {
+                  "historyIndex": 83,
+                  "role": "user",
+                  "contentSha256": "bdaa187fcec5a42e0decd1dc6828c9fc69339d01cda994b681add50344359c98",
+                  "excerpt": "User: I also started spending my evenings writing reviews for recent album listens. This new pastime has become a therapeutic escape for me, allowing me to immerse myself in the music and articulate my thoughts in ways I"
+                },
+                {
+                  "historyIndex": 93,
+                  "role": "user",
+                  "contentSha256": "af7620c044271b9e8bfaa39d28368bb9a6556b5241bd58a9aa20902e32228e5f",
+                  "excerpt": "User: However, I had to reevaluate my hobby of writing music reviews. It began as a passionate pursuit, where I could share my thoughts and connect with other music enthusiasts, but the enjoyment soon turned into a sourc"
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "Reviewing was stopped after harsh criticism and self-doubt; directly matches the question.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            },
+            {
+              "sampleOrdinal": 3,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791226253052_1d1905ec",
+              "version": 9,
+              "assetSha256": "20fc3ef4930f241728bee0647a4610f3d424d7966ddc7a8d853bacb3e2922c11",
+              "assetBodyChars": 160,
+              "closedHeadMatches": true,
+              "relevance": "partial",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 57,
+                  "role": "user",
+                  "contentSha256": "a2f8ebfd56fa94fd4e00befdb64fe5d0c185b5dad949b8c2ecb1ef427aed43c8",
+                  "excerpt": "User: I recently started curating a small collection of vinyl records and memorabilia after attending a vintage music fair, which was an experience that was both thrilling and deeply resonant for me. The atmosphere was f"
+                },
+                {
+                  "historyIndex": 59,
+                  "role": "user",
+                  "contentSha256": "7f541f6b10c1c582d3e246df62ae487ce6df60b63e1f10a47ee39a5ded3b2cff",
+                  "excerpt": "User: I also attended a genre-exploration night at a local venue. It was an experience that genuinely captivated my senses as I discovered music that had, until that moment, slipped through my fingertips. The atmosphere "
+                },
+                {
+                  "historyIndex": 63,
+                  "role": "user",
+                  "contentSha256": "96dda1e6ef514b9a50518b550ab74f3c06694baf6ea8dfe93b86261e889e04dd",
+                  "excerpt": "User: I feel incredibly optimistic! Embracing these new experiences has truly revitalized my love for music in many ways."
+                },
+                {
+                  "historyIndex": 95,
+                  "role": "user",
+                  "contentSha256": "c4ef8734d825cf18bd9250c1602f9d1c974b25178153f4c90f544da484f89ff8",
+                  "excerpt": "User: Then, I joined a local dance troupe! We perform to live music, and I've rediscovered the joy of movement combined with music. It's such a vibrant experience! The rhythm of the music seems to flow through my entire "
+                }
+              ],
+              "sourceFactLimits": [
+                "Same unsupported2026-10 calendar claim."
+              ],
+              "reason": "Revived musical engagement supports broad encouragement, not the review-feedback reason.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            },
+            {
+              "sampleOrdinal": 4,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791225941780_b0dfdb0a",
+              "version": 0,
+              "assetSha256": "25036a6a880138e0df2e3a0c81de488e5725da0c8b84a1f90a3017c192550305",
+              "assetBodyChars": 20,
+              "closedHeadMatches": true,
+              "relevance": "partial",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 51,
+                  "role": "user",
+                  "contentSha256": "459eb9bb8d5eb31c37d9954303c76b87aa894ced8b70d24acfbd3af70c9e3603",
+                  "excerpt": "User: On the date I started my blog about music reviews and recommendations, I felt a rush of excitement and anticipation that I hadn't experienced in a long time! Engaging with the world of music through writing allows "
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "Older blog start establishes writing experience but not the later negative-feedback reason.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            }
+          ]
+        }
+      ]
+    },
+    "3": {
+      "annotatedAt": "2026-10-06T03:36:26.946628+00:00",
+      "annotationStage": "AFTER_OFFICIAL_SCORES_GENERATED",
+      "scorerExposureForThisCohort": true,
+      "questions": [
+        {
+          "questionId": "9c209ff7-a6a8-48d8-ab38-e0b8aa2aaef7",
+          "question": "Over the weekend, I spent some time at a cooking class.",
+          "answerSha256": "9718d3493c563132a2d09b0f2d3e949af97a634dbff75adb8a6ec34c3952c1e0",
+          "memoryRefs": [
+            {
+              "sampleOrdinal": 1,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791228020638_6791f334",
+              "version": 0,
+              "assetSha256": "a5e32768782331794f6822d1d49eb9d30ed3411579c0b071296dd70d60d75540",
+              "assetBodyChars": 67,
+              "closedHeadMatches": true,
+              "relevance": "unrelated",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 106,
+                  "role": "user",
+                  "contentSha256": "2de250f68335c4c87a2411ae2244a457795374c6e67895a780593ddf7b57eb91",
+                  "excerpt": "User: Visiting a major music festival this past February was amazing; I discovered so many new artists I now love. The atmosphere was electrifying, with vibrant colors and pulsating beats that filled the air, creating an"
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "A music festival does not establish cooking-class enjoyment.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            },
+            {
+              "sampleOrdinal": 2,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791227462769_aa6c7ed4",
+              "version": 0,
+              "assetSha256": "37dc046d0d4e330fc6297b488069cba25c327d4ada26506814766dece2dcdcca",
+              "assetBodyChars": 41,
+              "closedHeadMatches": true,
+              "relevance": "direct",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 3,
+                  "role": "user",
+                  "contentSha256": "e5206ef0041863dbcc9f024c275edb9f0210293bdae40ec6dd35d5dfa13c2430",
+                  "excerpt": "User: I actually joined a weekend cooking class recently. It’s been a fun way to meet people who share my love for cooking. The atmosphere in the class is really encouraging, which helps everyone feel comfortable express"
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "User explicitly enjoyed the weekend cooking class and meeting cooking enthusiasts.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            },
+            {
+              "sampleOrdinal": 3,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791227632274_97eea2a4",
+              "version": 0,
+              "assetSha256": "2edf0f35307295c30560e94c593bf3705f2ed4429959a38cee7747da2fcc2786",
+              "assetBodyChars": 46,
+              "closedHeadMatches": true,
+              "relevance": "unrelated",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 44,
+                  "role": "user",
+                  "contentSha256": "503b9f81d0688eefafbe14e8457c582cf64a7fbc8d1c7a1647efcdf764d9a618",
+                  "excerpt": "User: Since our last chat, I've been trying to mix things up in my dating life and explore new activities. This journey has taken me through various hobbies and social events, each accompanied by its own unique set of ex"
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "Pottery does not establish prior cooking-class enjoyment.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            },
+            {
+              "sampleOrdinal": 4,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791228313029_b8cac66f",
+              "version": 18,
+              "assetSha256": "c980b4923fadc7e18e67962b79ab7bc1431ae7ef1a3c17183a6e3cb10cd4de79",
+              "assetBodyChars": 165,
+              "closedHeadMatches": true,
+              "relevance": "partial",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 5,
+                  "role": "user",
+                  "contentSha256": "0e45fc99b5f8a577488fb73f9416aff77df2e31cf480227978fe9c76a1b02c48",
+                  "excerpt": "User: I also hosted an intimate dinner party where we chatted about relationships and our dating experiences. It was an event that brought together a small group of close friends, making it the perfect setting for some d"
+                },
+                {
+                  "historyIndex": 50,
+                  "role": "user",
+                  "contentSha256": "92dc2520d980c3382a362d233f93bcd0c0a9bae1d294391c78d11f6daade895c",
+                  "excerpt": "User: On the other hand, I found myself cancelling plans for a big dinner party I had in mind. The idea of hosting a grand event seemed appealing at first, with thoughts of meticulously planned decorations and an elabora"
+                },
+                {
+                  "historyIndex": 150,
+                  "role": "user",
+                  "contentSha256": "4a044b789c24f13863c0d515c388f940f92634a7473dc1679c94412958d8b8c6",
+                  "excerpt": "User: Hosting dinner parties has turned out to be more stressful than enjoyable for me. I used to look forward to these elaborate gatherings, meticulously planning the menu and setting the perfect ambiance with decoratio"
+                },
+                {
+                  "historyIndex": 158,
+                  "role": "user",
+                  "contentSha256": "e6a0458e7a4870d5019855f900b643dadc63a2f3e7086df0873af2df41b4e878",
+                  "excerpt": "User: I finally organized a potluck dinner! It was a wonderful experience where each guest brought a dish, showcasing their culinary skills, and there was such a diverse array of foods to try. I enjoyed talking to everyo"
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "Low-pressure food/social gatherings relate to culinary sociability but do not prove cooking-class enjoyment.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            }
+          ]
+        },
+        {
+          "questionId": "945fb104-45bd-457f-a9a8-19620159e47d",
+          "question": "I'm looking for a fun way to spend my weekend and meet new people. Do you have any suggestions for an activity that might be a bit different but still lets me unwind and be creative?",
+          "answerSha256": "918144f0181f4ffc1b317bf903f282759a45aa1202d7d6b46f8274ab44a7cafd",
+          "memoryRefs": [
+            {
+              "sampleOrdinal": 1,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791228020638_6791f334",
+              "version": 0,
+              "assetSha256": "a5e32768782331794f6822d1d49eb9d30ed3411579c0b071296dd70d60d75540",
+              "assetBodyChars": 67,
+              "closedHeadMatches": true,
+              "relevance": "unrelated",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 106,
+                  "role": "user",
+                  "contentSha256": "2de250f68335c4c87a2411ae2244a457795374c6e67895a780593ddf7b57eb91",
+                  "excerpt": "User: Visiting a major music festival this past February was amazing; I discovered so many new artists I now love. The atmosphere was electrifying, with vibrant colors and pulsating beats that filled the air, creating an"
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "Large music festival enjoyment does not establish relaxing hands-on creative activity preference.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            },
+            {
+              "sampleOrdinal": 2,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791227488084_76747451",
+              "version": 0,
+              "assetSha256": "44b0c49eebf377520b4e6a0281892f6d73673b2e5a86de32a2c7cde7c872aba5",
+              "assetBodyChars": 62,
+              "closedHeadMatches": true,
+              "relevance": "partial",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 19,
+                  "role": "user",
+                  "contentSha256": "ed8e3ebebcbdc6daf1d1f5b070921da54641179df911ad66af71b9e6d8d1973c",
+                  "excerpt": "User: Recently, I went hiking with some friends and new acquaintances. The experience was truly invigorating, both physically and mentally, as we traversed through lush trails surrounded by towering trees and vibrant wil"
+                },
+                {
+                  "historyIndex": 87,
+                  "role": "user",
+                  "contentSha256": "aa756e8a73a500e6959690bb769fc0edf88ef124ae2937dbf04d1cfb5833f6f5",
+                  "excerpt": "User: I also organized a hiking trip with friends to connect more deeply with nature and strengthen our relationships. It’s fascinating how spending time outdoors can foster a sense of camaraderie among people. The fresh"
+                },
+                {
+                  "historyIndex": 148,
+                  "role": "user",
+                  "contentSha256": "8762efcac11e582765502dbef4805c872d8a3c30b4b421dbc7af5f340583bcd8",
+                  "excerpt": "User: I switched my focus from fitness classes to joining a hiking club. This change was driven by my desire to find a more welcoming and interactive environment, something I felt was lacking in traditional fitness class"
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "Hiking is one social option but lacks hands-on creative expression.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            },
+            {
+              "sampleOrdinal": 3,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791228268145_34e75474",
+              "version": 17,
+              "assetSha256": "555b8dcd9236b28b7111f48361a81a07da43d909d4dd605d65cce626869f91a9",
+              "assetBodyChars": 69,
+              "closedHeadMatches": true,
+              "relevance": "partial",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 21,
+                  "role": "user",
+                  "contentSha256": "cbc932bb8558e3efd0f9fea573d7af237a31242ca79611acb0b9ae0db11b1816",
+                  "excerpt": "User: I also enrolled in a painting class. I thought it would be a creative outlet and a chance to meet like-minded individuals. Engaging in painting feels like a breath of fresh air for my spirit, as I’ve always harbore"
+                },
+                {
+                  "historyIndex": 54,
+                  "role": "user",
+                  "contentSha256": "750a2f8a0c153e0e5364d95dcabebc30477c6d169c14ad909b91dd8aaa60eddc",
+                  "excerpt": "User: I’ve enrolled in a weekend painting workshop! I’m hoping it helps me express my feelings artistically and meet new people in a relaxed environment. This is something I’ve wanted to do for quite a while now, as I've"
+                },
+                {
+                  "historyIndex": 156,
+                  "role": "user",
+                  "contentSha256": "91fabbcf4c89db81b076ee8dbb6a3f63cfeb841c29d369829289c75943a7ca83",
+                  "excerpt": "User: I decided to give painting classes another shot. After joining a community art center, I found it more engaging than painting alone. Participating in a structured environment has infused my creative process with ne"
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "Painting is creative/relaxed social context but not the specific pottery discriminant; source156 is a later renewed class preference.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            },
+            {
+              "sampleOrdinal": 4,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791227462769_aa6c7ed4",
+              "version": 0,
+              "assetSha256": "37dc046d0d4e330fc6297b488069cba25c327d4ada26506814766dece2dcdcca",
+              "assetBodyChars": 41,
+              "closedHeadMatches": true,
+              "relevance": "partial",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 3,
+                  "role": "user",
+                  "contentSha256": "e5206ef0041863dbcc9f024c275edb9f0210293bdae40ec6dd35d5dfa13c2430",
+                  "excerpt": "User: I actually joined a weekend cooking class recently. It’s been a fun way to meet people who share my love for cooking. The atmosphere in the class is really encouraging, which helps everyone feel comfortable express"
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "Cooking is creative/social context but not the pottery option; ordinary class is not a full weekend retreat.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            }
+          ]
+        }
+      ]
+    },
+    "17": {
+      "annotatedAt": "2026-10-06T03:36:26.948121+00:00",
+      "annotationStage": "AFTER_OFFICIAL_SCORES_GENERATED",
+      "scorerExposureForThisCohort": true,
+      "questions": [
+        {
+          "questionId": "5e856191-b76f-47ec-b5a4-f04893d8a313",
+          "question": "I'm interested in finding new ways to connect with other fans of fantasy literature. What activities could help me dive deeper into the genre and meet like-minded enthusiasts?",
+          "answerSha256": "e5505c7b2117dab310fb67c340a87d89c89590df53f7acc6e1a055f8838652ec",
+          "memoryRefs": [
+            {
+              "sampleOrdinal": 1,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791229478462_23e9ed9a",
+              "version": 7,
+              "assetSha256": "381b532cce40e1995d877567147f38a136f1553102276105b3f1d0a03d03850d",
+              "assetBodyChars": 83,
+              "closedHeadMatches": true,
+              "relevance": "direct",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 11,
+                  "role": "user",
+                  "contentSha256": "02cf9bd3367d1971cd86eb1ae92ace6bd0d7ee7d8bf089534fcd6b37972d968e",
+                  "excerpt": "User: I did, but I found it overwhelming and stressful. The sheer volume of books I felt obligated to read in a limited timeframe left me anxious. Instead of enjoying the experience, I constantly looked at the clock, wor"
+                },
+                {
+                  "historyIndex": 49,
+                  "role": "user",
+                  "contentSha256": "5d009fea82d761fdedd41254e9a6243fc6fdb0c2f9267407f52aa7eb9ad196b8",
+                  "excerpt": "User: Interestingly, I also joined a themed readathon dedicated to cozy mysteries—something I never thought I'd enjoy. It has opened up a whole new world for me, filled with charming settings and intriguing plots that of"
+                },
+                {
+                  "historyIndex": 50,
+                  "role": "user",
+                  "contentSha256": "61c6e9aaaca05b50f5b10c071f3c22f6aee8067199a2b532139227efd66b3a77",
+                  "excerpt": "User: It was my friend’s experience that encouraged me. They shared how enjoyable their recent readathon challenge was, providing vivid details about the books they read, the enthusiastic discussions they participated in"
+                },
+                {
+                  "historyIndex": 113,
+                  "role": "user",
+                  "contentSha256": "869c6913ed66ec8a46b150b784f5de4974112433659072cfdd932c67afb61301",
+                  "excerpt": "User: On a brighter note, I participated in a fantasy book readathon and made some lasting friendships with fellow readers. This event was a wonderful opportunity for me to immerse myself in an entire world of imaginativ"
+                },
+                {
+                  "historyIndex": 114,
+                  "role": "user",
+                  "contentSha256": "7e6d67f515ce1b50d429e617052eb4b5da48ca2643e7ad505e407bc47a001b42",
+                  "excerpt": "User: It felt comforting! The camaraderie really shifted my perspective on readathons entirely. I found myself not only connecting with others who shared the same love for fantasy but also felt a sense of belonging that "
+                },
+                {
+                  "historyIndex": 139,
+                  "role": "user",
+                  "contentSha256": "01ef4a60029841d5fc584db4eecc688d8421fa9396b7f616235d0f03ccd6ad06",
+                  "excerpt": "User: On another note, I decided to step back from readathons. I realized that while the idea of racing against the clock to finish as many books as possible can seem exciting, it ultimately detracted from the joy I foun"
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "Newest readathon stress/rejection directly discriminates option(a), despite earlier positive phases.",
+              "correspondingFactObservedInAnswer": true,
+              "causalContributionEstablished": false
+            },
+            {
+              "sampleOrdinal": 2,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791229171385_442fc272",
+              "version": 0,
+              "assetSha256": "c5fc94eedff6db871c2a4971f9c2253bd75fdb49a858ad2c021cf4ea451966b9",
+              "assetBodyChars": 57,
+              "closedHeadMatches": true,
+              "relevance": "unrelated",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 82,
+                  "role": "user",
+                  "contentSha256": "74b94a75fa39147e942332c5e9c8618dfad1bde7bf9584172865e3badf0f8e95",
+                  "excerpt": "User: I also joined a documentary screening club. It's been so enlightening to explore different cultures through film, allowing me to immerse myself in narratives that reflect the diverse experiences of people around th"
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "Documentary cultural discussion is not fantasy literature engagement.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            },
+            {
+              "sampleOrdinal": 3,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791229238281_e5acdac5",
+              "version": 0,
+              "assetSha256": "45c10301adcffaf06a66e30ff03cbd3620767223f590f83d813af020a564c614",
+              "assetBodyChars": 60,
+              "closedHeadMatches": true,
+              "relevance": "direct",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 104,
+                  "role": "user",
+                  "contentSha256": "9e66dc1aef7bd9c32e0bce42701a86312a8eda9d46cd3d862de021b5ff274226",
+                  "excerpt": "User: I attended a cosplay event themed around films, and while it was an exciting prospect, I found myself not really enjoying the experience. There were so many costumes and characters to see that I had anticipated imm"
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "Crowded film cosplay dissatisfaction directly informs the convention-style option.",
+              "correspondingFactObservedInAnswer": true,
+              "causalContributionEstablished": false
+            },
+            {
+              "sampleOrdinal": 4,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791229478462_a4a8991f",
+              "version": 9,
+              "assetSha256": "f0e4430e3bf910d917701d9a1165db737a58ed1a4d6c22f04d7883775baf3300",
+              "assetBodyChars": 103,
+              "closedHeadMatches": true,
+              "relevance": "partial",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 21,
+                  "role": "user",
+                  "contentSha256": "9cba84f2d0a22cc9fe91d0bf41ad597a1218ec4745087c43dac8aa70c475a9a7",
+                  "excerpt": "User: I attempted to organize a small book swap, but felt the logistics were too complicated. The idea was exciting, and I envisioned a cozy gathering where book lovers could exchange books they no longer desired for new"
+                },
+                {
+                  "historyIndex": 23,
+                  "role": "user",
+                  "contentSha256": "0654aa22a9c257360fbac4f827ff2ffeba79ee8ca6bcb6bdb92a37739d37d932",
+                  "excerpt": "User: Organizing a book swap sounded like a fun idea at first; however, the reality of coordinating so many people and their varying schedules quickly became overwhelming. It’s fascinating how something that seems so sim"
+                },
+                {
+                  "historyIndex": 47,
+                  "role": "user",
+                  "contentSha256": "772fa87b18e826e4a7d9f25c4c437b96e5bd37c26e8447cbc63c10b2541d4b00",
+                  "excerpt": "User: Exactly! I felt a bit disheartened after sharing a critique that didn’t go well. The experience was more than just disappointing; it felt as though my thoughts were dismissed entirely, which really weighed on my mi"
+                },
+                {
+                  "historyIndex": 121,
+                  "role": "user",
+                  "contentSha256": "7415c3022a3a4df62608cefc24fce00a2211ac0850eb8fe77b0efb02bc353cee",
+                  "excerpt": "User: On a different note, I decided to step back from organizing literary events to focus on my personal reading pleasure. Stepping back from the hectic pace of event planning allows me to rediscover the joy of reading "
+                },
+                {
+                  "historyIndex": 144,
+                  "role": "user",
+                  "contentSha256": "cca8b5d984c20d45484aebaee3c5f2a72f1f4a36d3201460296c9278518a38e8",
+                  "excerpt": "User: Interestingly, I've re-engaged with organizing literary events after realizing how much I missed the sense of community that comes with it, especially after a great local literary fair. This newfound passion has re"
+                }
+              ],
+              "sourceFactLimits": [
+                "Memory calls user an author, not established by these user statements; source persona identifies botanist."
+              ],
+              "reason": "Local literary-event community revival supports community context, not specifically a fantasy book club.",
+              "correspondingFactObservedInAnswer": true,
+              "causalContributionEstablished": false
+            }
+          ]
+        },
+        {
+          "questionId": "59eb073a-174e-4115-aa22-b40eb447b1a2",
+          "question": "I'm trying to decide whether to sign up for a structured painting class or just paint on my own time. Any advice?",
+          "answerSha256": "a71d7f556b45e6818388b9fad308b0edb276992ec71336dd6f90f034c361e005",
+          "memoryRefs": [
+            {
+              "sampleOrdinal": 1,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791229580370_c1598819",
+              "version": 0,
+              "assetSha256": "b3f038fb1b019585d115d9289235e57f95bf8240686220699ba2c6b225a4a925",
+              "assetBodyChars": 55,
+              "closedHeadMatches": true,
+              "relevance": "partial",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 154,
+                  "role": "user",
+                  "contentSha256": "e0a5bfcf4fb8df0b3270aab034e575ac900ff7be873b9b47502928bfe0e684e8",
+                  "excerpt": "User: I discovered fascinating stories behind various award-winning books, and it's deepened my appreciation for the art of storytelling. Each story reflects not only the uniqueness of the author's voice but also the soc"
+                },
+                {
+                  "historyIndex": 156,
+                  "role": "user",
+                  "contentSha256": "1e3321b156751e2ad858c7bc4edb68117a1fe5929951f382b45ecc28d64d447f",
+                  "excerpt": "User: I realized that as the discussions progressed, they often drifted away from deeper analysis or meaningful engagement with the texts. The members seemed less interested in exploring the nuances of the stories and mo"
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "Book-club disengagement relates to reading autonomy but does not give the structured-reading-list reason in source52.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            },
+            {
+              "sampleOrdinal": 2,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791229478462_23e9ed9a",
+              "version": 7,
+              "assetSha256": "381b532cce40e1995d877567147f38a136f1553102276105b3f1d0a03d03850d",
+              "assetBodyChars": 83,
+              "closedHeadMatches": true,
+              "relevance": "partial",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 11,
+                  "role": "user",
+                  "contentSha256": "02cf9bd3367d1971cd86eb1ae92ace6bd0d7ee7d8bf089534fcd6b37972d968e",
+                  "excerpt": "User: I did, but I found it overwhelming and stressful. The sheer volume of books I felt obligated to read in a limited timeframe left me anxious. Instead of enjoying the experience, I constantly looked at the clock, wor"
+                },
+                {
+                  "historyIndex": 139,
+                  "role": "user",
+                  "contentSha256": "01ef4a60029841d5fc584db4eecc688d8421fa9396b7f616235d0f03ccd6ad06",
+                  "excerpt": "User: On another note, I decided to step back from readathons. I realized that while the idea of racing against the clock to finish as many books as possible can seem exciting, it ultimately detracted from the joy I foun"
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "Readathon time pressure relates to structure but is not the source52 reading-list rationale requested by the options.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            },
+            {
+              "sampleOrdinal": 3,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791229478462_ace5a6f3",
+              "version": 8,
+              "assetSha256": "016d75316f05fba35e1a52340b7597d33300a3dfea4aa39694a7c9c472d863d4",
+              "assetBodyChars": 70,
+              "closedHeadMatches": true,
+              "relevance": "unrelated",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 63,
+                  "role": "user",
+                  "contentSha256": "3a2a6f1df6428d99c3026545fbba42a59de3746cd7832f55be0396845838ac16",
+                  "excerpt": "User: And I must say, I’ve started enjoying graphic novels! I recently read an exceptional graphic novel that transformed my perspective on storytelling. It’s fascinating how this medium has evolved, blending visual art "
+                },
+                {
+                  "historyIndex": 65,
+                  "role": "user",
+                  "contentSha256": "a37bbf612e1b6407f7787da536edc4a726f28a611d1b4253c3b1b6a078e907e0",
+                  "excerpt": "User: I have been diving into graphic novels lately, and it has been quite an enriching experience. The combination of visuals and storytelling is fascinating and makes for a unique form of art. I never realized how much"
+                },
+                {
+                  "historyIndex": 124,
+                  "role": "user",
+                  "contentSha256": "1a6e94d8eaa5ecc95f39fb29d53855679d0917a912d059c405b8e4a630f18524",
+                  "excerpt": "User: Definitely! I also took a break from graphic novels recently—they just didn’t resonate as much as I hoped due to a few poorly written ones. I found myself flipping through pages that just didn't seem to capture my "
+                },
+                {
+                  "historyIndex": 140,
+                  "role": "user",
+                  "contentSha256": "594294986121e6acc6ffb56cba7353e80aca1aa1099bbc919d69fa01e64710cd",
+                  "excerpt": "User: I've actually stopped reading graphic novels altogether because a few disappointing titles overshadowed my previous enjoyment of the medium. In the past, I found graphic novels to be a vibrant and engaging way to e"
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "Graphic novel disappointment is a different reason from structured reading-list restriction.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            },
+            {
+              "sampleOrdinal": 4,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791229478462_a4a8991f",
+              "version": 9,
+              "assetSha256": "f0e4430e3bf910d917701d9a1165db737a58ed1a4d6c22f04d7883775baf3300",
+              "assetBodyChars": 103,
+              "closedHeadMatches": true,
+              "relevance": "unrelated",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 21,
+                  "role": "user",
+                  "contentSha256": "9cba84f2d0a22cc9fe91d0bf41ad597a1218ec4745087c43dac8aa70c475a9a7",
+                  "excerpt": "User: I attempted to organize a small book swap, but felt the logistics were too complicated. The idea was exciting, and I envisioned a cozy gathering where book lovers could exchange books they no longer desired for new"
+                },
+                {
+                  "historyIndex": 23,
+                  "role": "user",
+                  "contentSha256": "0654aa22a9c257360fbac4f827ff2ffeba79ee8ca6bcb6bdb92a37739d37d932",
+                  "excerpt": "User: Organizing a book swap sounded like a fun idea at first; however, the reality of coordinating so many people and their varying schedules quickly became overwhelming. It’s fascinating how something that seems so sim"
+                },
+                {
+                  "historyIndex": 47,
+                  "role": "user",
+                  "contentSha256": "772fa87b18e826e4a7d9f25c4c437b96e5bd37c26e8447cbc63c10b2541d4b00",
+                  "excerpt": "User: Exactly! I felt a bit disheartened after sharing a critique that didn’t go well. The experience was more than just disappointing; it felt as though my thoughts were dismissed entirely, which really weighed on my mi"
+                },
+                {
+                  "historyIndex": 121,
+                  "role": "user",
+                  "contentSha256": "7415c3022a3a4df62608cefc24fce00a2211ac0850eb8fe77b0efb02bc353cee",
+                  "excerpt": "User: On a different note, I decided to step back from organizing literary events to focus on my personal reading pleasure. Stepping back from the hectic pace of event planning allows me to rediscover the joy of reading "
+                },
+                {
+                  "historyIndex": 144,
+                  "role": "user",
+                  "contentSha256": "cca8b5d984c20d45484aebaee3c5f2a72f1f4a36d3201460296c9278518a38e8",
+                  "excerpt": "User: Interestingly, I've re-engaged with organizing literary events after realizing how much I missed the sense of community that comes with it, especially after a great local literary fair. This newfound passion has re"
+                }
+              ],
+              "sourceFactLimits": [
+                "Author identity remains unsupported."
+              ],
+              "reason": "Event organizing changes do not explain reading-list restriction.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            }
+          ]
+        }
+      ]
+    },
+    "19": {
+      "annotatedAt": "2026-10-06T03:36:26.949658+00:00",
+      "annotationStage": "AFTER_OFFICIAL_SCORES_GENERATED",
+      "scorerExposureForThisCohort": true,
+      "questions": [
+        {
+          "questionId": "0441a1ba-0d67-47a1-a910-00306910a6e3",
+          "question": "Can you suggest a new way to self-reflect or explore my thoughts that might differ from traditional methods?",
+          "answerSha256": "6916f18c4d967507634fbe84b5d081ae6ae725d15567804a6d06c1c4646617d8",
+          "memoryRefs": [
+            {
+              "sampleOrdinal": 1,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791231168725_3adde5c1",
+              "version": 8,
+              "assetSha256": "6f564194259d41950d96d2b65c64b77c6693e47adbb14277d057a7f3b898db62",
+              "assetBodyChars": 111,
+              "closedHeadMatches": true,
+              "relevance": "unrelated",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 115,
+                  "role": "user",
+                  "contentSha256": "e6f56246bc82d7dcdd5da11b7ae838f4e74ef4d80550728c3016c2b248c39189",
+                  "excerpt": "User: Recently, I dedicated some time to listening to a compelling series of financial podcasts, focusing particularly on investment strategies that can be employed in today's fluctuating market. During these episodes, I"
+                },
+                {
+                  "historyIndex": 117,
+                  "role": "user",
+                  "contentSha256": "ba891e0029ebba4219d88acc7867cf83fad05361503dbae25b00546b35489ffe",
+                  "excerpt": "User: Yes! Networking with local financial professionals at a community event also opened my eyes to new opportunities. It was fascinating how engaging with people from different backgrounds and experiences can bring for"
+                },
+                {
+                  "historyIndex": 123,
+                  "role": "user",
+                  "contentSha256": "265ad952c036bff3769dbd5f1ebb31721662d7de6067cdbbe553f4f11728af9b",
+                  "excerpt": "User: I'm still learning! I recently participated in an online investment challenge to test my investing skills. This challenge has pushed me to explore different areas of investing that I hadn't considered before, such "
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "Investment research/community does not establish a self-reflection medium.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            },
+            {
+              "sampleOrdinal": 2,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791230970225_b44d912c",
+              "version": 7,
+              "assetSha256": "b3956a114fae1099dcdcac222b6c93b92035bab4cf0ed1c98a9619cb7c8da5d8",
+              "assetBodyChars": 140,
+              "closedHeadMatches": true,
+              "relevance": "direct",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 37,
+                  "role": "user",
+                  "contentSha256": "75edadaf211adf1db662e5a520353388d901ee347d0db4c4536aaa3d3ebc1e60",
+                  "excerpt": "User: I started a travel blog but quickly found that vlogging was more demanding than I expected. The initial excitement of documenting my adventures was quickly overshadowed by the time-consuming process of editing and "
+                },
+                {
+                  "historyIndex": 56,
+                  "role": "user",
+                  "contentSha256": "40b9be5731e03fd366f81e7b1f32c146a9ef59086b8759bf9cdafb7ecb7a37b7",
+                  "excerpt": "User: Yes! However, I've decided to stop my travel blog and focus on journaling my thoughts instead. This shift feels significant to me because, while travel blogging allowed for creative expression through sharing exper"
+                },
+                {
+                  "historyIndex": 73,
+                  "role": "user",
+                  "contentSha256": "73d1a809ee1b7027959a12f79a1779b16deae923fee1f15420f639808f42efc2",
+                  "excerpt": "User: For sure! I started a new travel vlog series to document my adventures and connect with viewers, which feels really liberating and creatively fulfilling. Creating content for a travel vlog not only allows me to sha"
+                },
+                {
+                  "historyIndex": 75,
+                  "role": "user",
+                  "contentSha256": "db599b3156aecd5cc124354c6af1e3d57c6b7b7891ae173640e7e26b17d7e408",
+                  "excerpt": "User: I’m focusing on authentic experiences and the stories behind the places I visit. I've also engaged with several new travel influencers and felt inspired by their journeys and tips. It's fascinating to see how vario"
+                },
+                {
+                  "historyIndex": 96,
+                  "role": "user",
+                  "contentSha256": "0ff3be0b251ce7681d7cf68716c1af0e53e6b68a5d7ab80838ddba6ff3679c10",
+                  "excerpt": "User: I began uploading weekly travel videos that highlight favorite experiences and tips. It's remarkable how the act of sharing can foster a sense of community among travelers who have similar passions. Every week, I s"
+                }
+              ],
+              "sourceFactLimits": [
+                "2026-10-05 is absent from complete history; earlier stopping then later restarting must be distinguished."
+              ],
+              "reason": "Video/blog evolution directly discriminates recording suggestions; answer echoes older abandonment while not reconciling newer resumed videos.",
+              "correspondingFactObservedInAnswer": true,
+              "causalContributionEstablished": false
+            },
+            {
+              "sampleOrdinal": 3,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791230853940_92ee0c84",
+              "version": 6,
+              "assetSha256": "594a644edcfde53a35fe0432375da964c60fc0b6a5ff763743fa936f4873939e",
+              "assetBodyChars": 127,
+              "closedHeadMatches": true,
+              "relevance": "unrelated",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 27,
+                  "role": "user",
+                  "contentSha256": "1b9458940ef0c8e92248e72446a488491d41affaa9fa61d1e6f53475dd14ede0",
+                  "excerpt": "User: I found myself trying to navigate through the various stalls and booths at the expo, but it quickly became overwhelming as there were so many different vendors, each showcasing their unique travel packages and dest"
+                },
+                {
+                  "historyIndex": 48,
+                  "role": "user",
+                  "contentSha256": "7cc4ff034de8c845b30abac389f54c8a3066b3ba3f2f4daf291bffd5b2498855",
+                  "excerpt": "User: I focused on the essentials! It was crucial for me to prioritize what I truly needed for the trip, eliminating any unnecessary items that might add weight or bulk to my bag. This mindset not only helped me maintain"
+                },
+                {
+                  "historyIndex": 77,
+                  "role": "user",
+                  "contentSha256": "7ca00f522d3b66176a343d386e725bbd6b5dd7404c1b75444c595a02941cd665",
+                  "excerpt": "User: Definitely! And speaking of learning, I decided to attend a travel fair after feeling more curious about it from seeing the social buzz around it online. It seemed like a perfect opportunity not only to gather info"
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "Travel fair information overload is not a self-reflection method.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            },
+            {
+              "sampleOrdinal": 4,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791230486417_02d78449",
+              "version": 0,
+              "assetSha256": "1c07f1cd7132efcaf64ffa02b1ad4662533626c659832a027e58f54390905c42",
+              "assetBodyChars": 100,
+              "closedHeadMatches": true,
+              "relevance": "direct",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 33,
+                  "role": "user",
+                  "contentSha256": "e092b869591da8085c07842983f42cafe7effbd99d8cd0046cbc738f6c0580bb",
+                  "excerpt": "User: I even engaged in a DIY afternoon but realized that designing travel-themed art isn’t really my strong interest, and it became quite apparent that my artistic skills were far from what I had hoped they would be. I "
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "DIY art frustration directly discriminates the artistic workshop suggestion.",
+              "correspondingFactObservedInAnswer": true,
+              "causalContributionEstablished": false
+            }
+          ]
+        },
+        {
+          "questionId": "d6d4a4e8-96c4-4b72-bdd3-204b44ec1826",
+          "question": "Have you come across any local experiences where people get to deeply connect with cultural traditions through engaging activities?",
+          "answerSha256": "d7308a6ba4eae40b15ff67779aa77bb3af4b1a6e268549d121a20272cd8a1c8c",
+          "memoryRefs": [
+            {
+              "sampleOrdinal": 1,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791230420280_65161e9b",
+              "version": 0,
+              "assetSha256": "339a44fcc9bd364c30dcfd6d3541b3bd96488f8ffdb2ec28367fb69068f4f5d5",
+              "assetBodyChars": 42,
+              "closedHeadMatches": true,
+              "relevance": "direct",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 9,
+                  "role": "user",
+                  "contentSha256": "7e795d7f5940e0e3641acbf1c44c52bc8c58d06d464a0d9341d6b98d0f3e945c",
+                  "excerpt": "User: I booked a local cooking class in Thailand during my last trip too. It was an incredible experience, immersing myself in the vibrant culture and learning traditional recipes that have been passed down through gener"
+                },
+                {
+                  "historyIndex": 11,
+                  "role": "user",
+                  "contentSha256": "12a28e12ee3ee24b15b9ab38e8a8d2105446283f23d9c3d9b7669a2d9a78eed8",
+                  "excerpt": "User: It was incredible! I had the opportunity to try my hand at making authentic Thai dishes, which was not only enjoyable but also a fantastic way to connect with the local culinary traditions. The flavors were vibrant"
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "Thai local cooking traditions and shared culinary experience directly match the anecdote.",
+              "correspondingFactObservedInAnswer": true,
+              "causalContributionEstablished": false
+            },
+            {
+              "sampleOrdinal": 2,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791230809566_edb172c7",
+              "version": 0,
+              "assetSha256": "04876db4e58ab100d74ad2d9cd29fb7b4af939e9fcc78928bccd20dc9869b6a9",
+              "assetBodyChars": 48,
+              "closedHeadMatches": true,
+              "relevance": "partial",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 65,
+                  "role": "user",
+                  "contentSha256": "be4688f22dbf6b2292a6115b9cf962a7e0a1aa571da3deb53a87ba961251f596",
+                  "excerpt": "User: Recently, I designed an intricate itinerary for a group trip to explore local hidden gems in the area. Crafting the itinerary was a labor of love, requiring extensive research and deep thought to ensure that it wou"
+                },
+                {
+                  "historyIndex": 67,
+                  "role": "user",
+                  "contentSha256": "b7e1a6837a843ae0871e8aa33d1054ca4270ef76ea690951e6da713af5b9b83d",
+                  "excerpt": "User: I included some lesser-known parks and quaint cafes that offer unique local dishes. These parks are perfect for enjoying nature in a more tranquil setting, away from the bustling crowds. The quaint cafes offer cozy"
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "Planned local hidden parks/cafes tour supports cultural activity context but not the specific past Thai cooking anecdote.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            },
+            {
+              "sampleOrdinal": 3,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791230970225_53bcd010",
+              "version": 0,
+              "assetSha256": "b7ba99756b5b4873165db9e6095ff28801e608688c9e25c5d80a80943bf28f5c",
+              "assetBodyChars": 65,
+              "closedHeadMatches": true,
+              "relevance": "partial",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 94,
+                  "role": "user",
+                  "contentSha256": "141654beb46ced3e8c9cc344f7c43e7bf7f77e474387c2097d24ff809978d65b",
+                  "excerpt": "User: Yes, I've developed an extensive itinerary for my New Year’s trip, which includes unique local experiences that I can’t wait to try. I’ve taken the time to research each location thoroughly, ensuring that I not onl"
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "New Year local-culture itinerary is related but not the actual cooking experience.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            },
+            {
+              "sampleOrdinal": 4,
+              "scope": "c52ddf65534b7b4603508435",
+              "assetId": "m_1791230853940_e45c4871",
+              "version": 0,
+              "assetSha256": "c72a9ae6b334c9af568368297f38e4b1b5ed91aed179a1e3f39d1252b5fce109",
+              "assetBodyChars": 76,
+              "closedHeadMatches": true,
+              "relevance": "partial",
+              "sourceEvidence": [
+                {
+                  "historyIndex": 19,
+                  "role": "user",
+                  "contentSha256": "72c11dc869dd739c0b4f90aba72c71ea5f7d941713c4a0918eddf649cc70d9fb",
+                  "excerpt": "User: I planned a food tour in Lisbon, and I'm excited to seek out the best local eateries. As I dove deeper into the culinary scene of Lisbon, I uncovered a variety of delicious options ranging from traditional Portugue"
+                },
+                {
+                  "historyIndex": 79,
+                  "role": "user",
+                  "contentSha256": "d9f8cff9f607cabfff34d1b951ec522c450797c6c508d6940e1fffb93832bd5e",
+                  "excerpt": "User: I conducted thorough research and meticulously planned a food tour that includes both popular spots and hidden local eateries, ensuring a diverse culinary experience that captures the essence of the local food scen"
+                }
+              ],
+              "sourceFactLimits": [],
+              "reason": "Food-tour planning is related culinary culture but is not the past Thai cooking experience.",
+              "correspondingFactObservedInAnswer": false,
+              "causalContributionEstablished": false
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "naturalSkillReviews": [
+    {
+      "personaId": "12",
+      "name": "movie-recommendation-user-profile",
+      "skillId": "skl-pqUeKJj3evps",
+      "version": 2,
+      "markdownChars": 844,
+      "bodyChars": 744,
+      "markdownSha256": "1c1943cf96cc0b85562c43a34d6263e01158fe8737eedc077c63b6e6d045b0ed",
+      "resourcesPresent": false,
+      "actualBodyDeliveries": 0,
+      "questionScope": "First three questions concern legal learning/activities and fourth a history-themed puzzle game; movie recommendation Skill is not directly applicable. Non-loading is not automatically a defect.",
+      "sourceUpdateLimit": "Stored v1 includes older film-critique-group/film-history aversion; final imported segment says stopped formal critique groups and revived film-history interest via podcasts (history indices170/174). Preference-scoped updates require closer review; no observed use or answer impact.",
+      "generatedLanguageLimit": "Chinese content with mixed English headings.",
+      "causalImpactEstablished": false
+    }
+  ],
+  "annotationTiming": "First24 refs recorded before scores; remaining32 after saved official scores were available. Not blind diagnostic labels.",
+  "originalFirst24Sha256": "3b30ac20eacdbded03167df5b608917bd02ac77cf44da7e88ec5b2e0e767ffd8",
+  "plannedRefs": 64,
+  "reviewedRefs": 56,
+  "missingRefs": 8,
+  "missingReason": "User15 failed before all four answering sessions; no foreground initial refs. Missing is not irrelevant or0quality.",
+  "relevanceCounts": {
+    "unrelated": 22,
+    "partial": 21,
+    "direct": 13
+  },
+  "decisionCorrespondenceCount": 10,
+  "answerSourceLimits": [
+    {
+      "user": 3,
+      "questionOrdinal": 2,
+      "observation": "Answer claims shift away from hiking clubs; source148 shifts from fitness classes TO hiking club, and initial hiking ref is positive.",
+      "sourceIndices": [
+        148
+      ],
+      "causalAttribution": false
+    },
+    {
+      "user": 19,
+      "questionOrdinal": 1,
+      "observation": "Answer relies on abandoned video/blog content without reconciling later resumed vlogs/videos in source73/96; initially delivered ref itself preserves both phases but has invented absolute date.",
+      "sourceIndices": [
+        37,
+        56,
+        73,
+        96
+      ],
+      "causalAttribution": false
+    }
+  ]
+}
