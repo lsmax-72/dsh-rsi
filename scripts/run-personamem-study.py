@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Coordinate frozen PersonaMem users; all learning stays in the native plugin."""
-import argparse,ast,hashlib,json,math,os,random,re,subprocess,sys
-from datetime import datetime,timezone
+import argparse,ast,hashlib,json,math,os,random,re,subprocess,sys,time
+from datetime import datetime,timezone,timedelta
 from pathlib import Path
 from personamem_answer_diagnostics import diagnose_answer_format,official_parser_controls
 
@@ -127,6 +127,22 @@ def summarize(root,freeze,scorer,official_source):
         result.update(baselineMacroAccuracy=sum(u['arms'][0]['accuracy'] for u in users)/len(users),rsiMacroAccuracy=sum(u['arms'][1]['accuracy'] for u in users)/len(users),pairedAccuracyDifference=sum(delta)/len(delta),userClusterBootstrap95=[boot[249],boot[9749]],bootstrapDraws=10000)
     write(root/'results.json',result);return result
 
+def utc_day_headroom(now):
+    assert now.tzinfo is not None
+    now=now.astimezone(timezone.utc)
+    return ((now+timedelta(days=1)).replace(hour=0,minute=0,second=0,microsecond=0)-now).total_seconds()
+
+def wait_for_learning_day(root,instance,freeze):
+    # Wait before recording or dispatching an arm; learning keeps its original budget.
+    if freeze.get('learningFailurePolicy')!=NATIVE_LEARNING_POLICY:return
+    required=freeze['budgets']['learningWallSecondsPerUser']+300
+    while True:
+        now=datetime.now(timezone.utc);remaining=utc_day_headroom(now)
+        if remaining>=required:return
+        notice={'status':'WAITING_BEFORE_DISPATCH_FOR_UTC_DAY','observedAt':now.isoformat(),'requiredHeadroomSeconds':required,'remainingDaySeconds':remaining,'realModelRequests':0}
+        write(root/(instance+'-utc-day-wait.json'),notice);print(json.dumps(notice),flush=True)
+        time.sleep(min(60,remaining+1))
+
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--proposal',type=Path,required=True);p.add_argument('--public',type=Path,required=True);p.add_argument('--scorer',type=Path,required=True);p.add_argument('--official-source',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--image',default='dsh-rsi-formal:django__django-11119');p.add_argument('--freeze-only',action='store_true');p.add_argument('--resume',action='store_true');p.add_argument('--report-only',action='store_true');args=p.parse_args()
     project=Path(__file__).resolve().parent.parent;root=args.output.resolve();root.mkdir(parents=True,exist_ok=True);frozen=root/'freeze.json'
@@ -161,6 +177,7 @@ def main():
             if any(r['personaId']==persona and r['arm']==arm for r in records):continue
             out=root/(instance+'-'+arm);b=freeze['budgets'];learning=b['backgroundCallsPerUser'] if arm=='rsi' else 0
             argv=[sys.executable,'-B',str(project/'scripts/probe-runner.py'),'--persona-protocol',str(frozen),'--persona-input',str(root/'public'/(instance+'.json')),'--image',freeze['taskTag'],'--arm',arm,'--instance',instance,'--output',str(out),'--dispatch-limit',str(b['foregroundCallsPerQuestion']),'--request-limit',str(learning+freeze['questionCountPerUser']*b['foregroundCallsPerQuestion']),'--learning-call-budget',str(b['backgroundCallsPerUser']),'--learning-dispatch-limit',str(learning),'--wall-seconds',str(b['wallSecondsPerQuestion']),'--settle-seconds',str(b['learningWallSecondsPerUser'])]
+            if arm=='rsi':wait_for_learning_day(root,instance,freeze)
             record={'personaId':persona,'arm':arm,'status':'RUNNING','runDir':str(out),'startedAt':datetime.now(timezone.utc).isoformat()};records.append(record);write(root/'runs.json',records);print(json.dumps(record),flush=True)
             with (root/(out.name+'.runner.log')).open('w') as log:code=subprocess.run(argv,cwd=project,stdout=log,stderr=subprocess.STDOUT).returncode
             record.update(status='CLOSED',returncode=code,finishedAt=datetime.now(timezone.utc).isoformat());write(root/'runs.json',records)

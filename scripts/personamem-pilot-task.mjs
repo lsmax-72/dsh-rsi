@@ -65,6 +65,11 @@ export function apply(ctx,config){
       const importedRoles=[...history.agent.session.deriveMessages()].map(m=>({role:m.role,content:m.content.map(b=>b.text).join('')}));assert.deepEqual(importedRoles,input.history);
       durable('import.json',{personaId:input.personaId,contextId:input.contextId,cutoff:input.historyCutoffExclusive,messages:input.history.length,historySha256:createHash('sha256').update(JSON.stringify(input.history)).digest('hex'),nativeHistoryExact:true,turnBoundaries:imported.turnBoundaries});
       if(rsi){
+        if(config.learningFailurePolicy===NATIVE_LEARNING_POLICY&&!config.fixture){
+          const now=Date.now(),date=new Date(now),nextDay=Date.UTC(date.getUTCFullYear(),date.getUTCMonth(),date.getUTCDate()+1);
+          const headroom={observedAt:now,remainingDayMs:nextDay-now,requiredMs:config.settleMs+60000,realModelRequests:0};durable('utc-day-headroom.json',headroom);
+          assert.ok(headroom.remainingDayMs>=headroom.requiredMs,'Wait before dispatch: native learning must fit the same UTC quota day');
+        }
         phase='learning';lastLearningActivity=Date.now();const until=Date.now()+config.settleMs;
         rsi.runtime.observe(history.agent.session,imported.events.at(-1));
         // Capture is the native log recovery entry. L0 indexing can consume much of this bounded window.
