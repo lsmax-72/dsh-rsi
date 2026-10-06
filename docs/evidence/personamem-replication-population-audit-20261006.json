@@ -1,0 +1,122 @@
+{
+  "status": "METADATA_ONLY_PREEXPOSED_POPULATION_AUDIT",
+  "recordedAt": "2026-10-06T04:11:16.960861+00:00",
+  "officialUsers": [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15",
+    "16",
+    "17",
+    "18",
+    "19"
+  ],
+  "officialUserCount": 20,
+  "officialContexts": 37,
+  "officialQuestions": 589,
+  "developmentUser0Excluded": true,
+  "dispatchedStudies": [
+    {
+      "name": "personamem-independent-20261004",
+      "frozenSha256": "d3f2e157199f72fffd496fdac07045356d5b4023c5537d9688f88235291354bf",
+      "runsSha256": "c195d2a15a123bad148630fa910101c77a3feb8110f1cc4138e2352952eb8736",
+      "dispatchedUserIds": [
+        "2",
+        "5",
+        "6",
+        "10",
+        "13"
+      ]
+    },
+    {
+      "name": "personamem-fresh-independent-20261004",
+      "frozenSha256": "61773090c494ee8d74c79c0f8fb38ccaf82d3537e33dfe551127f6cebfe25ecf",
+      "runsSha256": "dad20b084e3d6a4a29951657dee501dcef956ad0fb8ebf9666ec2ce874cdae80",
+      "dispatchedUserIds": [
+        "8",
+        "16",
+        "18"
+      ]
+    },
+    {
+      "name": "personamem-current-method-20261006",
+      "frozenSha256": "aa56d9ec9c0a7ef715fd7c262461069762813380da1e55a7f0a170c127037091",
+      "runsSha256": "7fd268cc8fdceaa4830ef130e552a7688f4661c18d3f8e682404d06a3c096b6b",
+      "dispatchedUserIds": [
+        "3",
+        "4",
+        "9",
+        "12",
+        "14",
+        "15",
+        "17",
+        "19"
+      ]
+    }
+  ],
+  "exposedUserIds": [
+    "0",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "8",
+    "9",
+    "10",
+    "12",
+    "13",
+    "14",
+    "15",
+    "16",
+    "17",
+    "18",
+    "19"
+  ],
+  "neverDispatchedUserIds": [
+    "1",
+    "7",
+    "11"
+  ],
+  "newSelectedUsers": [
+    "9",
+    "4",
+    "12",
+    "14",
+    "3",
+    "17",
+    "19",
+    "15"
+  ],
+  "allSelectedUsersPreviouslyDispatched": true,
+  "exactPreviousPublicInputHashes": {
+    "9": "f7492183f2478258793c0ef4bbcf2656fa7d5569d43c6b2cd5c69489d264eb2f",
+    "4": "0582d05028b52aea5d76028cf813301b29bdb6dc02668aabb83d5c1aa4569ec4",
+    "12": "e2f9c3c9928191c963e6e2a9b4f61a9b0582d1f18d36499b48a73e97967bcc7f",
+    "14": "64e2c0586cb2aab6abf37a29d01405bfd6309b1edffff6d3f167bce6e1cf2351",
+    "3": "88353a13c148e3cbb7aed4436f505d2c77520116292bceb9cef78820d61d1a5c",
+    "17": "455fa98d3237c5b3e555b6734c16cb22d97696fdbd8ae44276588bcb1302a9d3",
+    "19": "a389ef9d644d1e484ca2e79ad0e3c9fa958dcf86b7ee6e1fe0c2963292e3c850",
+    "15": "23b76c1ab6cddada2861305583c029da5263d44f51d3ecf0d80ee0c8e167b14a"
+  },
+  "selectionRule": "Keep the entire exact previous registered eight-user/four-question cohort, including failed user 15; no score-based substitutions. Preserve the three untouched identities for later confirmation.",
+  "officialAnswersInspectedForSelection": false,
+  "independenceClaim": false,
+  "dataSha256": {
+    "questions_32k.csv": "cccd34cf53e0bc4d9536c04cff5ca045156d9a4e227e83327112482840bbc93c",
+    "shared_contexts_32k.jsonl": "217247ebfec9e8442fc53570c795ab69f21aad08745f7de78d9beab51b122d4a"
+  },
+  "realNewModelRequests": 0
+}
