@@ -1,0 +1,356 @@
+{
+  "status": "DATE_PROVENANCE_PASSED_SYNTHETIC_SAMPLE_OVERALL_FACTUAL_QUALITY_NOT_PASSED",
+  "checkedAt": "2026-10-06T12:44:17.094457+00:00",
+  "planSha256": "5e439c51bc2b47ff77781e2d07ddc5730ba1ac40741f1522b87912a4bec07b3a",
+  "predeclaredRevision": "4eebde2",
+  "sourceRevision": "5d20b589290f7adc0bb8fcb21bb5d1c8b7ceaf4a",
+  "sourceKind": "synthetic; explicit unknown-date statements make this easier than heterogeneous public histories",
+  "terminal": {
+    "status": "CLOSED",
+    "actualCallsMax": 6,
+    "wallSecondsMax": 420,
+    "exitCode": 0,
+    "elapsedSeconds": 89.777,
+    "gatewayRequests": 5,
+    "relayClosed": true,
+    "runnerClosed": true,
+    "receipt": {
+      "status": "NATIVE_OUTPUT_REQUIRES_CONTENT_REVIEW",
+      "sourceMessages": 6,
+      "sourceProseMatchesDurableLog": true,
+      "layers": {
+        "L0": 6,
+        "L1": 4,
+        "L2": 1,
+        "L3": 1
+      },
+      "actualRequests": 5,
+      "knownTokens": 22025,
+      "unknownActualUsage": 0,
+      "embeddingTokenUsage": null,
+      "taskSolverCalls": 0,
+      "taskCommands": 0,
+      "consumerCalls": 0,
+      "scorerRead": false,
+      "independentEffectClaim": false,
+      "triggerMode": "manual native sequence, not automatic scheduler validation"
+    }
+  },
+  "phaseCost": [
+    {
+      "phase": "L1",
+      "actualCalls": 1,
+      "inputTokens": 2343,
+      "outputTokens": 802,
+      "totalTokens": 3145
+    },
+    {
+      "phase": "L2",
+      "actualCalls": 2,
+      "inputTokens": 10027,
+      "outputTokens": 1060,
+      "totalTokens": 11087
+    },
+    {
+      "phase": "L3",
+      "actualCalls": 2,
+      "inputTokens": 6610,
+      "outputTokens": 1183,
+      "totalTokens": 7793
+    }
+  ],
+  "embeddingTokenUsage": null,
+  "qualityAuditStage": "manual audit after generation; no benchmark answers or scores consulted",
+  "findings": [
+    {
+      "check": "explicit_event_date",
+      "result": "PASS_IN_THIS_SAMPLE",
+      "source": "2024年3月1日陶艺课做杯子",
+      "L1": "2024-03-01; activity_start/end at source calendar day",
+      "L2": "用户（2024-03-01）参加了一次陶艺体验课",
+      "L3": "曾于 2024-03-01 参加陶艺体验课"
+    },
+    {
+      "check": "unknown_relative_event_dates",
+      "result": "PASS_IN_THIS_SAMPLE",
+      "source": "上周播客/下周披萨；最近偏好变化，无原始日历锚点",
+      "L1": "播客/披萨具体日历日期未知；偏好最近；均无绝对日期元数据",
+      "L2": "近期（未定日期）；演变日期未知；待确认保留上周/下周",
+      "L3": "具体日历日期未知；Evolution相对时间·日期未知"
+    },
+    {
+      "check": "clock_metadata",
+      "result": "PASS_IN_THIS_SAMPLE",
+      "details": "2026仅见于场景 META 或 Scene Navigation 更新元数据，不作为历史事件日期"
+    },
+    {
+      "check": "planned_pizza_not_claimed_completed",
+      "result": "PASS_IN_THIS_SAMPLE",
+      "details": "三层保持计划状态，没有生成已制作/已成功的事实"
+    },
+    {
+      "check": "no_generic_dislike_of_all_games",
+      "result": "PASS_IN_THIS_SAMPLE",
+      "details": "三层保留不完全排斥游戏；但游戏偏好变化的源事实覆盖不完整"
+    },
+    {
+      "check": "L1_source_lineage_and_dispatch_reconstruction",
+      "result": "PASS",
+      "details": "4条L1来源ID全部对应6条原始合成消息；5次实际请求逐次从持久化原生日志重建一致"
+    },
+    {
+      "check": "no_unsupported_narrative_specifics",
+      "result": "FAIL",
+      "L2": "核心叙事加入“动手拉坯”“报名体验课”；原文仅说参加陶艺课并做杯子",
+      "L3": "基本信息承接“亲手拉坯”作为事实；没有原始依据"
+    },
+    {
+      "check": "inference_remains_labeled",
+      "result": "FAIL",
+      "L2": "隐性信号推断满足感来自实物而非展示、不是追求专业水准",
+      "L3": "推断进入基本偏好/决策标尺/涌现特征，未继续标注假设"
+    },
+    {
+      "check": "past_preference_coverage",
+      "result": "PARTIAL",
+      "source": "以前觉得竞技游戏很有趣",
+      "L1": "压缩为当前偏好/不完全排斥游戏，丢失以前很有趣的具体表述",
+      "L2_L3": "转述为可接受游戏/轻度对抗；不能据此宣称完整追踪偏好变化"
+    }
+  ],
+  "sources": [
+    {
+      "id": "c4c8e33e-c748-4996-b04b-6b4d6f42126d",
+      "role": "user",
+      "content": "2024年3月1日，我参加了一次陶艺体验课，做了一个杯子。我喜欢这种轻松的创作活动，不喜欢带比赛压力的活动。",
+      "timestamp": 1791290699079,
+      "timestampKind": "imported-unknown"
+    },
+    {
+      "id": "0fc871f1-783a-4e44-82e8-253b76aa1d6f",
+      "role": "assistant",
+      "content": "你明确说陶艺体验课发生在2024年3月1日，而且偏好轻松的创作活动，不喜欢比赛压力。",
+      "timestamp": 1791290699079,
+      "timestampKind": "imported-unknown"
+    },
+    {
+      "id": "742efd91-08d2-4889-a9c1-96d58fcc2932",
+      "role": "user",
+      "content": "上周我听了一期烹饪播客，下周想照着做一次披萨。我没有提供这次聊天的日期，不知道下周具体是哪一天。",
+      "timestamp": 1791290699079,
+      "timestampKind": "imported-unknown"
+    },
+    {
+      "id": "6c3067b7-b447-4b02-99c7-ebfa3c221ec6",
+      "role": "assistant",
+      "content": "这里只知道你说的上周听了播客、下周计划做披萨，没有聊天日期，因此具体日历日期未知。",
+      "timestamp": 1791290699079,
+      "timestampKind": "imported-unknown"
+    },
+    {
+      "id": "7a51a34d-cf69-4bab-a0a3-1a5b52bbb1c8",
+      "role": "user",
+      "content": "以前我觉得竞技游戏很有趣，最近更想在周末做没有排名和比赛的创作活动。我不是不喜欢所有游戏，只是现在想轻松一些。",
+      "timestamp": 1791290699079,
+      "timestampKind": "imported-unknown"
+    },
+    {
+      "id": "28d86781-1d54-4674-8a5c-8cafc0e0e0e7",
+      "role": "assistant",
+      "content": "你说最近的周末偏好轻松创作，也明确说明不是不喜欢所有游戏；这段偏好变化没有具体日期。",
+      "timestamp": 1791290699079,
+      "timestampKind": "imported-unknown"
+    }
+  ],
+  "generatedLayers": {
+    "L1": {
+      "items": [
+        {
+          "id": "m_1791290721911_101a8192",
+          "content": "用户（我）在 2024-03-01 参加了一次陶艺体验课，并制作了一个杯子。",
+          "type": "episodic",
+          "priority": 70,
+          "scene_name": "我（AI）在整理用户的生活偏好与事件经历",
+          "source_message_ids": [
+            "c4c8e33e-c748-4996-b04b-6b4d6f42126d"
+          ],
+          "metadata": {
+            "activity_start_time": "2024-03-01T00:00:00Z",
+            "activity_end_time": "2024-03-01T23:59:59Z"
+          },
+          "timestamps": [
+            "2026-10-06T12:45:21.915Z"
+          ],
+          "createdAt": "2026-10-06T12:45:21.915Z",
+          "updatedAt": "2026-10-06T12:45:21.915Z",
+          "version": 0,
+          "sessionKey": "synthetic-profile-time-history",
+          "sessionId": "synthetic-profile-time-history",
+          "taskId": "",
+          "teamId": "default",
+          "userId": "default",
+          "agentId": "default"
+        },
+        {
+          "id": "m_1791290721911_600cad3e",
+          "content": "用户（我）喜欢轻松的创作活动，不喜欢带有比赛压力的活动。",
+          "type": "persona",
+          "priority": 80,
+          "scene_name": "我（AI）在整理用户的生活偏好与事件经历",
+          "source_message_ids": [
+            "c4c8e33e-c748-4996-b04b-6b4d6f42126d",
+            "7a51a34d-cf69-4bab-a0a3-1a5b52bbb1c8"
+          ],
+          "metadata": {},
+          "timestamps": [
+            "2026-10-06T12:45:21.964Z"
+          ],
+          "createdAt": "2026-10-06T12:45:21.964Z",
+          "updatedAt": "2026-10-06T12:45:21.964Z",
+          "version": 0,
+          "sessionKey": "synthetic-profile-time-history",
+          "sessionId": "synthetic-profile-time-history",
+          "taskId": "",
+          "teamId": "default",
+          "userId": "default",
+          "agentId": "default"
+        },
+        {
+          "id": "m_1791290721911_17779f6d",
+          "content": "用户（我）在“上周”听了一期烹饪播客，并计划在“下周”照着制作一次披萨（具体日历日期未知）。",
+          "type": "episodic",
+          "priority": 65,
+          "scene_name": "我（AI）在整理用户的生活偏好与事件经历",
+          "source_message_ids": [
+            "742efd91-08d2-4889-a9c1-96d58fcc2932"
+          ],
+          "metadata": {},
+          "timestamps": [
+            "2026-10-06T12:45:22.092Z"
+          ],
+          "createdAt": "2026-10-06T12:45:22.092Z",
+          "updatedAt": "2026-10-06T12:45:22.092Z",
+          "version": 0,
+          "sessionKey": "synthetic-profile-time-history",
+          "sessionId": "synthetic-profile-time-history",
+          "taskId": "",
+          "teamId": "default",
+          "userId": "default",
+          "agentId": "default"
+        },
+        {
+          "id": "m_1791290721911_c1b7c729",
+          "content": "用户（我）最近更倾向于在周末进行没有排名和比赛的创作活动，虽然不完全排斥游戏，但当前偏好转向轻松模式。",
+          "type": "persona",
+          "priority": 80,
+          "scene_name": "我（AI）在整理用户的生活偏好与事件经历",
+          "source_message_ids": [
+            "7a51a34d-cf69-4bab-a0a3-1a5b52bbb1c8"
+          ],
+          "metadata": {},
+          "timestamps": [
+            "2026-10-06T12:45:22.113Z"
+          ],
+          "createdAt": "2026-10-06T12:45:22.113Z",
+          "updatedAt": "2026-10-06T12:45:22.113Z",
+          "version": 0,
+          "sessionKey": "synthetic-profile-time-history",
+          "sessionId": "synthetic-profile-time-history",
+          "taskId": "",
+          "teamId": "default",
+          "userId": "default",
+          "agentId": "default"
+        }
+      ],
+      "total": 4
+    },
+    "L2": {
+      "items": [
+        {
+          "filename": "休闲创作-手工与烹饪兴趣.md",
+          "summary": "用户偏好无压力、无排名的休闲创作：陶艺做杯子、听烹饪播客计划做披萨。整体倾向轻松、自得其乐的周末手作模式。",
+          "heat": 1,
+          "created": "2026-10-06T12:45:22.140Z",
+          "updated": "2026-10-06T12:45:22.140Z",
+          "meta": {
+            "created": "2026-10-06T12:45:22.140Z",
+            "updated": "2026-10-06T12:45:22.140Z",
+            "summary": "用户偏好无压力、无排名的休闲创作：陶艺做杯子、听烹饪播客计划做披萨。整体倾向轻松、自得其乐的周末手作模式。",
+            "heat": 1
+          },
+          "content": "## 用户核心特征\n用户对陶艺、烹饪等动手创作有持续兴趣，但明确偏爱\"无竞争、无排名\"的轻松节奏。近期（未定日期）偏好进一步从游戏等带对抗性的活动，转向自得其乐的手作模式，看重过程中的放松与成就感，而非结果或胜负。\n\n## 用户偏好\n- 喜欢轻松、无比赛压力的创作活动。\n- 周末倾向于进行没有排名与竞争的手工/创作项目。\n- 不完全排斥游戏，但当前阶段更偏向轻松模式。\n\n## 隐性信号\n用户把\"压力/竞争\"视为休闲活动的减分项，可能将周末手工作为减压出口。做杯子的满足感来自亲手完成的实物，而非展示；计划照播客做披萨说明他愿意跟随外部灵感小步尝试，而非追求专业水准。\n\n## 核心叙事\n用户（2024-03-01）参加了一次陶艺体验课，动手拉坯做出了一个杯子——这是一次典型的\"无压力创作\"：触发（报名体验课）→行动（亲手做杯）→结果（收获一件自制的实物小物）。近期他又听了一期烹饪播客（具体日期未知），并计划接下来照着做一次披萨，延续了\"跟着灵感小步尝试、享受过程\"的模式。综合来看，他当下的休闲取向是：周末做点没有排名、不带比赛压力的手作，而非对抗性游戏。\n\n## 演变轨迹\n- [日期未知]: 从\"可接受游戏/轻度对抗\"转向\"当前偏好无排名的轻松创作模式\"，倾向性变化，非彻底排斥（记忆ID: #m_1791290721911_c1b7c729）。\n\n## 待确认/矛盾点\n- 烹饪播客与披萨制作的具体日历日期未知（仅知\"上周/下周\"相对时间），待未来记忆锚定。"
+        }
+      ],
+      "total": 1
+    },
+    "L3": {
+      "items": [
+        {
+          "id": "persona",
+          "content": "# User Narrative Profile\n\n> **Archetype (核心原型)**: 一位把周末当作减压出口，靠\"无排名、自得其乐\"的动手手作来换取放松与成就感的\"低压生活家\"。\n\n> **基本信息**\n- 曾于 2024-03-01 参加陶艺体验课，亲手拉坯做出一个杯子。\n- 近期收听烹饪播客，计划照做一份披萨（具体日历日期未知，仅\"上周/下周\"相对时间）。\n\n> **长期偏好**\n- 偏爱轻松、无竞争、无排名的创作节奏。\n- 周末倾向做动手/手工项目，看重过程而非结果或胜负。\n- 不完全排斥游戏，但当前阶段更偏向轻松、非对抗的模式。\n- 愿意跟随外部灵感\"小步尝试\"，而非追求专业水准。\n\n## 📖 Chapter 1: Context & Current State (全景语境)\n用户当下的休闲取向很清晰：周末做点没有排名、不带比赛压力的手作，而非对抗性游戏。他曾参加陶艺体验课亲手做出一个杯子，最近又听了一期烹饪播客、准备照着做披萨。整体是一条连贯的\"轻松创作\"线索——从可接受轻度对抗，逐步转向以自得其乐为主的放松状态。\n\n## 🎨 Chapter 2: The Texture of Life (生活的肌理)\n陶艺、烹饪都属于\"能做出实物\"的动手爱好，且都停留在体验与小步尝试层面，而非精通追求。做杯子的满足感来自亲手完成一件可用的小物，而非展示或评比；听播客后照做披萨，说明他乐于借外部灵感尝试新东西。品味上统一指向\"慢、低压、有手感、有即时成就感\"，把手作当成周末的减压出口。\n\n## 🤖 Chapter 3: Interaction & Cognitive Protocol (交互与认知协议)\n\n### 3.1 沟通策略 (How to Speak)\n推荐休闲/创作类活动时，优先\"轻松、无压力、可自娱\"，避免强调排名、竞争、专业门槛。语气放松、不催促，强调过程乐趣与完成感即可。\n\n### 3.2 决策逻辑 (How to Think)\n用户以\"是否带来放松与成就感\"为决策标尺，把压力/竞争视为减分项。倾向低门槛、跟着灵感小步走；对结果与胜负不敏感。据此替他做选择时，优先排除高对抗、高表现焦虑的选项。\n\n## 🧩 Chapter 4: Deep Insights & Evolution (深层洞察与演变)\n\n* **矛盾统一性**: 他愿意尝试新事物（做披萨）却不想被评价——\"小步探索\"与\"拒绝比较\"并不冲突，只要过程不施压就都欢迎。\n* **演变轨迹**:\n  - [相对时间·日期未知] 从\"可接受游戏/轻度对抗\"转向\"当前偏好无排名的轻松创作模式\"；属倾向性变化，非彻底排斥游戏。\n* **涌现特征**:\n  - `低压手作` - 周末靠动手创作减压放松\n  - `过程导向` - 重体验与完成感，轻结果胜负\n  - `小步尝试` - 跟灵感照做，不追专业水准\n  - `非对抗` - 排斥排名竞争，偏爱自得其乐\n  - `实物满足` - 亲手做出可用之物带来成就感\n\n---\n## 🗺️ Scene Navigation (Scene Index)\n*以下是当前场景记忆的索引，可根据需要 read 读取详细内容。*\n\n### Path: scene_blocks/休闲创作-手工与烹饪兴趣.md\n**热度**: 1 | **更新**: 2026-10-06T12:45:22.140Z\nSummary: 用户偏好无压力、无排名的休闲创作：陶艺做杯子、听烹饪播客计划做披萨。整体倾向轻松、自得其乐的周末手作模式。\n\n📌 使用说明：\n- Path 是 scene block 的绝对路径，可直接使用 **read** 工具读取完整内容（参数: filePath）\n- 热度：该场景被记忆命中的累计次数，越高越重要\n- Summary：场景的核心要点摘要\n"
+        }
+      ],
+      "total": 1
+    }
+  },
+  "rawArchive": "/Users/lsmax/Coder/dsh-rsi/.artifacts/native-profile-time-quality-20261006",
+  "rawHashes": {
+    "gateway.log": "e3790576c97dc648a36d95cb6d4bd9792b0ce674874469da782c8af05d8269f7",
+    "plan.json": "5e439c51bc2b47ff77781e2d07ddc5730ba1ac40741f1522b87912a4bec07b3a",
+    "run.log": "9c0d2310b92ddf4290c0722fc70603d85580f427cecda1c48da59e5af5d6a144",
+    "L0.json": "9befd2a94b219d177e22d904d67b41a5987a1bd1b5d3dc7d24f87fa9d225cc15",
+    "rsi-a174304a-1c1c-47a8-bc52-3e95b81c974d.events.json": "c3ac81d346041065a4552ab932dc0f6fd28db7c760ff07b1137759b13306e724",
+    "L1.json": "9cedb6d6fc413f99efbdbe2c5ac6b64f70c474a4bbec23eae7808d0b08a09995",
+    "history.json": "d20705cc2cfce77c4cbb52c34159198bdb583dae7754a26075b9b5af7729d86e",
+    "source-events.json": "f4204e6cfa560736f9073bf74c9fba2d45f229352289c83ccce2f88742528080",
+    "snapshot.json": "ef39b1ebb21bd61a7bdfa4739b82885a548b6f7e31b5e9cca644d55f6d49a8ee",
+    "started.json": "c913738ab3dae874287dd35ddc7743bb593796e92a94c3c9e8f2b907e7d41d48",
+    "L2.json": "cad3ef55ebe39b2d6e342be941246f18c7a23f52aaf1bb731a1b7877b2d4ca23",
+    "rsi-badf28e6-9ab2-4bd6-a402-d4ecaf4c7b03.events.json": "41a1a19e8a88b5e099d74b8768870097c5f0e735f1a6eb359bb1aec24d75d958",
+    "relay.py": "8aee7f5149aba3d31f46bbc668e59a02dd3a12b927fd4f9331a61e40a56a6900",
+    "stages.json": "37485b33f2564b9a83582c889460b1757661a81ff681161d082e350821ca7c78",
+    "requests.json": "d4a868baaf24fcc0beb9292a71af5c7d36092e10c285465a3d854c4ced0c69b2",
+    "L3.json": "495740ae1216baf1f0fea4c8f0a51b7ec496931293c0b9897f2bf3437955c736",
+    "terminal.json": "5ef2d7095f69bdf374f5773c6562c3d3e3ee258b7605bc12ee9d3be5a0d76e10",
+    "rsi-8f7adf62-b9c7-4d4c-9610-d0f523eaea2f.events.json": "adb1d8884f6a46470de01bcba93ef761931770611f78ffcf79a7de77440790c0",
+    "assets.json": "b124eddf860ec8a720800a6457ebf663060d17e56d538036ba03ec84ddb77350",
+    "patch.json": "f9d4c04dc679d40c21679d95f1bbdd2dbcdd9e0bc017797e8b291219c1f53078",
+    "source-messages.json": "67b4d991df9c1a6a2ba8d852aa28a60c1ec1a921b560e4d829204f181ba8b7a3",
+    "receipt.json": "028bbfb559e8e78c52e8682135b06450392d7e33499a6198c5bede15a8c72519",
+    "assets/rsi-state.sqlite": "a8d01a62609579f89d43c43940f6fceac46452e122e6103f24293c1e1ff91b32",
+    "assets/learning-runs/rsi-8f7adf62-b9c7-4d4c-9610-d0f523eaea2f.json": "0198f908af1871b75b813aaf1e1b6eb23bfe6f0f0c45cf7fce110107bff8a8a8",
+    "assets/learning-runs/rsi-badf28e6-9ab2-4bd6-a402-d4ecaf4c7b03.json": "09f54deff1a060693eca1ca6e0a187f7dd5862b2b41c4c161984ac0bf4b09e50",
+    "assets/learning-runs/rsi-a174304a-1c1c-47a8-bc52-3e95b81c974d.json": "86b71aefb20ebe48236cc1392755802d753961421a18755de7a053118b8ef1aa",
+    "assets/scopes/global/memory.sqlite": "1a5fc44014661704b6dce2958fb349f98c59b21cd788b1f4101fcb6c2d151d7e",
+    "assets/scopes/global/skills.sqlite": "e7b0215fbc2578232608b6fe5b92adedbc556d4a45bafdea70f35f904f55c8ba",
+    "assets/scopes/f5c159770b9a3c721f6b28dc/memory.sqlite": "299bd9e0bb7b53b8147badffd1d5e23f07015fb52fff541c0b08dcc99ea58917",
+    "assets/scopes/f5c159770b9a3c721f6b28dc/skills.sqlite": "e7b0215fbc2578232608b6fe5b92adedbc556d4a45bafdea70f35f904f55c8ba",
+    "assets/scopes/f5c159770b9a3c721f6b28dc/diagnostics/embedding.log": "67e25fe0e5a4910fab11c51e176d3d4e42395b4d52fae56218f2a2aaff857a94",
+    "assets/scopes/f5c159770b9a3c721f6b28dc/history/records/2026-10-06.jsonl": "d89323b0fb28b85bb0435cbd7131e1f05d05907de5acde92afda8957619ae8fe",
+    "assets/scopes/f5c159770b9a3c721f6b28dc/history/conversations/2026-10-06.jsonl": "5e4fbb7699b6911a8259528f53327f6f5c2e30e73354a2823fe7a173cf6ffe18",
+    "assets/scopes/f5c159770b9a3c721f6b28dc/history/instances/standalone/memory-generation-logs/v1/layer=l1/date=2026-10-06/hour=12/8208709278088__mid=m_1791290721911_101a8192__lid=mgl_l1_succeeded_1791290721911_m_1791290721911_101a8192_7b9e99a5875d4d81.json": "01f6fc0db7849ba89d65f76a5deb8bd24ed19451dde1de8f7d2c4a5a2cf62647",
+    "assets/scopes/f5c159770b9a3c721f6b28dc/history/instances/standalone/memory-generation-logs/v1/layer=l1/date=2026-10-06/hour=12/8208709278088__mid=m_1791290721911_101a8192__lid=mgl_l1_succeeded_1791290721911_m_1791290721911_101a8192_7b9e99a5875d4d81.json.meta.json": "e94d0e4a5a7f929f34b1181fcd827de5405b006fb2dbcd2cb7b5b6f856f12893",
+    "assets/scopes/f5c159770b9a3c721f6b28dc/profile/profiles/team%3Adefault%7Cagent%3Adefault/persona.md": "e44f43e168091b3dc47dd87eb54e0a7fa4acc88cb1684a2fca84922d9f7a85bb",
+    "assets/scopes/f5c159770b9a3c721f6b28dc/profile/profiles/team%3Adefault%7Cagent%3Adefault/.metadata/scene_index.json": "60130ba20b10aa2e5d232e38de39609c34087b8e4bfeda8a0f70a6e8a6be877c",
+    "assets/scopes/f5c159770b9a3c721f6b28dc/profile/profiles/team%3Adefault%7Cagent%3Adefault/.metadata/checkpoint.json": "b241472b12d9e7fb87dfd5a44c599c80c2397e5b3b787d1e2d1fbcdfd60dbeb0",
+    "assets/scopes/f5c159770b9a3c721f6b28dc/profile/profiles/team%3Adefault%7Cagent%3Adefault/scene_blocks/休闲创作-手工与烹饪兴趣.md": "d2c39704ac7ed77ec5e968e160642f10c9722369d12404fa42d8410bf3017951",
+    "home/profiles/sdk-minimal/cordis.patch.yml": "ef189a8c27db6d63930aa3046a3040482e952eafcb7487c644d508e8d461f027",
+    "home/profiles/sdk-minimal/package.json": "73c089627acc47000fd21b1a47445f166241b867cfdd59eb1eb66b269810ed93",
+    "home/profiles/sdk-minimal/cordis.yml": "c300dcf2ebc5f02062d6591268d29d3db6fe45e0cb138f5467276fe2ba06076e",
+    "home/profiles/sdk-minimal/pnpm-workspace.yaml": "ae7c5b68e2f157528e62885804e69e88583897b775e03c86fcbe52feaf498aba",
+    "home/sessions/--private-tmp-dsh-rsi-profile-time-quality-20261006-workspace--/rsi-a174304a-1c1c-47a8-bc52-3e95b81c974d/session.v4.jsonl": "6d1563199f75015766617318b06ed8f7081eeb73eb42e7958492022ecf5e448e",
+    "home/sessions/--private-tmp-dsh-rsi-profile-time-quality-20261006-workspace--/rsi-a174304a-1c1c-47a8-bc52-3e95b81c974d/session.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "home/sessions/--private-tmp-dsh-rsi-profile-time-quality-20261006-workspace--/rsi-8f7adf62-b9c7-4d4c-9610-d0f523eaea2f/session.v4.jsonl": "ebfd212f236e6d8d1baa83379144906f8d62e74a91795e3732a69e8864170422",
+    "home/sessions/--private-tmp-dsh-rsi-profile-time-quality-20261006-workspace--/rsi-8f7adf62-b9c7-4d4c-9610-d0f523eaea2f/session.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "home/sessions/--private-tmp-dsh-rsi-profile-time-quality-20261006-workspace--/rsi-badf28e6-9ab2-4bd6-a402-d4ecaf4c7b03/session.v4.jsonl": "a2e55d74264eb0c94bfa28a84c62857eab9ef808e3b17a7b33418eca3e0aa31f",
+    "home/sessions/--private-tmp-dsh-rsi-profile-time-quality-20261006-workspace--/rsi-badf28e6-9ab2-4bd6-a402-d4ecaf4c7b03/session.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "home/sessions/--private-tmp-dsh-rsi-profile-time-quality-20261006-workspace--/synthetic-profile-time-history/session.v4.jsonl": "66eed77733b15ca8e81da0aa295cc53029632af81ce4b24ef1795801a5406e53",
+    "home/sessions/--private-tmp-dsh-rsi-profile-time-quality-20261006-workspace--/synthetic-profile-time-history/session.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "limits": [
+    "One synthetic manual native sequence; no automatic scheduler, global duplication, Skill or downstream decision effectiveness validated by this run.",
+    "Real requests 5, known chat tokens 22025, unknown chat receipts 0; embedding token usage remains unknown.",
+    "No repeated call, rescue or budget extension. Original failed cohorts/scores/freezes untouched.",
+    "Dates passed in this one sample; scene-to-persona propagation turned unsupported narrative/inference into apparent facts, so overall quality is not passed."
+  ]
+}
