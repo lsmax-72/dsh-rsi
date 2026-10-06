@@ -19,7 +19,9 @@ try {
   assert.equal(review.systemPrompt.slice(0,SKILL_REVIEW_PROMPT.length),SKILL_REVIEW_PROMPT);
   for(const marker of ['<<past-user>>','<<past-assistant>>','<<past-tool_result>>','<<end-of-transcript>>'])assert.ok(review.prompt.includes(marker),marker);
   assert.ok(review.systemPrompt.includes('Write asset prose in zh-CN'));
-  assert.ok(review.systemPrompt.includes('target about 1500 characters'));
+  const draftLimit=Number(review.systemPrompt.match(/draft create\/update\/patch bodies at most (\d+) Unicode characters/)?.[1]);
+  const acceptanceLimit=Number(review.systemPrompt.match(/main bodies must stay within (\d+) Unicode characters/)?.[1]);
+  assert.ok(draftLimit>0 && draftLimit<acceptanceLimit && acceptanceLimit===1500,'draft leaves headroom below the acceptance ceiling');
   assert.ok(review.systemPrompt.includes('native skill_files_write resources'));
   assert.ok(review.systemPrompt.includes('completed turn alone are not execution evidence'));
   assert.ok(review.systemPrompt.includes('Separate observed evidence from proposed validation'));

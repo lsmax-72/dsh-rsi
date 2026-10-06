@@ -36,3 +36,7 @@
 ## 关闭后修复一：请求取消记账
 
 observer 的 finally 现在在迭代器提前关闭时补记终态：已观察正常 finish 才记 RETURNED，否则 INCOMPLETE；已有 ERROR 保留。不伪造 finish/usage，也不修改旧轮 DISPATCHING 回执。[零模型验收](evidence/personamem-observer-cancellation-20261006.json)包含真实 async generator.return() 在部分正文、usage、finish 三个时点关闭，以及原有十种 finish/usage 与传输错误控制，共 14 次夹具调用。原生历史持久化未由此夹具证明，仍以真实会话日志为准。
+
+## 关闭后修复二：原生画像/场景错误传播
+
+已补 runner 调用级错误捕获，已有画像时也恢复原始异常对象和 code；并发 L2/L3 不串写，失败不前进检查点，正常无变化和成功生成保持原生行为。[零模型验收](evidence/native-profile-error-propagation-20261006.json)已通过。原生源码仍为固定 60 文件，不修改旧轮收尾策略，也不宣称服务存储存在回滚。独立画像失败的运行记录和后续实验收尾规则仍需补齐。

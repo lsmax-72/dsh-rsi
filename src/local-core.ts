@@ -62,8 +62,21 @@ export async function openLocalCore(dataDir: string, runner: any, logger: any, s
     const resources = new SkillResourceStore({ storage });
     const versioning = new SkillVersioning({ store, resources, storage, logger });
     const skills = new SkillCore({ store, resources, versioning });
-    const scene = new SceneExtractor({ dataDir: profileDir, config: {}, storage: profile, llmRunner: runner, logger });
-    const persona = new PersonaGenerator({ dataDir: profileDir, config: {}, storage: profile, llmRunner: runner, logger });
+    // Native profile APIs hide runner failures in false/success=false. Keep their algorithms,
+    // but restore the original error per invocation, including when an old persona exists.
+    const profileErrors=new AsyncLocalStorage<{error?:unknown}>();
+    const profileRunner={run:async(params:any)=>{
+      try{return await runner.run(params);}
+      catch(error){const operation=profileErrors.getStore();if(operation)operation.error=error;throw error;}
+    }};
+    const profileOperation=async<T>(operation:()=>Promise<T>)=>{
+      const captured:{error?:unknown}={};
+      const result=await profileErrors.run(captured,operation);
+      if(Object.hasOwn(captured,'error'))throw captured.error;
+      return result;
+    };
+    const scene = new SceneExtractor({ dataDir: profileDir, config: {}, storage: profile, llmRunner: profileRunner, logger });
+    const persona = new PersonaGenerator({ dataDir: profileDir, config: {}, storage: profile, llmRunner: profileRunner, logger });
     const checkpoint = new CheckpointManager(profileDir,logger,profile);
     const personaTrigger = new PersonaTrigger({dataDir:profileDir,interval:parseConfig({}).persona.triggerEveryN,logger,storage:profile});
     return {
@@ -148,7 +161,7 @@ export async function openLocalCore(dataDir: string, runner: any, logger: any, s
       async extractScenes(after = '') {
         const rows = (await queryMemoryRecords(memory)).filter(row => row.updatedAt > after);
         if (!rows.length) return { skipped:true, latestCursor:after };
-        const result = await scene.extract(rows.map(row => ({ id:row.id, content:row.content, created_at:row.createdAt })));
+        const result = await profileOperation(()=>scene.extract(rows.map(row => ({ id:row.id, content:row.content, created_at:row.createdAt }))));
         if (!result.success) throw new Error(result.error ?? '场景提炼失败');
         if(!result.emptyExtraction && result.memoriesProcessed>0)await checkpoint.incrementScenesProcessed();
         return { latestCursor:rows.map(row => row.updatedAt).sort().at(-1), skipped:!!result.emptyExtraction };
@@ -157,7 +170,7 @@ export async function openLocalCore(dataDir: string, runner: any, logger: any, s
         const trigger=await personaTrigger.shouldGenerate();
         if(!force && !trigger.should)return false;
         if(!(await readSceneIndex(profileDir,profile)).length)return false;
-        const changed=await persona.generate(force?'用户手动重建':trigger.reason);
+        const changed=await profileOperation(()=>persona.generate(force?'用户手动重建':trigger.reason));
         if(!changed && !stripSceneNavigation(await profile.readFile('persona.md') ?? '').trim())throw new Error('画像生成失败');
         return changed;
       },

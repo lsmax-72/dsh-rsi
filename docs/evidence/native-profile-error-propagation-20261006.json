@@ -1,0 +1,19 @@
+{
+  "status": "PASS_NATIVE_PROFILE_ERROR_CONTROLS",
+  "checkedAt": "2026-10-06T11:47:26.713Z",
+  "realModelRequests": 0,
+  "fixtureRunnerCalls": 4,
+  "sourceSha256": "9170fcd6d92e71e474f8210ebc80494304e6a1c65de13fef158db334d0a493c5",
+  "checks": [
+    "existing-persona-preserves-original-budget-error-object",
+    "concurrent-L2-preserves-original-abort-error-object",
+    "failed-operations-do-not-advance-checkpoint",
+    "genuine-native-no-change-remains-false-without-dispatch",
+    "first-persona-failure-preserves-original-error",
+    "successful-native-generation-still-updates-checkpoint"
+  ],
+  "limits": [
+    "Fixture runner; no real profile-quality or storage rollback claim.",
+    "Frozen old experiment and old closed-failure policy unchanged."
+  ]
+}
