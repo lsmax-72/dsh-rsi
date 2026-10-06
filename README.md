@@ -4,7 +4,7 @@
 
 dsh-rsi 是面向 DeepSeek Harness（dsh）的单用户、本地自动学习插件。它从会话中提炼 Chat Memory 和 Skill，在后续任务中召回相关记忆、加载适用技能，并提供集成在插件详情页里的资产管理界面。
 
-当前为开发版本：本地安装、管理页及真实记忆/Skill 正文消费已有小型验收。修复后的[8 题连续学习实验](docs/continuous-learning-outcome-20261005.md)基线 5/8、启用组 3/8，已知聊天 token 多约 38%。最新[八用户开发复验](docs/personamem-development-terminal-20261006.md)完成 6/8 组，已完成子集官方分数 17/24 与 15/24、已知成本约 5.32 倍，且存在评分解析误判；完整估计与区间仍缺失。全部尝试共消耗 5,070,327 已知聊天 token，另有一次未知 usage。目前没有效果优势证据；画像错误传播、整条召回裁剪及时间来源适配已补；[真实日期小样本](docs/evidence/native-profile-time-quality-outcome-20261006.json)的日期传递通过，但场景补造细节并被画像承接，整体事实质量未通过；对应来源约束已补，真实效果与新实验收尾规则仍需验收。早期结果见[历史报告](docs/formal-results-20261003.md)，当前边界见[推进路线](docs/rsi-roadmap-20261004.md)。
+当前为开发版本：本地安装、管理页和真实记忆/Skill 正文消费已有验收。最新[完整八用户开发复验](docs/personamem-native-v2-outcome-20261007.md)使用 qwen3.8-27b、两组相同完整历史：基线 21/32、启用组 20/32，用户分组差值区间跨零；已知聊天 token 为基线 5.80 倍，无聊天 usage 缺测，嵌入 token 未提供。6 个自然 Skill 头、11 次正文加载均有实际日志，但没有效果优势证据。[固定8题连续学习](docs/continuous-learning-outcome-20261005.md)同样未见优势（5/8 对 3/8，已知聊天 token 多约38%）。装配修复与验证交付已完成，事实/偏好阶段和任务适用性仍有限；本轮是已曝光样本开发复验，不能当独立盲测。旧失败轮及费用见[历史终止报告](docs/personamem-development-terminal-20261006.md)，当前状态见[推进路线](docs/rsi-roadmap-20261004.md)。
 
 [产品定位](#产品定位) · [项目架构](#项目架构) · [工作流程](#工作流程) · [管理页面](#管理页面) · [工作区与存储](#工作区与存储) · [安装与开始使用](#安装与开始使用) · [验证状态](#验证状态) · [开发与贡献](#开发与贡献)
 
@@ -214,11 +214,13 @@ dsh --profile rsi-dev --no-open
 | 官方管理页面 | 独立 web profile 通过实际挂载、页签切换、RPC 设置保存与插件启停；个人桌面修复后的结果仍待用户确认 |
 | 安装包 | 本机 macOS ARM64 检查通过；远程 Linux/macOS/Windows 的源码构建与生产包安装检查全部通过，见 [CI 回执](docs/evidence/package-ci-20261003.json) |
 | 容器执行 | Linux 容器内真实工具与固定响应资产闭环通过；固定模型网关边界与 qwen 工具调用通过 |
-| 真实任务与效果 | 首轮固定 20 对后序：基线 8/20、插件 10/20；全链路 token 分别 12,119,317 / 已知下限 19,013,922，另 1 次 usage 未知（包含暂停的 1 次）；见 [正式报告](docs/formal-results-20261003.md)，不等同于稳定收益 |
+| PersonaMem完整开发复验 | 8用户/32题：21/32 对20/32，已知聊天token为5.80倍；8位学习均完成，64个正常回答、613次日志重建通过；不是独立盲测，见[完整报告](docs/personamem-native-v2-outcome-20261007.md) |
+| 固定编程连续学习 | 8题：5/8对3/8，后四题均2/4；39个保存快照检查，8题无自然Skill正文加载，见[结果与诊断](docs/continuous-learning-outcome-20261005.md) |
+| 历史20题开发记录 | 原冻结8/20对10/20、费用与未知用量保留；题单已用于开发，后续回归不能再作为独立盲测，见[历史报告](docs/formal-results-20261003.md) |
 
 本次试跑的失败原因、调用成本和接入缺口见 [真实试跑报告](docs/real-pilot-20261003.md)。同一题补跑与剩余门槛见 [补跑报告](docs/real-pilot-retry-20261003.md)。默认自动学习、自然 Skill 消费与新增成本见 [默认流程预演](docs/default-flow-preflight-20261003.md)。这些接入结果不能证明或否定插件相对效果。
 
-本轮效果评测比较 **原始 dsh 与完整 dsh-rsi**：保持题单、模型和任务预算一致，检查前序任务积累的经验能否改善后序任务，报告成功率、退步、学习开销和总成本。资产数量或页面展示不能代替效果结论。协议见 [整体验收与实验方案](docs/evaluation-plan.md)及 [已确认的固定方案](docs/paired-experiment-proposal.md)。
+当前验证比较保留正常历史的 dsh 基线与完整插件，保持各轮预先固定的题单、模型、环境和预算，分别报告任务质量、额外学习及消费成本。PersonaMem按用户分组统计，编程序列保留自身先前轨迹；官方评分不回流学习。资产数量、短正文与完整交付率都不能代替效果结论。最新协议和状态见[推进路线](docs/rsi-roadmap-20261004.md)；[早期方案](docs/evaluation-plan.md)及[原固定方案](docs/paired-experiment-proposal.md)作为历史记录保留。
 
 ## 开发与贡献
 
@@ -235,7 +237,7 @@ docs/          需求、实现边界、评测协议与运行证据
 
 核心固定为修订 `e09899c2136fb6bc27ecc68505e32bdb637cdfa8` 的源码文件，数量以核心清单为准；界面固定复用 10 个文件，其中文件树和对应样式从原详情页提取。构建前核对逐文件 SHA-256。必要适配留在 `adapters/` 与 `src/`，没有平行重写提炼、召回或版本系统。
 
-当前 Chat Memory 使用原生 SQLite FTS5、向量检索与 RRF；Skill 保留原生 BM25。默认本地向量模型为 embeddinggemma-300m-qat Q8_0（768 维），首次需下载约 329 MB；离线使用时通过插件配置 `embedding: {provider: "local", modelPath: "/绝对路径/embeddinggemma-300m-qat-Q8_0.gguf"}` 指定已下载文件。编码失败显式报错，首次模型加载及历史索引重建可能延长插件启动时间。2026-10-04 装配审计还确认了 Skill 生产提示词替换、画像触发缺失、资产分页遗漏、上下文截断和错误重试接线问题，见 [能力装配审计与隔离复现](docs/native-capability-audit-20261004.md)，最新修复状态见 [修复进度](docs/native-capability-repairs.md)。七类装配修复已有接入回执；最新实跑又发现画像错误传播和内部条目裁剪的遗漏，详见[终止报告](docs/personamem-development-terminal-20261006.md)，不能把局部验收当作完整解决；新增原生依赖的 Linux/macOS/Windows 安装检查全部通过。接入验收不等于效果改善；首轮实验结果对应此前适配版。构建成功也不代表通过了整个复用库的类型检查。来源、固定文件及许可见 [核心清单](vendor/core/manifest.json)、[界面清单](vendor/panel/manifest.json)、[核心许可](vendor/core/LICENSE)和[界面许可](vendor/panel/LICENSE)。
+当前 Chat Memory 使用原生 SQLite FTS5、向量检索与 RRF；Skill 保留原生 BM25。默认本地向量模型为 embeddinggemma-300m-qat Q8_0（768 维），首次需下载约 329 MB；离线使用时通过插件配置 `embedding: {provider: "local", modelPath: "/绝对路径/embeddinggemma-300m-qat-Q8_0.gguf"}` 指定已下载文件。编码失败显式报错，首次模型加载及历史索引重建可能延长插件启动时间。2026-10-04 装配审计还确认了 Skill 生产提示词替换、画像触发缺失、资产分页遗漏、上下文截断和错误重试接线问题，见 [能力装配审计与隔离复现](docs/native-capability-audit-20261004.md)，最新修复状态见 [修复进度](docs/native-capability-repairs.md)。七类装配及后续画像错误传播、完整条目/时间来源适配已有接入回执；[完整新复验](docs/personamem-native-v2-outcome-20261007.md)的原生学习与消费均结束，但事实忠实度、阶段合并和适用性仍有限，不能把接线验收当作质量保证。此前[终止结果](docs/personamem-development-terminal-20261006.md)保持；新增原生依赖的 Linux/macOS/Windows 安装检查全部通过。接入验收不等于效果改善；首轮实验结果对应此前适配版。构建成功也不代表通过了整个复用库的类型检查。来源、固定文件及许可见 [核心清单](vendor/core/manifest.json)、[界面清单](vendor/panel/manifest.json)、[核心许可](vendor/core/LICENSE)和[界面许可](vendor/panel/LICENSE)。
 
 ### 自动提炼 Skill 的正文预算
 
@@ -268,3 +270,5 @@ npm run test:package
 - [实际管理页挂载验收](docs/client-mount-review.md)
 - [固定响应下的闭环回执](docs/evidence/runtime-phase2.json)
 - [整体验收与实验方案](docs/evaluation-plan.md)
+- [完整八用户开发复验：质量、全链路token与两类资产](docs/personamem-native-v2-outcome-20261007.md)
+- [固定编程连续学习结果与诊断](docs/continuous-learning-outcome-20261005.md)
