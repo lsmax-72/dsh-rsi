@@ -1,0 +1,39 @@
+{
+  "status": "PASS_NATIVE_RECALL_ENTRY_BOUNDARIES",
+  "checkedAt": "2026-10-06T11:54:27.164Z",
+  "realModelRequests": 0,
+  "embedding": "Explicit deterministic fixture; actual native SQLite/FTS/vector/RRF path, no semantic-quality claim.",
+  "sourceSha256": "9ffb218fb42fcb17bc297a30678d937e5dac0707c53059d6659f72d78b7e86ad",
+  "tails": [
+    {
+      "remainingNativeChars": 40,
+      "nativeFragmentReproduced": true,
+      "completeDelivered": 1,
+      "dropped": 2
+    },
+    {
+      "remainingNativeChars": 60,
+      "nativeFragmentReproduced": true,
+      "completeDelivered": 1,
+      "dropped": 2
+    }
+  ],
+  "checks": [
+    "actual-native-40-and-60-character-tail-fragments-reproduced",
+    "host-delivers-only-complete-source-bodies-with-ID-and-version",
+    "native-selected-prefix-order-preserved",
+    "native-body-text-unchanged",
+    "recording-timestamp-label-distinguished-from-activity-metadata",
+    "explicit-activity-date-preserved",
+    "multiline-body-and-lookalike-entry-not-split",
+    "short-prefix-collision-prefers-complete-body",
+    "duplicate-complete-body-does-not-invent-ID",
+    "unmatched-fragment-fails-explicitly",
+    "oversized-complete-entry-excluded-not-truncated",
+    "outer-context-budget-and-refs-consistent"
+  ],
+  "limits": [
+    "Activity metadata presence is not independent factual validation.",
+    "Generated L2/L3 calendar claims require separate provenance guidance."
+  ]
+}

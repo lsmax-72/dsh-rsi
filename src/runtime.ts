@@ -260,18 +260,11 @@ export class Runtime {
     for(const {scope,core,result} of recalled){
       const fitted=fitRecallScope(result,scope,core.profileDir,Math.floor(available/recalled.length),!this.state.get(`profile-invalid:${scope}`));
       if(fitted.text)parts.push(fitted.text);
-      if(fitted.memories.length){
-        const stored=await core.readMemories();
-        const memories=fitted.memories.map((memory:any)=>{
-          const matches=stored.filter((row:any)=>row.content===memory.content && row.type===memory.type);
-          return matches.length===1?{...memory,id:matches[0].id,version:matches[0].version}:memory;
-        });
-        refs.push({scope,memories});
-      }
+      if(fitted.memories.length)refs.push({scope,memories:fitted.memories});
     }
     if(parts.length && guideText)parts.push(guideText);
     const delivered=parts.join('\n');
-    await this.within(entry.id,async()=>diagnosticEvent('INFO','rsi.recall.delivery',{query,query_message_ids:origin.queryMessageIds ?? [],delivered_chars:delivered.length,refs}),origin);
+    await this.within(entry.id,async()=>diagnosticEvent('INFO','rsi.recall.delivery',{query,query_message_ids:origin.queryMessageIds ?? [],delivered_chars:delivered.length,refs,native_memory_presentation:recalled.map(({scope,result})=>({scope,...result.memoryPresentation}))}),origin);
     return {text:delivered,refs};
   }
   async readProfile(cwd:string,path:string) {

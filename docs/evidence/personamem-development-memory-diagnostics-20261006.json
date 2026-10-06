@@ -1,0 +1,1062 @@
+{
+  "status": "FIXED_DEVELOPMENT_SUBSET_DIAGNOSTICS_NOT_BLIND",
+  "independenceClaim": false,
+  "fullRegisteredSampleComplete": false,
+  "completedUsers": 6,
+  "registeredUsers": 8,
+  "refs": 48,
+  "relevanceCounts": {
+    "partial": 31,
+    "direct": 13,
+    "unrelated": 4
+  },
+  "postNewScoreUsers": [
+    "3",
+    "17"
+  ],
+  "rubric": "Direct means decision-topic fact/preference, not necessarily correct or temporally current; partial and unrelated assessed separately.",
+  "users": [
+    {
+      "personaId": "9",
+      "annotationSha256": "8ebc42bb1f4710bb17304a107bd389c019ccdc27236de434da90305d8002e01e",
+      "annotationStage": "BEFORE_NEW_OFFICIAL_SCORES_GENERATED",
+      "counts": {
+        "partial": 6,
+        "direct": 2
+      },
+      "samples": [
+        {
+          "questionId": "a719edb3-a43f-4792-b820-fb45293c4e19",
+          "refs": [
+            {
+              "ordinal": 1,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791260773496_0c440bc7",
+              "version": 8,
+              "contentSha256": "4ae1a2504666d5ab72122dd02327a9da996998c0cb64b943183904061a2a8ddd",
+              "bodyChars": 115,
+              "relevance": "partial",
+              "sourceHistoryIndices": [
+                102
+              ],
+              "sourceRoles": [
+                "user"
+              ],
+              "limits": [
+                "提炼头合并了启动事实；最新原生source_ids仅含102，启动源50另外保留，不能把102当全部来源。"
+              ],
+              "reason": "电影播客创作提供电影兴趣背景，但不区分博客问题中电影行业新闻偏好。",
+              "causalContributionEstablished": false
+            },
+            {
+              "ordinal": 2,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791260493812_d431517d",
+              "version": 5,
+              "contentSha256": "063bd80fc1178ddf67f1d97f5666043c6aa93214362f9ed3ff7b4cd54c0c54aa",
+              "bodyChars": 73,
+              "relevance": "direct",
+              "sourceHistoryIndices": [
+                64
+              ],
+              "sourceRoles": [
+                "user"
+              ],
+              "limits": [
+                "“十大必看”来自19的for a blog；未明确就是64新建的个人博客，头的统一归属是推断。"
+              ],
+              "reason": "本人博客包含电影新闻和趋势，原话明确视其为令人兴奋的表达方式，直接提供新闻偏好的判断依据。",
+              "causalContributionEstablished": false
+            },
+            {
+              "ordinal": 3,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791260245003_0b9f186b",
+              "version": 0,
+              "contentSha256": "6b0bdd0bfe92a7bc52b83c2e589b76b7664553fe1b66f7de3c5245acd20c9571",
+              "bodyChars": 54,
+              "relevance": "partial",
+              "sourceHistoryIndices": [
+                7
+              ],
+              "sourceRoles": [
+                "user"
+              ],
+              "limits": [],
+              "reason": "已有独立电影影评经历提供博客创作背景，但没有区分行业新闻偏好。",
+              "causalContributionEstablished": false
+            },
+            {
+              "ordinal": 4,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791260773496_1450c778",
+              "version": 0,
+              "contentSha256": "27ed8e45c22001f4258871745d52ef13f6ebb419e00593f6de2aa5138385e6df",
+              "bodyChars": 63,
+              "relevance": "partial",
+              "sourceHistoryIndices": [
+                100
+              ],
+              "sourceRoles": [
+                "user"
+              ],
+              "limits": [],
+              "reason": "翻拍片讨论是电影创作背景，不证明当前博客主题，也不区分新闻偏好。",
+              "causalContributionEstablished": false
+            }
+          ]
+        },
+        {
+          "questionId": "b502d7dc-2345-41a3-8a22-0fb9ff719c9e",
+          "refs": [
+            {
+              "ordinal": 1,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791260708210_f3e79a1d",
+              "version": 0,
+              "contentSha256": "495413dce18367f59913511bf6d806d00f900f837e2bb9717e0414d1ef603852",
+              "bodyChars": 44,
+              "relevance": "direct",
+              "sourceHistoryIndices": [
+                90
+              ],
+              "sourceRoles": [
+                "user"
+              ],
+              "limits": [],
+              "reason": "90中退出在线电影论坛的原因明确是毒性互动/个人攻击；在37早期不投机、81重新活跃之后，应使用最新这一阶段。",
+              "causalContributionEstablished": false
+            },
+            {
+              "ordinal": 2,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791260773496_66fdf34b",
+              "version": 9,
+              "contentSha256": "8aab4c2e1348e0ee470fee36962c5d4bd348ec2826696089838b69b46440f165",
+              "bodyChars": 113,
+              "relevance": "partial",
+              "sourceHistoryIndices": [
+                106
+              ],
+              "sourceRoles": [
+                "user"
+              ],
+              "limits": [],
+              "reason": "电影理论读书会退出与轻松交流偏好相关；不是同一个论坛，也不是毒性互动的直接原因。",
+              "causalContributionEstablished": false
+            },
+            {
+              "ordinal": 3,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791260245003_a4b882dd",
+              "version": 0,
+              "contentSha256": "67ca31f8fb59253112cdfc10f88723c541c10781233aa464c85d1ec965533b25",
+              "bodyChars": 45,
+              "relevance": "partial",
+              "sourceHistoryIndices": [
+                3
+              ],
+              "sourceRoles": [
+                "user"
+              ],
+              "limits": [
+                "相对“近期”原样来自早期来源，不能当成当前阶段仍在该俱乐部的证据。"
+              ],
+              "reason": "线下电影俱乐部提供电影社群背景；不说明后来退出线上论坛的原因。",
+              "causalContributionEstablished": false
+            },
+            {
+              "ordinal": 4,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791260773496_1450c778",
+              "version": 0,
+              "contentSha256": "27ed8e45c22001f4258871745d52ef13f6ebb419e00593f6de2aa5138385e6df",
+              "bodyChars": 63,
+              "relevance": "partial",
+              "sourceHistoryIndices": [
+                100
+              ],
+              "sourceRoles": [
+                "user"
+              ],
+              "limits": [],
+              "reason": "社区翻拍讨论体现正向电影交流，但不能替代线上论坛退出原因。",
+              "causalContributionEstablished": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "personaId": "4",
+      "annotationSha256": "f65da1dc38663f0e6c18cfa67c2dd31cd480a35906b4e70ca6b28fb6020927f4",
+      "annotationStage": "BEFORE_NEW_OFFICIAL_SCORES_GENERATED",
+      "counts": {
+        "unrelated": 2,
+        "direct": 1,
+        "partial": 5
+      },
+      "samples": [
+        {
+          "questionId": "8c6f3412-d822-4131-9a51-184e6da3f476",
+          "refs": [
+            {
+              "ordinal": 1,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791261485607_2a135754",
+              "version": 0,
+              "contentSha256": "9601983d3a75e2be739597c10187f7847315ca009955a018dda4ad0d623165c1",
+              "bodyChars": 102,
+              "relevance": "unrelated",
+              "sourceHistoryIndices": [
+                1
+              ],
+              "sourceRoles": [
+                "user"
+              ],
+              "limits": [],
+              "reason": "遗产规划与家庭沟通不说明健身/备餐压力，也不提供四个选项中个人经历类比的依据。",
+              "causalContributionEstablished": false
+            },
+            {
+              "ordinal": 2,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791262152517_f9a1fc22",
+              "version": 14,
+              "contentSha256": "b433495a6938ca970aac645a7c99eb4a4bf878bf4511fee3566066e2865f7d3a",
+              "bodyChars": 272,
+              "relevance": "direct",
+              "sourceHistoryIndices": [
+                94,
+                98
+              ],
+              "sourceRoles": [
+                "user",
+                "user"
+              ],
+              "limits": [
+                "最新原生source_ids仅保留94/98；正文播客经历需从旧来源21/71复核。87已重新推出播客，正文“近期已停止播客”不能代表最新阶段。"
+              ],
+              "reason": "正文包含因持续产出压力暂停播客的过去经历，直接支持题中播客压力类比；newsletter倦怠也提供同类压力背景。",
+              "causalContributionEstablished": false
+            },
+            {
+              "ordinal": 3,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791262225040_312c8b0f",
+              "version": 19,
+              "contentSha256": "f60ed17bb27aa22e4651380682fa0540bb5cf84b72470788af54f1ed749d3896",
+              "bodyChars": 197,
+              "relevance": "partial",
+              "sourceHistoryIndices": [
+                108
+              ],
+              "sourceRoles": [
+                "user"
+              ],
+              "limits": [
+                "最新source_ids仅保留108；加密货币损失、房地产退出需分别复核96/52。"
+              ],
+              "reason": "用户通过规律投资降低压力，提供自主调整投入的背景；不是健身/备餐或题中播客经历的区分事实。",
+              "causalContributionEstablished": false
+            },
+            {
+              "ordinal": 4,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791262073025_1f525e19",
+              "version": 13,
+              "contentSha256": "063d8a93fc1f96bedb21e4d77ef86a90af2bb0fee27f92a41ce3300c0bc1dcb5",
+              "bodyChars": 182,
+              "relevance": "partial",
+              "sourceHistoryIndices": [
+                89
+              ],
+              "sourceRoles": [
+                "user"
+              ],
+              "limits": [
+                "89偏好动态导师制，正文把学习方式统一概括为只用线上资源超出该单条来源。"
+              ],
+              "reason": "自主节奏及实用学习偏好与回答强调实用建议有关，但不直接区分健身/备餐压力或播客历史类比。",
+              "causalContributionEstablished": false
+            }
+          ]
+        },
+        {
+          "questionId": "bd39c6a3-3ebb-4f12-a9b5-f690ebdf5bca",
+          "refs": [
+            {
+              "ordinal": 1,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791262152517_a3bc57f0",
+              "version": 16,
+              "contentSha256": "242e45cdf5f5991ab3061e8e539771b6413f8f0d154af3c4dbbcc12dd2260f12",
+              "bodyChars": 151,
+              "relevance": "partial",
+              "sourceHistoryIndices": [
+                100
+              ],
+              "sourceRoles": [
+                "user"
+              ],
+              "limits": [],
+              "reason": "为青年制作理财教育内容与本题信息图受众/目的相关，但未给出用户不喜欢制作图表的关键偏好。",
+              "causalContributionEstablished": false
+            },
+            {
+              "ordinal": 2,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791262152517_f9a1fc22",
+              "version": 14,
+              "contentSha256": "b433495a6938ca970aac645a7c99eb4a4bf878bf4511fee3566066e2865f7d3a",
+              "bodyChars": 272,
+              "relevance": "partial",
+              "sourceHistoryIndices": [
+                94,
+                98
+              ],
+              "sourceRoles": [
+                "user",
+                "user"
+              ],
+              "limits": [
+                "正文关于播客的当前阶段错误同第一题ref2。"
+              ],
+              "reason": "个人金融内容创作及产出压力提供背景，不能替代对信息图设计的明确喜恶。",
+              "causalContributionEstablished": false
+            },
+            {
+              "ordinal": 3,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791261655708_6ecd94d9",
+              "version": 0,
+              "contentSha256": "b8445b19f927de2f702971e60507474de76ff8b3c6a899a8b73260edad931c25",
+              "bodyChars": 67,
+              "relevance": "partial",
+              "sourceHistoryIndices": [
+                31
+              ],
+              "sourceRoles": [
+                "user"
+              ],
+              "limits": [],
+              "reason": "青年理财教育材料和互动形式评价提供相关教育背景，但未表明本人喜恶信息图设计。",
+              "causalContributionEstablished": false
+            },
+            {
+              "ordinal": 4,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791262152517_03c5a6f3",
+              "version": 17,
+              "contentSha256": "430c2d1a3ca80cadefa836a6325266a2171682b610de30d4e27af8ec833a2a15",
+              "bodyChars": 169,
+              "relevance": "unrelated",
+              "sourceHistoryIndices": [
+                102
+              ],
+              "sourceRoles": [
+                "user"
+              ],
+              "limits": [],
+              "reason": "退休投资组合和税务规划不支持是否喜欢制作信息图的决策。",
+              "causalContributionEstablished": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "personaId": "12",
+      "annotationSha256": "15122e9e9d998f15c23ad0e67e6f0e24c533cd1f47c28a017e8d83edccdc5f14",
+      "annotationStage": "BEFORE_NEW_OFFICIAL_SCORES_GENERATED",
+      "counts": {
+        "direct": 2,
+        "partial": 5,
+        "unrelated": 1
+      },
+      "samples": [
+        {
+          "questionId": "194ce23e-d6d7-46f9-99b0-a0eba223a0ee",
+          "refs": [
+            {
+              "ordinal": 1,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791263619294_a7158fc2",
+              "version": 8,
+              "contentSha256": "59d8358e8847b687ff77618675ce1614526c3de5f0dd68a5b1560ca3932c6b8e",
+              "bodyChars": 140,
+              "relevance": "direct",
+              "sourceHistoryIndices": [
+                106
+              ],
+              "sourceRoles": [
+                "user"
+              ],
+              "limits": [
+                "正文“验证有效性”是用户106的体验自述，不是独立效果测量；最新source_ids只保留106，早期29/52需从完整历史复核。"
+              ],
+              "reason": "直接提供ADR学习由缺乏应用背景转向实际课程/调解的经历和偏好。",
+              "causalContributionEstablished": false
+            },
+            {
+              "ordinal": 2,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791263619295_d0f50b3c",
+              "version": 0,
+              "contentSha256": "cc2eb4719876505c0b3015958dc24766bcd1afc34a5f929f50a5104cfae953db",
+              "bodyChars": 59,
+              "relevance": "partial",
+              "sourceHistoryIndices": [
+                107,
+                108
+              ],
+              "sourceRoles": [
+                "assistant",
+                "user"
+              ],
+              "limits": [
+                "“组建小组”仅在助手107陈述，用户108只说共享观点；不能把助手关于发起人的说法当已证实用户行为。"
+              ],
+              "reason": "小组讨论/共享多元视角提供动态法律学习背景，但不直接给出ADR模块缺少真实案例的区分事实。",
+              "causalContributionEstablished": false
+            },
+            {
+              "ordinal": 3,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791263619295_6a3c1eb7",
+              "version": 9,
+              "contentSha256": "c548c35b1aae3a9051e0f183ef8df725f6292caccbfa7527bc8fdf98abddb966",
+              "bodyChars": 133,
+              "relevance": "partial",
+              "sourceHistoryIndices": [
+                110
+              ],
+              "sourceRoles": [
+                "user"
+              ],
+              "limits": [
+                "最新source110支持参加技术研讨；75支持撰写文章，未单独证明“发表一系列”这一强化说法。"
+              ],
+              "reason": "法律科技研讨及技术应用兴趣与候选技术辅助学习相关，但不是ADR动态学习的明确方法偏好。",
+              "causalContributionEstablished": false
+            },
+            {
+              "ordinal": 4,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791263107414_43156f50",
+              "version": 0,
+              "contentSha256": "51c6db5e0cdb232d7c8a2aa250641d693965e9cf5ed8f34fd1f0452ac8a8dbf1",
+              "bodyChars": 41,
+              "relevance": "partial",
+              "sourceHistoryIndices": [
+                3,
+                5
+              ],
+              "sourceRoles": [
+                "user",
+                "user"
+              ],
+              "limits": [
+                "3包含意向，5才自述已经模拟陪审团陈述并获得自信；仍是体验自述，不是客观技能测试。"
+              ],
+              "reason": "模拟法庭实践和即时应变提供动态学习背景，但不是ADR特定缺少真实案例的事实。",
+              "causalContributionEstablished": false
+            }
+          ]
+        },
+        {
+          "questionId": "a64ba818-abee-404e-9a38-f440b74bcca7",
+          "refs": [
+            {
+              "ordinal": 1,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791263174505_80494312",
+              "version": 0,
+              "contentSha256": "e7146c0d960327409ee0d32adafb0650021b2a11c722f5212b6d4e214dea7611",
+              "bodyChars": 100,
+              "relevance": "direct",
+              "sourceHistoryIndices": [
+                27
+              ],
+              "sourceRoles": [
+                "user"
+              ],
+              "limits": [
+                "62后来参加另一场法律桌游并明确觉得有趣、富有启发。不能把27泛化成当前整体不喜欢；题中that night未唯一指定哪一场，必须保留阶段/事件歧义。"
+              ],
+              "reason": "直接涉及题中的法律桌游体验，但正文仅保留27的早期负面事件。",
+              "causalContributionEstablished": false
+            },
+            {
+              "ordinal": 2,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791264096118_9fdc5263",
+              "version": 0,
+              "contentSha256": "2f7b73ae4046a1ad193d97bd31974a19225c65272bd4f58df5e336174ffe50fd",
+              "bodyChars": 52,
+              "relevance": "unrelated",
+              "sourceHistoryIndices": [
+                176
+              ],
+              "sourceRoles": [
+                "user"
+              ],
+              "limits": [],
+              "reason": "恐怖电影观影派对不说明法律桌游的喜恶或其阶段。",
+              "causalContributionEstablished": false
+            },
+            {
+              "ordinal": 3,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791263307198_0aab1672",
+              "version": 1,
+              "contentSha256": "e97cad4ab82100d5791e158e7f82582ebf4b1cadf831bd1a87f62a986c9d5d26",
+              "bodyChars": 100,
+              "relevance": "partial",
+              "sourceHistoryIndices": [
+                44
+              ],
+              "sourceRoles": [
+                "user"
+              ],
+              "limits": [
+                "最新source44仅覆盖后一次研讨；不同活动的阶段不能直接迁移给桌游。"
+              ],
+              "reason": "其他法律教育活动由不满意转向有参与感，提供活动形式偏好背景，不能替代具体桌游的反转经历。",
+              "causalContributionEstablished": false
+            },
+            {
+              "ordinal": 4,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791263567758_cd39c4e6",
+              "version": 0,
+              "contentSha256": "88935534fa74037585417a69b29a9d924c2f6b13772856a9e04d0edf46022c97",
+              "bodyChars": 66,
+              "relevance": "partial",
+              "sourceHistoryIndices": [
+                100
+              ],
+              "sourceRoles": [
+                "user"
+              ],
+              "limits": [],
+              "reason": "法律社交活动和协作讨论提供相关社交学习背景，未说明桌游的具体体验。",
+              "causalContributionEstablished": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "personaId": "14",
+      "annotationSha256": "60e96857f393ed079d6e1b0873ee24b918d9daa215b12a39feb0426f6a490de1",
+      "annotationStage": "BEFORE_NEW_OFFICIAL_SCORES_GENERATED",
+      "counts": {
+        "partial": 5,
+        "direct": 3
+      },
+      "samples": [
+        {
+          "questionId": "a30c10c5-145a-49b0-b3d5-1479bf3c6797",
+          "refs": [
+            {
+              "ordinal": 1,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791264669847_a5979bb8",
+              "version": 0,
+              "contentSha256": "1b77538362a8f0bb1f7164349f97801860447913e0ad94769b8885c74a9df25f",
+              "bodyChars": 72,
+              "relevance": "partial",
+              "sourceHistoryIndices": [
+                27
+              ],
+              "sourceRoles": [
+                "user"
+              ],
+              "limits": [],
+              "reason": "音乐竞争场合的不适提供低压力活动背景，不能单独说明具体音乐创作方式。",
+              "causalContributionEstablished": false
+            },
+            {
+              "ordinal": 2,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791265018277_30977b55",
+              "version": 4,
+              "contentSha256": "d49faf4158db00f4b84140a10e4b03bad0594c5aa7499844d85110eb991688c2",
+              "bodyChars": 91,
+              "relevance": "direct",
+              "sourceHistoryIndices": [
+                67
+              ],
+              "sourceRoles": [
+                "user"
+              ],
+              "limits": [
+                "61曾再次享受非正式合作，67后又明确退出；不能把某一次偏好当全领域恒定拒绝合作。"
+              ],
+              "reason": "直接说明音乐合作的压力及最新转向自主独奏，区分合作与独立创作选项。",
+              "causalContributionEstablished": false
+            },
+            {
+              "ordinal": 3,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791264910005_6b7a2801",
+              "version": 0,
+              "contentSha256": "a46104545998e1ad90dac8d4384f2a25a9f2a3b1118411b39f914c2474dad58b",
+              "bodyChars": 48,
+              "relevance": "direct",
+              "sourceHistoryIndices": [
+                61
+              ],
+              "sourceRoles": [
+                "user"
+              ],
+              "limits": [
+                "67后来明确退出进一步合作，短记忆本身未给出这一后续转变。"
+              ],
+              "reason": "直接涉及候选合作创作的积极体验，但这是61的较早阶段。",
+              "causalContributionEstablished": false
+            },
+            {
+              "ordinal": 4,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791264598715_810a4f47",
+              "version": 0,
+              "contentSha256": "a2a1685d1dc391a18c929a887bdbd5acdfa790402e681ba0d423744e33e14708",
+              "bodyChars": 66,
+              "relevance": "partial",
+              "sourceHistoryIndices": [
+                9
+              ],
+              "sourceRoles": [
+                "user"
+              ],
+              "limits": [
+                "9讨论组的积极体验不能被29另一个鉴赏俱乐部退出一概覆盖。"
+              ],
+              "reason": "歌词讨论及多元观点提供音乐兴趣背景，未直接给出作曲/混音偏好。",
+              "causalContributionEstablished": false
+            }
+          ]
+        },
+        {
+          "questionId": "e86a1aad-0117-4021-9c68-f923f4111d5f",
+          "refs": [
+            {
+              "ordinal": 1,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791264669847_a5979bb8",
+              "version": 0,
+              "contentSha256": "1b77538362a8f0bb1f7164349f97801860447913e0ad94769b8885c74a9df25f",
+              "bodyChars": 72,
+              "relevance": "partial",
+              "sourceHistoryIndices": [
+                27
+              ],
+              "sourceRoles": [
+                "user"
+              ],
+              "limits": [],
+              "reason": "另一音乐场合的压力与乐评焦虑有背景关联，不是负面乐评反馈本身。",
+              "causalContributionEstablished": false
+            },
+            {
+              "ordinal": 2,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791265191391_7d5a4c25",
+              "version": 8,
+              "contentSha256": "82fc36597ed39942c76d7dc67d35f286b5d2ccdab7118e0c5d2b552dbcab5f3b",
+              "bodyChars": 99,
+              "relevance": "direct",
+              "sourceHistoryIndices": [
+                93
+              ],
+              "sourceRoles": [
+                "user"
+              ],
+              "limits": [
+                "这是历史经历；当前题明确重新考虑写作，不能简单把停止写作当本次应执行的决定。"
+              ],
+              "reason": "直接给出乐评热情到苛刻批评/焦虑后停止写作的变化，和当前担忧对应。",
+              "causalContributionEstablished": false
+            },
+            {
+              "ordinal": 3,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791264726771_476aca4c",
+              "version": 0,
+              "contentSha256": "07471f8093e9cbd771e7b06d5fe710299dab24690b42c99ddfa3156e34f318fc",
+              "bodyChars": 78,
+              "relevance": "partial",
+              "sourceHistoryIndices": [
+                35
+              ],
+              "sourceRoles": [
+                "user"
+              ],
+              "limits": [
+                "91后来的儿童社区音乐项目被用户评价很有成就感；不能把35的挫折泛化成当前完全不喜欢教育/社区。"
+              ],
+              "reason": "音乐教学挫折提供活动压力的相邻背景，不说明乐评反馈。",
+              "causalContributionEstablished": false
+            },
+            {
+              "ordinal": 4,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791264669847_aeb6783c",
+              "version": 0,
+              "contentSha256": "be21a8497b8690059e90d777d54e743d829a11e0bb39e839017e2c68d7add506",
+              "bodyChars": 59,
+              "relevance": "partial",
+              "sourceHistoryIndices": [
+                29
+              ],
+              "sourceRoles": [
+                "user"
+              ],
+              "limits": [],
+              "reason": "鉴赏俱乐部的结构化压力与重视音乐享受有背景关联，但不是写乐评的具体反馈。",
+              "causalContributionEstablished": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "personaId": "3",
+      "annotationSha256": "ff2715ce4c09bdd31b6e27e3a9022b4fad984c5a7a1b4056030f615cf92abc79",
+      "annotationStage": "AFTER_NEW_OFFICIAL_SCORES_GENERATED_AND_READ",
+      "counts": {
+        "partial": 6,
+        "direct": 2
+      },
+      "samples": [
+        {
+          "questionId": "9c209ff7-a6a8-48d8-ab38-e0b8aa2aaef7",
+          "refs": [
+            {
+              "ordinal": 1,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791266796511_8b9ee559",
+              "version": 0,
+              "contentSha256": "5488c4bd8b53b3073ad0777b0c83a4d30e9290aab833f6d9d625130be132428a",
+              "bodyChars": 73,
+              "relevance": "partial",
+              "sourceHistoryIndices": [
+                73
+              ],
+              "sourceRoles": [
+                "user"
+              ],
+              "limits": "Food tour is a culinary/social activity, but does not establish the specific earlier cooking-class experience.",
+              "reason": null,
+              "causalContributionEstablished": false
+            },
+            {
+              "ordinal": 2,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791267136632_2c3cc113",
+              "version": 7,
+              "contentSha256": "f2b95ebbba8f9db4435874b1c39bc70c06300c38ba236a3551f458b8055675cd",
+              "bodyChars": 217,
+              "relevance": "partial",
+              "sourceHistoryIndices": [
+                140
+              ],
+              "sourceRoles": [
+                "user"
+              ],
+              "limits": "Literary/social-group history provides social context without the cooking-class fact; latest source 140 limits earlier phase claims.",
+              "reason": null,
+              "causalContributionEstablished": false
+            },
+            {
+              "ordinal": 3,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791266586989_c1b11b9d",
+              "version": 0,
+              "contentSha256": "5107c79e33aa1334635abe97f818510ad849b1c2e2718441c33d134747467ca4",
+              "bodyChars": 45,
+              "relevance": "partial",
+              "sourceHistoryIndices": [
+                44
+              ],
+              "sourceRoles": [
+                "user"
+              ],
+              "limits": "Pottery is another relaxing social class, not evidence of enjoying cooking classes.",
+              "reason": null,
+              "causalContributionEstablished": false
+            },
+            {
+              "ordinal": 4,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791267198676_f54651a6",
+              "version": 11,
+              "contentSha256": "d29917d06a5f50c93b265aecc065b2856ce7c501391e79fd20dae4a5d0d0af42",
+              "bodyChars": 101,
+              "relevance": "partial",
+              "sourceHistoryIndices": [
+                156
+              ],
+              "sourceRoles": [
+                "user"
+              ],
+              "limits": "Painting-class reversal is different activity; retain latest source 156 rather than freezing earlier home-only preference.",
+              "reason": null,
+              "causalContributionEstablished": false
+            }
+          ]
+        },
+        {
+          "questionId": "945fb104-45bd-457f-a9a8-19620159e47d",
+          "refs": [
+            {
+              "ordinal": 1,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791267136632_7c28ef86",
+              "version": 0,
+              "contentSha256": "e5f431462668717d09cdcc5556000f65d01e9c53e8c64c751c2bfb4e9583352e",
+              "bodyChars": 81,
+              "relevance": "direct",
+              "sourceHistoryIndices": [
+                142
+              ],
+              "sourceRoles": [
+                "user"
+              ],
+              "limits": "Hands-on craft/social experience addresses the current creativity and connection criteria; source 142 is a statement of this activity, not evidence that every class works.",
+              "reason": null,
+              "causalContributionEstablished": false
+            },
+            {
+              "ordinal": 2,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791266796511_8b9ee559",
+              "version": 0,
+              "contentSha256": "5488c4bd8b53b3073ad0777b0c83a4d30e9290aab833f6d9d625130be132428a",
+              "bodyChars": 73,
+              "relevance": "partial",
+              "sourceHistoryIndices": [
+                73
+              ],
+              "sourceRoles": [
+                "user"
+              ],
+              "limits": "Food-tour social/relaxation context does not establish a tactile-art preference.",
+              "reason": null,
+              "causalContributionEstablished": false
+            },
+            {
+              "ordinal": 3,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791267136632_2c3cc113",
+              "version": 7,
+              "contentSha256": "f2b95ebbba8f9db4435874b1c39bc70c06300c38ba236a3551f458b8055675cd",
+              "bodyChars": 217,
+              "relevance": "partial",
+              "sourceHistoryIndices": [
+                140
+              ],
+              "sourceRoles": [
+                "user"
+              ],
+              "limits": "Literary-group social context does not distinguish the offered creative activities.",
+              "reason": null,
+              "causalContributionEstablished": false
+            },
+            {
+              "ordinal": 4,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791267198676_e98bbcdf",
+              "version": 9,
+              "contentSha256": "be3340e32ca445795f2637181a16cab04c7d0162edc0a1e67930001f3b033c8e",
+              "bodyChars": 78,
+              "relevance": "direct",
+              "sourceHistoryIndices": [
+                148
+              ],
+              "sourceRoles": [
+                "user"
+              ],
+              "limits": "Hiking-group experience addresses the offered hiking candidate and meeting people, but does not support the creativity criterion; only partial coverage of the whole question.",
+              "reason": null,
+              "causalContributionEstablished": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "personaId": "17",
+      "annotationSha256": "04d4ed350a8edf99746961eb6eaf5c84db1d9477f007d6c6b8812b4fb55adcc8",
+      "annotationStage": "AFTER_NEW_OFFICIAL_SCORES_GENERATED_AND_READ",
+      "counts": {
+        "partial": 4,
+        "direct": 3,
+        "unrelated": 1
+      },
+      "samples": [
+        {
+          "questionId": "5e856191-b76f-47ec-b5a4-f04893d8a313",
+          "refs": [
+            {
+              "ordinal": 1,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791268192413_afff090a",
+              "version": 0,
+              "contentSha256": "b0620d74e205f7d17dd912d3f12f6598d7e8a6d42e2d1c7004f3c834d4888322",
+              "bodyChars": 55,
+              "relevance": "partial",
+              "sourceHistoryIndices": [
+                104
+              ],
+              "sourceRoles": [
+                "user"
+              ],
+              "limits": "Film cosplay discomfort is contextual; do not infer a universal aversion to every fan gathering from one event.",
+              "reason": null,
+              "causalContributionEstablished": false
+            },
+            {
+              "ordinal": 2,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791268422677_b9686d1d",
+              "version": 0,
+              "contentSha256": "dd4535b798adf57f76700ff0bb6fcf9e52f52809c3ed2e6b1eccf40d6ee31ea5",
+              "bodyChars": 76,
+              "relevance": "direct",
+              "sourceHistoryIndices": [
+                139
+              ],
+              "sourceRoles": [
+                "user"
+              ],
+              "limits": "Later source 139 withdrawal from readathons directly concerns an offered activity; current phase differs from earlier positive experience.",
+              "reason": null,
+              "causalContributionEstablished": false
+            },
+            {
+              "ordinal": 3,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791268275924_6038006d",
+              "version": 0,
+              "contentSha256": "d7e87ddfb116f4c98b73b8e9114a9a89e34fa52d387ce2d663dcc2972d86798d",
+              "bodyChars": 68,
+              "relevance": "direct",
+              "sourceHistoryIndices": [
+                113,
+                114
+              ],
+              "sourceRoles": [
+                "user",
+                "user"
+              ],
+              "limits": "Sources 113/114 record earlier positive fantasy-readathon social experience, but must be read alongside later source 139 withdrawal.",
+              "reason": null,
+              "causalContributionEstablished": false
+            },
+            {
+              "ordinal": 4,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791267820143_7acf1fc5",
+              "version": 0,
+              "contentSha256": "a976c45c8e2ba79da6c6a398d86ac230a9b5d743a6942e152a6f6b29969d6d94",
+              "bodyChars": 96,
+              "relevance": "direct",
+              "sourceHistoryIndices": [
+                49,
+                50
+              ],
+              "sourceRoles": [
+                "user",
+                "user"
+              ],
+              "limits": "Sources 49/50 record positive cozy-mystery readathon/community experience; relevant activity format but a different genre and earlier phase.",
+              "reason": null,
+              "causalContributionEstablished": false
+            }
+          ]
+        },
+        {
+          "questionId": "59eb073a-174e-4115-aa22-b40eb447b1a2",
+          "refs": [
+            {
+              "ordinal": 1,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791268422677_f275ff77",
+              "version": 4,
+              "contentSha256": "b0bd825e64762f1bf97ef06de4045d81e01d4a8e20239d57a02b340cbd751ac7",
+              "bodyChars": 121,
+              "relevance": "partial",
+              "sourceHistoryIndices": [
+                142
+              ],
+              "sourceRoles": [
+                "user"
+              ],
+              "limits": "Fiction/free-creativity preference is cross-domain context for painting structure; latest source 142 does not support the added still-studying-writing-guide claim.",
+              "reason": null,
+              "causalContributionEstablished": false
+            },
+            {
+              "ordinal": 2,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791267820143_9551945b",
+              "version": 1,
+              "contentSha256": "7cff1efabef5a3faf45a887c0f1f6ed8dc8b8f6afbd3158b2cd0ef31dd8a3419",
+              "bodyChars": 97,
+              "relevance": "partial",
+              "sourceHistoryIndices": [
+                46
+              ],
+              "sourceRoles": [
+                "user"
+              ],
+              "limits": "Stopping formal book critique provides pressure/structure context, not a direct painting-method preference.",
+              "reason": null,
+              "causalContributionEstablished": false
+            },
+            {
+              "ordinal": 3,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791268422677_b9686d1d",
+              "version": 0,
+              "contentSha256": "dd4535b798adf57f76700ff0bb6fcf9e52f52809c3ed2e6b1eccf40d6ee31ea5",
+              "bodyChars": 76,
+              "relevance": "partial",
+              "sourceHistoryIndices": [
+                139
+              ],
+              "sourceRoles": [
+                "user"
+              ],
+              "limits": "Readathon pressure is a different activity and cannot by itself establish painting-class preferences.",
+              "reason": null,
+              "causalContributionEstablished": false
+            },
+            {
+              "ordinal": 4,
+              "scope": "c52ddf65534b7b4603508435",
+              "id": "m_1791268486088_29aa759c",
+              "version": 8,
+              "contentSha256": "b3e5d0ceb81a25a891db9b9d8c33ebfa45db358d27a66b157ccc01b2c5b49eeb",
+              "bodyChars": 114,
+              "relevance": "unrelated",
+              "sourceHistoryIndices": [
+                152
+              ],
+              "sourceRoles": [
+                "user"
+              ],
+              "limits": "Paper/e-book collecting preferences do not support choosing a structured painting class or self-paced painting.",
+              "reason": null,
+              "causalContributionEstablished": false
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "realNewModelRequests": 0
+}

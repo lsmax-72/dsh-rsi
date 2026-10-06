@@ -3,6 +3,7 @@ import { AsyncLocalStorage } from 'node:async_hooks';
 import { mkdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import { createReadyEmbedding, guardedEmbedding, withEmbeddingIntegrity, verifyVectorCoverage } from './native-embedding.js';
+import { fitNativeMemoryEntries } from './recall-context.js';
 import { FileLogger } from '../adapters/local-observability.js';
 import {
   SkillCore, SqliteSkillStore, SkillResourceStore, SkillVersioning, SkillExtractor, SKILL_REVIEW_PROMPT,
@@ -153,10 +154,11 @@ export async function openLocalCore(dataDir: string, runner: any, logger: any, s
       async recall(query: string, maxChars = 6000) {
         await ensureVectors();
         const result = await withEmbeddingIntegrity(()=>performAutoRecall({ userText:query, pluginDataDir:profileBaseDir,
-          cfg:parseConfig({ recall:{ strategy:'hybrid', maxResults:8, maxTotalRecallChars:maxChars } }),
+          cfg:parseConfig({ recall:{ strategy:'hybrid', maxResults:8, maxTotalRecallChars:0, maxCharsPerMemory:0 } }),
           vectorStore:memory, embeddingService, storage:profileBase, logger }));
         if (result?.error) throw new Error('记忆召回失败');
-        return result;
+        // Disable native prefix truncation via its public config; search/ranking stay native.
+        return fitNativeMemoryEntries(result,await this.readMemories(),maxChars);
       },
       async extractScenes(after = '') {
         const rows = (await queryMemoryRecords(memory)).filter(row => row.updatedAt > after);
