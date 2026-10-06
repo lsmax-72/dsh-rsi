@@ -5,6 +5,7 @@ import {createHash} from 'node:crypto';
 import {createUserMessage,LlmAdapter} from '@deepseek-ai/dsh-llm';
 import {Session} from '@deepseek-ai/dsh-session';
 import {appendPersonaHistory,personaHistoryContext,importedHistoryTimeNote} from './personamem-history.mjs';
+import {decidePersonaLearning,STRICT_LEARNING_POLICY} from './personamem-learning-policy.mjs';
 export const hasKnownPersonaUsage=row=>Number.isFinite(row.usage?.totalTokens)&&row.usage.totalTokens>0;
 export const name='personamem-pilot-task';
 export const inject=['llm','agents','sessions','sessionPersistence','tools','skills'];
@@ -12,7 +13,7 @@ export const inject=['llm','agents','sessions','sessionPersistence','tools','ski
 // Experimental driver only. Native import, learning, recall and Skill tools stay in their normal paths.
 export function apply(ctx,config){
   const dir='/state/pilot/'+config.instanceId;mkdirSync(dir,{recursive:true});
-  const requests=[],checks=[],answers=[],tools=[],blocked=[];let phase='setup',front=0,back=0,questionCalls=0,lastLearningActivity=Date.now(),rsi;
+  const requests=[],checks=[],answers=[],tools=[],blocked=[];let phase='setup',front=0,back=0,questionCalls=0,lastLearningActivity=Date.now(),rsi,learningDisposition;
   const durable=(name,value)=>{const path=dir+'/'+name,tmp=path+'.tmp';writeFileSync(tmp,JSON.stringify(value,null,2));const fd=openSync(tmp,'r');try{fsyncSync(fd);}finally{closeSync(fd);}renameSync(tmp,path);};
   const save=()=>durable('model-requests.json',requests);
   ctx.on('llm/stream',async function*(options,next){
@@ -28,7 +29,30 @@ export function apply(ctx,config){
     try{for await(const chunk of next()){if(chunk.type==='usage'){row.usage=chunk.usage;save();}if(chunk.type==='text-delta')row.responseBlocks[chunk.index]=(row.responseBlocks[chunk.index]??'')+chunk.text;if(chunk.type==='block-end'&&chunk.block.type==='text')row.responseBlocks[chunk.index]=chunk.block.text;if(chunk.type==='finish')row.finish=structuredClone(chunk.reason);yield chunk;}row.status=['stop','tool-calls'].includes(row.finish?.kind)?'RETURNED':'INCOMPLETE';}catch(error){row.status='ERROR';row.error=error.message;throw error;}finally{row.finishedAt=Date.now();if(background)lastLearningActivity=Date.now();save();}
   });
   ctx.on('tools/result',(execution,result)=>{tools.push({name:execution.name,callId:execution.callId,args:execution.arguments,isError:result.isError===true,phase,requestOrdinal:front});durable('tool-results.json',tools);});
-  if(config.fixture){class Fixture extends LlmAdapter{async *stream(options){const background=options.sessionId.startsWith('rsi-'),system=options.messages.filter(m=>m.role==='system').flatMap(m=>m.content).map(b=>b.text??'').join('\n');const text=background?(system.includes('Skill Review Agent')?'Nothing to save.':'[]'):'<final_answer>(a)</final_answer>';yield{type:'block-start',index:0,blockType:'text'};if(!background&&config.fixtureAnswerStop==='error-after-text'){yield{type:'text-delta',index:0,text};throw new Error('FIXTURE interrupted after partial output');}yield{type:'block-end',index:0,block:{type:'text',text}};yield{type:'usage',usage:{inputTokens:13,outputTokens:7,totalTokens:20}};yield{type:'finish',reason:{kind:background?'stop':(config.fixtureAnswerStop??'stop')}};}}ctx.effect(()=>ctx.llm.registerAdapter(['pilot-fixture'],new Fixture()));}
+  if(config.fixture){
+    let fixtureSkillCalls=0;
+    class Fixture extends LlmAdapter{
+      async *stream(options){
+        const background=options.sessionId.startsWith('rsi-'),system=options.messages.filter(m=>m.role==='system').flatMap(m=>m.content).map(b=>b.text??'').join('\n');
+        const skillReview=system.includes('Skill Review Agent');let block={type:'text',text:background?(skillReview?'Nothing to save.':'[]'):'<final_answer>(a)</final_answer>'};
+        if(background&&config.fixtureClosedLearningFailure){
+          if(skillReview){
+            fixtureSkillCalls++;
+            if(fixtureSkillCalls>1){yield{type:'finish',reason:{kind:'error',failure:{code:'ABORTED',message:'FIXTURE closed Skill review abort after native asset write'}}};return;}
+            block={type:'tool-call',id:'fixture-pre-abort-skill',name:'skill_create',arguments:JSON.stringify({name:'fixture-log-preservation',content:'---\nname: fixture-log-preservation\ndescription: Explicit fixture, no real successful experience\n---\n\n# 测试记录\n保留完整失败日志。以下仅为隔离夹具，不是真实成功经验。'})};
+          }else{
+            const prompt=options.messages.filter(m=>m.role==='user').flatMap(m=>m.content).map(b=>b.text??'').join('\n'),id=prompt.match(/\[([^\]]+)\] \[user\]/)?.[1];assert.ok(id);
+            block={type:'text',text:JSON.stringify([{scene_name:'隔离测试记录',message_ids:[id],memories:[{content:'保留完整失败日志。显式隔离夹具。',type:'instruction',priority:70,source_message_ids:[id],metadata:{fixture:true}}]}])};
+          }
+        }
+        yield{type:'block-start',index:0,blockType:block.type};
+        if(!background&&config.fixtureAnswerStop==='error-after-text'){yield{type:'text-delta',index:0,text:block.text};throw new Error('FIXTURE interrupted after partial output');}
+        yield{type:'block-end',index:0,block};yield{type:'usage',usage:{inputTokens:13,outputTokens:7,totalTokens:20}};
+        yield{type:'finish',reason:{kind:background?(block.type==='tool-call'?'tool-calls':'stop'):(config.fixtureAnswerStop??'stop')}};
+      }
+    }
+    ctx.effect(()=>ctx.llm.registerAdapter(['pilot-fixture'],new Fixture()));
+  }
   ctx.effect(()=>{const alive=setInterval(()=>{},1000);const timer=setTimeout(async()=>{let deadline;let receipt;
     try{
       const input=JSON.parse(await readFile('/opt/rsi/personamem.json','utf8'));assert.equal(input.questions.length,config.expectedQuestionCount??2);assert.ok(!Object.hasOwn(input,'correct_answer'));rsi=ctx.get('rsi');assert.equal(!!rsi,config.arm==='rsi');if(rsi)await rsi.ready;
@@ -51,10 +75,10 @@ export function apply(ctx,config){
           await new Promise(resolve=>setTimeout(resolve,1000));
         }
         await rsi.request('settings',{cwd:'/workspace',settings:{learningEnabled:false}});const snapshot=await rsi.request('snapshot',{cwd:'/workspace'});durable('learning.json',{settled,snapshot});durable('assets.json',await rsi.request('export',{cwd:'/workspace'}));
-        assert.ok(settled,'Native history learning did not finish within the predeclared window; do not score this as a task failure or expand it silently');
-        assert.equal(snapshot.layers[snapshot.workspace.id].L0,input.history.filter(m=>m.role!=='system').length);
+        learningDisposition=decidePersonaLearning({policy:config.learningFailurePolicy??STRICT_LEARNING_POLICY,settled,snapshot,activeCount:rsi.runtime.active.size,expectedL0:input.history.filter(m=>m.role!=='system').length,requests:requests.filter(r=>r.phase==='learning'),blocked});
+        durable('learning.json',{settled,snapshot,disposition:learningDisposition});
       }
-      let frozenLearning;if(rsi){const s=await rsi.request('snapshot',{cwd:'/workspace'});frozenLearning={jobs:s.jobs.map(j=>j.id).sort(),sources:[...new Set(s.jobs.map(v=>v.sourceSessionId))].sort(),layers:s.layers};}
+      const assetState=value=>({memory:value.memory,memoryHistory:value.memoryHistory,skills:value.skills,profileFiles:value.profileFiles});let frozenAssets,frozenLearning;if(rsi){frozenAssets=assetState(await rsi.request('export',{cwd:'/workspace'}));const s=await rsi.request('snapshot',{cwd:'/workspace'});frozenLearning={jobs:s.jobs.map(j=>j.id).sort(),sources:[...new Set(s.jobs.map(v=>v.sourceSessionId))].sort(),layers:s.layers};}
       for(const q of input.questions){phase=q.id;questionCalls=0;const id='persona-'+input.personaId+'-question-'+q.id;
         const handle=await ctx.agents.create({sessionId:id,meta:{cwd:'/workspace'},seed:imported.events,agentOptions});
         handle.agent.inject(createUserMessage({source:{kind:'personamem-history',form:'recall',sessionId:seed.id},content:[{type:'text',text:personaHistoryContext(input.history)}]}));
@@ -73,8 +97,8 @@ export function apply(ctx,config){
         }
         answers.push({questionId:q.id,personaId:input.personaId,sessionId:id,response,responseOrigin:'last native model text blocks, including aborted attempts',answerAvailable:!!response.trim(),stopReason:reason,requests:questionCalls,wallMs:Date.now()-start,allHistoricalTextPresent:true,commonHistoricalTimeNotePresent:visible.includes(importedHistoryTimeNote),historicalContextSha256:createHash('sha256').update(personaHistoryContext(input.history)).digest('hex')});durable('answers.json',answers);
       }
-      if(rsi){const s=await rsi.request('snapshot',{cwd:'/workspace'});const after={jobs:s.jobs.map(j=>j.id).sort(),sources:[...new Set(s.jobs.map(v=>v.sourceSessionId))].sort(),layers:s.layers};assert.deepEqual(after,frozenLearning,'Question sessions contaminated the frozen learning snapshot');durable('question-isolation.json',{matches:true,before:frozenLearning,after});}
-      receipt={status:'COMPLETED',developmentPilot:!config.personaFormal,formalPersonaMemEvaluation:!!config.personaFormal,arm:config.arm,fixture:!!config.fixture,personaId:input.personaId,questionIds:input.questions.map(q=>q.id),historyCutoffExclusive:input.historyCutoffExclusive,historySha256:createHash('sha256').update(JSON.stringify(input.history)).digest('hex'),foregroundRequests:front,learningRequests:back,knownTokens:requests.reduce((sum,r)=>sum+(hasKnownPersonaUsage(r)?r.usage.totalTokens:0),0),unknownActualUsage:requests.filter(r=>!hasKnownPersonaUsage(r)).length,answersProvided:false,completeHistoryInBothArms:true,commonHistoricalTimeNote:true,historicalContextSha256:createHash('sha256').update(personaHistoryContext(input.history)).digest('hex'),roleProjection:'Historical system backgrounds are labelled producer context; not identical to official standalone roles',accuracy:null};
+      if(rsi){const s=await rsi.request('snapshot',{cwd:'/workspace'});const after={jobs:s.jobs.map(j=>j.id).sort(),sources:[...new Set(s.jobs.map(v=>v.sourceSessionId))].sort(),layers:s.layers};assert.deepEqual(after,frozenLearning,'Question sessions contaminated the frozen learning snapshot');const afterAssets=assetState(await rsi.request('export',{cwd:'/workspace'}));assert.deepEqual(afterAssets,frozenAssets,'Question sessions changed frozen asset content or versions');durable('question-isolation.json',{matches:true,assetContentAndVersionsMatch:true,before:frozenLearning,after,assetStateSha256:createHash('sha256').update(JSON.stringify(frozenAssets)).digest('hex')});}
+      receipt={status:'COMPLETED',developmentPilot:!config.personaFormal,formalPersonaMemEvaluation:!!config.personaFormal,arm:config.arm,fixture:!!config.fixture,personaId:input.personaId,questionIds:input.questions.map(q=>q.id),historyCutoffExclusive:input.historyCutoffExclusive,historySha256:createHash('sha256').update(JSON.stringify(input.history)).digest('hex'),foregroundRequests:front,learningRequests:back,knownTokens:requests.reduce((sum,r)=>sum+(hasKnownPersonaUsage(r)?r.usage.totalTokens:0),0),unknownActualUsage:requests.filter(r=>!hasKnownPersonaUsage(r)).length,answersProvided:false,completeHistoryInBothArms:true,commonHistoricalTimeNote:true,historicalContextSha256:createHash('sha256').update(personaHistoryContext(input.history)).digest('hex'),learningFailurePolicy:config.learningFailurePolicy??STRICT_LEARNING_POLICY,learningDisposition,learningStateSha256:rsi?createHash('sha256').update(await readFile(dir+'/learning.json')).digest('hex'):undefined,roleProjection:'Historical system backgrounds are labelled producer context; not identical to official standalone roles',accuracy:null};
     }catch(error){receipt={status:'ERROR',developmentPilot:!config.personaFormal,formalPersonaMemEvaluation:!!config.personaFormal,fixture:!!config.fixture,classification:'UNCLASSIFIED_NOT_TASK_FAIL',error:error.message,foregroundRequests:front,learningRequests:back,knownTokens:requests.reduce((sum,r)=>sum+(hasKnownPersonaUsage(r)?r.usage.totalTokens:0),0),unknownActualUsage:requests.filter(r=>!hasKnownPersonaUsage(r)).length};}
     finally{clearTimeout(deadline);await ctx.root.fiber.dispose();save();durable('receipt.json',receipt);console.log(JSON.stringify(receipt));process.exit(receipt.status==='COMPLETED'?0:1);}
   },0);return()=>{clearInterval(alive);clearTimeout(timer);};});

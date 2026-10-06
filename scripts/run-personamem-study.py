@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Coordinate frozen independent users; all learning stays in the native plugin."""
+"""Coordinate frozen PersonaMem users; all learning stays in the native plugin."""
 import argparse,ast,hashlib,json,math,os,random,re,subprocess,sys
 from datetime import datetime,timezone
 from pathlib import Path
@@ -21,9 +21,47 @@ def grader_from_source(path):
     for text,key,correct in [('<final_answer>(b)</final_answer>','(b)',True),('<final_answer>(a)</final_answer>','(b)',False),('<final_answer>(a) (b)</final_answer>','(b)',False)]:assert bool(grader.extract_answer(text,key)[0])==correct
     return grader
 
+STRICT_LEARNING_POLICY='require-complete'
+PARTIAL_LEARNING_POLICY='evaluate-closed-bounded-failure'
+
+def protocol_kind(freeze):
+    policy=freeze.get('learningFailurePolicy',STRICT_LEARNING_POLICY)
+    assert policy in [STRICT_LEARNING_POLICY,PARTIAL_LEARNING_POLICY],'Unknown frozen learning failure policy'
+    replication=freeze.get('cohortKind')=='preexposed-development-replication'
+    if freeze.get('status')=='FROZEN_PERSONAMEM_REPLICATION':assert replication,'Replication cohort label missing'
+    if not replication:assert freeze.get('independenceClaim',True) is True,'Independence declaration contradicts cohort'
+    if replication:assert freeze.get('status')=='FROZEN_PERSONAMEM_REPLICATION' and freeze.get('independenceClaim') is False,'Preexposed users cannot be labelled independent'
+    return policy,replication
+
+def learning_outcome(folder,receipt,arm,policy):
+    # Legacy receipts remain readable under their original strict default.
+    if 'learningFailurePolicy' in receipt:assert receipt['learningFailurePolicy']==policy,'Receipt changed frozen learning policy'
+    if arm=='baseline':return {'status':'NOT_APPLICABLE','complete':None}
+    disposition=receipt.get('learningDisposition')
+    if disposition is None:
+        assert receipt.get('status')!='COMPLETED' or policy==STRICT_LEARNING_POLICY,'Opt-in answering receipt omitted learning outcome'
+        return {'status':'LEGACY_COMPLETED' if receipt.get('status')=='COMPLETED' else 'NOT_COMPLETED_OR_UNKNOWN','complete':True if receipt.get('status')=='COMPLETED' else None}
+    assert disposition.get('policy')==policy,'Learning disposition changed frozen policy'
+    state=folder/'learning.json';assert state.is_file() and receipt.get('learningStateSha256')==sha(state),'Learning state receipt missing or changed'
+    learning=json.loads(state.read_text());assert learning.get('disposition')==disposition,'Learning state/disposition mismatch'
+    if disposition.get('status')=='COMPLETED':
+        assert disposition.get('complete') is True and learning.get('settled') is True,'Completed learner has no settlement evidence'
+    else:
+        assert policy==PARTIAL_LEARNING_POLICY and disposition.get('status')=='FAILED_CLOSED_BOUNDED' and disposition.get('complete') is False,'Partial learner requires predeclared opt-in policy'
+        assert disposition.get('foregroundMayUseExistingAssets') is True and disposition.get('learningFailureIsNotAnswerScore') is True
+        jobs=learning['snapshot']['jobs'];failed=[j for j in jobs if j['status']!='completed']
+        assert failed and all(j['status'] in ['failed','paused'] and j.get('stages',{}).get('failure',{}).get('code') in ['ABORTED','BUDGET_EXHAUSTED'] for j in failed),'Non-bounded failure cannot enter opt-in estimate'
+        assert [{k:j.get(k) if k!='code' else j['stages']['failure']['code'] for k in ['id','status','code','error']} for j in failed]==disposition['failedJobs'],'Failed-job provenance mismatch'
+        requests=json.loads((folder/'model-requests.json').read_text());background=[r for r in requests if r['phase']=='learning']
+        assert background and all(r.get('status') in ['RETURNED','ERROR','INCOMPLETE'] for r in background),'Partial learner ledger is not closed'
+        if any(j['stages']['failure']['code']=='BUDGET_EXHAUSTED' for j in failed):
+            blocked=json.loads((folder/'blocked-dispatches.json').read_text());assert any(r['reason']=='EXPERIMENT_CALL_CAP' for r in blocked),'No actual cap-stop receipt'
+    return disposition
+
 def summarize(root,freeze,scorer,official_source):
     # Offline only. Scores and keys are never passed to probe-runner or any Agent.
     for path,digest in freeze['scorerInputSha256'].items():assert sha(Path(path))==digest
+    policy,replication=protocol_kind(freeze)
     grader=grader_from_source(official_source);keys=json.loads((scorer/'answers.json').read_text());users=[];total=0;unknown=0
     records=json.loads((root/'runs.json').read_text()) if (root/'runs.json').exists() else []
     for case in freeze['cases']:
@@ -41,7 +79,8 @@ def summarize(root,freeze,scorer,official_source):
             assert len({q['questionId'] for q in rows})==len(rows) and all(q['questionId'] in case['questionIds'] for q in rows)
             scores=[{'questionId':q['questionId'],'correct':bool(grader.extract_answer(q['response'],keys[q['questionId']])[0]),'completed':(q.get('stopReason') or {}).get('kind')=='completed','answerAvailable':bool(q['response'].strip()),'responseSha256':hashlib.sha256(q['response'].encode()).hexdigest()} for q in rows]
             receipt=json.loads((folder/'receipt.json').read_text()) if (folder/'receipt.json').exists() else {}
-            if receipt:assert not receipt.get('fixture') and receipt.get('formalPersonaMemEvaluation'),'Only real frozen PersonaMem runs may enter an independent report'
+            if receipt:assert not receipt.get('fixture') and receipt.get('formalPersonaMemEvaluation'),'Only real frozen PersonaMem runs may enter the report'
+            learning=learning_outcome(folder,receipt,arm,policy)
             historical_time_status=None
             if receipt and freeze.get('requiresCommonHistoricalTimeNote'):
                 # A failed learner has not constructed an answering request. Require the
@@ -57,12 +96,12 @@ def summarize(root,freeze,scorer,official_source):
                     historical_time_status='VERIFIED_BY_ANSWERING_RECEIPT'
             known=sum(r['usage']['totalTokens'] for r in requests if known_usage(r));missing=sum(not known_usage(r) for r in requests);total+=known;unknown+=missing
             if (folder/'import.json').exists():histories.append(json.loads((folder/'import.json').read_text())['historySha256'])
-            user['arms'].append({'arm':arm,'runnerReturnCode':record.get('returncode'),'runnerStatus':receipt.get('status'),'scores':scores,'accuracy':sum(q['correct'] for q in scores)/len(scores) if len(scores)==freeze['questionCountPerUser'] else None,'knownTokens':known,'unknownActualUsage':missing,'foregroundTokens':sum(r['usage']['totalTokens'] for r in requests if known_usage(r) and r['phase']!='learning'),'backgroundTokens':sum(r['usage']['totalTokens'] for r in requests if known_usage(r) and r['phase']=='learning'),'gatewayLedgerMatches':True,'historicalTimeContextStatus':historical_time_status,'runnerError':receipt.get('error'),'runnerClassification':receipt.get('classification')})
+            user['arms'].append({'arm':arm,'runnerReturnCode':record.get('returncode'),'runnerStatus':receipt.get('status'),'scores':scores,'accuracy':sum(q['correct'] for q in scores)/len(scores) if len(scores)==freeze['questionCountPerUser'] else None,'knownTokens':known,'unknownActualUsage':missing,'foregroundTokens':sum(r['usage']['totalTokens'] for r in requests if known_usage(r) and r['phase']!='learning'),'backgroundTokens':sum(r['usage']['totalTokens'] for r in requests if known_usage(r) and r['phase']=='learning'),'gatewayLedgerMatches':True,'historicalTimeContextStatus':historical_time_status,'runnerError':receipt.get('error'),'runnerClassification':receipt.get('classification'),'learningDisposition':learning})
         assert len(set(histories))<=1,'Paired user history changed'
         assert len(set(time_contexts))<=1,'Paired historical time context changed'
         users.append(user)
     complete=all(len(u['arms'])==2 and all(a['accuracy'] is not None and a['runnerReturnCode']==0 and a['runnerStatus']=='COMPLETED' for a in u['arms']) for u in users)
-    result={'cohortKind':freeze.get('cohortKind','originally-selected-independent-users'),'populationProvenance':freeze.get('populationProvenance'),'status':'COMPLETE_INDEPENDENT_SAVED_RESULTS' if complete else 'INCOMPLETE_WITHHOLD_FULL_PAIRED_ESTIMATE','users':users,'plannedUsers':len(users),'knownTokens':total,'unknownActualUsage':unknown,'officialScorerControlsPassed':3,'scoresReturnedToLearning':False,'smallSampleLimit':'Eight correlated user clusters; not the full benchmark or a universal causal guarantee.','baselineMacroAccuracy':None,'rsiMacroAccuracy':None,'pairedAccuracyDifference':None,'userClusterBootstrap95':None,'bootstrapDraws':0,'reporterScriptSha256':sha(Path(__file__))}
+    result={'cohortKind':freeze.get('cohortKind','originally-selected-independent-users'),'populationProvenance':freeze.get('populationProvenance'),'independenceClaim':not replication,'learningFailurePolicy':policy,'completedLearners':sum(a['learningDisposition']['complete'] is True for u in users for a in u['arms'] if a['arm']=='rsi'),'closedBoundedFailedLearners':sum(a['learningDisposition']['status']=='FAILED_CLOSED_BOUNDED' for u in users for a in u['arms'] if a['arm']=='rsi'),'status':('COMPLETE_PREEXPOSED_SAVED_RESULTS' if replication else 'COMPLETE_INDEPENDENT_SAVED_RESULTS') if complete else 'INCOMPLETE_WITHHOLD_FULL_PAIRED_ESTIMATE','users':users,'plannedUsers':len(users),'knownTokens':total,'unknownActualUsage':unknown,'officialScorerControlsPassed':3,'scoresReturnedToLearning':False,'smallSampleLimit':'Eight correlated user clusters; not the full benchmark or a universal causal guarantee.','baselineMacroAccuracy':None,'rsiMacroAccuracy':None,'pairedAccuracyDifference':None,'userClusterBootstrap95':None,'bootstrapDraws':0,'reporterScriptSha256':sha(Path(__file__))}
     if complete:
         delta=[u['arms'][1]['accuracy']-u['arms'][0]['accuracy'] for u in users];rng=random.Random(freeze['selectionSeed']);boot=sorted(sum(rng.choices(delta,k=len(delta)))/len(delta) for _ in range(10000))
         result.update(baselineMacroAccuracy=sum(u['arms'][0]['accuracy'] for u in users)/len(users),rsiMacroAccuracy=sum(u['arms'][1]['accuracy'] for u in users)/len(users),pairedAccuracyDifference=sum(delta)/len(delta),userClusterBootstrap95=[boot[249],boot[9749]],bootstrapDraws=10000)
@@ -77,6 +116,10 @@ def main():
         assert not subprocess.check_output(['git','status','--porcelain'],cwd=project,text=True).strip()
         assert os.environ.get('RSI_MODEL_UPSTREAM'),'Use the authorized model service'
         proposal=json.loads(args.proposal.read_text());persona=proposal['persona'];assert len(persona['cases'])==8 and persona['questionCountPerUser']==4
+        cohort=proposal.get('cohortKind','originally-selected-independent-users');replication=cohort=='preexposed-development-replication'
+        policy=proposal.get('learningFailurePolicy',STRICT_LEARNING_POLICY)
+        assert policy in [STRICT_LEARNING_POLICY,PARTIAL_LEARNING_POLICY]
+        if replication:assert proposal.get('independenceClaim') is False,'Declare known exposure explicitly'
         grader_from_source(args.official_source)
         hashes={str(f.relative_to(project)):sha(f) for name in ['src','adapters','vendor','lib','scripts'] for f in sorted((project/name).rglob('*')) if f.is_file() and '__pycache__' not in f.parts and f.suffix not in ['.pyc','.pyo']}
         for name in ['package.json','package-lock.json','cordis.patch.yml']:hashes[name]=sha(project/name)
@@ -84,7 +127,7 @@ def main():
         for case in persona['cases']:
             source=args.public/('persona-'+case['personaId']+'.json');assert sha(source)==case['publicInputSha256']
             (public_root/source.name).write_bytes(source.read_bytes())
-        freeze={'status':'FROZEN_INDEPENDENT_PERSONAMEM','revision':subprocess.check_output(['git','rev-parse','HEAD'],cwd=project,text=True).strip(),'inputSha256':hashes,'model':proposal['model'],'upstreamSha256':hashlib.sha256(os.environ['RSI_MODEL_UPSTREAM'].encode()).hexdigest(),'taskImageId':subprocess.check_output(['docker','image','inspect','--format','{{.Id}}',args.image],text=True).strip(),'taskTag':args.image,'selectionSeed':proposal['selectionSeed'],'questionCountPerUser':persona['questionCountPerUser'],'cases':persona['cases'],'budgets':persona['budgetProposal'],'sourceProposalSha256':sha(args.proposal),'populationProvenance':proposal.get('supersedesForNewDispatchOnly'),'cohortKind':proposal.get('cohortKind','originally-selected-independent-users'),'requiresCommonHistoricalTimeNote':persona.get('sameHistoricalTimeExplanationBothArms',False),'datasetProvenance':proposal.get('datasetProvenance'),'scorerInputSha256':{str(f.resolve()):sha(f) for f in [args.scorer/'answers.json',args.official_source]},'frozenAt':datetime.now(timezone.utc).isoformat(),'diagnosticSampling':'For each user, first two preselected questions and first four delivered Memory references per question. Label direct/partial/unrelated, source attribution and answer correspondence without feeding scores back. All body lengths and request occurrences counted automatically.', 'retryPolicy':'No automatic retry, budget expansion, rescue learning or answer feedback. Stop scale-out on incomplete native learning.','armsByUser':{c['personaId']:['baseline','rsi'] if i%2==0 else ['rsi','baseline'] for i,c in enumerate(persona['cases'])}}
+        freeze={'status':'FROZEN_PERSONAMEM_REPLICATION' if replication else 'FROZEN_INDEPENDENT_PERSONAMEM','independenceClaim':not replication,'learningFailurePolicy':policy,'revision':subprocess.check_output(['git','rev-parse','HEAD'],cwd=project,text=True).strip(),'inputSha256':hashes,'model':proposal['model'],'upstreamSha256':hashlib.sha256(os.environ['RSI_MODEL_UPSTREAM'].encode()).hexdigest(),'taskImageId':subprocess.check_output(['docker','image','inspect','--format','{{.Id}}',args.image],text=True).strip(),'taskTag':args.image,'selectionSeed':proposal['selectionSeed'],'questionCountPerUser':persona['questionCountPerUser'],'cases':persona['cases'],'budgets':persona['budgetProposal'],'sourceProposalSha256':sha(args.proposal),'populationProvenance':proposal.get('supersedesForNewDispatchOnly'),'cohortKind':proposal.get('cohortKind','originally-selected-independent-users'),'requiresCommonHistoricalTimeNote':persona.get('sameHistoricalTimeExplanationBothArms',False),'datasetProvenance':proposal.get('datasetProvenance'),'scorerInputSha256':{str(f.resolve()):sha(f) for f in [args.scorer/'answers.json',args.official_source]},'frozenAt':datetime.now(timezone.utc).isoformat(),'diagnosticSampling':'For each user, first two preselected questions and first four delivered Memory references per question. Label direct/partial/unrelated, source attribution and answer correspondence without feeding scores back. All body lengths and request occurrences counted automatically.', 'retryPolicy':'No automatic retry, budget expansion, rescue learning or answer feedback. '+('Only verified closed ABORTED or recorded call-cap failures may answer with existing assets; live, unclassified, capture and infrastructure failures stop scale-out.' if policy==PARTIAL_LEARNING_POLICY else 'Stop scale-out on incomplete native learning.'),'armsByUser':{c['personaId']:['baseline','rsi'] if i%2==0 else ['rsi','baseline'] for i,c in enumerate(persona['cases'])}}
         write(frozen,freeze)
     freeze=json.loads(frozen.read_text())
     if args.report_only:print(json.dumps(summarize(root,freeze,args.scorer,args.official_source)));return

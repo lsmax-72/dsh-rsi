@@ -1,0 +1,77 @@
+{
+  "status": "PASS_PREDECLARED_LEARNING_FAILURE_POLICY_CONTROLS",
+  "realNewModelRequests": 0,
+  "savedFailedLearnerSource": true,
+  "originalStudyResumed": false,
+  "originalStrictRuleStillRejectsSameFailedLearner": true,
+  "partialRuleOptInOnly": true,
+  "onlyAbortedOrRecordedCapFailuresAccepted": true,
+  "liveUnclassifiedOrInfrastructureFailuresRemainFatal": true,
+  "controls": [
+    {
+      "name": "actual-closed-aborted-learner-assets",
+      "status": "FAILED_CLOSED_BOUNDED",
+      "learningComplete": false
+    },
+    {
+      "name": "same-original-state-strict-default",
+      "rejected": true
+    },
+    {
+      "name": "active-call-not-frozen",
+      "rejected": true
+    },
+    {
+      "name": "incomplete-native-capture",
+      "rejected": true
+    },
+    {
+      "name": "pending-native-queue",
+      "rejected": true
+    },
+    {
+      "name": "infrastructure-failure",
+      "rejected": true
+    },
+    {
+      "name": "shutdown-receipt",
+      "rejected": true
+    },
+    {
+      "name": "unclosed-dispatch",
+      "rejected": true
+    },
+    {
+      "name": "budget-without-cap-receipt",
+      "rejected": true
+    },
+    {
+      "name": "recorded-call-cap",
+      "status": "FAILED_CLOSED_BOUNDED",
+      "learningComplete": false
+    },
+    {
+      "name": "claimed-settled-but-failed",
+      "rejected": true
+    },
+    {
+      "name": "claimed-settled-but-profile-pending",
+      "rejected": true
+    },
+    {
+      "name": "completed-original-policy",
+      "status": "COMPLETED",
+      "learningComplete": true
+    },
+    {
+      "name": "unknown-policy",
+      "rejected": true
+    }
+  ],
+  "probeSha256": "43f33f56b8d122c5db64bd1125cc733abce47e45d490e58d3331984e24fbd1a0",
+  "sourceHashes": {
+    "scheduler": "31060761760a98c628473b1c5a6eea3d580bb615e07f9ab83e77d3b828594d0c",
+    "requests": "c3679de78e76731a6e5e8c93eca15272ef3d6fa3017eafd22eb98394b2a65490"
+  },
+  "limits": "Decision gate controls only; no foreground continuation or full runtime/statistical method claim."
+}

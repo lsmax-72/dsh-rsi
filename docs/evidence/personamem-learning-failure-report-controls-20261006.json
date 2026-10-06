@@ -1,0 +1,79 @@
+{
+  "status": "PASS_FAILED_PREANSWER_REPORT_CONTROLS",
+  "fixtureOnly": true,
+  "realModelRequests": 0,
+  "officialScorerSourceUnchanged": true,
+  "reporterScriptSha256": "aa897756e09e06894437a8767b151ef2fbaa32e468d865ddf04bfa35c0c1a929",
+  "controls": [
+    {
+      "case": "complete",
+      "status": "COMPLETE_INDEPENDENT_SAVED_RESULTS",
+      "unknownUsage": 0
+    },
+    {
+      "case": "preanswer-failure",
+      "status": "INCOMPLETE_WITHHOLD_FULL_PAIRED_ESTIMATE",
+      "unknownUsage": 0
+    },
+    {
+      "case": "unknown-failure",
+      "status": "INCOMPLETE_WITHHOLD_FULL_PAIRED_ESTIMATE",
+      "unknownUsage": 1
+    },
+    {
+      "case": "completed-missing-note",
+      "rejected": true,
+      "error": "Common history time context missing"
+    },
+    {
+      "case": "failed-answer-missing-note",
+      "rejected": true,
+      "error": "Common history time context missing"
+    },
+    {
+      "case": "wrong-preanswer-phase",
+      "rejected": true,
+      "error": "Common history time context missing"
+    },
+    {
+      "case": "wire-mismatch",
+      "rejected": true,
+      "error": "Gateway/native ledger mismatch; withhold paired result"
+    },
+    {
+      "case": "partial-opt-in",
+      "status": "COMPLETE_PREEXPOSED_SAVED_RESULTS",
+      "learningFailuresRetained": 1,
+      "knownTokens": 70,
+      "independenceClaim": false
+    },
+    {
+      "case": "partial-without-freeze",
+      "rejected": true,
+      "error": "Receipt changed frozen learning policy"
+    },
+    {
+      "case": "partial-state-tampered",
+      "rejected": true,
+      "error": "Learning state receipt missing or changed"
+    },
+    {
+      "case": "partial-disposition-mismatch",
+      "rejected": true,
+      "error": "Learning state/disposition mismatch"
+    },
+    {
+      "case": "replication-complete",
+      "status": "COMPLETE_PREEXPOSED_SAVED_RESULTS",
+      "learningFailuresRetained": 0,
+      "knownTokens": 70,
+      "independenceClaim": false
+    },
+    {
+      "case": "replication-independent-label",
+      "rejected": true,
+      "error": "Preexposed users cannot be labelled independent"
+    }
+  ],
+  "scope": "Offline reporting only; no learner recovery, rescoring feedback, new answer generation or quota change."
+}

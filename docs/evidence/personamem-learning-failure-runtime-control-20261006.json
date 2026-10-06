@@ -1,0 +1,160 @@
+{
+  "status": "PASS_NATIVE_CLOSED_LEARNER_FOREGROUND_CONTROL",
+  "realModelRequests": 0,
+  "fixtureOnly": true,
+  "formalEvaluationStarted": false,
+  "nativeHistoryL0": 2,
+  "nativeMemoryHeads": 1,
+  "nativeSkillHeads": 1,
+  "fixtureBackgroundStreams": 3,
+  "fixtureForegroundStreams": 2,
+  "fixtureKnownUsageTokens": 80,
+  "fixtureUnknownUsageEntries": 1,
+  "foregroundQuestionsCompleted": 2,
+  "failedLearningRemainsFailed": true,
+  "assetContentVersionsResourcesFrozen": true,
+  "allFiveFixtureInputsDurablyReconstructed": true,
+  "unknownFailureNegativeControlRejected": true,
+  "oldStudyReadOnlyMirrorReport": {
+    "status": "INCOMPLETE_WITHHOLD_FULL_PAIRED_ESTIMATE",
+    "knownTokens": 5288793,
+    "unknownActualUsage": 1,
+    "fullPairEstimate": null,
+    "sourceFilesUnchanged": 77
+  },
+  "policy": {
+    "arm": "rsi",
+    "imageId": "sha256:49d52ff2d8af81643be2422bb81ecc6feddc90b94dce8dfd3050b063340b58b5",
+    "user": "1000:1000",
+    "networkInternal": true,
+    "rootfsReadOnly": true,
+    "hostBinds": [],
+    "experimentOwnedVolume": true,
+    "fixture": true,
+    "requestLimit": 24,
+    "dispatchLimit": 2,
+    "learningCallBudget": 20,
+    "learningDispatchLimit": 20,
+    "fixtureLearning": true,
+    "wallSecondsPerPhase": 30,
+    "settleSecondsPerPhase": 30,
+    "embeddingModelSha256": "6fa0c02a9c302be6f977521d399b4de3a46310a4f2621ee0063747881b673f67",
+    "embeddingProvider": "native-local",
+    "formalBenchmark": false,
+    "personaProtocolSha256": null,
+    "instanceId": "closed-failure-control",
+    "sourceSessionsRestored": false,
+    "baselineRawHistoryRestored": false,
+    "effectivePatch": [
+      {
+        "id": "sdk-app-startup",
+        "disabled": true
+      },
+      {
+        "id": "sdk-jsonrpc-server",
+        "disabled": true
+      },
+      {
+        "id": "llm-deepseek",
+        "disabled": true
+      },
+      {
+        "id": "tools",
+        "config": {
+          "mode": "native"
+        }
+      },
+      {
+        "id": "persistent-bash",
+        "disabled": true
+      },
+      {
+        "insert": [
+          {
+            "id": "rsi-registry",
+            "name": "@deepseek-ai/dsh-typert-registry"
+          },
+          {
+            "id": "rsi-gateway",
+            "name": "@deepseek-ai/dsh-api-gateway"
+          },
+          {
+            "id": "rsi-skills",
+            "name": "@deepseek-ai/dsh-skill"
+          },
+          {
+            "id": "rsi-tool-skill",
+            "name": "@deepseek-ai/dsh-tool-skill"
+          },
+          {
+            "id": "rsi",
+            "name": "/opt/rsi/lib/index.js",
+            "config": {
+              "dataDir": "/state/assets",
+              "provider": "pilot-fixture",
+              "model": "fixture",
+              "settings": {
+                "dailyCallBudget": 20,
+                "learningEnabled": true,
+                "idleSeconds": 1
+              },
+              "embedding": {
+                "provider": "local",
+                "modelPath": "/opt/rsi/embedding.gguf"
+              }
+            }
+          },
+          {
+            "id": "rsi-pilot-task",
+            "name": "/opt/rsi/scripts/personamem-pilot-task.mjs",
+            "config": {
+              "arm": "rsi",
+              "instanceId": "closed-failure-control",
+              "fixture": true,
+              "fixtureAnswerStop": "stop",
+              "interruptCheckpoint": false,
+              "baselineDate": null,
+              "dispatchLimit": 2,
+              "learningCallBudget": 20,
+              "learningDispatchLimit": 20,
+              "fixtureLearning": true,
+              "wallTimeMs": 30000,
+              "settleMs": 30000,
+              "formal": false,
+              "expectedTree": null,
+              "expectedVersion": null,
+              "fixtureClosedLearningFailure": true,
+              "learningFailurePolicy": "evaluate-closed-bounded-failure",
+              "expectedQuestionCount": 2,
+              "phases": [
+                {
+                  "name": "fixture-q0"
+                },
+                {
+                  "name": "fixture-q1"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "filesSha256": {
+    "policy.json": "e27bd92fecf6abdf2a2159aca664cb813fd304531084b8750ce1eaa5ab5c9b1e",
+    "state/pilot/closed-failure-control/reconstruction.json": "4b1d13fadf6302ccec1aeea573ac0696516e6caacaa3f68babf23771ab2b11f0",
+    "state/pilot/closed-failure-control/learning.json": "915ad7a6a28c3363120aa7a1f5c8ea207d066ba9ea90b8c3ac0b3a98e5cfe88a",
+    "state/pilot/closed-failure-control/question-isolation.json": "5b776da18ac6d328ce4b62b068ea85c19c130f5cbb11857b842e4096fedcd826",
+    "state/pilot/closed-failure-control/answers.json": "87cc15e2c63143ae59ed17cc10a8c2c5b183ce8a7df7f234c98ccffb98c9b8d0",
+    "state/pilot/closed-failure-control/assets.json": "8781a2018e44c47d90a2f71b8d018a03f0974941bdb7c492a9d02b7c9f45426b",
+    "state/pilot/closed-failure-control/model-requests.json": "02402a33308aa158a1dcf7463443d895b70bab11f848dcb2253165ab50537c64",
+    "state/pilot/closed-failure-control/receipt.json": "9be96e649a1f753be416da20c1cd02b7e1b1f185106fb67bdd72e668ac29dee2"
+  },
+  "sourceSha256": {
+    "scripts/personamem-pilot-task.mjs": "c8f4f4019c78617da6ee4e99432db19612912f21df36256a2e3807ad84f405e4",
+    "scripts/personamem-learning-policy.mjs": "07367f9b7744d3439d0622c33e7601b7f21e277e45260ce3659eb1e9dde37457",
+    "scripts/probe-runner.py": "3dc835eec58b78481a2ee79823c207f1cf376ac92237a70444dd0ac6190bac12",
+    "scripts/run-personamem-study.py": "aa897756e09e06894437a8767b151ef2fbaa32e468d865ddf04bfa35c0c1a929"
+  },
+  "limits": "Explicit synthetic adapter validates native persistence/failure/foreground/freeze contracts only. No real model quality, scorer success or whole-product effect claim. ABORTED accepts a closed operational interruption; it does not establish its root cause."
+}

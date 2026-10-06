@@ -37,4 +37,34 @@ with tempfile.TemporaryDirectory(prefix='dsh-rsi-failed-report-') as tmp:
    try:mod.summarize(root,freeze,scorer,args.official_source.resolve())
    except AssertionError as error:controls.append({'case':mode,'rejected':True,'error':str(error)})
    else:raise AssertionError('Invalid report fixture accepted: '+mode)
+ # New policy must be frozen before dispatch; these are explicit synthetic ledgers.
+ for mode in ['partial-opt-in','partial-without-freeze','partial-state-tampered','partial-disposition-mismatch','replication-complete','replication-independent-label']:
+  setup('complete');trial=copy.deepcopy(freeze)
+  trial.update(status='FROZEN_PERSONAMEM_REPLICATION',cohortKind='preexposed-development-replication',independenceClaim=False,learningFailurePolicy=mod.PARTIAL_LEARNING_POLICY)
+  folder=root/'persona-fixture-rsi/state/pilot/persona-fixture'
+  job={'id':'fixture-job','status':'failed','error':'fixture closed abort','stages':{'failure':{'code':'ABORTED'}}}
+  disposition={'policy':mod.PARTIAL_LEARNING_POLICY,'status':'FAILED_CLOSED_BOUNDED','complete':False,'failedJobs':[{'id':job['id'],'status':job['status'],'code':'ABORTED','error':job['error']}],'foregroundMayUseExistingAssets':True,'learningFailureIsNotAnswerScore':True}
+  learning={'settled':False,'snapshot':{'jobs':[job]},'disposition':disposition}
+  mod.write(folder/'learning.json',learning)
+  receipt=json.loads((folder/'receipt.json').read_text());receipt.update(learningFailurePolicy=mod.PARTIAL_LEARNING_POLICY,learningDisposition=disposition,learningStateSha256=mod.sha(folder/'learning.json'));mod.write(folder/'receipt.json',receipt)
+  baseline=root/'persona-fixture-baseline/state/pilot/persona-fixture/receipt.json';receipt_base=json.loads(baseline.read_text());receipt_base['learningFailurePolicy']=mod.PARTIAL_LEARNING_POLICY;mod.write(baseline,receipt_base)
+  req=json.loads((folder/'model-requests.json').read_text());req.insert(0,{'phase':'learning','usage':{'totalTokens':30},'status':'ERROR'});mod.write(folder/'model-requests.json',req)
+  with (root/'persona-fixture-rsi/gateway.log').open('a') as handle:handle.write(json.dumps({'request':2,'model':'fixture','enableThinking':False,'messageRoles':[]})+'\n')
+  if mode=='partial-without-freeze':trial=copy.deepcopy(freeze)
+  if mode=='partial-state-tampered':learning['snapshot']['jobs'][0]['error']='changed';mod.write(folder/'learning.json',learning)
+  if mode=='partial-disposition-mismatch':learning['disposition']=copy.deepcopy(disposition);learning['disposition']['failedJobs'][0]['error']='changed';mod.write(folder/'learning.json',learning);receipt['learningStateSha256']=mod.sha(folder/'learning.json');mod.write(folder/'receipt.json',receipt)
+  if mode=='replication-complete':
+   disposition={'policy':mod.PARTIAL_LEARNING_POLICY,'status':'COMPLETED','complete':True,'failedJobs':[]}
+   learning={'settled':True,'snapshot':{'jobs':[]},'disposition':disposition};mod.write(folder/'learning.json',learning)
+   receipt.update(learningDisposition=disposition,learningStateSha256=mod.sha(folder/'learning.json'));mod.write(folder/'receipt.json',receipt)
+  if mode=='replication-independent-label':trial['status']='FROZEN_INDEPENDENT_PERSONAMEM'
+  if mode in ['partial-opt-in','replication-complete']:
+   result=mod.summarize(root,trial,scorer,args.official_source.resolve());assert result['status']=='COMPLETE_PREEXPOSED_SAVED_RESULTS' and result['independenceClaim'] is False
+   assert result['baselineMacroAccuracy']==result['rsiMacroAccuracy']==1 and result['closedBoundedFailedLearners']==(1 if mode=='partial-opt-in' else 0) and result['completedLearners']==(0 if mode=='partial-opt-in' else 1)
+   assert result['knownTokens']==70 and result['unknownActualUsage']==0 and result['users'][0]['arms'][1]['backgroundTokens']==30
+   controls.append({'case':mode,'status':result['status'],'learningFailuresRetained':result['closedBoundedFailedLearners'],'knownTokens':70,'independenceClaim':False})
+  else:
+   try:mod.summarize(root,trial,scorer,args.official_source.resolve())
+   except AssertionError as error:controls.append({'case':mode,'rejected':True,'error':str(error)})
+   else:raise AssertionError('Invalid opt-in report fixture accepted: '+mode)
  receipt={'status':'PASS_FAILED_PREANSWER_REPORT_CONTROLS','fixtureOnly':True,'realModelRequests':0,'officialScorerSourceUnchanged':True,'reporterScriptSha256':mod.sha(project/'scripts/run-personamem-study.py'),'controls':controls,'scope':'Offline reporting only; no learner recovery, rescoring feedback, new answer generation or quota change.'};args.output.write_text(json.dumps(receipt,ensure_ascii=False,indent=2)+'\n');print(json.dumps(receipt))
