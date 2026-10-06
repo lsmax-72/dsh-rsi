@@ -4,7 +4,7 @@
 
 dsh-rsi 是面向 DeepSeek Harness（dsh）的单用户、本地自动学习插件。它从会话中提炼 Chat Memory 和 Skill，在后续任务中召回相关记忆、加载适用技能，并提供集成在插件详情页里的资产管理界面。
 
-当前为开发版本：本地安装、管理页及真实记忆/Skill正文消费已有小型验收。修复后的[8题连续学习实验](docs/continuous-learning-outcome-20261005.md)基线5/8、启用组3/8，已知聊天token多约38%。[新轮PersonaMem](docs/personamem-current-incomplete-20261006.md)完成7/8位用户配对，部分结果18/28与16/28、已知成本约5.02倍；第8位在自动Skill正文缩减时超时，完整效果及统计区间仍缺失。目前没有效果优势证据，正文更新可靠性、资源拆分和内容事实仍有限制。早期适配版结果见[历史报告](docs/formal-results-20261003.md)，最新边界见[推进路线](docs/rsi-roadmap-20261004.md)。
+当前为开发版本：本地安装、管理页及真实记忆/Skill 正文消费已有小型验收。修复后的[8 题连续学习实验](docs/continuous-learning-outcome-20261005.md)基线 5/8、启用组 3/8，已知聊天 token 多约 38%。最新[八用户开发复验](docs/personamem-development-terminal-20261006.md)完成 6/8 组，已完成子集官方分数 17/24 与 15/24、已知成本约 5.32 倍，且存在评分解析误判；完整估计与区间仍缺失。全部尝试共消耗 5,070,327 已知聊天 token，另有一次未知 usage。目前没有效果优势证据；画像失败传播、内部召回截断和时间来源仍需修复。早期结果见[历史报告](docs/formal-results-20261003.md)，当前边界见[推进路线](docs/rsi-roadmap-20261004.md)。
 
 [产品定位](#产品定位) · [项目架构](#项目架构) · [工作流程](#工作流程) · [管理页面](#管理页面) · [工作区与存储](#工作区与存储) · [安装与开始使用](#安装与开始使用) · [验证状态](#验证状态) · [开发与贡献](#开发与贡献)
 
@@ -235,7 +235,7 @@ docs/          需求、实现边界、评测协议与运行证据
 
 核心固定为修订 `e09899c2136fb6bc27ecc68505e32bdb637cdfa8` 的源码文件，数量以核心清单为准；界面固定复用 10 个文件，其中文件树和对应样式从原详情页提取。构建前核对逐文件 SHA-256。必要适配留在 `adapters/` 与 `src/`，没有平行重写提炼、召回或版本系统。
 
-当前 Chat Memory 使用原生 SQLite FTS5、向量检索与 RRF；Skill 保留原生 BM25。默认本地向量模型为 embeddinggemma-300m-qat Q8_0（768 维），首次需下载约 329 MB；离线使用时通过插件配置 `embedding: {provider: "local", modelPath: "/绝对路径/embeddinggemma-300m-qat-Q8_0.gguf"}` 指定已下载文件。编码失败显式报错，首次模型加载及历史索引重建可能延长插件启动时间。2026-10-04 装配审计还确认了 Skill 生产提示词替换、画像触发缺失、资产分页遗漏、上下文截断和错误重试接线问题，见 [能力装配审计与隔离复现](docs/native-capability-audit-20261004.md)，最新修复状态见 [修复进度](docs/native-capability-repairs.md)。七类装配问题已逐项修复并保存接入回执；新增原生依赖的 Linux/macOS/Windows 安装检查全部通过。接入验收不等于效果改善；首轮实验结果对应此前适配版。构建成功也不代表通过了整个复用库的类型检查。来源、固定文件及许可见 [核心清单](vendor/core/manifest.json)、[界面清单](vendor/panel/manifest.json)、[核心许可](vendor/core/LICENSE)和[界面许可](vendor/panel/LICENSE)。
+当前 Chat Memory 使用原生 SQLite FTS5、向量检索与 RRF；Skill 保留原生 BM25。默认本地向量模型为 embeddinggemma-300m-qat Q8_0（768 维），首次需下载约 329 MB；离线使用时通过插件配置 `embedding: {provider: "local", modelPath: "/绝对路径/embeddinggemma-300m-qat-Q8_0.gguf"}` 指定已下载文件。编码失败显式报错，首次模型加载及历史索引重建可能延长插件启动时间。2026-10-04 装配审计还确认了 Skill 生产提示词替换、画像触发缺失、资产分页遗漏、上下文截断和错误重试接线问题，见 [能力装配审计与隔离复现](docs/native-capability-audit-20261004.md)，最新修复状态见 [修复进度](docs/native-capability-repairs.md)。七类装配修复已有接入回执；最新实跑又发现画像错误传播和内部条目裁剪的遗漏，详见[终止报告](docs/personamem-development-terminal-20261006.md)，不能把局部验收当作完整解决；新增原生依赖的 Linux/macOS/Windows 安装检查全部通过。接入验收不等于效果改善；首轮实验结果对应此前适配版。构建成功也不代表通过了整个复用库的类型检查。来源、固定文件及许可见 [核心清单](vendor/core/manifest.json)、[界面清单](vendor/panel/manifest.json)、[核心许可](vendor/core/LICENSE)和[界面许可](vendor/panel/LICENSE)。
 
 ### 自动提炼 Skill 的正文预算
 
