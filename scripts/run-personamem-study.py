@@ -25,17 +25,18 @@ def grader_from_source(path):
 
 STRICT_LEARNING_POLICY='require-complete'
 PARTIAL_LEARNING_POLICY='evaluate-closed-bounded-failure'
+NATIVE_LEARNING_POLICY='evaluate-closed-native-failure-v2'
 
 def protocol_kind(freeze):
     policy=freeze.get('learningFailurePolicy',STRICT_LEARNING_POLICY)
-    assert policy in [STRICT_LEARNING_POLICY,PARTIAL_LEARNING_POLICY],'Unknown frozen learning failure policy'
+    assert policy in [STRICT_LEARNING_POLICY,PARTIAL_LEARNING_POLICY,NATIVE_LEARNING_POLICY],'Unknown frozen learning failure policy'
     replication=freeze.get('cohortKind')=='preexposed-development-replication'
     if freeze.get('status')=='FROZEN_PERSONAMEM_REPLICATION':assert replication,'Replication cohort label missing'
     if not replication:assert freeze.get('independenceClaim',True) is True,'Independence declaration contradicts cohort'
     if replication:assert freeze.get('status')=='FROZEN_PERSONAMEM_REPLICATION' and freeze.get('independenceClaim') is False,'Preexposed users cannot be labelled independent'
     return policy,replication
 
-def learning_outcome(folder,receipt,arm,policy):
+def learning_outcome(folder,receipt,arm,policy,call_limit=None,expected_l0=None):
     # Legacy receipts remain readable under their original strict default.
     if 'learningFailurePolicy' in receipt:assert receipt['learningFailurePolicy']==policy,'Receipt changed frozen learning policy'
     if arm=='baseline':return {'status':'NOT_APPLICABLE','complete':None}
@@ -46,6 +47,15 @@ def learning_outcome(folder,receipt,arm,policy):
     assert disposition.get('policy')==policy,'Learning disposition changed frozen policy'
     state=folder/'learning.json';assert state.is_file() and receipt.get('learningStateSha256')==sha(state),'Learning state receipt missing or changed'
     learning=json.loads(state.read_text());assert learning.get('disposition')==disposition,'Learning state/disposition mismatch'
+    if policy==NATIVE_LEARNING_POLICY:
+        assert learning.get('callLimit')==call_limit and learning.get('expectedL0')==expected_l0,'Gate counters differ from frozen budget/public history'
+        native=folder/'native-learning-runs.json';assert native.is_file() and learning.get('nativeEvidenceSha256')==sha(native),'Native failure journals missing/changed'
+        background=[r for r in json.loads((folder/'model-requests.json').read_text()) if r['phase']=='learning']
+        arguments={'policy':policy,'settled':learning['settled'],'snapshot':learning['snapshot'],'activeCount':learning['activeCount'],'expectedL0':expected_l0,'callLimit':call_limit,'requests':background,'nativeRuns':json.loads(native.read_text())}
+        check=subprocess.run(['node',str(Path(__file__).with_name('check-personamem-native-learning.mjs'))],input=json.dumps(arguments),text=True,capture_output=True,timeout=30)
+        assert check.returncode==0,'Native learning gate replay rejected: '+check.stderr[-2000:]
+        assert json.loads(check.stdout)==disposition,'Native replay/disposition mismatch'
+        return disposition
     if disposition.get('status')=='COMPLETED':
         assert disposition.get('complete') is True and learning.get('settled') is True,'Completed learner has no settlement evidence'
     else:
@@ -86,7 +96,11 @@ def summarize(root,freeze,scorer,official_source):
             scores=[{'questionId':q['questionId'],'correct':bool(grader.extract_answer(q['response'],keys[q['questionId']])[0]),'formatDiagnostic':diagnose_answer_format(q['response']),'completed':(q.get('stopReason') or {}).get('kind')=='completed','answerAvailable':bool(q['response'].strip()),'responseSha256':hashlib.sha256(q['response'].encode()).hexdigest()} for q in rows]
             receipt=json.loads((folder/'receipt.json').read_text()) if (folder/'receipt.json').exists() else {}
             if receipt:assert not receipt.get('fixture') and receipt.get('formalPersonaMemEvaluation'),'Only real frozen PersonaMem runs may enter the report'
-            learning=learning_outcome(folder,receipt,arm,policy)
+            expected_l0=None
+            if policy==NATIVE_LEARNING_POLICY and arm=='rsi':
+                public=root/'public'/('persona-'+case['personaId']+'.json');assert public.is_file() and sha(public)==case['publicInputSha256'],'Frozen public source missing/changed'
+                expected_l0=sum(m['role'] in ['user','assistant'] for m in json.loads(public.read_text())['history'])
+            learning=learning_outcome(folder,receipt,arm,policy,freeze.get('budgets',{}).get('backgroundCallsPerUser'),expected_l0)
             historical_time_status=None
             if receipt and freeze.get('requiresCommonHistoricalTimeNote'):
                 # A failed learner has not constructed an answering request. Require the
@@ -124,7 +138,7 @@ def main():
         proposal=json.loads(args.proposal.read_text());persona=proposal['persona'];assert len(persona['cases'])==8 and persona['questionCountPerUser']==4
         cohort=proposal.get('cohortKind','originally-selected-independent-users');replication=cohort=='preexposed-development-replication'
         policy=proposal.get('learningFailurePolicy',STRICT_LEARNING_POLICY)
-        assert policy in [STRICT_LEARNING_POLICY,PARTIAL_LEARNING_POLICY]
+        assert policy in [STRICT_LEARNING_POLICY,PARTIAL_LEARNING_POLICY,NATIVE_LEARNING_POLICY]
         if replication:assert proposal.get('independenceClaim') is False,'Declare known exposure explicitly'
         grader_from_source(args.official_source)
         hashes={str(f.relative_to(project)):sha(f) for name in ['src','adapters','vendor','lib','scripts'] for f in sorted((project/name).rglob('*')) if f.is_file() and '__pycache__' not in f.parts and f.suffix not in ['.pyc','.pyo']}
@@ -133,7 +147,7 @@ def main():
         for case in persona['cases']:
             source=args.public/('persona-'+case['personaId']+'.json');assert sha(source)==case['publicInputSha256']
             (public_root/source.name).write_bytes(source.read_bytes())
-        freeze={'status':'FROZEN_PERSONAMEM_REPLICATION' if replication else 'FROZEN_INDEPENDENT_PERSONAMEM','independenceClaim':not replication,'learningFailurePolicy':policy,'revision':subprocess.check_output(['git','rev-parse','HEAD'],cwd=project,text=True).strip(),'inputSha256':hashes,'model':proposal['model'],'upstreamSha256':hashlib.sha256(os.environ['RSI_MODEL_UPSTREAM'].encode()).hexdigest(),'taskImageId':subprocess.check_output(['docker','image','inspect','--format','{{.Id}}',args.image],text=True).strip(),'taskTag':args.image,'selectionSeed':proposal['selectionSeed'],'questionCountPerUser':persona['questionCountPerUser'],'cases':persona['cases'],'budgets':persona['budgetProposal'],'sourceProposalSha256':sha(args.proposal),'populationProvenance':proposal.get('supersedesForNewDispatchOnly'),'cohortKind':proposal.get('cohortKind','originally-selected-independent-users'),'requiresCommonHistoricalTimeNote':persona.get('sameHistoricalTimeExplanationBothArms',False),'datasetProvenance':proposal.get('datasetProvenance'),'scorerInputSha256':{str(f.resolve()):sha(f) for f in [args.scorer/'answers.json',args.official_source]},'frozenAt':datetime.now(timezone.utc).isoformat(),'diagnosticSampling':'For each user, first two preselected questions and first four delivered Memory references per question. Label direct/partial/unrelated, source attribution and answer correspondence without feeding scores back. All body lengths and request occurrences counted automatically.', 'retryPolicy':'No automatic retry, budget expansion, rescue learning or answer feedback. '+('Only verified closed ABORTED or recorded call-cap failures may answer with existing assets; live, unclassified, capture and infrastructure failures stop scale-out.' if policy==PARTIAL_LEARNING_POLICY else 'Stop scale-out on incomplete native learning.'),'armsByUser':{c['personaId']:['baseline','rsi'] if i%2==0 else ['rsi','baseline'] for i,c in enumerate(persona['cases'])}}
+        freeze={'status':'FROZEN_PERSONAMEM_REPLICATION' if replication else 'FROZEN_INDEPENDENT_PERSONAMEM','independenceClaim':not replication,'learningFailurePolicy':policy,'revision':subprocess.check_output(['git','rev-parse','HEAD'],cwd=project,text=True).strip(),'inputSha256':hashes,'model':proposal['model'],'upstreamSha256':hashlib.sha256(os.environ['RSI_MODEL_UPSTREAM'].encode()).hexdigest(),'taskImageId':subprocess.check_output(['docker','image','inspect','--format','{{.Id}}',args.image],text=True).strip(),'taskTag':args.image,'selectionSeed':proposal['selectionSeed'],'questionCountPerUser':persona['questionCountPerUser'],'cases':persona['cases'],'budgets':persona['budgetProposal'],'sourceProposalSha256':sha(args.proposal),'populationProvenance':proposal.get('supersedesForNewDispatchOnly'),'cohortKind':proposal.get('cohortKind','originally-selected-independent-users'),'requiresCommonHistoricalTimeNote':persona.get('sameHistoricalTimeExplanationBothArms',False),'datasetProvenance':proposal.get('datasetProvenance'),'scorerInputSha256':{str(f.resolve()):sha(f) for f in [args.scorer/'answers.json',args.official_source]},'frozenAt':datetime.now(timezone.utc).isoformat(),'diagnosticSampling':'For each user, first two preselected questions and first four delivered Memory references per question. Label direct/partial/unrelated, source attribution and answer correspondence without feeding scores back. All body lengths and request occurrences counted automatically.', 'retryPolicy':'No automatic retry, budget expansion, rescue learning or answer feedback. '+('Only verified closed ABORTED or recorded call-cap failures may answer with existing assets; v2 additionally replays native journals and quota receipts; live, unclassified, capture and infrastructure failures stop scale-out.' if policy in [PARTIAL_LEARNING_POLICY,NATIVE_LEARNING_POLICY] else 'Stop scale-out on incomplete native learning.'),'armsByUser':{c['personaId']:['baseline','rsi'] if i%2==0 else ['rsi','baseline'] for i,c in enumerate(persona['cases'])}}
         write(frozen,freeze)
     freeze=json.loads(frozen.read_text())
     if args.report_only:print(json.dumps(summarize(root,freeze,args.scorer,args.official_source)));return

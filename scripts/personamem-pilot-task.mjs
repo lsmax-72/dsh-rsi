@@ -5,7 +5,8 @@ import {createHash} from 'node:crypto';
 import {createUserMessage,LlmAdapter} from '@deepseek-ai/dsh-llm';
 import {Session} from '@deepseek-ai/dsh-session';
 import {appendPersonaHistory,personaHistoryContext,importedHistoryTimeNote} from './personamem-history.mjs';
-import {decidePersonaLearning,STRICT_LEARNING_POLICY} from './personamem-learning-policy.mjs';
+import {decidePersonaLearning,STRICT_LEARNING_POLICY,NATIVE_LEARNING_POLICY} from './personamem-learning-policy.mjs';
+import {collectPersonaNativeRuns} from './personamem-native-learning-policy.mjs';
 export const hasKnownPersonaUsage=row=>Number.isFinite(row.usage?.totalTokens)&&row.usage.totalTokens>0;
 export const name='personamem-pilot-task';
 export const inject=['llm','agents','sessions','sessionPersistence','tools','skills'];
@@ -25,7 +26,7 @@ export function apply(ctx,config){
     const restored=Session.fromRestore(options.sessionId,stored.events,handle.header,handle.inheritedEventCount,stored.eventState);await handle.close();
     assert.deepEqual([...restored.deriveMessages()],options.messages,'Dispatch is not reconstructable from the durable native log');
     checks.push({sessionId:options.sessionId,prefixEndSeq:stored.events.at(-1)?.seq,matches:true});durable('reconstruction.json',checks);
-    const row={sessionId:options.sessionId,phase:background?'learning':phase,messages:structuredClone(options.messages),usage:null,responseBlocks:{},status:'DISPATCHING',observedAt:Date.now()};requests.push(row);save();
+    const row={sessionId:options.sessionId,phase:background?'learning':phase,messages:structuredClone(options.messages),usage:null,responseBlocks:{},status:'DISPATCHING',observedAt:Date.now(),prefixEndSeq:stored.events.at(-1)?.seq};requests.push(row);save();
     try{for await(const chunk of next()){if(chunk.type==='usage'){row.usage=chunk.usage;save();}if(chunk.type==='text-delta')row.responseBlocks[chunk.index]=(row.responseBlocks[chunk.index]??'')+chunk.text;if(chunk.type==='block-end'&&chunk.block.type==='text')row.responseBlocks[chunk.index]=chunk.block.text;if(chunk.type==='finish')row.finish=structuredClone(chunk.reason);yield chunk;}row.status=['stop','tool-calls'].includes(row.finish?.kind)?'RETURNED':'INCOMPLETE';}catch(error){row.status='ERROR';row.error=error.message;throw error;}finally{if(row.status==='DISPATCHING')row.status=['stop','tool-calls'].includes(row.finish?.kind)?'RETURNED':'INCOMPLETE';row.finishedAt=Date.now();if(background)lastLearningActivity=Date.now();save();}
   });
   ctx.on('tools/result',(execution,result)=>{tools.push({name:execution.name,callId:execution.callId,args:execution.arguments,isError:result.isError===true,phase,requestOrdinal:front});durable('tool-results.json',tools);});
@@ -35,11 +36,11 @@ export function apply(ctx,config){
       async *stream(options){
         const background=options.sessionId.startsWith('rsi-'),system=options.messages.filter(m=>m.role==='system').flatMap(m=>m.content).map(b=>b.text??'').join('\n');
         const skillReview=system.includes('Skill Review Agent');let block={type:'text',text:background?(skillReview?'Nothing to save.':'[]'):'<final_answer>(a)</final_answer>'};
-        if(background&&config.fixtureClosedLearningFailure){
+        if(background&&(config.fixtureClosedLearningFailure||config.fixtureClosedProfileFailure)){
           if(skillReview){
             fixtureSkillCalls++;
-            if(fixtureSkillCalls>1){yield{type:'finish',reason:{kind:'error',failure:{code:'ABORTED',message:'FIXTURE closed Skill review abort after native asset write'}}};return;}
-            block={type:'tool-call',id:'fixture-pre-abort-skill',name:'skill_create',arguments:JSON.stringify({name:'fixture-log-preservation',content:'---\nname: fixture-log-preservation\ndescription: Explicit fixture, no real successful experience\n---\n\n# 测试记录\n保留完整失败日志。以下仅为隔离夹具，不是真实成功经验。'})};
+            if(fixtureSkillCalls>1&&config.fixtureClosedLearningFailure){yield{type:'finish',reason:{kind:'error',failure:{code:'ABORTED',message:'FIXTURE closed Skill review abort after native asset write'}}};return;}
+            block=fixtureSkillCalls>1?{type:'text',text:'Saved.'}:{type:'tool-call',id:'fixture-pre-abort-skill',name:'skill_create',arguments:JSON.stringify({name:'fixture-log-preservation',content:'---\nname: fixture-log-preservation\ndescription: Explicit fixture, no real successful experience\n---\n\n# 测试记录\n保留完整失败日志。以下仅为隔离夹具，不是真实成功经验。'})};
           }else{
             const prompt=options.messages.filter(m=>m.role==='user').flatMap(m=>m.content).map(b=>b.text??'').join('\n'),id=prompt.match(/\[([^\]]+)\] \[user\]/)?.[1];assert.ok(id);
             block={type:'text',text:JSON.stringify([{scene_name:'隔离测试记录',message_ids:[id],memories:[{content:'保留完整失败日志。显式隔离夹具。',type:'instruction',priority:70,source_message_ids:[id],metadata:{fixture:true}}]}])};
@@ -70,13 +71,19 @@ export function apply(ctx,config){
         await rsi.runtime.captureQueue;
         let settled=false;
         while(Date.now()<until){const snapshot=await rsi.request('snapshot',{cwd:'/workspace'});durable('scheduler.json',snapshot);
-          if(snapshot.jobs.length&&snapshot.jobs.every(j=>j.status==='completed')&&snapshot.nativeProfiles.every(p=>!p.trigger.should)&&snapshot.nativePipelines.length&&snapshot.nativePipelines.every(p=>p.queues.l1Idle&&p.queues.l2Idle&&p.queues.l3Idle&&p.sessions.every(s=>s.conversation_count===0&&s.l2_pending_l1_count===0))&&rsi.runtime.active.size===0&&Date.now()-lastLearningActivity>=(config.fixture?1000:45000)){settled=true;break;}
+          if((config.learningFailurePolicy!==NATIVE_LEARNING_POLICY||!snapshot.profilePending)&&snapshot.jobs.length&&snapshot.jobs.every(j=>j.status==='completed')&&snapshot.nativeProfiles.every(p=>!p.trigger.should)&&snapshot.nativePipelines.length&&snapshot.nativePipelines.every(p=>p.queues.l1Idle&&p.queues.l2Idle&&p.queues.l3Idle&&p.sessions.every(s=>s.conversation_count===0&&s.l2_pending_l1_count===0))&&rsi.runtime.active.size===0&&Date.now()-lastLearningActivity>=(config.fixture?1000:45000)){settled=true;break;}
           if(snapshot.jobs.some(j=>['failed','paused','interrupted'].includes(j.status))&&rsi.runtime.active.size===0)break;
+          if(config.learningFailurePolicy===NATIVE_LEARNING_POLICY&&snapshot.nativeProfileCalls.some(c=>c.status==='failed')&&snapshot.jobs.every(j=>['completed','failed','paused'].includes(j.status))&&rsi.runtime.active.size===0&&snapshot.nativePipelines.every(p=>p.queues.l1Idle&&p.queues.l2Idle&&p.queues.l3Idle&&!p.queues.l1Pending&&!p.queues.l2Pending&&!p.queues.l3Pending))break;
           await new Promise(resolve=>setTimeout(resolve,1000));
         }
         await rsi.request('settings',{cwd:'/workspace',settings:{learningEnabled:false}});const snapshot=await rsi.request('snapshot',{cwd:'/workspace'});durable('learning.json',{settled,snapshot});durable('assets.json',await rsi.request('export',{cwd:'/workspace'}));
-        learningDisposition=decidePersonaLearning({policy:config.learningFailurePolicy??STRICT_LEARNING_POLICY,settled,snapshot,activeCount:rsi.runtime.active.size,expectedL0:input.history.filter(m=>m.role!=='system').length,requests:requests.filter(r=>r.phase==='learning'),blocked});
-        durable('learning.json',{settled,snapshot,disposition:learningDisposition});
+        let nativeRuns,nativeEvidenceSha256;
+        if(config.learningFailurePolicy===NATIVE_LEARNING_POLICY){nativeRuns=await collectPersonaNativeRuns(ctx,rsi);durable('native-learning-runs.json',nativeRuns);nativeEvidenceSha256=createHash('sha256').update(await readFile(dir+'/native-learning-runs.json')).digest('hex');}
+        const learningInput={policy:config.learningFailurePolicy??STRICT_LEARNING_POLICY,settled,snapshot,activeCount:rsi.runtime.active.size,expectedL0:input.history.filter(m=>m.role!=='system').length,requests:requests.filter(r=>r.phase==='learning'),blocked,callLimit:config.learningDispatchLimit,nativeRuns};
+        // Retain the attempted gate input even if it rejects; never manufacture a failed job.
+        durable('learning.json',{settled,snapshot,activeCount:learningInput.activeCount,expectedL0:learningInput.expectedL0,callLimit:learningInput.callLimit,nativeEvidenceSha256});
+        learningDisposition=decidePersonaLearning(learningInput);
+        durable('learning.json',{settled,snapshot,activeCount:learningInput.activeCount,expectedL0:learningInput.expectedL0,callLimit:learningInput.callLimit,nativeEvidenceSha256,disposition:learningDisposition});
       }
       const assetState=value=>({memory:value.memory,memoryHistory:value.memoryHistory,skills:value.skills,profileFiles:value.profileFiles});let frozenAssets,frozenLearning;if(rsi){frozenAssets=assetState(await rsi.request('export',{cwd:'/workspace'}));const s=await rsi.request('snapshot',{cwd:'/workspace'});frozenLearning={jobs:s.jobs.map(j=>j.id).sort(),sources:[...new Set(s.jobs.map(v=>v.sourceSessionId))].sort(),layers:s.layers};}
       for(const q of input.questions){phase=q.id;questionCalls=0;const id='persona-'+input.personaId+'-question-'+q.id;

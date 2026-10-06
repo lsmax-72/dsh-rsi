@@ -59,6 +59,7 @@ def main():
     parser.add_argument('--instance',default='preflight',help='Unique public task ID; reused across its two arms only')
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--fixture', action='store_true')
+    parser.add_argument('--persona-fixture-closed-profile-failure',action='store_true',help='Fixture only: complete history job, close an independent native profile quota failure, then answer with frozen assets')
     parser.add_argument('--persona-fixture-closed-learning-failure',action='store_true',help='Fixture only: store native assets then abort Skill review; verify opt-in foreground continuation, zero real models')
     parser.add_argument('--fixture-answer-stop',choices=['stop','max-tokens','error-after-text'],default='stop',help='PersonaMem fixture only: native finish reason; never modifies a real provider')
     parser.add_argument('--persona-input',type=Path,help='Public PersonaMem input only; answers must be absent')
@@ -84,6 +85,8 @@ def main():
     parser.add_argument('--wall-seconds', type=int, default=1200)
     parser.add_argument('--settle-seconds', type=int, default=90)
     args = parser.parse_args()
+    if args.persona_fixture_closed_profile_failure and not (args.fixture and args.fixture_learning and args.persona_input and args.arm=='rsi'): parser.error('Closed-profile control requires a native PersonaMem RSI learning fixture')
+    if args.persona_fixture_closed_profile_failure and args.persona_fixture_closed_learning_failure: parser.error('Use one declared fixture failure mode')
     if args.persona_fixture_closed_learning_failure and not (args.fixture and args.fixture_learning and args.persona_input and args.arm=='rsi'): parser.error('Closed-learning failure control requires a native PersonaMem RSI learning fixture')
     if args.fixture_answer_stop!='stop' and (not args.fixture or not args.persona_input): parser.error('Synthetic finish reasons require a PersonaMem fixture')
     if args.persona_fixture_questions!=2 and (not args.fixture or not args.persona_input): parser.error('Synthetic question count requires a PersonaMem fixture')
@@ -121,6 +124,8 @@ def main():
         'fixtureAnswerStop':args.fixture_answer_stop,'interruptCheckpoint':args.interrupt_checkpoint, 'baselineDate':args.baseline_date, 'dispatchLimit':args.dispatch_limit,
         'learningCallBudget':args.learning_call_budget, 'learningDispatchLimit':learning_limit, 'fixtureLearning':args.fixture_learning, 'wallTimeMs':args.wall_seconds*1000,
         'settleMs':args.settle_seconds*1000,'formal':args.formal,'expectedTree':args.expected_tree,'expectedVersion':args.expected_version}
+    if args.persona_fixture_closed_profile_failure:
+        driver['config'].update(fixtureClosedProfileFailure=True,learningFailurePolicy='evaluate-closed-native-failure-v2')
     if args.persona_fixture_closed_learning_failure:
         driver['config'].update(fixtureClosedLearningFailure=True,learningFailurePolicy='evaluate-closed-bounded-failure')
     if args.phases: driver['config']['phases']=json.loads(args.phases.read_text())
@@ -147,7 +152,7 @@ def main():
             if any(not (project/path).is_file() or hashlib.sha256((project/path).read_bytes()).hexdigest()!=sha for path,sha in frozen['inputSha256'].items()): parser.error('Frozen implementation bytes changed')
             driver['config']['personaFormal']=True
             learning_policy=frozen.get('learningFailurePolicy','require-complete')
-            if learning_policy not in ['require-complete','evaluate-closed-bounded-failure']: parser.error('Unknown frozen learning failure policy')
+            if learning_policy not in ['require-complete','evaluate-closed-bounded-failure','evaluate-closed-native-failure-v2']: parser.error('Unknown frozen learning failure policy')
             driver['config']['learningFailurePolicy']=learning_policy
         if len(public.get('questions',[]))!=expected_questions or any('correct_answer' in q for q in public['questions']): parser.error('Public question count/answer separation differs from the selected PersonaMem mode')
         driver['config']['expectedQuestionCount']=expected_questions
@@ -207,6 +212,7 @@ def main():
                 shutil.copy2(project/'scripts/personamem-pilot-task.mjs',root/'personamem-pilot-task.mjs')
                 shutil.copy2(project/'scripts/personamem-history.mjs',root/'personamem-history.mjs')
                 shutil.copy2(project/'scripts/personamem-learning-policy.mjs',root/'personamem-learning-policy.mjs')
+                shutil.copy2(project/'scripts/personamem-native-learning-policy.mjs',root/'personamem-native-learning-policy.mjs')
                 shutil.copy2(args.persona_input,root/'personamem.json')
             shutil.copy2(project/'scripts/audit-session-requests.mjs',root/'audit-session-requests.mjs')
             shutil.copy2(project/'scripts/task-input.mjs',root/'task-input.mjs')
@@ -215,7 +221,7 @@ def main():
             shutil.copy2(project/'package-lock.json',root/'package-lock.json')
             dockerfile = f'FROM {args.image}\nUSER root\nCOPY package.json package-lock.json /opt/rsi/\nRUN cd /opt/rsi && npm ci --ignore-scripts\nCOPY lib /opt/rsi/lib\nCOPY pilot-task.mjs audit-session-requests.mjs task-input.mjs pilot.json /opt/rsi/scripts/\nENV NODE_LLAMA_CPP_GPU=false\n'
             if args.persona_input:
-                dockerfile += 'COPY personamem-pilot-task.mjs personamem-history.mjs personamem-learning-policy.mjs /opt/rsi/scripts/\nCOPY personamem.json /opt/rsi/personamem.json\n'
+                dockerfile += 'COPY personamem-pilot-task.mjs personamem-history.mjs personamem-learning-policy.mjs personamem-native-learning-policy.mjs /opt/rsi/scripts/\nCOPY personamem.json /opt/rsi/personamem.json\n'
             if args.profile_recovery:dockerfile += 'COPY recover-native-profiles.mjs /opt/rsi/scripts/\n'
             if embedding_model:
                 shutil.copy2(embedding_model,root/'embedding.gguf')

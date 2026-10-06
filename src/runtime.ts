@@ -201,7 +201,8 @@ export class Runtime {
         const settings=this.state.settings();
         if(this.stopping)throw Object.assign(new Error('插件正在关闭'),{code:'INTERRUPTED'});
         if(!settings.enabled || !settings.learningEnabled)throw Object.assign(new Error('自动学习已暂停'),{code:'LEARNING_PAUSED'});
-        if(Number(this.state.usage().calls)>=settings.dailyCallBudget)throw Object.assign(new Error('今日学习调用预算已用完'),{code:'BUDGET_EXHAUSTED'});
+        const budgetUsage=this.state.usage();
+        if(Number(budgetUsage.calls)>=settings.dailyCallBudget)throw Object.assign(new Error('今日学习调用预算已用完'),{code:'BUDGET_EXHAUSTED',blockedDispatch:{reason:'HOST_LEARNING_QUOTA_PRECHECK',jobId:job.id,scope,day:budgetUsage.day,usedReservations:Number(budgetUsage.calls),callBudget:settings.dailyCallBudget,observedAt:Date.now()}});
         if(!(job.payload.route ?? this.route(scope)))throw Object.assign(new Error('尚无会话模型配置'),{code:'MISSING_ROUTE'});
         stages.failure={...stages.failure,attempts:(stages.failure?.attempts ?? 0)+1};
         this.state.updateJob(job.id,'running',stages);
@@ -239,7 +240,7 @@ export class Runtime {
         this.state.updateJob(job.id,'completed',stages); this.invalidate();
       } catch (error:any) {
         const paused = ['LEARNING_PAUSED','BUDGET_EXHAUSTED','MISSING_ROUTE'].includes(error.code) || !this.state.settings().learningEnabled || !this.state.settings().enabled || Number(this.state.usage().calls) >= this.state.settings().dailyCallBudget;
-        stages.failure={...stages.failure,code:error.code ?? 'EXTRACTION_FAILED',retryable:!paused && !this.stopping && !['INVALID_LIMIT','UNSUPPORTED_TOOL','INVALID_CONFIG'].includes(error.code)};
+        stages.failure={...stages.failure,code:error.code ?? 'EXTRACTION_FAILED',retryable:!paused && !this.stopping && !['INVALID_LIMIT','UNSUPPORTED_TOOL','INVALID_CONFIG'].includes(error.code),...(error.blockedDispatch?{blockedDispatch:error.blockedDispatch}:{})};
         this.state.updateJob(job.id,this.stopping ? 'interrupted' : paused ? 'paused' : 'failed',stages,error.message);
         await this.within(scope,async()=>diagnosticEvent('ERROR','rsi.learning.failed',{status:this.stopping?'interrupted':paused?'paused':'failed',code:stages.failure.code,retryable:stages.failure.retryable,attempts:stages.failure.attempts},error),{sessionId,jobId:job.id});
         if (!paused && !this.stopping) this.ctx.logger.error('后台学习失败：%s',error.message);
