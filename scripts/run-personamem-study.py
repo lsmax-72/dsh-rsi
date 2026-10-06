@@ -42,17 +42,27 @@ def summarize(root,freeze,scorer,official_source):
             scores=[{'questionId':q['questionId'],'correct':bool(grader.extract_answer(q['response'],keys[q['questionId']])[0]),'completed':(q.get('stopReason') or {}).get('kind')=='completed','answerAvailable':bool(q['response'].strip()),'responseSha256':hashlib.sha256(q['response'].encode()).hexdigest()} for q in rows]
             receipt=json.loads((folder/'receipt.json').read_text()) if (folder/'receipt.json').exists() else {}
             if receipt:assert not receipt.get('fixture') and receipt.get('formalPersonaMemEvaluation'),'Only real frozen PersonaMem runs may enter an independent report'
+            historical_time_status=None
             if receipt and freeze.get('requiresCommonHistoricalTimeNote'):
-                assert receipt.get('commonHistoricalTimeNote') is True and receipt.get('historicalContextSha256'),'Common history time context missing'
-                time_contexts.append(receipt['historicalContextSha256'])
+                # A failed learner has not constructed an answering request. Require the
+                # note for every answered arm, but preserve pre-answer failure costs.
+                pre_answer_failure=(receipt.get('status')=='ERROR' and not rows
+                    and receipt.get('foregroundRequests')==0
+                    and all(r['phase']=='learning' for r in requests))
+                if pre_answer_failure:
+                    historical_time_status='NOT_REACHED_PREANSWER_FAILURE'
+                else:
+                    assert receipt.get('commonHistoricalTimeNote') is True and receipt.get('historicalContextSha256'),'Common history time context missing'
+                    time_contexts.append(receipt['historicalContextSha256'])
+                    historical_time_status='VERIFIED_BY_ANSWERING_RECEIPT'
             known=sum(r['usage']['totalTokens'] for r in requests if known_usage(r));missing=sum(not known_usage(r) for r in requests);total+=known;unknown+=missing
             if (folder/'import.json').exists():histories.append(json.loads((folder/'import.json').read_text())['historySha256'])
-            user['arms'].append({'arm':arm,'runnerReturnCode':record.get('returncode'),'runnerStatus':receipt.get('status'),'scores':scores,'accuracy':sum(q['correct'] for q in scores)/len(scores) if len(scores)==freeze['questionCountPerUser'] else None,'knownTokens':known,'unknownActualUsage':missing,'foregroundTokens':sum(r['usage']['totalTokens'] for r in requests if known_usage(r) and r['phase']!='learning'),'backgroundTokens':sum(r['usage']['totalTokens'] for r in requests if known_usage(r) and r['phase']=='learning'),'gatewayLedgerMatches':True})
+            user['arms'].append({'arm':arm,'runnerReturnCode':record.get('returncode'),'runnerStatus':receipt.get('status'),'scores':scores,'accuracy':sum(q['correct'] for q in scores)/len(scores) if len(scores)==freeze['questionCountPerUser'] else None,'knownTokens':known,'unknownActualUsage':missing,'foregroundTokens':sum(r['usage']['totalTokens'] for r in requests if known_usage(r) and r['phase']!='learning'),'backgroundTokens':sum(r['usage']['totalTokens'] for r in requests if known_usage(r) and r['phase']=='learning'),'gatewayLedgerMatches':True,'historicalTimeContextStatus':historical_time_status,'runnerError':receipt.get('error'),'runnerClassification':receipt.get('classification')})
         assert len(set(histories))<=1,'Paired user history changed'
         assert len(set(time_contexts))<=1,'Paired historical time context changed'
         users.append(user)
     complete=all(len(u['arms'])==2 and all(a['accuracy'] is not None and a['runnerReturnCode']==0 and a['runnerStatus']=='COMPLETED' for a in u['arms']) for u in users)
-    result={'cohortKind':freeze.get('cohortKind','originally-selected-independent-users'),'populationProvenance':freeze.get('populationProvenance'),'status':'COMPLETE_INDEPENDENT_SAVED_RESULTS' if complete else 'INCOMPLETE_WITHHOLD_FULL_PAIRED_ESTIMATE','users':users,'plannedUsers':len(users),'knownTokens':total,'unknownActualUsage':unknown,'officialScorerControlsPassed':3,'scoresReturnedToLearning':False,'smallSampleLimit':'Eight correlated user clusters; not the full benchmark or a universal causal guarantee.'}
+    result={'cohortKind':freeze.get('cohortKind','originally-selected-independent-users'),'populationProvenance':freeze.get('populationProvenance'),'status':'COMPLETE_INDEPENDENT_SAVED_RESULTS' if complete else 'INCOMPLETE_WITHHOLD_FULL_PAIRED_ESTIMATE','users':users,'plannedUsers':len(users),'knownTokens':total,'unknownActualUsage':unknown,'officialScorerControlsPassed':3,'scoresReturnedToLearning':False,'smallSampleLimit':'Eight correlated user clusters; not the full benchmark or a universal causal guarantee.','baselineMacroAccuracy':None,'rsiMacroAccuracy':None,'pairedAccuracyDifference':None,'userClusterBootstrap95':None,'bootstrapDraws':0,'reporterScriptSha256':sha(Path(__file__))}
     if complete:
         delta=[u['arms'][1]['accuracy']-u['arms'][0]['accuracy'] for u in users];rng=random.Random(freeze['selectionSeed']);boot=sorted(sum(rng.choices(delta,k=len(delta)))/len(delta) for _ in range(10000))
         result.update(baselineMacroAccuracy=sum(u['arms'][0]['accuracy'] for u in users)/len(users),rsiMacroAccuracy=sum(u['arms'][1]['accuracy'] for u in users)/len(users),pairedAccuracyDifference=sum(delta)/len(delta),userClusterBootstrap95=[boot[249],boot[9749]],bootstrapDraws=10000)

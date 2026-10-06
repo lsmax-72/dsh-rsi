@@ -1,0 +1,45 @@
+{
+  "status": "PASS_FAILED_PREANSWER_REPORT_CONTROLS",
+  "fixtureOnly": true,
+  "realModelRequests": 0,
+  "officialScorerSourceUnchanged": true,
+  "reporterScriptSha256": "36e329fb9ae187d8e25a6b4010e2a67a24d899cec25ada1fbcf4af2d860c3c3c",
+  "controls": [
+    {
+      "case": "complete",
+      "status": "COMPLETE_INDEPENDENT_SAVED_RESULTS",
+      "unknownUsage": 0
+    },
+    {
+      "case": "preanswer-failure",
+      "status": "INCOMPLETE_WITHHOLD_FULL_PAIRED_ESTIMATE",
+      "unknownUsage": 0
+    },
+    {
+      "case": "unknown-failure",
+      "status": "INCOMPLETE_WITHHOLD_FULL_PAIRED_ESTIMATE",
+      "unknownUsage": 1
+    },
+    {
+      "case": "completed-missing-note",
+      "rejected": true,
+      "error": "Common history time context missing"
+    },
+    {
+      "case": "failed-answer-missing-note",
+      "rejected": true,
+      "error": "Common history time context missing"
+    },
+    {
+      "case": "wrong-preanswer-phase",
+      "rejected": true,
+      "error": "Common history time context missing"
+    },
+    {
+      "case": "wire-mismatch",
+      "rejected": true,
+      "error": "Gateway/native ledger mismatch; withhold paired result"
+    }
+  ],
+  "scope": "Offline reporting only; no learner recovery, rescoring feedback, new answer generation or quota change."
+}
