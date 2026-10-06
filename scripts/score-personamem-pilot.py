@@ -2,11 +2,12 @@
 """Grade saved answers with the pinned official method; never invoke a model or learner."""
 import argparse,ast,hashlib,json,re
 from pathlib import Path
+from personamem_answer_diagnostics import diagnose_answer_format
 def grade_saved_answer(grader,row,answer):
     # Correctness follows the official answer method; native termination is a separate health signal.
     correct,_=grader.extract_answer(row['response'],answer)
     reason=row.get('stopReason') or {}
-    return {'correct':bool(correct),'completed':reason.get('kind')=='completed','answerAvailable':bool(row['response'].strip()),'stopReason':row.get('stopReason')}
+    return {'correct':bool(correct),'formatDiagnostic':diagnose_answer_format(row['response']),'completed':reason.get('kind')=='completed','answerAvailable':bool(row['response'].strip()),'stopReason':row.get('stopReason')}
 
 p=argparse.ArgumentParser();p.add_argument('--experiment',type=Path,required=True);p.add_argument('--scorer',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--instance',default='persona-0');p.add_argument('--rsi-dir',default='rsi');args=p.parse_args()
 if args.output.exists():p.error('Preserve previous scores; choose an unused output path')

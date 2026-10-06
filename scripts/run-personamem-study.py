@@ -3,6 +3,7 @@
 import argparse,ast,hashlib,json,math,os,random,re,subprocess,sys
 from datetime import datetime,timezone
 from pathlib import Path
+from personamem_answer_diagnostics import diagnose_answer_format,official_parser_controls
 
 def known_usage(row):
     # An all-zero interrupted adapter receipt is not evidence of free upstream generation.
@@ -19,6 +20,7 @@ def grader_from_source(path):
     namespace={'re':re};code=ast.Module(body=[ast.ClassDef(name='Evaluation',bases=[],keywords=[],body=[method],decorator_list=[])],type_ignores=[])
     exec(compile(ast.fix_missing_locations(code),'official-answer-method','exec'),namespace);grader=namespace['Evaluation']()
     for text,key,correct in [('<final_answer>(b)</final_answer>','(b)',True),('<final_answer>(a)</final_answer>','(b)',False),('<final_answer>(a) (b)</final_answer>','(b)',False)]:assert bool(grader.extract_answer(text,key)[0])==correct
+    grader.parserHealth=official_parser_controls(grader)
     return grader
 
 STRICT_LEARNING_POLICY='require-complete'
@@ -60,6 +62,10 @@ def learning_outcome(folder,receipt,arm,policy):
 
 def summarize(root,freeze,scorer,official_source):
     # Offline only. Scores and keys are never passed to probe-runner or any Agent.
+    diagnostic_digest=sha(Path(diagnose_answer_format.__code__.co_filename))
+    if (root/'results.json').exists():
+        previous=json.loads((root/'results.json').read_text())
+        assert previous.get('reporterScriptSha256')==sha(Path(__file__)) and previous.get('answerDiagnosticsModuleSha256')==diagnostic_digest,'Saved report has a different reporter/diagnostic revision; preserve it and write a separate audit'
     for path,digest in freeze['scorerInputSha256'].items():assert sha(Path(path))==digest
     policy,replication=protocol_kind(freeze)
     grader=grader_from_source(official_source);keys=json.loads((scorer/'answers.json').read_text());users=[];total=0;unknown=0
@@ -77,7 +83,7 @@ def summarize(root,freeze,scorer,official_source):
             assert all(r['enableThinking'] is False and 'developer' not in r['messageRoles'] for r in sent)
             rows=json.loads((folder/'answers.json').read_text()) if (folder/'answers.json').exists() else []
             assert len({q['questionId'] for q in rows})==len(rows) and all(q['questionId'] in case['questionIds'] for q in rows)
-            scores=[{'questionId':q['questionId'],'correct':bool(grader.extract_answer(q['response'],keys[q['questionId']])[0]),'completed':(q.get('stopReason') or {}).get('kind')=='completed','answerAvailable':bool(q['response'].strip()),'responseSha256':hashlib.sha256(q['response'].encode()).hexdigest()} for q in rows]
+            scores=[{'questionId':q['questionId'],'correct':bool(grader.extract_answer(q['response'],keys[q['questionId']])[0]),'formatDiagnostic':diagnose_answer_format(q['response']),'completed':(q.get('stopReason') or {}).get('kind')=='completed','answerAvailable':bool(q['response'].strip()),'responseSha256':hashlib.sha256(q['response'].encode()).hexdigest()} for q in rows]
             receipt=json.loads((folder/'receipt.json').read_text()) if (folder/'receipt.json').exists() else {}
             if receipt:assert not receipt.get('fixture') and receipt.get('formalPersonaMemEvaluation'),'Only real frozen PersonaMem runs may enter the report'
             learning=learning_outcome(folder,receipt,arm,policy)
@@ -101,7 +107,7 @@ def summarize(root,freeze,scorer,official_source):
         assert len(set(time_contexts))<=1,'Paired historical time context changed'
         users.append(user)
     complete=all(len(u['arms'])==2 and all(a['accuracy'] is not None and a['runnerReturnCode']==0 and a['runnerStatus']=='COMPLETED' for a in u['arms']) for u in users)
-    result={'cohortKind':freeze.get('cohortKind','originally-selected-independent-users'),'populationProvenance':freeze.get('populationProvenance'),'independenceClaim':not replication,'learningFailurePolicy':policy,'completedLearners':sum(a['learningDisposition']['complete'] is True for u in users for a in u['arms'] if a['arm']=='rsi'),'closedBoundedFailedLearners':sum(a['learningDisposition']['status']=='FAILED_CLOSED_BOUNDED' for u in users for a in u['arms'] if a['arm']=='rsi'),'status':('COMPLETE_PREEXPOSED_SAVED_RESULTS' if replication else 'COMPLETE_INDEPENDENT_SAVED_RESULTS') if complete else 'INCOMPLETE_WITHHOLD_FULL_PAIRED_ESTIMATE','users':users,'plannedUsers':len(users),'knownTokens':total,'unknownActualUsage':unknown,'officialScorerControlsPassed':3,'scoresReturnedToLearning':False,'smallSampleLimit':'Eight correlated user clusters; not the full benchmark or a universal causal guarantee.','baselineMacroAccuracy':None,'rsiMacroAccuracy':None,'pairedAccuracyDifference':None,'userClusterBootstrap95':None,'bootstrapDraws':0,'reporterScriptSha256':sha(Path(__file__))}
+    result={'cohortKind':freeze.get('cohortKind','originally-selected-independent-users'),'populationProvenance':freeze.get('populationProvenance'),'independenceClaim':not replication,'learningFailurePolicy':policy,'completedLearners':sum(a['learningDisposition']['complete'] is True for u in users for a in u['arms'] if a['arm']=='rsi'),'closedBoundedFailedLearners':sum(a['learningDisposition']['status']=='FAILED_CLOSED_BOUNDED' for u in users for a in u['arms'] if a['arm']=='rsi'),'status':('COMPLETE_PREEXPOSED_SAVED_RESULTS' if replication else 'COMPLETE_INDEPENDENT_SAVED_RESULTS') if complete else 'INCOMPLETE_WITHHOLD_FULL_PAIRED_ESTIMATE','users':users,'plannedUsers':len(users),'knownTokens':total,'unknownActualUsage':unknown,'officialScorerControlsPassed':3,'officialParserDiagnostics':grader.parserHealth,'requiredFormatFailures':sum(not q['formatDiagnostic']['valid'] for u in users for a in u['arms'] for q in a['scores']),'reportedAccuracyMethod':'PINNED_OFFICIAL_EXTRACT_ANSWER_UNCHANGED','scoresReturnedToLearning':False,'smallSampleLimit':'Eight correlated user clusters; not the full benchmark or a universal causal guarantee.','baselineMacroAccuracy':None,'rsiMacroAccuracy':None,'pairedAccuracyDifference':None,'userClusterBootstrap95':None,'bootstrapDraws':0,'reporterScriptSha256':sha(Path(__file__)),'answerDiagnosticsModuleSha256':diagnostic_digest}
     if complete:
         delta=[u['arms'][1]['accuracy']-u['arms'][0]['accuracy'] for u in users];rng=random.Random(freeze['selectionSeed']);boot=sorted(sum(rng.choices(delta,k=len(delta)))/len(delta) for _ in range(10000))
         result.update(baselineMacroAccuracy=sum(u['arms'][0]['accuracy'] for u in users)/len(users),rsiMacroAccuracy=sum(u['arms'][1]['accuracy'] for u in users)/len(users),pairedAccuracyDifference=sum(delta)/len(delta),userClusterBootstrap95=[boot[249],boot[9749]],bootstrapDraws=10000)

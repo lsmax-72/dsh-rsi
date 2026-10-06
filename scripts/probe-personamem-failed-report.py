@@ -67,4 +67,12 @@ with tempfile.TemporaryDirectory(prefix='dsh-rsi-failed-report-') as tmp:
    try:mod.summarize(root,trial,scorer,args.official_source.resolve())
    except AssertionError as error:controls.append({'case':mode,'rejected':True,'error':str(error)})
    else:raise AssertionError('Invalid opt-in report fixture accepted: '+mode)
+ original=(root/'results.json').read_bytes()
+ for field in ['reporterScriptSha256','answerDiagnosticsModuleSha256']:
+  tampered=json.loads(original);tampered[field]='different-source-revision';mod.write(root/'results.json',tampered);saved=(root/'results.json').read_bytes()
+  try:mod.summarize(root,trial,scorer,args.official_source.resolve())
+  except AssertionError as error:assert 'Saved report has a different' in str(error);controls.append({'case':'preserve-prior-'+field,'rejected':True})
+  else:raise AssertionError('Prior report with different source was overwritten')
+  assert (root/'results.json').read_bytes()==saved
+  (root/'results.json').write_bytes(original)
  receipt={'status':'PASS_FAILED_PREANSWER_REPORT_CONTROLS','fixtureOnly':True,'realModelRequests':0,'officialScorerSourceUnchanged':True,'reporterScriptSha256':mod.sha(project/'scripts/run-personamem-study.py'),'controls':controls,'scope':'Offline reporting only; no learner recovery, rescoring feedback, new answer generation or quota change.'};args.output.write_text(json.dumps(receipt,ensure_ascii=False,indent=2)+'\n');print(json.dumps(receipt))

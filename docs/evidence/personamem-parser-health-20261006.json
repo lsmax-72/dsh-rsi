@@ -1,0 +1,179 @@
+{
+  "status": "PASS",
+  "cases": [
+    {
+      "case": "correct-but-truncated",
+      "correct": true,
+      "formatDiagnostic": {
+        "valid": true,
+        "reason": "SINGLE_CHOICE",
+        "choice": "b"
+      },
+      "completed": false,
+      "answerAvailable": true,
+      "stopReason": {
+        "kind": "max-tokens"
+      }
+    },
+    {
+      "case": "wrong-but-completed",
+      "correct": false,
+      "formatDiagnostic": {
+        "valid": true,
+        "reason": "SINGLE_CHOICE",
+        "choice": "a"
+      },
+      "completed": true,
+      "answerAvailable": true,
+      "stopReason": {
+        "kind": "completed"
+      }
+    },
+    {
+      "case": "ambiguous-but-completed",
+      "correct": false,
+      "formatDiagnostic": {
+        "valid": false,
+        "reason": "NON_SINGLE_CHOICE_TAIL",
+        "choice": null
+      },
+      "completed": true,
+      "answerAvailable": true,
+      "stopReason": {
+        "kind": "completed"
+      }
+    },
+    {
+      "case": "empty-after-error",
+      "correct": false,
+      "formatDiagnostic": {
+        "valid": false,
+        "reason": "MISSING_FINAL_ANSWER_MARKER",
+        "choice": null
+      },
+      "completed": false,
+      "answerAvailable": false,
+      "stopReason": {
+        "kind": "error"
+      }
+    },
+    {
+      "case": "correct-but-interrupted",
+      "correct": true,
+      "formatDiagnostic": {
+        "valid": true,
+        "reason": "SINGLE_CHOICE",
+        "choice": "b"
+      },
+      "completed": false,
+      "answerAvailable": true,
+      "stopReason": {
+        "kind": "interrupted"
+      }
+    }
+  ],
+  "fixtureOnly": true,
+  "realModelRequests": 0,
+  "actualScoresOverwritten": false,
+  "officialMethodUnchanged": true,
+  "parserHealth": {
+    "status": "KNOWN_OFFICIAL_FALLBACK_FALSE_POSITIVES_CONFIRMED",
+    "controls": [
+      {
+        "name": "protocol-correct",
+        "dummyLabel": "(a)",
+        "officialCorrect": true,
+        "formatDiagnostic": {
+          "valid": true,
+          "reason": "SINGLE_CHOICE",
+          "choice": "a"
+        }
+      },
+      {
+        "name": "protocol-wrong",
+        "dummyLabel": "(a)",
+        "officialCorrect": false,
+        "formatDiagnostic": {
+          "valid": true,
+          "reason": "SINGLE_CHOICE",
+          "choice": "b"
+        }
+      },
+      {
+        "name": "protocol-ambiguous",
+        "dummyLabel": "(a)",
+        "officialCorrect": false,
+        "formatDiagnostic": {
+          "valid": false,
+          "reason": "NON_SINGLE_CHOICE_TAIL",
+          "choice": null
+        }
+      },
+      {
+        "name": "empty",
+        "dummyLabel": "(a)",
+        "officialCorrect": false,
+        "formatDiagnostic": {
+          "valid": false,
+          "reason": "MISSING_FINAL_ANSWER_MARKER",
+          "choice": null
+        }
+      },
+      {
+        "name": "english-article-false-positive",
+        "dummyLabel": "(a)",
+        "officialCorrect": true,
+        "formatDiagnostic": {
+          "valid": false,
+          "reason": "MISSING_FINAL_ANSWER_MARKER",
+          "choice": null
+        }
+      },
+      {
+        "name": "ordinary-prose-false-positive",
+        "dummyLabel": "(a)",
+        "officialCorrect": true,
+        "formatDiagnostic": {
+          "valid": false,
+          "reason": "MISSING_FINAL_ANSWER_MARKER",
+          "choice": null
+        }
+      },
+      {
+        "name": "unmarked-single-choice",
+        "dummyLabel": "(a)",
+        "officialCorrect": true,
+        "formatDiagnostic": {
+          "valid": false,
+          "reason": "MISSING_FINAL_ANSWER_MARKER",
+          "choice": null
+        }
+      },
+      {
+        "name": "marker-with-extra-prose",
+        "dummyLabel": "(a)",
+        "officialCorrect": true,
+        "formatDiagnostic": {
+          "valid": false,
+          "reason": "NON_SINGLE_CHOICE_TAIL",
+          "choice": null
+        }
+      },
+      {
+        "name": "protocol-plain-letter",
+        "dummyLabel": "(a)",
+        "officialCorrect": true,
+        "formatDiagnostic": {
+          "valid": true,
+          "reason": "SINGLE_CHOICE",
+          "choice": "a"
+        }
+      }
+    ],
+    "officialMethodChanged": false,
+    "textFallbackSafe": false,
+    "requiresSeparateFormatReport": true,
+    "realModelRequests": 0,
+    "realAnswerKeysRead": false
+  }
+}
