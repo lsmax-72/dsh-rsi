@@ -1,0 +1,57 @@
+{
+  "status": "PASS_NATIVE_PROFILE_FAILURE_REPORT_CONTROLS",
+  "realModelRequests": 0,
+  "fixtureOnly": true,
+  "controls": [
+    {
+      "case": "native-closed-profile-opt-in",
+      "status": "COMPLETE_PREEXPOSED_SAVED_RESULTS",
+      "knownFixtureTokens": 45,
+      "unknownFixtureUsage": 1,
+      "failedLearningRetained": true
+    },
+    {
+      "case": "old-policy-does-not-accept-new-receipt",
+      "rejected": true,
+      "error": "Receipt changed frozen learning policy"
+    },
+    {
+      "case": "missing-native-journal",
+      "rejected": true,
+      "error": "Native failure journals missing/changed"
+    },
+    {
+      "case": "altered-dispatch-input",
+      "rejected": true,
+      "error": "        '\\n' +\n            '```markdown\\n' +\n            '# 已有画像\\n' +\n            '这不是学习效果验证。\\n' +\n            '```\\n' +\n            '\\n' +\n            '---\\n' +\n            '\\n' +\n            '\\n' +\n            '## 🔄 迭代决策指南\\n' +\n            '\\n' +\n            '面对变化场景，自主判断处理方式：强化（佐证已有洞察）/ 补充（新维度）/ 修正（矛盾）/ 重构（结构调整）/ 不改（无有用新增内容）。\\n'\n        }\n      ],\n      role: 'user',\n      id: 'a9f73407-3ea7-4ecf-b87c-3915f1fa2dd7'\n    }\n  ],\n  operator: 'deepStrictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.14.1\n"
+    },
+    {
+      "case": "reservation-count-mismatch",
+      "rejected": true,
+      "error": "eservations differ from actual observed requests\n\n2 !== 1\n\n    at decideClosedNativeLearning (file:///Users/lsmax/Coder/dsh-rsi/scripts/personamem-native-learning-policy.mjs:21:9)\n    at file:///Users/lsmax/Coder/dsh-rsi/scripts/check-personamem-native-learning.mjs:4:28\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: 2,\n  expected: 1,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.14.1\n"
+    },
+    {
+      "case": "non-bounded-native-end",
+      "rejected": true,
+      "error": "ipts/personamem-native-learning-policy.mjs:30:10)\n    at file:///Users/lsmax/Coder/dsh-rsi/scripts/check-personamem-native-learning.mjs:4:28\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: 'da85c1204e6be8a7d801f5f4441d5b87980530207176e2e04667e44828ed924d',\n  expected: '4ccde4221024cb968cf0bcfd94ab66e0ae045d450157df626426340909860061',\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.14.1\n"
+    },
+    {
+      "case": "invented-failed-job-disposition",
+      "rejected": true,
+      "error": "Native replay/disposition mismatch"
+    },
+    {
+      "case": "changed-public-history",
+      "rejected": true,
+      "error": "Frozen public source missing/changed"
+    },
+    {
+      "case": "changed-frozen-budget",
+      "rejected": true,
+      "error": "Gate counters differ from frozen budget/public history"
+    }
+  ],
+  "nativeControlSha256": "234a0a6483f37bd9656e60972d3c041ddaf8bf3f35d9a2c4e0c118f826e38208",
+  "reporterSha256": "bc1ba769fd8010efd0f23d0045ed49092a2526317be9331e88bf9351c480546a",
+  "limits": "Actual installed-host profile journals plus synthetic answers/counters; validates reporting and cost boundaries only, not quality or an eight-user estimate."
+}
