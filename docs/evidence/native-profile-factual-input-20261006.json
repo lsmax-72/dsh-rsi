@@ -1,0 +1,60 @@
+{
+  "status": "PASS_NATIVE_PROFILE_ERROR_CONTROLS",
+  "checkedAt": "2026-10-06T12:49:40.310Z",
+  "realModelRequests": 0,
+  "fixtureRunnerCalls": 4,
+  "timeInputs": [
+    {
+      "taskId": "scene-extract-1791290980276",
+      "nativeSystemPrefixChars": 6672,
+      "nativeSystemPrefixSha256": "71e4a4c009bab02e6a1ba5afb7cfea6a89a46cc32f489ce009f282f8b7198a1c",
+      "timeGuidanceAppended": true,
+      "factualGuidanceAppended": true,
+      "explicitSourceDateRetained": true,
+      "unanchoredRelativeTimeRetained": true
+    },
+    {
+      "taskId": "persona-generation",
+      "nativeSystemPrefixChars": 2969,
+      "nativeSystemPrefixSha256": "124bdd97a528e13448589685a091b202fbacee6c6f3d2bb7f3ccfee4a60bb93f",
+      "timeGuidanceAppended": true,
+      "factualGuidanceAppended": true,
+      "explicitSourceDateRetained": true,
+      "unanchoredRelativeTimeRetained": true
+    },
+    {
+      "taskId": "persona-generation",
+      "nativeSystemPrefixChars": 2969,
+      "nativeSystemPrefixSha256": "124bdd97a528e13448589685a091b202fbacee6c6f3d2bb7f3ccfee4a60bb93f",
+      "timeGuidanceAppended": true,
+      "factualGuidanceAppended": true,
+      "explicitSourceDateRetained": true,
+      "unanchoredRelativeTimeRetained": true
+    },
+    {
+      "taskId": "persona-generation",
+      "nativeSystemPrefixChars": 2969,
+      "nativeSystemPrefixSha256": "124bdd97a528e13448589685a091b202fbacee6c6f3d2bb7f3ccfee4a60bb93f",
+      "timeGuidanceAppended": true,
+      "factualGuidanceAppended": true,
+      "explicitSourceDateRetained": true,
+      "unanchoredRelativeTimeRetained": true
+    }
+  ],
+  "sourceSha256": "8f4c5d1d3e56b943cd0679453e93a0355fb2a7e1cb6bbd6cd0bc01efe6c6ea2e",
+  "checks": [
+    "existing-persona-preserves-original-budget-error-object",
+    "concurrent-L2-preserves-original-abort-error-object",
+    "failed-operations-do-not-advance-checkpoint",
+    "genuine-native-no-change-remains-false-without-dispatch",
+    "first-persona-failure-preserves-original-error",
+    "successful-native-generation-still-updates-checkpoint",
+    "native-L2-and-L3-time-guidance-appended-after-original-prefix",
+    "supplied-explicit-event-date-and-relative-wording-preserved",
+    "native-implicit-insights-remain-tentative-host-guidance-delivered"
+  ],
+  "limits": [
+    "Fixture runner proves actual native runner inputs and errors; it does not prove real generated date quality or storage rollback.",
+    "Frozen old experiment and old closed-failure policy unchanged."
+  ]
+}

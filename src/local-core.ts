@@ -15,6 +15,8 @@ import { withinSkillReviewBudget, GENERATED_SKILL_BODY_MAX_CHARS, GENERATED_SKIL
 
 const PROFILE_TIME_PROVENANCE='Profile source-time provenance: memory created_at and recording timestamps, scene META created/updated, and the current runtime date are processing metadata, not historical activity dates. Preserve calendar event claims only when supported by original source facts. Keep unanchored relative times relative; use unknown date or relative order for Evolution when no source date is established. Existing generated scenes/personas are derived summaries, not independent evidence for their inherited calendar claims. Keep native file META and profile update timestamps as recording/update metadata; do not erase explicit source-supported event dates.';
 
+const PROFILE_FACT_PROVENANCE='Profile factual provenance: do not invent actions, techniques or outcomes beyond supplied source statements. Keep native implicit insights explicitly tentative, not established facts, standing preferences or mandatory interaction rules. Hypotheses in derived scenes/personas remain hypotheses when reused. Preserve explicit preference qualifications and changes, including prior preferences and exceptions.';
+
 /** Validate host configuration before any learning dispatch; source selection remains native. */
 export function validateSkillTranscriptWindow(value:any={}) {
   if(!value || typeof value!=='object' || Array.isArray(value))throw Object.assign(new Error('Skill 来源窗口必须是原生参数对象'),{code:'INVALID_CONFIG'});
@@ -69,7 +71,7 @@ export async function openLocalCore(dataDir: string, runner: any, logger: any, s
     // but restore the original error per invocation, including when an old persona exists.
     const profileErrors=new AsyncLocalStorage<{error?:unknown}>();
     const profileRunner={run:async(params:any)=>{
-      try{return await runner.run({...params,systemPrompt:`${params.systemPrompt ?? ''}\n${PROFILE_TIME_PROVENANCE}`});}
+      try{return await runner.run({...params,systemPrompt:`${params.systemPrompt ?? ''}\n${PROFILE_TIME_PROVENANCE}\n${PROFILE_FACT_PROVENANCE}`});}
       catch(error){const operation=profileErrors.getStore();if(operation)operation.error=error;throw error;}
     }};
     const profileOperation=async<T>(operation:()=>Promise<T>)=>{
@@ -131,7 +133,7 @@ export async function openLocalCore(dataDir: string, runner: any, logger: any, s
               const nativeLabel=`[${message.id}] [${message.role}] [${new Date(message.timestamp).toISOString()}]:`;
               prompt=prompt.replace(nativeLabel,`[${message.id}] [${message.role}] [original_time:unknown; recorded_at:${new Date(message.timestamp).toISOString()}]:`);
             }
-            annotated={...params,prompt,systemPrompt:`${params.systemPrompt}\nThese memory inputs contain user/assistant prose, without tool execution results. Do not convert assistant claims or plans into verified success. Attribute such outcomes as assistant-reported/unverified, retain the source message IDs, and never invent successful tests. Instruction memories are standing rules or reusable operating conventions; a one-off feature/fix request is not a rule for future unrelated tasks. Capture useful task-specific history as episodic context instead, without inventing success. Preserve durable user facts and preferences.${timeProvenance(params)}`};
+            annotated={...params,prompt,systemPrompt:`${params.systemPrompt}\nThese memory inputs contain user/assistant prose, without tool execution results. Do not convert assistant claims or plans into verified success. Attribute such outcomes as assistant-reported/unverified, retain the source message IDs, and never invent successful tests. Instruction memories are standing rules or reusable operating conventions; a one-off feature/fix request is not a rule for future unrelated tasks. Capture useful task-specific history as episodic context instead, without inventing success. Preserve durable user facts and preferences. For preference changes retain explicitly stated past/current preferences and exception qualifiers, rather than only a current generalization.${timeProvenance(params)}`};
           }else if(params.taskId==='l1-conflict-detection'){
             annotated={...params,systemPrompt:`${params.systemPrompt}\nCandidate memory timestamps are persistence/recording metadata, not evidence for activity dates. Do not turn them or the current runtime date into calendar claims in merged_content. Preserve explicit source-supported event dates and unanchored relative wording; generated summaries do not establish new user facts or stronger preferences.${input.messages.some((m:any)=>m.timestampKind==='imported-unknown')?' New memories in this call include imported history without original message dates; do not infer absolute dates for those records.':''}`};
           }
