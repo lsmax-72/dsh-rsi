@@ -1,0 +1,42 @@
+{
+  "status": "PASS_NATIVE_REVIEW_BODY_BUDGET",
+  "controls": [
+    {
+      "control": "oversize-create",
+      "rejected": true
+    },
+    {
+      "control": "native-version-resource",
+      "updateAndPatchOversizeRejectedBeforeNewVersion": true,
+      "nativeStaleAndPatchErrorsPreserved": true,
+      "versions": [
+        1,
+        2,
+        3
+      ],
+      "oldVersionRetained": true,
+      "resourceChars": 14400,
+      "resourceSha256": "0243ce2fbc9640ed36cdf994edd51818ec4b587dc5524ed4358cbe5c6ef9d329",
+      "resourceNotTruncated": true,
+      "bodyChars": 76
+    },
+    {
+      "control": "unicode-boundary",
+      "exact1500Accepted": true,
+      "unicode1501Rejected": true
+    }
+  ],
+  "nativePromptPrefixSha256": "0ed83c6534e4688d72cc45fc6844b6e2fddf4e892adba9f7c08db654fb425938",
+  "draftTargetChars": 1000,
+  "hardWriteLimitChars": 1500,
+  "oversizeFeedbackMeasuredReductionVerified": true,
+  "concurrentHumanNativeLongBodyAccepted": true,
+  "ordinaryMutationAfterReviewFailureAccepted": true,
+  "realModelRequests": 0,
+  "fixtureReviewRunnerCalls": 4,
+  "embeddingFixture": true,
+  "nativeSkillCoreToolsSqliteVersionResourcesUsed": true,
+  "resourceScriptsExecuted": false,
+  "contentQualityOrEffectClaim": false,
+  "scope": "Review-only write budget and native mutation/resource contract. Actual generated semantics and consumer loading need real validation."
+}

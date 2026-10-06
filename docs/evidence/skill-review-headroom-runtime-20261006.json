@@ -1,0 +1,29 @@
+{
+  "status": "PASS",
+  "nativeJobCompleted": true,
+  "nativeRejectedThenCorrectedWithinSameReview": true,
+  "nativeModelBridgeAndFormatSeamScopePreserved": true,
+  "skillReviewFixtureCalls": 4,
+  "allActualFixtureInputsDurablyReconstructed": true,
+  "fixtureDispatchCount": 6,
+  "protocolExcludedFromLearning": true,
+  "storedBodyChars": 70,
+  "resourceChars": 1800,
+  "actualProviderResourceDirectoryResolved": true,
+  "nativeVersionedExportContainsFullResource": true,
+  "realModelRequests": 0,
+  "resourceScriptsExecuted": false,
+  "modelAndEncodingFixtures": true,
+  "qualityOrEffectClaim": false,
+  "limitation": "Installed DSH default turn/capture/process, model bridge and native skill mutation/resource/provider/export contracts are exercised using explicit fixtures. No true model generation or content quality claim.",
+  "restart": {
+    "status": "PASS",
+    "restoredNativeVersion": 2,
+    "restoredResourceComplete": true,
+    "realModelRequests": 0
+  },
+  "hostVersion": "0.2.0-rc.2",
+  "checkedAt": "2026-10-06T03:14:43.652460+00:00",
+  "isolatedHome": true,
+  "diagnostics": []
+}

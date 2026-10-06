@@ -3,7 +3,7 @@ import {mkdtemp,readFile,writeFile,rm} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {join} from 'node:path';
 import {openLocalCore} from '../lib/local-core.js';
-import {parseSkillFile} from '../lib/core-entry.js';
+import {parseSkillFile,SKILL_REVIEW_PROMPT} from '../lib/core-entry.js';
 import {fixtureEmbedding} from './fixture-embedding.mjs';
 const output=process.argv[2];assert.ok(output,'Receipt path required');
 const root=await mkdtemp('/private/tmp/dsh-rsi-native-body-budget-');
@@ -17,12 +17,12 @@ let core;const results=[];
 const logger={info(){},warn(){},error(){},debug(){}};
 try {
  core=await openLocalCore(root,{async run(params){
-  callCount++;assert.ok(params.systemPrompt.includes('1500 Unicode characters'));
+  callCount++;assert.ok(params.systemPrompt.startsWith(SKILL_REVIEW_PROMPT));assert.ok(params.systemPrompt.includes('1500 Unicode characters'));assert.ok(params.systemPrompt.includes('1000 Unicode characters'));
   const execute=async(name,args)=>JSON.parse(await params.tools[name].execute(args));
   if(phase==='oversize-create'){
    start();await resume;
    const result=await execute('skill_create',{name:'oversize-generated',content:file('oversize-generated',long)});
-   assert.match(result.message,/RSI_SKILL_BODY_BUDGET_EXCEEDED/);assert.equal(result.error,'SKILL_FRONTMATTER_INVALID');results.push({control:'oversize-create',rejected:true});
+   assert.match(result.message,/RSI_SKILL_BODY_BUDGET_EXCEEDED/);assert.match(result.message,/targeting at most 1000 Unicode characters/);assert.match(result.message,new RegExp('reduce this draft by at least '+([...long].length-1000)));assert.match(result.message,/Do not submit unchanged content again/);assert.equal(result.error,'SKILL_FRONTMATTER_INVALID');results.push({control:'oversize-create',rejected:true});
   }else if(phase==='native-version-resource'){
    const created=await execute('skill_create',{name:'compact-generated',content:file('compact-generated',short)});assert.ok(created.ok);
    const written=await execute('skill_files_write',{skill_id:created.skill_id,expected_version:created.version,path:'notes/evidence.txt',content:resource});assert.ok(written.ok);assert.equal(written.version,2);
@@ -50,6 +50,6 @@ try {
  phase='unicode-boundary';await core.createSkillExtractor().extract(input);
  phase='fixture-throw';await assert.rejects(core.createSkillExtractor().extract(input),/fixture review runner failure/);
  const after=await core.skills.create({...ids,name:'human-long-after-failure',content:file('human-long-after-failure',long)});assert.ok(after.skill_id);
- const receipt={status:'PASS_NATIVE_REVIEW_BODY_BUDGET',controls:results,concurrentHumanNativeLongBodyAccepted:true,ordinaryMutationAfterReviewFailureAccepted:true,realModelRequests:0,fixtureReviewRunnerCalls:callCount,embeddingFixture:true,nativeSkillCoreToolsSqliteVersionResourcesUsed:true,resourceScriptsExecuted:false,contentQualityOrEffectClaim:false,scope:'Review-only write budget and native mutation/resource contract. Actual generated semantics and consumer loading need real validation.'};
+ const receipt={status:'PASS_NATIVE_REVIEW_BODY_BUDGET',controls:results,nativePromptPrefixSha256:createHash('sha256').update(SKILL_REVIEW_PROMPT).digest('hex'),draftTargetChars:1000,hardWriteLimitChars:1500,oversizeFeedbackMeasuredReductionVerified:true,concurrentHumanNativeLongBodyAccepted:true,ordinaryMutationAfterReviewFailureAccepted:true,realModelRequests:0,fixtureReviewRunnerCalls:callCount,embeddingFixture:true,nativeSkillCoreToolsSqliteVersionResourcesUsed:true,resourceScriptsExecuted:false,contentQualityOrEffectClaim:false,scope:'Review-only write budget and native mutation/resource contract. Actual generated semantics and consumer loading need real validation.'};
  await writeFile(output,JSON.stringify(receipt,null,2)+'\n',{flag:'wx'});console.log(JSON.stringify(receipt));
 }finally{release?.();core?.close();await rm(root,{recursive:true,force:true});}
