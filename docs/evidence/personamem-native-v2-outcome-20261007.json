@@ -1,0 +1,4548 @@
+{
+  "status": "COMPLETE_EIGHT_USER_NATIVE_V2_DEVELOPMENT_COMPARISON",
+  "recordedAt": "2026-10-06T17:21:47.687738+00:00",
+  "studyRoot": "/Users/lsmax/Coder/dsh-rsi/.artifacts/personamem-native-v2-replication-20261006",
+  "sourceRevision": "af603cb7df7a079b5d1713c5b3a33ea0f596ce73",
+  "freezeSha256": "413e23ab945159db12e8b8cdaeef8d2719f8f98826890755a1fb9d4791a95346",
+  "officialReport": {
+    "cohortKind": "preexposed-development-replication",
+    "populationProvenance": {
+      "oldFreezeSha256": "0da4818f6c70674c53b654c16104d5e357f7606a010c89305d14b09f3ad4cdba",
+      "oldRevision": "68cf6ec396405edd857f46768c6dea5b9da48ee0",
+      "oldResultsRemainIncompleteUnchanged": true,
+      "sameEightUsersSameQuestionsSameCutoffsSamePublicBytes": true,
+      "populationExposure": "All eight identities/histories have been used for development. Method revisions used earlier observed artifacts/scores and the synthetic profile diagnostic. This is not an independent blind test. Untouched users 1/7/11 remain reserved.",
+      "selectionUsesNoNewAnswersOrOutcomes": "No changes to subjects, question IDs/order, public bytes, history cutoffs or model/number/time budgets based on results.",
+      "doesNotResumeOrReplaceOldCohorts": true,
+      "noAutomaticMethodCyclingAfterThisRun": "A new unclassified/infrastructure/capture failure stops scale-out, preserving all cost and missingness. Do not rescue, expand or silently restart."
+    },
+    "independenceClaim": false,
+    "learningFailurePolicy": "evaluate-closed-native-failure-v2",
+    "completedLearners": 8,
+    "closedBoundedFailedLearners": 0,
+    "status": "COMPLETE_PREEXPOSED_SAVED_RESULTS",
+    "users": [
+      {
+        "personaId": "9",
+        "arms": [
+          {
+            "arm": "baseline",
+            "runnerReturnCode": 0,
+            "runnerStatus": "COMPLETED",
+            "scores": [
+              {
+                "questionId": "a719edb3-a43f-4792-b820-fb45293c4e19",
+                "correct": true,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "b"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "66af6cdbea8c1085b4ea1c1e562084e2e8b764d45897904cc423f8823829844b"
+              },
+              {
+                "questionId": "b502d7dc-2345-41a3-8a22-0fb9ff719c9e",
+                "correct": false,
+                "formatDiagnostic": {
+                  "valid": false,
+                  "reason": "NON_SINGLE_CHOICE_TAIL",
+                  "choice": null
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "8acf517926ec2ce33800f98df790d4940f0fd4a49e98e25885ebe000ffd13fb0"
+              },
+              {
+                "questionId": "b35349e0-993b-452a-bb5e-67668833b39b",
+                "correct": true,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "a"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "5b4b95a395dd59338a67f4d6ee4ea9629d8cf53db9180a37d13b6c4772c09b30"
+              },
+              {
+                "questionId": "436e377a-98ba-44fc-809c-1743bbf4e033",
+                "correct": true,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "c"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "6199954767a353484938cee673f142f1458efeaae2d9c7c3878bf9c62aa23cc9"
+              }
+            ],
+            "accuracy": 0.75,
+            "knownTokens": 105048,
+            "unknownActualUsage": 0,
+            "foregroundTokens": 105048,
+            "backgroundTokens": 0,
+            "gatewayLedgerMatches": true,
+            "historicalTimeContextStatus": "VERIFIED_BY_ANSWERING_RECEIPT",
+            "runnerError": null,
+            "runnerClassification": null,
+            "learningDisposition": {
+              "status": "NOT_APPLICABLE",
+              "complete": null
+            }
+          },
+          {
+            "arm": "rsi",
+            "runnerReturnCode": 0,
+            "runnerStatus": "COMPLETED",
+            "scores": [
+              {
+                "questionId": "a719edb3-a43f-4792-b820-fb45293c4e19",
+                "correct": true,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "b"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "9f6cb9e778fe92f7f3d8d07472aa73735fb6b7553583851657c6a09f6490b5db"
+              },
+              {
+                "questionId": "b502d7dc-2345-41a3-8a22-0fb9ff719c9e",
+                "correct": true,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "c"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "e519d7ace203ea16b70f5e0e27f2fe140f3ca6504e6aa3e2a4717154e7f61a9a"
+              },
+              {
+                "questionId": "b35349e0-993b-452a-bb5e-67668833b39b",
+                "correct": false,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "c"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "6860fd2b7d1512e029d64b7942441bea68343fd995ca702a7e6ed607da27caf7"
+              },
+              {
+                "questionId": "436e377a-98ba-44fc-809c-1743bbf4e033",
+                "correct": true,
+                "formatDiagnostic": {
+                  "valid": false,
+                  "reason": "NON_SINGLE_CHOICE_TAIL",
+                  "choice": null
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "740a9bf08c75e80e9cc0c1754ae0c3fef4b04664fed65f2ee42280375296c7ce"
+              }
+            ],
+            "accuracy": 0.75,
+            "knownTokens": 813397,
+            "unknownActualUsage": 0,
+            "foregroundTokens": 309723,
+            "backgroundTokens": 503674,
+            "gatewayLedgerMatches": true,
+            "historicalTimeContextStatus": "VERIFIED_BY_ANSWERING_RECEIPT",
+            "runnerError": null,
+            "runnerClassification": null,
+            "learningDisposition": {
+              "policy": "evaluate-closed-native-failure-v2",
+              "status": "COMPLETED",
+              "complete": true,
+              "failedJobs": [],
+              "failedProfiles": []
+            }
+          }
+        ]
+      },
+      {
+        "personaId": "4",
+        "arms": [
+          {
+            "arm": "baseline",
+            "runnerReturnCode": 0,
+            "runnerStatus": "COMPLETED",
+            "scores": [
+              {
+                "questionId": "8c6f3412-d822-4131-9a51-184e6da3f476",
+                "correct": true,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "d"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "7aa754f6b4a4231a289a6757f7f106a56ce9825e052c09d1aaae8a03ed8a89c4"
+              },
+              {
+                "questionId": "bd39c6a3-3ebb-4f12-a9b5-f690ebdf5bca",
+                "correct": true,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "a"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "4a686e7ae11100ca3e6ad4c81406819f1f2aeaa92732c90e7fc55e78a49f0ee8"
+              },
+              {
+                "questionId": "8dbe465c-85ad-4663-a517-da7b86418cde",
+                "correct": false,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "a"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "a4ae836a3d271f220776badf2db3921d8b4769ade12c71a0776deba3148d7946"
+              },
+              {
+                "questionId": "64e6edb1-2675-4bec-bac5-ac3cffb7a36c",
+                "correct": true,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "c"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "b197681a31e3001660bdf0eaf6a0327ffd1abfb4933f4590fff0e6162eef1fa2"
+              }
+            ],
+            "accuracy": 0.75,
+            "knownTokens": 81964,
+            "unknownActualUsage": 0,
+            "foregroundTokens": 81964,
+            "backgroundTokens": 0,
+            "gatewayLedgerMatches": true,
+            "historicalTimeContextStatus": "VERIFIED_BY_ANSWERING_RECEIPT",
+            "runnerError": null,
+            "runnerClassification": null,
+            "learningDisposition": {
+              "status": "NOT_APPLICABLE",
+              "complete": null
+            }
+          },
+          {
+            "arm": "rsi",
+            "runnerReturnCode": 0,
+            "runnerStatus": "COMPLETED",
+            "scores": [
+              {
+                "questionId": "8c6f3412-d822-4131-9a51-184e6da3f476",
+                "correct": true,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "d"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "39ca3bac77ff7745669646bcf76a20b36789a6ea959708535fe72789ad5fea92"
+              },
+              {
+                "questionId": "bd39c6a3-3ebb-4f12-a9b5-f690ebdf5bca",
+                "correct": true,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "a"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "f35331dccde85a1db27dab3eff9c78bd4f5b2c71762a01465b62c8116cbc1be9"
+              },
+              {
+                "questionId": "8dbe465c-85ad-4663-a517-da7b86418cde",
+                "correct": false,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "a"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "56f09e51c9f1c5909fe474db0518fe4a9626a73eb2ac1c658bec53842e7004ba"
+              },
+              {
+                "questionId": "64e6edb1-2675-4bec-bac5-ac3cffb7a36c",
+                "correct": true,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "c"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "95998dc912165e95a8ef29c073c3d3d7ee0dd8bf2b56e0ca139af3d608632efd"
+              }
+            ],
+            "accuracy": 0.75,
+            "knownTokens": 399134,
+            "unknownActualUsage": 0,
+            "foregroundTokens": 119861,
+            "backgroundTokens": 279273,
+            "gatewayLedgerMatches": true,
+            "historicalTimeContextStatus": "VERIFIED_BY_ANSWERING_RECEIPT",
+            "runnerError": null,
+            "runnerClassification": null,
+            "learningDisposition": {
+              "policy": "evaluate-closed-native-failure-v2",
+              "status": "COMPLETED",
+              "complete": true,
+              "failedJobs": [],
+              "failedProfiles": []
+            }
+          }
+        ]
+      },
+      {
+        "personaId": "12",
+        "arms": [
+          {
+            "arm": "baseline",
+            "runnerReturnCode": 0,
+            "runnerStatus": "COMPLETED",
+            "scores": [
+              {
+                "questionId": "194ce23e-d6d7-46f9-99b0-a0eba223a0ee",
+                "correct": true,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "d"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "2dd31d2dfe5ff7aa3374cd6d20dcc3ae2c167058c30b8d67431889d7b474853a"
+              },
+              {
+                "questionId": "a64ba818-abee-404e-9a38-f440b74bcca7",
+                "correct": true,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "b"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "74dc05e80c20c586022192ccfce62c9fa19b39b5f19cce749caa389783de3d08"
+              },
+              {
+                "questionId": "8be28bb6-049f-4735-8957-a15234c138f4",
+                "correct": true,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "a"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "a0948f0b83079edb9c5e22c8473c62e47770ec515d15c929c94ca8604862f8b2"
+              },
+              {
+                "questionId": "cb4799ed-15e8-4dda-a716-b81fa1d6d9da",
+                "correct": true,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "d"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "a284fad434e9751a6ddb9ae0901e9c6125adc4862fed8ffbbfed4ea6a18fec75"
+              }
+            ],
+            "accuracy": 1.0,
+            "knownTokens": 124642,
+            "unknownActualUsage": 0,
+            "foregroundTokens": 124642,
+            "backgroundTokens": 0,
+            "gatewayLedgerMatches": true,
+            "historicalTimeContextStatus": "VERIFIED_BY_ANSWERING_RECEIPT",
+            "runnerError": null,
+            "runnerClassification": null,
+            "learningDisposition": {
+              "status": "NOT_APPLICABLE",
+              "complete": null
+            }
+          },
+          {
+            "arm": "rsi",
+            "runnerReturnCode": 0,
+            "runnerStatus": "COMPLETED",
+            "scores": [
+              {
+                "questionId": "194ce23e-d6d7-46f9-99b0-a0eba223a0ee",
+                "correct": false,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "a"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "36a752d1ee5a428592627a2cf72d986da5ae5dd6c83b1d31f699b7ba336b1677"
+              },
+              {
+                "questionId": "a64ba818-abee-404e-9a38-f440b74bcca7",
+                "correct": true,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "b"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "d59e3bfc57ef261fb703638e144a03a70ccd8ed44aae2612abb4cd7466be554f"
+              },
+              {
+                "questionId": "8be28bb6-049f-4735-8957-a15234c138f4",
+                "correct": true,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "a"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "e380c2ebca27d474d79fdedb257a8f1f9fa4c21fe716d525fb5eeb4e7c21f62a"
+              },
+              {
+                "questionId": "cb4799ed-15e8-4dda-a716-b81fa1d6d9da",
+                "correct": false,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "a"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "c75386ad449b3ebf3f10d6822a781c4f58f32274998964df9d695f3203c33bd3"
+              }
+            ],
+            "accuracy": 0.5,
+            "knownTokens": 675884,
+            "unknownActualUsage": 0,
+            "foregroundTokens": 241169,
+            "backgroundTokens": 434715,
+            "gatewayLedgerMatches": true,
+            "historicalTimeContextStatus": "VERIFIED_BY_ANSWERING_RECEIPT",
+            "runnerError": null,
+            "runnerClassification": null,
+            "learningDisposition": {
+              "policy": "evaluate-closed-native-failure-v2",
+              "status": "COMPLETED",
+              "complete": true,
+              "failedJobs": [],
+              "failedProfiles": []
+            }
+          }
+        ]
+      },
+      {
+        "personaId": "14",
+        "arms": [
+          {
+            "arm": "baseline",
+            "runnerReturnCode": 0,
+            "runnerStatus": "COMPLETED",
+            "scores": [
+              {
+                "questionId": "a30c10c5-145a-49b0-b3d5-1479bf3c6797",
+                "correct": true,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "a"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "1d99a3ca49956b44d324d452b02366029d55f5230c9693f23c1e23262bb411b5"
+              },
+              {
+                "questionId": "e86a1aad-0117-4021-9c68-f923f4111d5f",
+                "correct": true,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "a"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "c6d05c71f188e4e020ce4a61a11e5225090667a2a9705be8ccc632c8f7898347"
+              },
+              {
+                "questionId": "8d52f6de-0bc5-4cac-8873-ca57060186b3",
+                "correct": true,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "d"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "f22b500173f8f6c5e3f1cd384b7727b355aa7981ca4190bfb3206debda999fb8"
+              },
+              {
+                "questionId": "4b742ee7-077d-4cce-9c27-51dfe81fcdc4",
+                "correct": false,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "d"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "2e1b418dfd0d6cde71725ee260b91adf22dbe986536fec049bdbffcc1abd7636"
+              }
+            ],
+            "accuracy": 0.75,
+            "knownTokens": 130055,
+            "unknownActualUsage": 0,
+            "foregroundTokens": 130055,
+            "backgroundTokens": 0,
+            "gatewayLedgerMatches": true,
+            "historicalTimeContextStatus": "VERIFIED_BY_ANSWERING_RECEIPT",
+            "runnerError": null,
+            "runnerClassification": null,
+            "learningDisposition": {
+              "status": "NOT_APPLICABLE",
+              "complete": null
+            }
+          },
+          {
+            "arm": "rsi",
+            "runnerReturnCode": 0,
+            "runnerStatus": "COMPLETED",
+            "scores": [
+              {
+                "questionId": "a30c10c5-145a-49b0-b3d5-1479bf3c6797",
+                "correct": true,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "a"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "56f09e51c9f1c5909fe474db0518fe4a9626a73eb2ac1c658bec53842e7004ba"
+              },
+              {
+                "questionId": "e86a1aad-0117-4021-9c68-f923f4111d5f",
+                "correct": true,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "a"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "1836d32e2ababd42aabb2bd2302b5f4ce716dab97816c71644edec1b0dbe4637"
+              },
+              {
+                "questionId": "8d52f6de-0bc5-4cac-8873-ca57060186b3",
+                "correct": true,
+                "formatDiagnostic": {
+                  "valid": false,
+                  "reason": "NON_SINGLE_CHOICE_TAIL",
+                  "choice": null
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "b2bd4cdf008c2f943adad11c9b0fa6479d698a16ca06bf23158a37f21ea394eb"
+              },
+              {
+                "questionId": "4b742ee7-077d-4cce-9c27-51dfe81fcdc4",
+                "correct": false,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "b"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "879062a0fae02deb6c787715bb98e833f3f3e8a13bd923ace629a6baeb904073"
+              }
+            ],
+            "accuracy": 0.75,
+            "knownTokens": 635883,
+            "unknownActualUsage": 0,
+            "foregroundTokens": 177358,
+            "backgroundTokens": 458525,
+            "gatewayLedgerMatches": true,
+            "historicalTimeContextStatus": "VERIFIED_BY_ANSWERING_RECEIPT",
+            "runnerError": null,
+            "runnerClassification": null,
+            "learningDisposition": {
+              "policy": "evaluate-closed-native-failure-v2",
+              "status": "COMPLETED",
+              "complete": true,
+              "failedJobs": [],
+              "failedProfiles": []
+            }
+          }
+        ]
+      },
+      {
+        "personaId": "3",
+        "arms": [
+          {
+            "arm": "baseline",
+            "runnerReturnCode": 0,
+            "runnerStatus": "COMPLETED",
+            "scores": [
+              {
+                "questionId": "9c209ff7-a6a8-48d8-ab38-e0b8aa2aaef7",
+                "correct": true,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "d"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "6f0b7d6f48ce931f670b2443afcb033bb916a1f9e55b70c5c5fadaf3537c1f83"
+              },
+              {
+                "questionId": "945fb104-45bd-457f-a9a8-19620159e47d",
+                "correct": false,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "d"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "bd3fccd3779173baf16aae6051982a81a349b88df8fb44433729a2d771892834"
+              },
+              {
+                "questionId": "d3767473-d464-42c1-9ead-7a61d922f120",
+                "correct": false,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "d"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "964b9e8cccf723447d2442107dca5cc8ffb492ecc6c45574ab03aca8108d82ce"
+              },
+              {
+                "questionId": "a966820a-8b42-4ec9-8427-958468f98d3b",
+                "correct": true,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "a"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "882f2875f4a1df5fa22823b1b7c567f5454e7c6335196cb75c455a1acce780f1"
+              }
+            ],
+            "accuracy": 0.5,
+            "knownTokens": 117001,
+            "unknownActualUsage": 0,
+            "foregroundTokens": 117001,
+            "backgroundTokens": 0,
+            "gatewayLedgerMatches": true,
+            "historicalTimeContextStatus": "VERIFIED_BY_ANSWERING_RECEIPT",
+            "runnerError": null,
+            "runnerClassification": null,
+            "learningDisposition": {
+              "status": "NOT_APPLICABLE",
+              "complete": null
+            }
+          },
+          {
+            "arm": "rsi",
+            "runnerReturnCode": 0,
+            "runnerStatus": "COMPLETED",
+            "scores": [
+              {
+                "questionId": "9c209ff7-a6a8-48d8-ab38-e0b8aa2aaef7",
+                "correct": true,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "d"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "65bc97fa68fb723d5d69007d0d831934813829bfbf72bb6eee045ec579a8b8ae"
+              },
+              {
+                "questionId": "945fb104-45bd-457f-a9a8-19620159e47d",
+                "correct": false,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "b"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "05559b747f0a2cc3ec8babb54632a8f8315b8578efa728439f79657a94a88fe2"
+              },
+              {
+                "questionId": "d3767473-d464-42c1-9ead-7a61d922f120",
+                "correct": false,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "b"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "a3fea0ec09f0ecfd9309e7fd5356359afdd0b2be1b113bab9620b93e23114428"
+              },
+              {
+                "questionId": "a966820a-8b42-4ec9-8427-958468f98d3b",
+                "correct": true,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "a"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "56f09e51c9f1c5909fe474db0518fe4a9626a73eb2ac1c658bec53842e7004ba"
+              }
+            ],
+            "accuracy": 0.5,
+            "knownTokens": 602844,
+            "unknownActualUsage": 0,
+            "foregroundTokens": 194403,
+            "backgroundTokens": 408441,
+            "gatewayLedgerMatches": true,
+            "historicalTimeContextStatus": "VERIFIED_BY_ANSWERING_RECEIPT",
+            "runnerError": null,
+            "runnerClassification": null,
+            "learningDisposition": {
+              "policy": "evaluate-closed-native-failure-v2",
+              "status": "COMPLETED",
+              "complete": true,
+              "failedJobs": [],
+              "failedProfiles": []
+            }
+          }
+        ]
+      },
+      {
+        "personaId": "17",
+        "arms": [
+          {
+            "arm": "baseline",
+            "runnerReturnCode": 0,
+            "runnerStatus": "COMPLETED",
+            "scores": [
+              {
+                "questionId": "5e856191-b76f-47ec-b5a4-f04893d8a313",
+                "correct": false,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "b"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "fa4a299f6a19ff137e822dc3e8681f1805062f94359f0d407f998c1176f1bf34"
+              },
+              {
+                "questionId": "59eb073a-174e-4115-aa22-b40eb447b1a2",
+                "correct": true,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "d"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "fe37437f4274454599f7da5f9050e9476f1c2c1c11b9493c866dc2154d2e8abe"
+              },
+              {
+                "questionId": "9ac098cd-a109-412a-ad1a-ad90f2f8a6d3",
+                "correct": false,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "a"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "e528d3a5ec7e67c3f79186f30cc1c9b6d933ebce4bb4df49e157a8fab2c95cfb"
+              },
+              {
+                "questionId": "f0f1c22f-ab86-4d6f-a017-6cdb7f5e88f4",
+                "correct": true,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "d"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "eff0d038aa7abbe6fb61ebdf607e8102002da5065344c348d96ee1c9ad62284d"
+              }
+            ],
+            "accuracy": 0.5,
+            "knownTokens": 129443,
+            "unknownActualUsage": 0,
+            "foregroundTokens": 129443,
+            "backgroundTokens": 0,
+            "gatewayLedgerMatches": true,
+            "historicalTimeContextStatus": "VERIFIED_BY_ANSWERING_RECEIPT",
+            "runnerError": null,
+            "runnerClassification": null,
+            "learningDisposition": {
+              "status": "NOT_APPLICABLE",
+              "complete": null
+            }
+          },
+          {
+            "arm": "rsi",
+            "runnerReturnCode": 0,
+            "runnerStatus": "COMPLETED",
+            "scores": [
+              {
+                "questionId": "5e856191-b76f-47ec-b5a4-f04893d8a313",
+                "correct": false,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "c"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "1fbb97dcd52c033baa86abc5b8a0fc96272ee52f58e9f6d4835d41c14e426d05"
+              },
+              {
+                "questionId": "59eb073a-174e-4115-aa22-b40eb447b1a2",
+                "correct": true,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "d"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "ea56b8d26b31e3003c832eb86a968ca1f7627020fca0cc476b0610f0650532a8"
+              },
+              {
+                "questionId": "9ac098cd-a109-412a-ad1a-ad90f2f8a6d3",
+                "correct": true,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "b"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "cb6439e82d4d3bee5cab0d20627bb85af3deb29cde36a8a97af6234cb2932acf"
+              },
+              {
+                "questionId": "f0f1c22f-ab86-4d6f-a017-6cdb7f5e88f4",
+                "correct": true,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "d"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "a71d7f556b45e6818388b9fad308b0edb276992ec71336dd6f90f034c361e005"
+              }
+            ],
+            "accuracy": 0.75,
+            "knownTokens": 616135,
+            "unknownActualUsage": 0,
+            "foregroundTokens": 217693,
+            "backgroundTokens": 398442,
+            "gatewayLedgerMatches": true,
+            "historicalTimeContextStatus": "VERIFIED_BY_ANSWERING_RECEIPT",
+            "runnerError": null,
+            "runnerClassification": null,
+            "learningDisposition": {
+              "policy": "evaluate-closed-native-failure-v2",
+              "status": "COMPLETED",
+              "complete": true,
+              "failedJobs": [],
+              "failedProfiles": []
+            }
+          }
+        ]
+      },
+      {
+        "personaId": "19",
+        "arms": [
+          {
+            "arm": "baseline",
+            "runnerReturnCode": 0,
+            "runnerStatus": "COMPLETED",
+            "scores": [
+              {
+                "questionId": "0441a1ba-0d67-47a1-a910-00306910a6e3",
+                "correct": false,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "a"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "088cc32db80b8fbd271dfe105cf313a98e8a3c211f366213fa321fb1a165d1c3"
+              },
+              {
+                "questionId": "d6d4a4e8-96c4-4b72-bdd3-204b44ec1826",
+                "correct": true,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "b"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "12a4d6ac691e7c7c188e49461f315f0bae9b5db61e129e029aa17cadef1cae8b"
+              },
+              {
+                "questionId": "fcfde00b-be10-4c52-922d-85cf7ae9f556",
+                "correct": true,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "b"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "a408a010d5f7fdc1edc42e1d7b5d4d6a739a839ad4c844532b972d3107c91b6a"
+              },
+              {
+                "questionId": "28200b70-034f-4c0c-bde7-21754136740d",
+                "correct": false,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "a"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "23a63efc0653bf27529c95ed148d4b688798052957a0dc7c9dcbe83951b1b0a4"
+              }
+            ],
+            "accuracy": 0.5,
+            "knownTokens": 107364,
+            "unknownActualUsage": 0,
+            "foregroundTokens": 107364,
+            "backgroundTokens": 0,
+            "gatewayLedgerMatches": true,
+            "historicalTimeContextStatus": "VERIFIED_BY_ANSWERING_RECEIPT",
+            "runnerError": null,
+            "runnerClassification": null,
+            "learningDisposition": {
+              "status": "NOT_APPLICABLE",
+              "complete": null
+            }
+          },
+          {
+            "arm": "rsi",
+            "runnerReturnCode": 0,
+            "runnerStatus": "COMPLETED",
+            "scores": [
+              {
+                "questionId": "0441a1ba-0d67-47a1-a910-00306910a6e3",
+                "correct": false,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "c"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "5466b0dd28258cfd9757b53e264f5ed220315327965028e92f5d7efb1e050b50"
+              },
+              {
+                "questionId": "d6d4a4e8-96c4-4b72-bdd3-204b44ec1826",
+                "correct": true,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "b"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "a3fea0ec09f0ecfd9309e7fd5356359afdd0b2be1b113bab9620b93e23114428"
+              },
+              {
+                "questionId": "fcfde00b-be10-4c52-922d-85cf7ae9f556",
+                "correct": true,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "b"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "3bb71564aabd8c36798449697ab867a4111ef8c30637933428ede09c6fb77bed"
+              },
+              {
+                "questionId": "28200b70-034f-4c0c-bde7-21754136740d",
+                "correct": false,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "b"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "80be8c1f5749733056c74a9baf490b936e19bd2ce58e60626d5fd9ea146d5ce9"
+              }
+            ],
+            "accuracy": 0.5,
+            "knownTokens": 747751,
+            "unknownActualUsage": 0,
+            "foregroundTokens": 246376,
+            "backgroundTokens": 501375,
+            "gatewayLedgerMatches": true,
+            "historicalTimeContextStatus": "VERIFIED_BY_ANSWERING_RECEIPT",
+            "runnerError": null,
+            "runnerClassification": null,
+            "learningDisposition": {
+              "policy": "evaluate-closed-native-failure-v2",
+              "status": "COMPLETED",
+              "complete": true,
+              "failedJobs": [],
+              "failedProfiles": []
+            }
+          }
+        ]
+      },
+      {
+        "personaId": "15",
+        "arms": [
+          {
+            "arm": "baseline",
+            "runnerReturnCode": 0,
+            "runnerStatus": "COMPLETED",
+            "scores": [
+              {
+                "questionId": "0034a537-925f-448b-b275-eae07f3d9ae5",
+                "correct": true,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "d"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "fbce010e626d4b700af9f3ac0231094e0e295a51e215b71fded3d8c5361b949f"
+              },
+              {
+                "questionId": "4b803069-7679-411e-8310-d885e6ed1e7d",
+                "correct": false,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "b"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "a089ee9caf8978da631f6999051388adf70fbbba3c34d5628440da9f6b0597bd"
+              },
+              {
+                "questionId": "d0b826d3-9805-416c-a8a8-343ffe1c9098",
+                "correct": false,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "c"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "79fa22bbe1ecff690b58dd8947acf921d214fcccafe8231d0b69f5704444ccf8"
+              },
+              {
+                "questionId": "29c557de-15e3-43c5-b416-de5d4f1845e5",
+                "correct": true,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "d"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "703a9c6368162baa998872d31dd2c38eac32d78ddef7abad4ac3666e467255b4"
+              }
+            ],
+            "accuracy": 0.5,
+            "knownTokens": 98311,
+            "unknownActualUsage": 0,
+            "foregroundTokens": 98311,
+            "backgroundTokens": 0,
+            "gatewayLedgerMatches": true,
+            "historicalTimeContextStatus": "VERIFIED_BY_ANSWERING_RECEIPT",
+            "runnerError": null,
+            "runnerClassification": null,
+            "learningDisposition": {
+              "status": "NOT_APPLICABLE",
+              "complete": null
+            }
+          },
+          {
+            "arm": "rsi",
+            "runnerReturnCode": 0,
+            "runnerStatus": "COMPLETED",
+            "scores": [
+              {
+                "questionId": "0034a537-925f-448b-b275-eae07f3d9ae5",
+                "correct": true,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "d"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "6fcf7d40df09162340a00292042267f8784cabff7da087fc5839fb1fa9a00bbb"
+              },
+              {
+                "questionId": "4b803069-7679-411e-8310-d885e6ed1e7d",
+                "correct": false,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "b"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "6e9cdadf2181827a64b676648dcb78ab1ac2f099d164761ec4f686d599ded01f"
+              },
+              {
+                "questionId": "d0b826d3-9805-416c-a8a8-343ffe1c9098",
+                "correct": false,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "b"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "3bb71564aabd8c36798449697ab867a4111ef8c30637933428ede09c6fb77bed"
+              },
+              {
+                "questionId": "29c557de-15e3-43c5-b416-de5d4f1845e5",
+                "correct": true,
+                "formatDiagnostic": {
+                  "valid": true,
+                  "reason": "SINGLE_CHOICE",
+                  "choice": "d"
+                },
+                "completed": true,
+                "answerAvailable": true,
+                "responseSha256": "806b68678ae89961f8cb8424ae3de7d9525765155f5a377982d28fdb4fe3a0f2"
+              }
+            ],
+            "accuracy": 0.5,
+            "knownTokens": 696363,
+            "unknownActualUsage": 0,
+            "foregroundTokens": 198407,
+            "backgroundTokens": 497956,
+            "gatewayLedgerMatches": true,
+            "historicalTimeContextStatus": "VERIFIED_BY_ANSWERING_RECEIPT",
+            "runnerError": null,
+            "runnerClassification": null,
+            "learningDisposition": {
+              "policy": "evaluate-closed-native-failure-v2",
+              "status": "COMPLETED",
+              "complete": true,
+              "failedJobs": [],
+              "failedProfiles": []
+            }
+          }
+        ]
+      }
+    ],
+    "plannedUsers": 8,
+    "knownTokens": 6081219,
+    "unknownActualUsage": 0,
+    "officialScorerControlsPassed": 3,
+    "officialParserDiagnostics": {
+      "status": "KNOWN_OFFICIAL_FALLBACK_FALSE_POSITIVES_CONFIRMED",
+      "controls": [
+        {
+          "name": "protocol-correct",
+          "dummyLabel": "(a)",
+          "officialCorrect": true,
+          "formatDiagnostic": {
+            "valid": true,
+            "reason": "SINGLE_CHOICE",
+            "choice": "a"
+          }
+        },
+        {
+          "name": "protocol-wrong",
+          "dummyLabel": "(a)",
+          "officialCorrect": false,
+          "formatDiagnostic": {
+            "valid": true,
+            "reason": "SINGLE_CHOICE",
+            "choice": "b"
+          }
+        },
+        {
+          "name": "protocol-ambiguous",
+          "dummyLabel": "(a)",
+          "officialCorrect": false,
+          "formatDiagnostic": {
+            "valid": false,
+            "reason": "NON_SINGLE_CHOICE_TAIL",
+            "choice": null
+          }
+        },
+        {
+          "name": "empty",
+          "dummyLabel": "(a)",
+          "officialCorrect": false,
+          "formatDiagnostic": {
+            "valid": false,
+            "reason": "MISSING_FINAL_ANSWER_MARKER",
+            "choice": null
+          }
+        },
+        {
+          "name": "english-article-false-positive",
+          "dummyLabel": "(a)",
+          "officialCorrect": true,
+          "formatDiagnostic": {
+            "valid": false,
+            "reason": "MISSING_FINAL_ANSWER_MARKER",
+            "choice": null
+          }
+        },
+        {
+          "name": "ordinary-prose-false-positive",
+          "dummyLabel": "(a)",
+          "officialCorrect": true,
+          "formatDiagnostic": {
+            "valid": false,
+            "reason": "MISSING_FINAL_ANSWER_MARKER",
+            "choice": null
+          }
+        },
+        {
+          "name": "unmarked-single-choice",
+          "dummyLabel": "(a)",
+          "officialCorrect": true,
+          "formatDiagnostic": {
+            "valid": false,
+            "reason": "MISSING_FINAL_ANSWER_MARKER",
+            "choice": null
+          }
+        },
+        {
+          "name": "marker-with-extra-prose",
+          "dummyLabel": "(a)",
+          "officialCorrect": true,
+          "formatDiagnostic": {
+            "valid": false,
+            "reason": "NON_SINGLE_CHOICE_TAIL",
+            "choice": null
+          }
+        },
+        {
+          "name": "protocol-plain-letter",
+          "dummyLabel": "(a)",
+          "officialCorrect": true,
+          "formatDiagnostic": {
+            "valid": true,
+            "reason": "SINGLE_CHOICE",
+            "choice": "a"
+          }
+        }
+      ],
+      "officialMethodChanged": false,
+      "textFallbackSafe": false,
+      "requiresSeparateFormatReport": true,
+      "realModelRequests": 0,
+      "realAnswerKeysRead": false
+    },
+    "requiredFormatFailures": 3,
+    "reportedAccuracyMethod": "PINNED_OFFICIAL_EXTRACT_ANSWER_UNCHANGED",
+    "scoresReturnedToLearning": false,
+    "smallSampleLimit": "Eight correlated user clusters; not the full benchmark or a universal causal guarantee.",
+    "baselineMacroAccuracy": 0.65625,
+    "rsiMacroAccuracy": 0.625,
+    "pairedAccuracyDifference": -0.03125,
+    "userClusterBootstrap95": [
+      -0.1875,
+      0.09375
+    ],
+    "bootstrapDraws": 10000,
+    "reporterScriptSha256": "be14f7be9a334364794a2b32fe9d581a7f1258297d9ac896039142bf94c5be64",
+    "answerDiagnosticsModuleSha256": "d727fcafc21662afdb9ea6931e3aa2a59a32979f1f3a651d725c1a06c0e2dacf"
+  },
+  "runtimeAudit": {
+    "status": "COMPLETE_NATIVE_V2_DEVELOPMENT_AUDIT_NOT_BLIND",
+    "recordedAt": "2026-10-06T17:19:11.021471+00:00",
+    "freezeSha256": "413e23ab945159db12e8b8cdaeef8d2719f8f98826890755a1fb9d4791a95346",
+    "resultsSha256": "9cf7ba98232fda2c2c9a28855832dead18c7ef3372b496c61f3841e4cf315faf",
+    "revision": "af603cb7df7a079b5d1713c5b3a33ea0f596ce73",
+    "independenceClaim": false,
+    "newModelRequests": 0,
+    "quality": {
+      "baselineMacroAccuracy": 0.65625,
+      "rsiMacroAccuracy": 0.625,
+      "pairedAccuracyDifference": -0.03125,
+      "userClusterBootstrap95": [
+        -0.1875,
+        0.09375
+      ],
+      "bootstrapDraws": 10000,
+      "completedLearners": 8,
+      "closedBoundedFailedLearners": 0,
+      "requiredFormatFailures": 3,
+      "reportedAccuracyMethod": "PINNED_OFFICIAL_EXTRACT_ANSWER_UNCHANGED",
+      "officialParserDiagnostics": {
+        "status": "KNOWN_OFFICIAL_FALLBACK_FALSE_POSITIVES_CONFIRMED",
+        "controls": [
+          {
+            "name": "protocol-correct",
+            "dummyLabel": "(a)",
+            "officialCorrect": true,
+            "formatDiagnostic": {
+              "valid": true,
+              "reason": "SINGLE_CHOICE",
+              "choice": "a"
+            }
+          },
+          {
+            "name": "protocol-wrong",
+            "dummyLabel": "(a)",
+            "officialCorrect": false,
+            "formatDiagnostic": {
+              "valid": true,
+              "reason": "SINGLE_CHOICE",
+              "choice": "b"
+            }
+          },
+          {
+            "name": "protocol-ambiguous",
+            "dummyLabel": "(a)",
+            "officialCorrect": false,
+            "formatDiagnostic": {
+              "valid": false,
+              "reason": "NON_SINGLE_CHOICE_TAIL",
+              "choice": null
+            }
+          },
+          {
+            "name": "empty",
+            "dummyLabel": "(a)",
+            "officialCorrect": false,
+            "formatDiagnostic": {
+              "valid": false,
+              "reason": "MISSING_FINAL_ANSWER_MARKER",
+              "choice": null
+            }
+          },
+          {
+            "name": "english-article-false-positive",
+            "dummyLabel": "(a)",
+            "officialCorrect": true,
+            "formatDiagnostic": {
+              "valid": false,
+              "reason": "MISSING_FINAL_ANSWER_MARKER",
+              "choice": null
+            }
+          },
+          {
+            "name": "ordinary-prose-false-positive",
+            "dummyLabel": "(a)",
+            "officialCorrect": true,
+            "formatDiagnostic": {
+              "valid": false,
+              "reason": "MISSING_FINAL_ANSWER_MARKER",
+              "choice": null
+            }
+          },
+          {
+            "name": "unmarked-single-choice",
+            "dummyLabel": "(a)",
+            "officialCorrect": true,
+            "formatDiagnostic": {
+              "valid": false,
+              "reason": "MISSING_FINAL_ANSWER_MARKER",
+              "choice": null
+            }
+          },
+          {
+            "name": "marker-with-extra-prose",
+            "dummyLabel": "(a)",
+            "officialCorrect": true,
+            "formatDiagnostic": {
+              "valid": false,
+              "reason": "NON_SINGLE_CHOICE_TAIL",
+              "choice": null
+            }
+          },
+          {
+            "name": "protocol-plain-letter",
+            "dummyLabel": "(a)",
+            "officialCorrect": true,
+            "formatDiagnostic": {
+              "valid": true,
+              "reason": "SINGLE_CHOICE",
+              "choice": "a"
+            }
+          }
+        ],
+        "officialMethodChanged": false,
+        "textFallbackSafe": false,
+        "requiresSeparateFormatReport": true,
+        "realModelRequests": 0,
+        "realAnswerKeysRead": false
+      }
+    },
+    "costs": {
+      "baseline": {
+        "foreground": {
+          "calls": 32,
+          "knownInputTokens": 870654,
+          "knownOutputTokens": 23174,
+          "knownTotalTokens": 893828,
+          "unknownUsage": 0
+        },
+        "background": {
+          "calls": 0,
+          "knownInputTokens": 0,
+          "knownOutputTokens": 0,
+          "knownTotalTokens": 0,
+          "unknownUsage": 0
+        },
+        "knownChatTokens": 893828,
+        "embeddingCalls": 0,
+        "embeddingInputChars": 0,
+        "embeddingTimeMs": 0,
+        "embeddingTokenUsage": null
+      },
+      "rsi": {
+        "foreground": {
+          "calls": 54,
+          "knownInputTokens": 1696529,
+          "knownOutputTokens": 8461,
+          "knownTotalTokens": 1704990,
+          "unknownUsage": 0
+        },
+        "background": {
+          "calls": 527,
+          "knownInputTokens": 3222958,
+          "knownOutputTokens": 259443,
+          "knownTotalTokens": 3482401,
+          "unknownUsage": 0
+        },
+        "knownChatTokens": 5187391,
+        "embeddingCalls": 2030,
+        "embeddingInputChars": 1249565,
+        "embeddingTimeMs": 2519575,
+        "embeddingTokenUsage": null
+      }
+    },
+    "knownChatRatio": 5.8035673530030385,
+    "knownForegroundRatio": 1.9075146448757478,
+    "unknownActualUsage": 0,
+    "maxAnswerWallMs": 95444,
+    "arms": [
+      {
+        "personaId": "9",
+        "arm": "baseline",
+        "correct": 3,
+        "denominator": 4,
+        "nativeCompletedAnswers": 4,
+        "requiredFormatFailures": 1,
+        "usage": {
+          "foreground": {
+            "calls": 4,
+            "knownInputTokens": 103142,
+            "knownOutputTokens": 1906,
+            "knownTotalTokens": 105048,
+            "unknownUsage": 0
+          },
+          "background": {
+            "calls": 0,
+            "knownInputTokens": 0,
+            "knownOutputTokens": 0,
+            "knownTotalTokens": 0,
+            "unknownUsage": 0
+          }
+        },
+        "nativeLearningCostByTaskId": {},
+        "learningSpanSeconds": 0,
+        "learningUtcDays": [],
+        "utcGuard": null,
+        "learningDisposition": {
+          "status": "NOT_APPLICABLE",
+          "complete": null
+        },
+        "embeddingCalls": 0,
+        "embeddingInputChars": 0,
+        "embeddingTimeMs": 0,
+        "embeddingTokenUsage": null,
+        "firstRequestMemoryBodies": 0,
+        "naturalSkillToolCalls": 0,
+        "skillBodyRequestExposures": 0,
+        "skillCharsRepeatedAcrossRequests": 0,
+        "actualSkillBodyDeliveries": [],
+        "storedSkillHeads": 0,
+        "modelLedgerSha256": "ff8d731760a5b7a5cf102e00decc5e65c4507df7d6dcea045ac57331b36807e1",
+        "diagnosticsSha256": "2cb6208f78d6e9da2b7e616fd2d30464dc93a8bd1c4e33aaef2b32c6e959df6a",
+        "answersSha256": "f58d1ca98949bc2ec92226d70853fd7808d2539bf96b6d82bddd7ee3167ea30a"
+      },
+      {
+        "personaId": "9",
+        "arm": "rsi",
+        "correct": 3,
+        "denominator": 4,
+        "nativeCompletedAnswers": 4,
+        "requiredFormatFailures": 1,
+        "usage": {
+          "foreground": {
+            "calls": 10,
+            "knownInputTokens": 308906,
+            "knownOutputTokens": 817,
+            "knownTotalTokens": 309723,
+            "unknownUsage": 0
+          },
+          "background": {
+            "calls": 70,
+            "knownInputTokens": 472799,
+            "knownOutputTokens": 30875,
+            "knownTotalTokens": 503674,
+            "unknownUsage": 0
+          }
+        },
+        "nativeLearningCostByTaskId": {
+          "l1-extraction": {
+            "calls": 17,
+            "knownInputTokens": 81341,
+            "knownOutputTokens": 12220,
+            "knownTotalTokens": 93561,
+            "unknownUsage": 0
+          },
+          "l1-conflict-detection": {
+            "calls": 12,
+            "knownInputTokens": 45623,
+            "knownOutputTokens": 4867,
+            "knownTotalTokens": 50490,
+            "unknownUsage": 0
+          },
+          "skill-extract": {
+            "calls": 24,
+            "knownInputTokens": 240290,
+            "knownOutputTokens": 2850,
+            "knownTotalTokens": 243140,
+            "unknownUsage": 0
+          },
+          "scene-extract": {
+            "calls": 12,
+            "knownInputTokens": 84347,
+            "knownOutputTokens": 8479,
+            "knownTotalTokens": 92826,
+            "unknownUsage": 0
+          },
+          "persona-generation": {
+            "calls": 5,
+            "knownInputTokens": 21198,
+            "knownOutputTokens": 2459,
+            "knownTotalTokens": 23657,
+            "unknownUsage": 0
+          }
+        },
+        "learningSpanSeconds": 1030.07,
+        "learningUtcDays": [
+          "2026-10-06"
+        ],
+        "utcGuard": {
+          "observedAt": 1791295702561,
+          "remainingDayMs": 35497439,
+          "requiredMs": 2460000,
+          "realModelRequests": 0
+        },
+        "learningDisposition": {
+          "policy": "evaluate-closed-native-failure-v2",
+          "status": "COMPLETED",
+          "complete": true,
+          "failedJobs": [],
+          "failedProfiles": []
+        },
+        "embeddingCalls": 230,
+        "embeddingInputChars": 144992,
+        "embeddingTimeMs": 288866,
+        "embeddingTokenUsage": null,
+        "firstRequestMemoryBodies": 60,
+        "naturalSkillToolCalls": 2,
+        "skillBodyRequestExposures": 2,
+        "skillCharsRepeatedAcrossRequests": 2176,
+        "actualSkillBodyDeliveries": [
+          {
+            "questionId": "b35349e0-993b-452a-bb5e-67668833b39b",
+            "requestOrdinal": 78,
+            "name": "rsi-personalized-movie-recommendation-intake",
+            "bodyChars": 1088,
+            "bodySha256": "9dda96e3d3a27f50b6124bbd7a92fb633c5e8b975caefea57b7917856467e5a1",
+            "toolCallId": "call_9b2f9cf851314abbb2bec4ce"
+          },
+          {
+            "questionId": "436e377a-98ba-44fc-809c-1743bbf4e033",
+            "requestOrdinal": 80,
+            "name": "rsi-personalized-movie-recommendation-intake",
+            "bodyChars": 1088,
+            "bodySha256": "9dda96e3d3a27f50b6124bbd7a92fb633c5e8b975caefea57b7917856467e5a1",
+            "toolCallId": "call_1d8e8b29ca954a3ca1ef8c88"
+          }
+        ],
+        "storedSkillHeads": 1,
+        "modelLedgerSha256": "695299170456db54a8ac877f44f68b9b23b83a9e3be9d92efa664efa22364804",
+        "diagnosticsSha256": "3935b1b13723a380e6cb28223bc31c22e78d9b46f14c394532724813a995deb8",
+        "answersSha256": "aed824169833db5eb48ba358f902f9f2d5f27a5d4193ca358a4b86bd58838360"
+      },
+      {
+        "personaId": "4",
+        "arm": "baseline",
+        "correct": 3,
+        "denominator": 4,
+        "nativeCompletedAnswers": 4,
+        "requiredFormatFailures": 0,
+        "usage": {
+          "foreground": {
+            "calls": 4,
+            "knownInputTokens": 79670,
+            "knownOutputTokens": 2294,
+            "knownTotalTokens": 81964,
+            "unknownUsage": 0
+          },
+          "background": {
+            "calls": 0,
+            "knownInputTokens": 0,
+            "knownOutputTokens": 0,
+            "knownTotalTokens": 0,
+            "unknownUsage": 0
+          }
+        },
+        "nativeLearningCostByTaskId": {},
+        "learningSpanSeconds": 0,
+        "learningUtcDays": [],
+        "utcGuard": null,
+        "learningDisposition": {
+          "status": "NOT_APPLICABLE",
+          "complete": null
+        },
+        "embeddingCalls": 0,
+        "embeddingInputChars": 0,
+        "embeddingTimeMs": 0,
+        "embeddingTokenUsage": null,
+        "firstRequestMemoryBodies": 0,
+        "naturalSkillToolCalls": 0,
+        "skillBodyRequestExposures": 0,
+        "skillCharsRepeatedAcrossRequests": 0,
+        "actualSkillBodyDeliveries": [],
+        "storedSkillHeads": 0,
+        "modelLedgerSha256": "958f828d59aeb0ca7e0973c5fbff38cbd254318c9d3babeaa840808e2bae5e51",
+        "diagnosticsSha256": "768414f97c4377fc6113562b25caed1cfe2b844b077faaf1482e4438baa4bc43",
+        "answersSha256": "9aa50906f93e9c145bd968d51eb128ea83eb94703af59c446fd23efc392b5aae"
+      },
+      {
+        "personaId": "4",
+        "arm": "rsi",
+        "correct": 3,
+        "denominator": 4,
+        "nativeCompletedAnswers": 4,
+        "requiredFormatFailures": 0,
+        "usage": {
+          "foreground": {
+            "calls": 5,
+            "knownInputTokens": 118798,
+            "knownOutputTokens": 1063,
+            "knownTotalTokens": 119861,
+            "unknownUsage": 0
+          },
+          "background": {
+            "calls": 47,
+            "knownInputTokens": 253414,
+            "knownOutputTokens": 25859,
+            "knownTotalTokens": 279273,
+            "unknownUsage": 0
+          }
+        },
+        "nativeLearningCostByTaskId": {
+          "l1-extraction": {
+            "calls": 14,
+            "knownInputTokens": 64783,
+            "knownOutputTokens": 10915,
+            "knownTotalTokens": 75698,
+            "unknownUsage": 0
+          },
+          "l1-conflict-detection": {
+            "calls": 12,
+            "knownInputTokens": 47321,
+            "knownOutputTokens": 6799,
+            "knownTotalTokens": 54120,
+            "unknownUsage": 0
+          },
+          "skill-extract": {
+            "calls": 7,
+            "knownInputTokens": 64188,
+            "knownOutputTokens": 110,
+            "knownTotalTokens": 64298,
+            "unknownUsage": 0
+          },
+          "scene-extract": {
+            "calls": 10,
+            "knownInputTokens": 62866,
+            "knownOutputTokens": 5841,
+            "knownTotalTokens": 68707,
+            "unknownUsage": 0
+          },
+          "persona-generation": {
+            "calls": 4,
+            "knownInputTokens": 14256,
+            "knownOutputTokens": 2194,
+            "knownTotalTokens": 16450,
+            "unknownUsage": 0
+          }
+        },
+        "learningSpanSeconds": 875.241,
+        "learningUtcDays": [
+          "2026-10-06"
+        ],
+        "utcGuard": {
+          "observedAt": 1791296932056,
+          "remainingDayMs": 34267944,
+          "requiredMs": 2460000,
+          "realModelRequests": 0
+        },
+        "learningDisposition": {
+          "policy": "evaluate-closed-native-failure-v2",
+          "status": "COMPLETED",
+          "complete": true,
+          "failedJobs": [],
+          "failedProfiles": []
+        },
+        "embeddingCalls": 198,
+        "embeddingInputChars": 123890,
+        "embeddingTimeMs": 251757,
+        "embeddingTokenUsage": null,
+        "firstRequestMemoryBodies": 59,
+        "naturalSkillToolCalls": 0,
+        "skillBodyRequestExposures": 0,
+        "skillCharsRepeatedAcrossRequests": 0,
+        "actualSkillBodyDeliveries": [],
+        "storedSkillHeads": 0,
+        "modelLedgerSha256": "cb7ba6eb3eb49d912e02ba347a057f2165238129d1816ff337a005e5f339b45d",
+        "diagnosticsSha256": "c684ed84d62ba67768624f2948418fc55bd7cf2e8000bf1981b7b14d87b0f4f9",
+        "answersSha256": "da390df756cdeaccba85b63136fb395279c3813c8756c7aa07e5a4538f251cef"
+      },
+      {
+        "personaId": "12",
+        "arm": "baseline",
+        "correct": 4,
+        "denominator": 4,
+        "nativeCompletedAnswers": 4,
+        "requiredFormatFailures": 0,
+        "usage": {
+          "foreground": {
+            "calls": 4,
+            "knownInputTokens": 122802,
+            "knownOutputTokens": 1840,
+            "knownTotalTokens": 124642,
+            "unknownUsage": 0
+          },
+          "background": {
+            "calls": 0,
+            "knownInputTokens": 0,
+            "knownOutputTokens": 0,
+            "knownTotalTokens": 0,
+            "unknownUsage": 0
+          }
+        },
+        "nativeLearningCostByTaskId": {},
+        "learningSpanSeconds": 0,
+        "learningUtcDays": [],
+        "utcGuard": null,
+        "learningDisposition": {
+          "status": "NOT_APPLICABLE",
+          "complete": null
+        },
+        "embeddingCalls": 0,
+        "embeddingInputChars": 0,
+        "embeddingTimeMs": 0,
+        "embeddingTokenUsage": null,
+        "firstRequestMemoryBodies": 0,
+        "naturalSkillToolCalls": 0,
+        "skillBodyRequestExposures": 0,
+        "skillCharsRepeatedAcrossRequests": 0,
+        "actualSkillBodyDeliveries": [],
+        "storedSkillHeads": 0,
+        "modelLedgerSha256": "32fe34bcf8b02004ad2394b6a30777e180721e045b0c56bfb7303e90f033dcd2",
+        "diagnosticsSha256": "9c040cc45f19f587b691b91280443ac78fc266b8c359bb082504a84344bbdf38",
+        "answersSha256": "cb4a320b02f1b0e7b5fbab0bdef0d357f6ca35c743e4321ad03bde91a2cf2512"
+      },
+      {
+        "personaId": "12",
+        "arm": "rsi",
+        "correct": 2,
+        "denominator": 4,
+        "nativeCompletedAnswers": 4,
+        "requiredFormatFailures": 0,
+        "usage": {
+          "foreground": {
+            "calls": 7,
+            "knownInputTokens": 239867,
+            "knownOutputTokens": 1302,
+            "knownTotalTokens": 241169,
+            "unknownUsage": 0
+          },
+          "background": {
+            "calls": 67,
+            "knownInputTokens": 397259,
+            "knownOutputTokens": 37456,
+            "knownTotalTokens": 434715,
+            "unknownUsage": 0
+          }
+        },
+        "nativeLearningCostByTaskId": {
+          "l1-extraction": {
+            "calls": 21,
+            "knownInputTokens": 99560,
+            "knownOutputTokens": 15463,
+            "knownTotalTokens": 115023,
+            "unknownUsage": 0
+          },
+          "l1-conflict-detection": {
+            "calls": 15,
+            "knownInputTokens": 53768,
+            "knownOutputTokens": 7277,
+            "knownTotalTokens": 61045,
+            "unknownUsage": 0
+          },
+          "skill-extract": {
+            "calls": 12,
+            "knownInputTokens": 114878,
+            "knownOutputTokens": 724,
+            "knownTotalTokens": 115602,
+            "unknownUsage": 0
+          },
+          "scene-extract": {
+            "calls": 14,
+            "knownInputTokens": 106373,
+            "knownOutputTokens": 11942,
+            "knownTotalTokens": 118315,
+            "unknownUsage": 0
+          },
+          "persona-generation": {
+            "calls": 5,
+            "knownInputTokens": 22680,
+            "knownOutputTokens": 2050,
+            "knownTotalTokens": 24730,
+            "unknownUsage": 0
+          }
+        },
+        "learningSpanSeconds": 1265.446,
+        "learningUtcDays": [
+          "2026-10-06"
+        ],
+        "utcGuard": {
+          "observedAt": 1791298165227,
+          "remainingDayMs": 33034773,
+          "requiredMs": 2460000,
+          "realModelRequests": 0
+        },
+        "learningDisposition": {
+          "policy": "evaluate-closed-native-failure-v2",
+          "status": "COMPLETED",
+          "complete": true,
+          "failedJobs": [],
+          "failedProfiles": []
+        },
+        "embeddingCalls": 282,
+        "embeddingInputChars": 181414,
+        "embeddingTimeMs": 361535,
+        "embeddingTokenUsage": null,
+        "firstRequestMemoryBodies": 63,
+        "naturalSkillToolCalls": 3,
+        "skillBodyRequestExposures": 3,
+        "skillCharsRepeatedAcrossRequests": 2664,
+        "actualSkillBodyDeliveries": [
+          {
+            "questionId": "a64ba818-abee-404e-9a38-f440b74bcca7",
+            "requestOrdinal": 70,
+            "name": "rsi-casual-chat-mirror-tone",
+            "bodyChars": 888,
+            "bodySha256": "afdb7869867c7fd89f423f5ae34d0237c68e940b4defbe0fdbaf036b2f050bdb",
+            "toolCallId": "call_dfb0ba4b1d38409f8122953e"
+          },
+          {
+            "questionId": "8be28bb6-049f-4735-8957-a15234c138f4",
+            "requestOrdinal": 72,
+            "name": "rsi-casual-chat-mirror-tone",
+            "bodyChars": 888,
+            "bodySha256": "afdb7869867c7fd89f423f5ae34d0237c68e940b4defbe0fdbaf036b2f050bdb",
+            "toolCallId": "call_00905febaab64cb6b258f229"
+          },
+          {
+            "questionId": "cb4799ed-15e8-4dda-a716-b81fa1d6d9da",
+            "requestOrdinal": 74,
+            "name": "rsi-casual-chat-mirror-tone",
+            "bodyChars": 888,
+            "bodySha256": "afdb7869867c7fd89f423f5ae34d0237c68e940b4defbe0fdbaf036b2f050bdb",
+            "toolCallId": "call_d6a45131e8714f74b98fa9dc"
+          }
+        ],
+        "storedSkillHeads": 1,
+        "modelLedgerSha256": "da1c99b1b3588789d8e3809eaf1a165c813389483656f15a63205f074a568e30",
+        "diagnosticsSha256": "6a9659a196d1b73358e8dd163b79638793b46b77b2c8c0ce93a60dae17bf9a44",
+        "answersSha256": "e2b16d5064bb4cec4940caedfd22cd0d3dd8c41eff35286e802c1e5a7e933bf1"
+      },
+      {
+        "personaId": "14",
+        "arm": "baseline",
+        "correct": 3,
+        "denominator": 4,
+        "nativeCompletedAnswers": 4,
+        "requiredFormatFailures": 0,
+        "usage": {
+          "foreground": {
+            "calls": 4,
+            "knownInputTokens": 127763,
+            "knownOutputTokens": 2292,
+            "knownTotalTokens": 130055,
+            "unknownUsage": 0
+          },
+          "background": {
+            "calls": 0,
+            "knownInputTokens": 0,
+            "knownOutputTokens": 0,
+            "knownTotalTokens": 0,
+            "unknownUsage": 0
+          }
+        },
+        "nativeLearningCostByTaskId": {},
+        "learningSpanSeconds": 0,
+        "learningUtcDays": [],
+        "utcGuard": null,
+        "learningDisposition": {
+          "status": "NOT_APPLICABLE",
+          "complete": null
+        },
+        "embeddingCalls": 0,
+        "embeddingInputChars": 0,
+        "embeddingTimeMs": 0,
+        "embeddingTokenUsage": null,
+        "firstRequestMemoryBodies": 0,
+        "naturalSkillToolCalls": 0,
+        "skillBodyRequestExposures": 0,
+        "skillCharsRepeatedAcrossRequests": 0,
+        "actualSkillBodyDeliveries": [],
+        "storedSkillHeads": 0,
+        "modelLedgerSha256": "6a014c042f3f7fc7147c28295085c318c0cd7e9cbfedb5d15e4bfffe00ebb513",
+        "diagnosticsSha256": "75eaa125ac53a4af84b5652dc5c7a88b06969037044f953395210ccf2b8f22f2",
+        "answersSha256": "2e2f5ab5ed5a36fce881b5012a58558d22c453646de97d5cc1741cbe4471154b"
+      },
+      {
+        "personaId": "14",
+        "arm": "rsi",
+        "correct": 3,
+        "denominator": 4,
+        "nativeCompletedAnswers": 4,
+        "requiredFormatFailures": 1,
+        "usage": {
+          "foreground": {
+            "calls": 5,
+            "knownInputTokens": 177195,
+            "knownOutputTokens": 163,
+            "knownTotalTokens": 177358,
+            "unknownUsage": 0
+          },
+          "background": {
+            "calls": 72,
+            "knownInputTokens": 423352,
+            "knownOutputTokens": 35173,
+            "knownTotalTokens": 458525,
+            "unknownUsage": 0
+          }
+        },
+        "nativeLearningCostByTaskId": {
+          "l1-extraction": {
+            "calls": 21,
+            "knownInputTokens": 101168,
+            "knownOutputTokens": 17055,
+            "knownTotalTokens": 118223,
+            "unknownUsage": 0
+          },
+          "l1-conflict-detection": {
+            "calls": 17,
+            "knownInputTokens": 59544,
+            "knownOutputTokens": 6304,
+            "knownTotalTokens": 65848,
+            "unknownUsage": 0
+          },
+          "skill-extract": {
+            "calls": 15,
+            "knownInputTokens": 143978,
+            "knownOutputTokens": 930,
+            "knownTotalTokens": 144908,
+            "unknownUsage": 0
+          },
+          "scene-extract": {
+            "calls": 13,
+            "knownInputTokens": 97727,
+            "knownOutputTokens": 8825,
+            "knownTotalTokens": 106552,
+            "unknownUsage": 0
+          },
+          "persona-generation": {
+            "calls": 6,
+            "knownInputTokens": 20935,
+            "knownOutputTokens": 2059,
+            "knownTotalTokens": 22994,
+            "unknownUsage": 0
+          }
+        },
+        "learningSpanSeconds": 1245.852,
+        "learningUtcDays": [
+          "2026-10-06"
+        ],
+        "utcGuard": {
+          "observedAt": 1791299634335,
+          "remainingDayMs": 31565665,
+          "requiredMs": 2460000,
+          "realModelRequests": 0
+        },
+        "learningDisposition": {
+          "policy": "evaluate-closed-native-failure-v2",
+          "status": "COMPLETED",
+          "complete": true,
+          "failedJobs": [],
+          "failedProfiles": []
+        },
+        "embeddingCalls": 294,
+        "embeddingInputChars": 177804,
+        "embeddingTimeMs": 349220,
+        "embeddingTokenUsage": null,
+        "firstRequestMemoryBodies": 64,
+        "naturalSkillToolCalls": 1,
+        "skillBodyRequestExposures": 1,
+        "skillCharsRepeatedAcrossRequests": 459,
+        "actualSkillBodyDeliveries": [
+          {
+            "questionId": "a30c10c5-145a-49b0-b3d5-1479bf3c6797",
+            "requestOrdinal": 74,
+            "name": "rsi-code-refactor-preference-small-modular",
+            "bodyChars": 459,
+            "bodySha256": "e5eeba869b8d82eccd6baf6e881481673c20f74af0ef976cecc22f35bf709158",
+            "toolCallId": "call_e4080bc3f4fa4506b6a182ec"
+          }
+        ],
+        "storedSkillHeads": 1,
+        "modelLedgerSha256": "3e067c5e76c13770e7d99c7be2fe06cbd53216558890a9ee15a1c6074003060b",
+        "diagnosticsSha256": "c6031a8e0e44c52c35f08be0b0e3007b504f0fb9d62d0ea5eabd1c93e27a0526",
+        "answersSha256": "e10dde834bb0d15bf9929d2764109298071dd20bc29675e3fbd224e5e2b6faee"
+      },
+      {
+        "personaId": "3",
+        "arm": "baseline",
+        "correct": 2,
+        "denominator": 4,
+        "nativeCompletedAnswers": 4,
+        "requiredFormatFailures": 0,
+        "usage": {
+          "foreground": {
+            "calls": 4,
+            "knownInputTokens": 112647,
+            "knownOutputTokens": 4354,
+            "knownTotalTokens": 117001,
+            "unknownUsage": 0
+          },
+          "background": {
+            "calls": 0,
+            "knownInputTokens": 0,
+            "knownOutputTokens": 0,
+            "knownTotalTokens": 0,
+            "unknownUsage": 0
+          }
+        },
+        "nativeLearningCostByTaskId": {},
+        "learningSpanSeconds": 0,
+        "learningUtcDays": [],
+        "utcGuard": null,
+        "learningDisposition": {
+          "status": "NOT_APPLICABLE",
+          "complete": null
+        },
+        "embeddingCalls": 0,
+        "embeddingInputChars": 0,
+        "embeddingTimeMs": 0,
+        "embeddingTokenUsage": null,
+        "firstRequestMemoryBodies": 0,
+        "naturalSkillToolCalls": 0,
+        "skillBodyRequestExposures": 0,
+        "skillCharsRepeatedAcrossRequests": 0,
+        "actualSkillBodyDeliveries": [],
+        "storedSkillHeads": 0,
+        "modelLedgerSha256": "12e93a4c4ef404c6c63ccd757db2e985c572aa1c992bbe990bb52f13862a87e5",
+        "diagnosticsSha256": "df640663fb403567a83cb83fdbdda8a91efeb35ccb33db00a3600dd0bba94fe9",
+        "answersSha256": "75606362e2486d765642db7ff3e839c43d85c575ceadaa9bf21f856fb9118339"
+      },
+      {
+        "personaId": "3",
+        "arm": "rsi",
+        "correct": 2,
+        "denominator": 4,
+        "nativeCompletedAnswers": 4,
+        "requiredFormatFailures": 0,
+        "usage": {
+          "foreground": {
+            "calls": 6,
+            "knownInputTokens": 191674,
+            "knownOutputTokens": 2729,
+            "knownTotalTokens": 194403,
+            "unknownUsage": 0
+          },
+          "background": {
+            "calls": 64,
+            "knownInputTokens": 373860,
+            "knownOutputTokens": 34581,
+            "knownTotalTokens": 408441,
+            "unknownUsage": 0
+          }
+        },
+        "nativeLearningCostByTaskId": {
+          "l1-extraction": {
+            "calls": 19,
+            "knownInputTokens": 91101,
+            "knownOutputTokens": 15626,
+            "knownTotalTokens": 106727,
+            "unknownUsage": 0
+          },
+          "l1-conflict-detection": {
+            "calls": 17,
+            "knownInputTokens": 67071,
+            "knownOutputTokens": 8567,
+            "knownTotalTokens": 75638,
+            "unknownUsage": 0
+          },
+          "skill-extract": {
+            "calls": 10,
+            "knownInputTokens": 101831,
+            "knownOutputTokens": 203,
+            "knownTotalTokens": 102034,
+            "unknownUsage": 0
+          },
+          "scene-extract": {
+            "calls": 12,
+            "knownInputTokens": 91439,
+            "knownOutputTokens": 7620,
+            "knownTotalTokens": 99059,
+            "unknownUsage": 0
+          },
+          "persona-generation": {
+            "calls": 6,
+            "knownInputTokens": 22418,
+            "knownOutputTokens": 2565,
+            "knownTotalTokens": 24983,
+            "unknownUsage": 0
+          }
+        },
+        "learningSpanSeconds": 1172.421,
+        "learningUtcDays": [
+          "2026-10-06"
+        ],
+        "utcGuard": {
+          "observedAt": 1791301283133,
+          "remainingDayMs": 29916867,
+          "requiredMs": 2460000,
+          "realModelRequests": 0
+        },
+        "learningDisposition": {
+          "policy": "evaluate-closed-native-failure-v2",
+          "status": "COMPLETED",
+          "complete": true,
+          "failedJobs": [],
+          "failedProfiles": []
+        },
+        "embeddingCalls": 276,
+        "embeddingInputChars": 156943,
+        "embeddingTimeMs": 337632,
+        "embeddingTokenUsage": null,
+        "firstRequestMemoryBodies": 64,
+        "naturalSkillToolCalls": 0,
+        "skillBodyRequestExposures": 0,
+        "skillCharsRepeatedAcrossRequests": 0,
+        "actualSkillBodyDeliveries": [],
+        "storedSkillHeads": 0,
+        "modelLedgerSha256": "bf78875f0a29c27dc49a794b8696cab2acdf8f956b61ed41d434490e175d1b72",
+        "diagnosticsSha256": "009754f6a0660418774b2baf181034393acb198d6026da5e0249b8e9b6648653",
+        "answersSha256": "1e3ca54bce4c1dfefd1dc2045764aea62e5309a6238eface19107a7a92509686"
+      },
+      {
+        "personaId": "17",
+        "arm": "baseline",
+        "correct": 2,
+        "denominator": 4,
+        "nativeCompletedAnswers": 4,
+        "requiredFormatFailures": 0,
+        "usage": {
+          "foreground": {
+            "calls": 4,
+            "knownInputTokens": 126467,
+            "knownOutputTokens": 2976,
+            "knownTotalTokens": 129443,
+            "unknownUsage": 0
+          },
+          "background": {
+            "calls": 0,
+            "knownInputTokens": 0,
+            "knownOutputTokens": 0,
+            "knownTotalTokens": 0,
+            "unknownUsage": 0
+          }
+        },
+        "nativeLearningCostByTaskId": {},
+        "learningSpanSeconds": 0,
+        "learningUtcDays": [],
+        "utcGuard": null,
+        "learningDisposition": {
+          "status": "NOT_APPLICABLE",
+          "complete": null
+        },
+        "embeddingCalls": 0,
+        "embeddingInputChars": 0,
+        "embeddingTimeMs": 0,
+        "embeddingTokenUsage": null,
+        "firstRequestMemoryBodies": 0,
+        "naturalSkillToolCalls": 0,
+        "skillBodyRequestExposures": 0,
+        "skillCharsRepeatedAcrossRequests": 0,
+        "actualSkillBodyDeliveries": [],
+        "storedSkillHeads": 0,
+        "modelLedgerSha256": "82be90708ad29b08484bb7c48a70e77435408174f2f62d6167c3049c6e7156e3",
+        "diagnosticsSha256": "a6607104ca0934d896db0e39fa868b113eefb277baaf0c119f6cdf047f99f90c",
+        "answersSha256": "3be5d77b9044577c8bd03137e23c5943349aac23c34ec5771dfff8dd472d72a1"
+      },
+      {
+        "personaId": "17",
+        "arm": "rsi",
+        "correct": 3,
+        "denominator": 4,
+        "nativeCompletedAnswers": 4,
+        "requiredFormatFailures": 0,
+        "usage": {
+          "foreground": {
+            "calls": 6,
+            "knownInputTokens": 216655,
+            "knownOutputTokens": 1038,
+            "knownTotalTokens": 217693,
+            "unknownUsage": 0
+          },
+          "background": {
+            "calls": 64,
+            "knownInputTokens": 370971,
+            "knownOutputTokens": 27471,
+            "knownTotalTokens": 398442,
+            "unknownUsage": 0
+          }
+        },
+        "nativeLearningCostByTaskId": {
+          "l1-extraction": {
+            "calls": 20,
+            "knownInputTokens": 97783,
+            "knownOutputTokens": 13369,
+            "knownTotalTokens": 111152,
+            "unknownUsage": 0
+          },
+          "l1-conflict-detection": {
+            "calls": 13,
+            "knownInputTokens": 43559,
+            "knownOutputTokens": 3823,
+            "knownTotalTokens": 47382,
+            "unknownUsage": 0
+          },
+          "skill-extract": {
+            "calls": 13,
+            "knownInputTokens": 131064,
+            "knownOutputTokens": 268,
+            "knownTotalTokens": 131332,
+            "unknownUsage": 0
+          },
+          "scene-extract": {
+            "calls": 12,
+            "knownInputTokens": 77660,
+            "knownOutputTokens": 7841,
+            "knownTotalTokens": 85501,
+            "unknownUsage": 0
+          },
+          "persona-generation": {
+            "calls": 6,
+            "knownInputTokens": 20905,
+            "knownOutputTokens": 2170,
+            "knownTotalTokens": 23075,
+            "unknownUsage": 0
+          }
+        },
+        "learningSpanSeconds": 1011.403,
+        "learningUtcDays": [
+          "2026-10-06"
+        ],
+        "utcGuard": {
+          "observedAt": 1791302703666,
+          "remainingDayMs": 28496334,
+          "requiredMs": 2460000,
+          "realModelRequests": 0
+        },
+        "learningDisposition": {
+          "policy": "evaluate-closed-native-failure-v2",
+          "status": "COMPLETED",
+          "complete": true,
+          "failedJobs": [],
+          "failedProfiles": []
+        },
+        "embeddingCalls": 268,
+        "embeddingInputChars": 178716,
+        "embeddingTimeMs": 330998,
+        "embeddingTokenUsage": null,
+        "firstRequestMemoryBodies": 64,
+        "naturalSkillToolCalls": 0,
+        "skillBodyRequestExposures": 0,
+        "skillCharsRepeatedAcrossRequests": 0,
+        "actualSkillBodyDeliveries": [],
+        "storedSkillHeads": 0,
+        "modelLedgerSha256": "7b548478bcd6969e7c63b298b189ac221204bec47482ac947058577f513410d8",
+        "diagnosticsSha256": "bb7703df257185b86c02dcb4933339ca9cc159bf79162b7bf1e5daf6dda6f50c",
+        "answersSha256": "4cc92845833bd546a672d347d1474a328ee208f34e80316aa44d98d064c50464"
+      },
+      {
+        "personaId": "19",
+        "arm": "baseline",
+        "correct": 2,
+        "denominator": 4,
+        "nativeCompletedAnswers": 4,
+        "requiredFormatFailures": 0,
+        "usage": {
+          "foreground": {
+            "calls": 4,
+            "knownInputTokens": 104417,
+            "knownOutputTokens": 2947,
+            "knownTotalTokens": 107364,
+            "unknownUsage": 0
+          },
+          "background": {
+            "calls": 0,
+            "knownInputTokens": 0,
+            "knownOutputTokens": 0,
+            "knownTotalTokens": 0,
+            "unknownUsage": 0
+          }
+        },
+        "nativeLearningCostByTaskId": {},
+        "learningSpanSeconds": 0,
+        "learningUtcDays": [],
+        "utcGuard": null,
+        "learningDisposition": {
+          "status": "NOT_APPLICABLE",
+          "complete": null
+        },
+        "embeddingCalls": 0,
+        "embeddingInputChars": 0,
+        "embeddingTimeMs": 0,
+        "embeddingTokenUsage": null,
+        "firstRequestMemoryBodies": 0,
+        "naturalSkillToolCalls": 0,
+        "skillBodyRequestExposures": 0,
+        "skillCharsRepeatedAcrossRequests": 0,
+        "actualSkillBodyDeliveries": [],
+        "storedSkillHeads": 0,
+        "modelLedgerSha256": "a7aa52aeefdcd781219c60fca50cb3fda3377301989dcaa6dd47858d7ed9a856",
+        "diagnosticsSha256": "b3d41aa1ff78a9d928acedd98e236318b84c862916579e2cf40ab463854ecafa",
+        "answersSha256": "4eb8e9b124221c8798aa68a367382d999f260796367cc010bac37934a87c13d6"
+      },
+      {
+        "personaId": "19",
+        "arm": "rsi",
+        "correct": 2,
+        "denominator": 4,
+        "nativeCompletedAnswers": 4,
+        "requiredFormatFailures": 0,
+        "usage": {
+          "foreground": {
+            "calls": 8,
+            "knownInputTokens": 246111,
+            "knownOutputTokens": 265,
+            "knownTotalTokens": 246376,
+            "unknownUsage": 0
+          },
+          "background": {
+            "calls": 76,
+            "knownInputTokens": 467800,
+            "knownOutputTokens": 33575,
+            "knownTotalTokens": 501375,
+            "unknownUsage": 0
+          }
+        },
+        "nativeLearningCostByTaskId": {
+          "l1-extraction": {
+            "calls": 18,
+            "knownInputTokens": 84756,
+            "knownOutputTokens": 13555,
+            "knownTotalTokens": 98311,
+            "unknownUsage": 0
+          },
+          "l1-conflict-detection": {
+            "calls": 16,
+            "knownInputTokens": 49173,
+            "knownOutputTokens": 5750,
+            "knownTotalTokens": 54923,
+            "unknownUsage": 0
+          },
+          "skill-extract": {
+            "calls": 21,
+            "knownInputTokens": 213054,
+            "knownOutputTokens": 2975,
+            "knownTotalTokens": 216029,
+            "unknownUsage": 0
+          },
+          "scene-extract": {
+            "calls": 12,
+            "knownInputTokens": 82275,
+            "knownOutputTokens": 7778,
+            "knownTotalTokens": 90053,
+            "unknownUsage": 0
+          },
+          "persona-generation": {
+            "calls": 9,
+            "knownInputTokens": 38542,
+            "knownOutputTokens": 3517,
+            "knownTotalTokens": 42059,
+            "unknownUsage": 0
+          }
+        },
+        "learningSpanSeconds": 1159.744,
+        "learningUtcDays": [
+          "2026-10-06"
+        ],
+        "utcGuard": {
+          "observedAt": 1791304134540,
+          "remainingDayMs": 27065460,
+          "requiredMs": 2460000,
+          "realModelRequests": 0
+        },
+        "learningDisposition": {
+          "policy": "evaluate-closed-native-failure-v2",
+          "status": "COMPLETED",
+          "complete": true,
+          "failedJobs": [],
+          "failedProfiles": []
+        },
+        "embeddingCalls": 247,
+        "embeddingInputChars": 151328,
+        "embeddingTimeMs": 314708,
+        "embeddingTokenUsage": null,
+        "firstRequestMemoryBodies": 64,
+        "naturalSkillToolCalls": 3,
+        "skillBodyRequestExposures": 3,
+        "skillCharsRepeatedAcrossRequests": 2397,
+        "actualSkillBodyDeliveries": [
+          {
+            "questionId": "0441a1ba-0d67-47a1-a910-00306910a6e3",
+            "requestOrdinal": 78,
+            "name": "rsi-travel-planning-advice",
+            "bodyChars": 799,
+            "bodySha256": "318ddf3e3fb116c7878db86774da89754a342adc2420f9e2feda5b9ee4c4bc11",
+            "toolCallId": "call_669804783487489a909abd52"
+          },
+          {
+            "questionId": "fcfde00b-be10-4c52-922d-85cf7ae9f556",
+            "requestOrdinal": 82,
+            "name": "rsi-travel-planning-advice",
+            "bodyChars": 799,
+            "bodySha256": "318ddf3e3fb116c7878db86774da89754a342adc2420f9e2feda5b9ee4c4bc11",
+            "toolCallId": "call_88fc22281f26419d880fbc70"
+          },
+          {
+            "questionId": "28200b70-034f-4c0c-bde7-21754136740d",
+            "requestOrdinal": 84,
+            "name": "rsi-travel-planning-advice",
+            "bodyChars": 799,
+            "bodySha256": "318ddf3e3fb116c7878db86774da89754a342adc2420f9e2feda5b9ee4c4bc11",
+            "toolCallId": "call_1266b4506b20448d8945a5ab"
+          }
+        ],
+        "storedSkillHeads": 1,
+        "modelLedgerSha256": "62d40b6603b22016ab109200ea13b5e410efb4eae3ba8266dfe3b1b24e854851",
+        "diagnosticsSha256": "1bd9dcb2968928e607793e9683b3d526776e103339f71343ad5c1456d5fe1c45",
+        "answersSha256": "cd503fd6a7adfe430b8d609eaf1b14808133863fd5058008a526de311dcb65d6"
+      },
+      {
+        "personaId": "15",
+        "arm": "baseline",
+        "correct": 2,
+        "denominator": 4,
+        "nativeCompletedAnswers": 4,
+        "requiredFormatFailures": 0,
+        "usage": {
+          "foreground": {
+            "calls": 4,
+            "knownInputTokens": 93746,
+            "knownOutputTokens": 4565,
+            "knownTotalTokens": 98311,
+            "unknownUsage": 0
+          },
+          "background": {
+            "calls": 0,
+            "knownInputTokens": 0,
+            "knownOutputTokens": 0,
+            "knownTotalTokens": 0,
+            "unknownUsage": 0
+          }
+        },
+        "nativeLearningCostByTaskId": {},
+        "learningSpanSeconds": 0,
+        "learningUtcDays": [],
+        "utcGuard": null,
+        "learningDisposition": {
+          "status": "NOT_APPLICABLE",
+          "complete": null
+        },
+        "embeddingCalls": 0,
+        "embeddingInputChars": 0,
+        "embeddingTimeMs": 0,
+        "embeddingTokenUsage": null,
+        "firstRequestMemoryBodies": 0,
+        "naturalSkillToolCalls": 0,
+        "skillBodyRequestExposures": 0,
+        "skillCharsRepeatedAcrossRequests": 0,
+        "actualSkillBodyDeliveries": [],
+        "storedSkillHeads": 0,
+        "modelLedgerSha256": "41209aa1196bcb59e03d60b9516561fea8c3787bd547ffd4b1d91f2b5f411f79",
+        "diagnosticsSha256": "ed75e6ba861be1ca31b743708d24e8adc94bf4af3de2239ae0e27c12d73a1c58",
+        "answersSha256": "d2e2092773e9aaa984794c36753650049bfa385cc3e415e5730258e42414d24c"
+      },
+      {
+        "personaId": "15",
+        "arm": "rsi",
+        "correct": 2,
+        "denominator": 4,
+        "nativeCompletedAnswers": 4,
+        "requiredFormatFailures": 0,
+        "usage": {
+          "foreground": {
+            "calls": 7,
+            "knownInputTokens": 197323,
+            "knownOutputTokens": 1084,
+            "knownTotalTokens": 198407,
+            "unknownUsage": 0
+          },
+          "background": {
+            "calls": 67,
+            "knownInputTokens": 463503,
+            "knownOutputTokens": 34453,
+            "knownTotalTokens": 497956,
+            "unknownUsage": 0
+          }
+        },
+        "nativeLearningCostByTaskId": {
+          "l1-extraction": {
+            "calls": 16,
+            "knownInputTokens": 76460,
+            "knownOutputTokens": 12758,
+            "knownTotalTokens": 89218,
+            "unknownUsage": 0
+          },
+          "l1-conflict-detection": {
+            "calls": 12,
+            "knownInputTokens": 45149,
+            "knownOutputTokens": 6891,
+            "knownTotalTokens": 52040,
+            "unknownUsage": 0
+          },
+          "skill-extract": {
+            "calls": 22,
+            "knownInputTokens": 241321,
+            "knownOutputTokens": 4823,
+            "knownTotalTokens": 246144,
+            "unknownUsage": 0
+          },
+          "scene-extract": {
+            "calls": 12,
+            "knownInputTokens": 80813,
+            "knownOutputTokens": 7655,
+            "knownTotalTokens": 88468,
+            "unknownUsage": 0
+          },
+          "persona-generation": {
+            "calls": 5,
+            "knownInputTokens": 19760,
+            "knownOutputTokens": 2326,
+            "knownTotalTokens": 22086,
+            "unknownUsage": 0
+          }
+        },
+        "learningSpanSeconds": 1112.66,
+        "learningUtcDays": [
+          "2026-10-06"
+        ],
+        "utcGuard": {
+          "observedAt": 1791305473361,
+          "remainingDayMs": 25726639,
+          "requiredMs": 2460000,
+          "realModelRequests": 0
+        },
+        "learningDisposition": {
+          "policy": "evaluate-closed-native-failure-v2",
+          "status": "COMPLETED",
+          "complete": true,
+          "failedJobs": [],
+          "failedProfiles": []
+        },
+        "embeddingCalls": 235,
+        "embeddingInputChars": 134478,
+        "embeddingTimeMs": 284859,
+        "embeddingTokenUsage": null,
+        "firstRequestMemoryBodies": 64,
+        "naturalSkillToolCalls": 2,
+        "skillBodyRequestExposures": 2,
+        "skillCharsRepeatedAcrossRequests": 1786,
+        "actualSkillBodyDeliveries": [
+          {
+            "questionId": "d0b826d3-9805-416c-a8a8-343ffe1c9098",
+            "requestOrdinal": 72,
+            "name": "rsi-personal-finance-learning-profile",
+            "bodyChars": 1135,
+            "bodySha256": "6387ebc4ccdb787b537558d039dc669dfbfa243f182b85b6049bde0b8e77a3f4",
+            "toolCallId": "call_52c068b8b95845d99ae77ec7"
+          },
+          {
+            "questionId": "29c557de-15e3-43c5-b416-de5d4f1845e5",
+            "requestOrdinal": 74,
+            "name": "rsi-personal-hobby-preference-profile",
+            "bodyChars": 651,
+            "bodySha256": "cb9c72e6952c92e8ca87c21f0d7c9adca913d8c831c3bbf2ca9afd8b4567d319",
+            "toolCallId": "call_f5c024f7e34d4785981984b6"
+          }
+        ],
+        "storedSkillHeads": 2,
+        "modelLedgerSha256": "dfdf3f581cb0e2e4d2371c488085d1f0eca27817750b50d5d39fafe16a92e124",
+        "diagnosticsSha256": "92451679caca53b4996e1da647be44ada9e1ea29563a7c74d96fa455f90f3d41",
+        "answersSha256": "071b7bedb80066095434a9f76bfbe92f753f9bc2d684dd069d5ba2d36197b026"
+      }
+    ],
+    "fixedSample": {
+      "planned": 64,
+      "observed": 64,
+      "counts": {
+        "partial": 44,
+        "direct": 14,
+        "unrelated": 6
+      },
+      "samples": [
+        {
+          "personaId": "9",
+          "questionId": "a719edb3-a43f-4792-b820-fb45293c4e19",
+          "ordinal": 1,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791296405478_c89cbc97",
+          "version": 0,
+          "contentSha256": "16eb4c93c876a9100149ba220f248635542b505ed5591dfde44d6c404e07f5db",
+          "bodyChars": 80,
+          "relevance": "partial",
+          "reason": "翻拍社区讨论提供电影兴趣背景，但不能区分博客问题中行业新闻的偏好。",
+          "sourceHistoryIndices": [
+            100
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": []
+        },
+        {
+          "personaId": "9",
+          "questionId": "a719edb3-a43f-4792-b820-fb45293c4e19",
+          "ordinal": 2,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791295793621_3e495024",
+          "version": 0,
+          "contentSha256": "bed0b396d8a2289cb24aa304de7ff5e1a38daa0e95545ec87cef673f6519ba19",
+          "bodyChars": 75,
+          "relevance": "partial",
+          "reason": "写独立电影影评属于电影写作背景，不直接说明是否喜欢行业新闻。",
+          "sourceHistoryIndices": [
+            7
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": []
+        },
+        {
+          "personaId": "9",
+          "questionId": "a719edb3-a43f-4792-b820-fb45293c4e19",
+          "ordinal": 3,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791296405478_104b4d6c",
+          "version": 7,
+          "contentSha256": "4fa73739824ec43384c22b05908656aabf3fcb2468cc6ea2eb0860126c61e981",
+          "bodyChars": 117,
+          "relevance": "partial",
+          "reason": "邪典电影播客属于电影兴趣背景，与行业新闻偏好的判断只有间接关系。",
+          "sourceHistoryIndices": [
+            102
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": [
+            "最新原生 source_message_ids 指向102；启动播客及成功剧集分别另见50/58，不能把102当全部合并事实的来源。"
+          ]
+        },
+        {
+          "personaId": "9",
+          "questionId": "a719edb3-a43f-4792-b820-fb45293c4e19",
+          "ordinal": 4,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791296435252_1e9d038d",
+          "version": 9,
+          "contentSha256": "c71eef8c62caa2df7f3c0861d53b2d042ddcd5c2092c48a3dca431c10c2cc3c6",
+          "bodyChars": 114,
+          "relevance": "partial",
+          "reason": "本地放映和问答提供电影社区兴趣背景，不直接支持行业新闻偏好。",
+          "sourceHistoryIndices": [
+            108
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": [
+            "合并头包含更早的放映、电影节和专家讨论；原生最新来源108不能单独支撑全部内容，108还是用户作为创作者分享作品。"
+          ]
+        },
+        {
+          "personaId": "9",
+          "questionId": "b502d7dc-2345-41a3-8a22-0fb9ff719c9e",
+          "ordinal": 1,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791296435252_1e9d038d",
+          "version": 9,
+          "contentSha256": "c71eef8c62caa2df7f3c0861d53b2d042ddcd5c2092c48a3dca431c10c2cc3c6",
+          "bodyChars": 114,
+          "relevance": "partial",
+          "reason": "本地放映问答说明社区参与背景，未提供退出线上论坛的原因。",
+          "sourceHistoryIndices": [
+            108
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": [
+            "合并头包含更早的放映、电影节和专家讨论；原生最新来源108不能单独支撑全部内容，108还是用户作为创作者分享作品。"
+          ]
+        },
+        {
+          "personaId": "9",
+          "questionId": "b502d7dc-2345-41a3-8a22-0fb9ff719c9e",
+          "ordinal": 2,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791295793621_3e495024",
+          "version": 0,
+          "contentSha256": "bed0b396d8a2289cb24aa304de7ff5e1a38daa0e95545ec87cef673f6519ba19",
+          "bodyChars": 75,
+          "relevance": "partial",
+          "reason": "独立电影评论与论坛互动没有直接关系，只是共同的电影兴趣背景。",
+          "sourceHistoryIndices": [
+            7
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": []
+        },
+        {
+          "personaId": "9",
+          "questionId": "b502d7dc-2345-41a3-8a22-0fb9ff719c9e",
+          "ordinal": 3,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791296348015_de218bb0",
+          "version": 0,
+          "contentSha256": "1d5ace8b81f9735234bd5088c18d87052fef92d5fe64f0ff2fb9d1178649685c",
+          "bodyChars": 106,
+          "relevance": "partial",
+          "reason": "短片放映获好评提供正向社群活动背景，不直接说明退出旧论坛的原因。",
+          "sourceHistoryIndices": [
+            94
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": []
+        },
+        {
+          "personaId": "9",
+          "questionId": "b502d7dc-2345-41a3-8a22-0fb9ff719c9e",
+          "ordinal": 4,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791296348015_f0fe68b6",
+          "version": 0,
+          "contentSha256": "7cb87340183ce73094fde0d8af67f40f33b72ce2109972b82d42b53069880e8a",
+          "bodyChars": 72,
+          "relevance": "direct",
+          "reason": "明确指出有毒互动、人身攻击和心理健康，与重返论坛问题的关键依据直接对应。",
+          "sourceHistoryIndices": [
+            90
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": []
+        },
+        {
+          "personaId": "4",
+          "questionId": "8c6f3412-d822-4131-9a51-184e6da3f476",
+          "ordinal": 1,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791297485930_c878e0b8",
+          "version": 12,
+          "contentSha256": "e2ebafa8dda5fe1e57af84b0467dd9b7f2e2eaf666f659c3194f89f078167473",
+          "bodyChars": 228,
+          "relevance": "direct",
+          "reason": "播客产出压力导致暂停的历史直接对应选项d的压力类比；当前记忆还记录了后来的改版恢复。",
+          "sourceHistoryIndices": [
+            87
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": [
+            "最新来源87对应改版新播客；公开创作起点21、创业者系列54、压力暂停71另有历史，不能把87当整个合并头的全部来源。"
+          ]
+        },
+        {
+          "personaId": "4",
+          "questionId": "8c6f3412-d822-4131-9a51-184e6da3f476",
+          "ordinal": 2,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791297681035_2d0d7fe5",
+          "version": 16,
+          "contentSha256": "8ab468ab52a70f7b967ed02c1d0ada635546668db1740c4e7067be44c23f88b0",
+          "bodyChars": 167,
+          "relevance": "partial",
+          "reason": "精细预算压力与放松的经历可提供减负背景，但未直接涉及健身或膳食。",
+          "sourceHistoryIndices": [
+            106
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": [
+            "最新来源106是放弃细致追踪；实时预算37和放宽趋势62是更早阶段，需保留阶段区分。"
+          ]
+        },
+        {
+          "personaId": "4",
+          "questionId": "8c6f3412-d822-4131-9a51-184e6da3f476",
+          "ordinal": 3,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791297609838_25a959ef",
+          "version": 0,
+          "contentSha256": "b8bf487141eb7353c05a5f4402ff28a7998fa2860e56ccbdcb4ac15335729a4f",
+          "bodyChars": 91,
+          "relevance": "partial",
+          "reason": "经济简报的受众压力与倦怠说明工作压力模式，对健身膳食是间接类比。",
+          "sourceHistoryIndices": [
+            94,
+            98
+          ],
+          "sourceRoles": [
+            "user",
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": []
+        },
+        {
+          "personaId": "4",
+          "questionId": "8c6f3412-d822-4131-9a51-184e6da3f476",
+          "ordinal": 4,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791297195889_661034b0",
+          "version": 2,
+          "contentSha256": "ee574785fb84a036577bacd6f51cd7bb1e98c2cf80f901d59251948fa07ed54e",
+          "bodyChars": 121,
+          "relevance": "partial",
+          "reason": "房地产分析的复杂性和决策疲劳只能提供压力背景，未直接涉及健身膳食。",
+          "sourceHistoryIndices": [
+            52
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": []
+        },
+        {
+          "personaId": "4",
+          "questionId": "bd39c6a3-3ebb-4f12-a9b5-f690ebdf5bca",
+          "ordinal": 1,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791297681035_2d0d7fe5",
+          "version": 16,
+          "contentSha256": "8ab468ab52a70f7b967ed02c1d0ada635546668db1740c4e7067be44c23f88b0",
+          "bodyChars": 167,
+          "relevance": "partial",
+          "reason": "财务追踪态度变化属于财务主题背景，没有信息图制作喜好。",
+          "sourceHistoryIndices": [
+            106
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": [
+            "最新来源106是放弃细致追踪；实时预算37和放宽趋势62是更早阶段，需保留阶段区分。"
+          ]
+        },
+        {
+          "personaId": "4",
+          "questionId": "bd39c6a3-3ebb-4f12-a9b5-f690ebdf5bca",
+          "ordinal": 2,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791297681035_23cb67e6",
+          "version": 18,
+          "contentSha256": "c6179b2e45e47e43f642d9cfaa54dde6563530e8f728573575772c8fca619afd",
+          "bodyChars": 135,
+          "relevance": "partial",
+          "reason": "财务素养与青年教育说明任务主题背景，未说明喜不喜欢制作信息图。",
+          "sourceHistoryIndices": [
+            110
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": []
+        },
+        {
+          "personaId": "4",
+          "questionId": "bd39c6a3-3ebb-4f12-a9b5-f690ebdf5bca",
+          "ordinal": 3,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791297485930_c878e0b8",
+          "version": 12,
+          "contentSha256": "e2ebafa8dda5fe1e57af84b0467dd9b7f2e2eaf666f659c3194f89f078167473",
+          "bodyChars": 228,
+          "relevance": "partial",
+          "reason": "财经播客是另一个内容形式，不能替代信息图偏好的判断。",
+          "sourceHistoryIndices": [
+            87
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": [
+            "最新来源87对应改版新播客；公开创作起点21、创业者系列54、压力暂停71另有历史，不能把87当整个合并头的全部来源。"
+          ]
+        },
+        {
+          "personaId": "4",
+          "questionId": "bd39c6a3-3ebb-4f12-a9b5-f690ebdf5bca",
+          "ordinal": 4,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791297609838_9464cc18",
+          "version": 14,
+          "contentSha256": "f75cb8f3a856b3c5f487952b17c80facd37891311dfca4b24c06d42da4764799",
+          "bodyChars": 169,
+          "relevance": "partial",
+          "reason": "退休配置与研究同属财务领域，但未提供信息图制作偏好。",
+          "sourceHistoryIndices": [
+            102
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": [
+            "最新来源102是多元化退休计划；税收研究25与较早研讨会77另有来源，不能单独据102确认全部账户/税收细节。"
+          ]
+        },
+        {
+          "personaId": "12",
+          "questionId": "194ce23e-d6d7-46f9-99b0-a0eba223a0ee",
+          "ordinal": 1,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791298704958_02bbbf6c",
+          "version": 7,
+          "contentSha256": "b0696e432fd837db6088ae1ef169c12e77eda3aa6f87ecbf58ee286b5c08456f",
+          "bodyChars": 81,
+          "relevance": "partial",
+          "reason": "社区立法焦点小组说明对话和参与式活动的背景，但未直接说明冲突解决学习方式。",
+          "sourceHistoryIndices": [
+            79
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": [
+            "合并头还有早期背景事实，最新原生来源不等于所有合并事实的完整来源。"
+          ]
+        },
+        {
+          "personaId": "12",
+          "questionId": "194ce23e-d6d7-46f9-99b0-a0eba223a0ee",
+          "ordinal": 2,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791298855868_dea36254",
+          "version": 0,
+          "contentSha256": "264f2e9255ad4c27518de97119526af7c04f0ac4a3c3cedb50a662d400d5b68f",
+          "bodyChars": 69,
+          "relevance": "direct",
+          "reason": "实际调解中通过沟通化解冲突，与体验式冲突解决任务直接相关。",
+          "sourceHistoryIndices": [
+            106
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": []
+        },
+        {
+          "personaId": "12",
+          "questionId": "194ce23e-d6d7-46f9-99b0-a0eba223a0ee",
+          "ordinal": 3,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791298471547_ec2737f3",
+          "version": 5,
+          "contentSha256": "596399280842e703b294d5b9bdff3c4e522cc1d05d8f0b4f6256b1de9e53f412",
+          "bodyChars": 126,
+          "relevance": "direct",
+          "reason": "ADR课程的具体技巧、心理机制及现实应用的趣味性直接支持任务主题与学习偏好。",
+          "sourceHistoryIndices": [
+            52,
+            53
+          ],
+          "sourceRoles": [
+            "user",
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": [
+            "旧ADR不感兴趣在29，后来52/53明确喜欢；该条保留了过去与本次差别，但最新原生来源仅52/53。"
+          ]
+        },
+        {
+          "personaId": "12",
+          "questionId": "194ce23e-d6d7-46f9-99b0-a0eba223a0ee",
+          "ordinal": 4,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791298795558_36aefa27",
+          "version": 0,
+          "contentSha256": "caeb4fa31dcf6340a5fcfbc757316440fcb4ac49faa09a70614ad5923e9daef4",
+          "bodyChars": 64,
+          "relevance": "partial",
+          "reason": "法律辩论比赛提供互动学习背景，但不直接选择某种冲突解决学习方法。",
+          "sourceHistoryIndices": [
+            94,
+            96
+          ],
+          "sourceRoles": [
+            "user",
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": []
+        },
+        {
+          "personaId": "12",
+          "questionId": "a64ba818-abee-404e-9a38-f440b74bcca7",
+          "ordinal": 1,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791298471547_12c9d175",
+          "version": 3,
+          "contentSha256": "a9c2aade7f34ccb06f1d894635d2866d4b5bfa077865b464689087482cbdc455",
+          "bodyChars": 131,
+          "relevance": "partial",
+          "reason": "法律素养研讨会属于法律学习背景，不能替代特定桌游体验。",
+          "sourceHistoryIndices": [
+            44
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": [
+            "25是不喜欢同类研讨会，44明确说本次engaging/impactful；该头仅概括负面一般经验，最新来源44却为正面，未保留此次例外。"
+          ]
+        },
+        {
+          "personaId": "12",
+          "questionId": "a64ba818-abee-404e-9a38-f440b74bcca7",
+          "ordinal": 2,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791298318336_3de14075",
+          "version": 0,
+          "contentSha256": "8527bfca8924a9a86f2050547cb0192fb227ffdfa7d1201b29f3d616097c0efc",
+          "bodyChars": 69,
+          "relevance": "direct",
+          "reason": "原话27明确桌游之夜不够吸引、偏重机制且偏离法律复杂性，直接对应问题；但另一次62的体验是正向。",
+          "sourceHistoryIndices": [
+            27
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": [
+            "原27是负面桌游体验，62另一次不同法律桌游是正面；题目that night未明确区分这两场，选项b/d文字重复；官方评分保持。"
+          ]
+        },
+        {
+          "personaId": "12",
+          "questionId": "a64ba818-abee-404e-9a38-f440b74bcca7",
+          "ordinal": 3,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791298795558_36aefa27",
+          "version": 0,
+          "contentSha256": "caeb4fa31dcf6340a5fcfbc757316440fcb4ac49faa09a70614ad5923e9daef4",
+          "bodyChars": 64,
+          "relevance": "partial",
+          "reason": "法律辩论热情属于背景，不能直接证明法律桌游的喜好。",
+          "sourceHistoryIndices": [
+            94,
+            96
+          ],
+          "sourceRoles": [
+            "user",
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": []
+        },
+        {
+          "personaId": "12",
+          "questionId": "a64ba818-abee-404e-9a38-f440b74bcca7",
+          "ordinal": 4,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791298855868_a426ff7f",
+          "version": 11,
+          "contentSha256": "e6bc7726d1a42edddd7abc150cbfc268b8fdbc43cf336e63afb9f098f330dbb4",
+          "bodyChars": 151,
+          "relevance": "partial",
+          "reason": "法律技术研讨会说明职业兴趣背景，不直接涉及桌游体验。",
+          "sourceHistoryIndices": [
+            110
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": [
+            "合并头还有早期背景事实，最新原生来源不等于所有合并事实的完整来源。"
+          ]
+        },
+        {
+          "personaId": "14",
+          "questionId": "a30c10c5-145a-49b0-b3d5-1479bf3c6797",
+          "ordinal": 1,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791300183726_2c56b530",
+          "version": 3,
+          "contentSha256": "d76bae28d9527b0c1bde2432132fa1e51d9adbe7f0f3b28084e7b14c1df6458c",
+          "bodyChars": 226,
+          "relevance": "partial",
+          "reason": "多种音乐活动带来热情与感知变化，属于创意表达的背景，但未直接确定一种创作方法。",
+          "sourceHistoryIndices": [
+            85
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": [
+            "原生合并头的最新来源仅覆盖部分事件；需要旧版本和原始历史共同核对完整来源，不把单条来源当全部事实依据。"
+          ]
+        },
+        {
+          "personaId": "14",
+          "questionId": "a30c10c5-145a-49b0-b3d5-1479bf3c6797",
+          "ordinal": 2,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791300273636_21fc7984",
+          "version": 6,
+          "contentSha256": "e1e9f72d49303c6f270503b0c8fedfba641bfd44e7f4e171c846d0ef51844423",
+          "bodyChars": 97,
+          "relevance": "direct",
+          "reason": "现场音乐舞蹈和团队艺术体验直接涉及通过音乐自我表达，可影响新表达方式的建议。",
+          "sourceHistoryIndices": [
+            95
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": [
+            "原生合并头的最新来源仅覆盖部分事件；需要旧版本和原始历史共同核对完整来源，不把单条来源当全部事实依据。"
+          ]
+        },
+        {
+          "personaId": "14",
+          "questionId": "a30c10c5-145a-49b0-b3d5-1479bf3c6797",
+          "ordinal": 3,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791299730960_421d33f9",
+          "version": 0,
+          "contentSha256": "0ab2fe852e48191bbe59c02ca74d66e225f616a6e46f2b43ada9da32ef4f7d47",
+          "bodyChars": 59,
+          "relevance": "partial",
+          "reason": "歌词讨论是音乐理解背景，未直接指明创作表达方法。",
+          "sourceHistoryIndices": [
+            9
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": []
+        },
+        {
+          "personaId": "14",
+          "questionId": "a30c10c5-145a-49b0-b3d5-1479bf3c6797",
+          "ordinal": 4,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791300098986_03888731",
+          "version": 0,
+          "contentSha256": "530dd2b8e15a8dbb3de715236667020cef3f36a7f8a96d5fe1f2e1f1a9368c96",
+          "bodyChars": 57,
+          "relevance": "direct",
+          "reason": "合作压力转向个人创作直接影响是否建议新的合作项目。",
+          "sourceHistoryIndices": [
+            67
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": []
+        },
+        {
+          "personaId": "14",
+          "questionId": "e86a1aad-0117-4021-9c68-f923f4111d5f",
+          "ordinal": 1,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791300273636_f1cad479",
+          "version": 5,
+          "contentSha256": "1f6559c40708ed78609ae9b93dac9d40b03872c0c0ddd538bb77317420a13ac5",
+          "bodyChars": 87,
+          "relevance": "direct",
+          "reason": "写乐评因严厉批评产生压力、改为享受音乐，直接支持再次写评论问题的情绪和原因。",
+          "sourceHistoryIndices": [
+            93
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": [
+            "原生合并头的最新来源仅覆盖部分事件；需要旧版本和原始历史共同核对完整来源，不把单条来源当全部事实依据。"
+          ]
+        },
+        {
+          "personaId": "14",
+          "questionId": "e86a1aad-0117-4021-9c68-f923f4111d5f",
+          "ordinal": 2,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791300098986_097b0832",
+          "version": 0,
+          "contentSha256": "cf21e55aa66e7b53770077032645e8b500552b92146a2937d9067fe7cd2ce597",
+          "bodyChars": 42,
+          "relevance": "partial",
+          "reason": "音乐节的感官压力是心理负担背景，不是写乐评遭受反馈的具体原因。",
+          "sourceHistoryIndices": [
+            71
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": []
+        },
+        {
+          "personaId": "14",
+          "questionId": "e86a1aad-0117-4021-9c68-f923f4111d5f",
+          "ordinal": 3,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791299911295_537e72bf",
+          "version": 1,
+          "contentSha256": "a356b0704e7b67f71762f55b73c86ba3284de9ef58ede379fcee741169f1c1de",
+          "bodyChars": 116,
+          "relevance": "partial",
+          "reason": "商业化音乐播客导致退出提供真实性和自主探索背景，未直接涉及负面评论反馈。",
+          "sourceHistoryIndices": [
+            45
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": [
+            "原生合并头的最新来源仅覆盖部分事件；需要旧版本和原始历史共同核对完整来源，不把单条来源当全部事实依据。"
+          ]
+        },
+        {
+          "personaId": "14",
+          "questionId": "e86a1aad-0117-4021-9c68-f923f4111d5f",
+          "ordinal": 4,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791300098986_03888731",
+          "version": 0,
+          "contentSha256": "530dd2b8e15a8dbb3de715236667020cef3f36a7f8a96d5fe1f2e1f1a9368c96",
+          "bodyChars": 57,
+          "relevance": "partial",
+          "reason": "合作项目的截止压力提供自主创作背景，不直接涉及写评论受到批评。",
+          "sourceHistoryIndices": [
+            67
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": []
+        },
+        {
+          "personaId": "3",
+          "questionId": "9c209ff7-a6a8-48d8-ab38-e0b8aa2aaef7",
+          "ordinal": 1,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791301371282_5e6e1e7a",
+          "version": 0,
+          "contentSha256": "0d9f2cfb8ff1a3db16c106474f752291d156148997a666aa6edfddcc4a0a692f",
+          "bodyChars": 29,
+          "relevance": "partial",
+          "reason": "原生短条只记录课程参加和交友，没有保留原话明确的fun/love；与题目直接同场景，但只部分支持喜欢与不喜欢的区分。",
+          "sourceHistoryIndices": [
+            3
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": [
+            "原3明确说课程fun、love cooking；L1正文只29字，态度压缩发生在原生提炼，不是宿主截断正文。"
+          ]
+        },
+        {
+          "personaId": "3",
+          "questionId": "9c209ff7-a6a8-48d8-ab38-e0b8aa2aaef7",
+          "ordinal": 2,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791302366538_a5babbb6",
+          "version": 18,
+          "contentSha256": "ce954bf813c90eea8f9ce857162438ea7f643d833ffaf43e10444702427fb324",
+          "bodyChars": 156,
+          "relevance": "partial",
+          "reason": "家庭聚餐是烹饪社交背景，不直接说明烹饪课程的喜好。",
+          "sourceHistoryIndices": [
+            158
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": [
+            "合并头含多个较早事件，最新来源不是全部合并事实的完整依据。"
+          ]
+        },
+        {
+          "personaId": "3",
+          "questionId": "9c209ff7-a6a8-48d8-ab38-e0b8aa2aaef7",
+          "ordinal": 3,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791302259904_5569ed43",
+          "version": 16,
+          "contentSha256": "8f7ea8b0ad03fdf6ff9f78bba5a4ba6e57dbc367446ddd89df39dbc180ec15c9",
+          "bodyChars": 146,
+          "relevance": "partial",
+          "reason": "美食短途旅行说明美食兴趣背景，不直接说明课程体验。",
+          "sourceHistoryIndices": [
+            146
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": [
+            "最新来源146为旅行计划，后来152又说weekend getaways太疲惫；头的当前计划不能单独代表最后状态。首题第3/4条同源146出现重叠。"
+          ]
+        },
+        {
+          "personaId": "3",
+          "questionId": "9c209ff7-a6a8-48d8-ab38-e0b8aa2aaef7",
+          "ordinal": 4,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791302327597_12b5b8d5",
+          "version": 0,
+          "contentSha256": "9867260c7b736459e5554fac4b20bdb0c28917c4947e8db4383b7d39d6da9504",
+          "bodyChars": 70,
+          "relevance": "partial",
+          "reason": "另一条同146来源的美食旅行计划，仍只是兴趣背景。",
+          "sourceHistoryIndices": [
+            146
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": [
+            "最新来源146为旅行计划，后来152又说weekend getaways太疲惫；头的当前计划不能单独代表最后状态。首题第3/4条同源146出现重叠。"
+          ]
+        },
+        {
+          "personaId": "3",
+          "questionId": "945fb104-45bd-457f-a9a8-19620159e47d",
+          "ordinal": 1,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791301884712_6b19b93c",
+          "version": 0,
+          "contentSha256": "b803343f022198361565be43c781e89a141470cb170508460c58ff6991a7f148",
+          "bodyChars": 21,
+          "relevance": "partial",
+          "reason": "自然之旅说明周末放松背景，未直接涉及结识人或创意活动。",
+          "sourceHistoryIndices": [
+            81
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": []
+        },
+        {
+          "personaId": "3",
+          "questionId": "945fb104-45bd-457f-a9a8-19620159e47d",
+          "ordinal": 2,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791301371282_5e6e1e7a",
+          "version": 0,
+          "contentSha256": "0d9f2cfb8ff1a3db16c106474f752291d156148997a666aa6edfddcc4a0a692f",
+          "bodyChars": 29,
+          "relevance": "direct",
+          "reason": "烹饪课程与交友直接支持候选烹饪社交活动。",
+          "sourceHistoryIndices": [
+            3
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": [
+            "原3明确说课程fun、love cooking；L1正文只29字，态度压缩发生在原生提炼，不是宿主截断正文。"
+          ]
+        },
+        {
+          "personaId": "3",
+          "questionId": "945fb104-45bd-457f-a9a8-19620159e47d",
+          "ordinal": 3,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791301884712_6ef72e85",
+          "version": 0,
+          "contentSha256": "e8bd6f0acab84127ff8ca72fc72fb2b497f7b5e9a9af1a9c9ceb0113184069c3",
+          "bodyChars": 17,
+          "relevance": "direct",
+          "reason": "与朋友远足是具体的社交户外经历，可影响候选徒步活动判断。",
+          "sourceHistoryIndices": [
+            87
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": []
+        },
+        {
+          "personaId": "3",
+          "questionId": "945fb104-45bd-457f-a9a8-19620159e47d",
+          "ordinal": 4,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791302259904_5569ed43",
+          "version": 16,
+          "contentSha256": "8f7ea8b0ad03fdf6ff9f78bba5a4ba6e57dbc367446ddd89df39dbc180ec15c9",
+          "bodyChars": 146,
+          "relevance": "direct",
+          "reason": "美食主题短途计划是具体活动偏好，可影响候选美食Retreat，但152又出现旅行疲惫，需要阶段区分。",
+          "sourceHistoryIndices": [
+            146
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": [
+            "最新来源146为旅行计划，后来152又说weekend getaways太疲惫；头的当前计划不能单独代表最后状态。首题第3/4条同源146出现重叠。"
+          ]
+        },
+        {
+          "personaId": "17",
+          "questionId": "5e856191-b76f-47ec-b5a4-f04893d8a313",
+          "ordinal": 1,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791303212893_ad2aa63f",
+          "version": 0,
+          "contentSha256": "f21f31a56d083beca8c8f4ca3ee047329f6b24917aeda5b6115010b034b98078",
+          "bodyChars": 30,
+          "relevance": "partial",
+          "reason": "电影主题Cosplay是粉丝活动背景，但正文省略原104不喜欢、人群噪声和孤立感，不能据参加推断适合幻想文学大会。",
+          "sourceHistoryIndices": [
+            104
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": [
+            "原104明确not really enjoying，头仅30字参加记录，态度缺失来自原生提炼，不是宿主正文裁剪。"
+          ]
+        },
+        {
+          "personaId": "17",
+          "questionId": "5e856191-b76f-47ec-b5a4-f04893d8a313",
+          "ordinal": 2,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791303380583_6301d863",
+          "version": 4,
+          "contentSha256": "3e3c8976e9383dadfb8409aac35583cff33575a5c09ddedf3014f852d816709c",
+          "bodyChars": 116,
+          "relevance": "partial",
+          "reason": "恢复文学活动组织与社群连接有关，但不是具体幻想文学或四个候选活动的直接经历。",
+          "sourceHistoryIndices": [
+            144
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": [
+            "合并头需结合历史版本确认早期事实；当前source_message_ids只指最新事件，不是全部合并事实的完整出处。"
+          ]
+        },
+        {
+          "personaId": "17",
+          "questionId": "5e856191-b76f-47ec-b5a4-f04893d8a313",
+          "ordinal": 3,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791303559757_52fee651",
+          "version": 0,
+          "contentSha256": "0f37aefc104c194c03922f92ac4b91a19896f9b40a9ae83cb4cdd6cb88d08923",
+          "bodyChars": 58,
+          "relevance": "partial",
+          "reason": "电影社交媒体群是线上粉丝互动类比，不是幻想文学社区的具体经历。",
+          "sourceHistoryIndices": [
+            173
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": []
+        },
+        {
+          "personaId": "17",
+          "questionId": "5e856191-b76f-47ec-b5a4-f04893d8a313",
+          "ordinal": 4,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791302853475_e73b86b8",
+          "version": 0,
+          "contentSha256": "c0c0ab58435d1a9bccd3a65203da1e88ac8f5fae7533e6fe289776a30b390cc4",
+          "bodyChars": 59,
+          "relevance": "partial",
+          "reason": "文学活动提案提供线下文学社群背景，不直接区分四个候选活动。",
+          "sourceHistoryIndices": [
+            37,
+            39
+          ],
+          "sourceRoles": [
+            "user",
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": []
+        },
+        {
+          "personaId": "17",
+          "questionId": "59eb073a-174e-4115-aa22-b40eb447b1a2",
+          "ordinal": 1,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791303380583_f88c564b",
+          "version": 3,
+          "contentSha256": "128d28e121153324acb09c8959226b1c5f2b14977ba45c8595cded0e0abe72fa",
+          "bodyChars": 130,
+          "relevance": "partial",
+          "reason": "阅读写作指南的结构约束可作为自由创作的类比；不是绘画课经历，且原题与阅读选项错配，不能把选项相关性当绘画建议证据。",
+          "sourceHistoryIndices": [
+            142
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": [
+            "合并头需结合历史版本确认早期事实；当前source_message_ids只指最新事件，不是全部合并事实的完整出处。",
+            "相关性相对于实际绘画问题只属于类比；阅读选项本身造成任务质量歧义，标签不能解释成检索算法的纯错误。"
+          ]
+        },
+        {
+          "personaId": "17",
+          "questionId": "59eb073a-174e-4115-aa22-b40eb447b1a2",
+          "ordinal": 2,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791303380583_b3ccad85",
+          "version": 2,
+          "contentSha256": "d9338e08aa1693e838725bd62b60c4b96b326fca1990ba7c39a791594d1ca48d",
+          "bodyChars": 130,
+          "relevance": "partial",
+          "reason": "退出限时阅读说明低压力节奏偏好，绘画仅为跨场景类比；题目和选项错配。",
+          "sourceHistoryIndices": [
+            139
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": [
+            "合并头需结合历史版本确认早期事实；当前source_message_ids只指最新事件，不是全部合并事实的完整出处。",
+            "相关性相对于实际绘画问题只属于类比；阅读选项本身造成任务质量歧义，标签不能解释成检索算法的纯错误。"
+          ]
+        },
+        {
+          "personaId": "17",
+          "questionId": "59eb073a-174e-4115-aa22-b40eb447b1a2",
+          "ordinal": 3,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791302941086_38f4587d",
+          "version": 1,
+          "contentSha256": "2cde962086be447e14f4d0516ff06528df7d908ee27570994de743036e03f5bf",
+          "bodyChars": 107,
+          "relevance": "partial",
+          "reason": "放弃正式书评转向非正式讨论可类比结构约束，但不是绘画课体验；题目和选项错配。",
+          "sourceHistoryIndices": [
+            46
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": [
+            "合并头需结合历史版本确认早期事实；当前source_message_ids只指最新事件，不是全部合并事实的完整出处。",
+            "相关性相对于实际绘画问题只属于类比；阅读选项本身造成任务质量歧义，标签不能解释成检索算法的纯错误。"
+          ]
+        },
+        {
+          "personaId": "17",
+          "questionId": "59eb073a-174e-4115-aa22-b40eb447b1a2",
+          "ordinal": 4,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791303447730_dcee5b7a",
+          "version": 0,
+          "contentSha256": "e201efccf3f0957014d0eb99d9fe448851a81e1c540f26ce9d3611442d37e776",
+          "bodyChars": 64,
+          "relevance": "partial",
+          "reason": "读书小组机械化/缺深度支持深度优先的文学背景，未直接说明绘画课与自由绘画；题目和选项错配。",
+          "sourceHistoryIndices": [
+            156
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": [
+            "相关性相对于实际绘画问题只属于类比；阅读选项本身造成任务质量歧义，标签不能解释成检索算法的纯错误。"
+          ]
+        },
+        {
+          "personaId": "19",
+          "questionId": "0441a1ba-0d67-47a1-a910-00306910a6e3",
+          "ordinal": 1,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791304670223_4fbf625a",
+          "version": 8,
+          "contentSha256": "0bf3bcff1b7312ef9f78ebdc0d49e4d35d6f84a5b6eb76a1e22eb67a06c44171",
+          "bodyChars": 160,
+          "relevance": "unrelated",
+          "reason": "多地餐厅与美食路线不说明个人自我反思方法或候选活动的经验。",
+          "sourceHistoryIndices": [
+            79
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": [
+            "多事件合并头的最新来源ID不是所有较早地名/经历的完整出处，需历史版本与原始消息核对。"
+          ]
+        },
+        {
+          "personaId": "19",
+          "questionId": "0441a1ba-0d67-47a1-a910-00306910a6e3",
+          "ordinal": 2,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791305073527_740cf863",
+          "version": 11,
+          "contentSha256": "65dd6e88ba93852089078c0f95d5c9ded4ae55a1de4500e95ced4c5053d5a694",
+          "bodyChars": 115,
+          "relevance": "unrelated",
+          "reason": "投资回报失望不提供冥想、影像自省、艺术工作坊或日志圈的具体依据，不能把所有情绪经历都算有效反思方法信息。",
+          "sourceHistoryIndices": [
+            139
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": [
+            "多事件合并头的最新来源ID不是所有较早地名/经历的完整出处，需历史版本与原始消息核对。"
+          ]
+        },
+        {
+          "personaId": "19",
+          "questionId": "0441a1ba-0d67-47a1-a910-00306910a6e3",
+          "ordinal": 3,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791305119243_104ecf8e",
+          "version": 0,
+          "contentSha256": "33930f4e290ec1201e36323ef9ea1be5d5949b5700644d0e237ec34ce7f1299b",
+          "bodyChars": 83,
+          "relevance": "partial",
+          "reason": "金融读书会群体互动冷淡对群体活动体验有弱类比，但不是自省活动的具体经历。",
+          "sourceHistoryIndices": [
+            151
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": []
+        },
+        {
+          "personaId": "19",
+          "questionId": "0441a1ba-0d67-47a1-a910-00306910a6e3",
+          "ordinal": 4,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791305018263_7b0f4635",
+          "version": 10,
+          "contentSha256": "7bc3dcf3d718f1aa484ef98e0a8f0c3a44abf905146e16def75ccfc307bc1ad1",
+          "bodyChars": 115,
+          "relevance": "unrelated",
+          "reason": "财务公益教育项目不说明个人自省方法，社区教育不能自动等同日志圈或艺术反思。",
+          "sourceHistoryIndices": [
+            125
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": [
+            "多事件合并头的最新来源ID不是所有较早地名/经历的完整出处，需历史版本与原始消息核对。"
+          ]
+        },
+        {
+          "personaId": "19",
+          "questionId": "d6d4a4e8-96c4-4b72-bdd3-204b44ec1826",
+          "ordinal": 1,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791304670223_4fbf625a",
+          "version": 8,
+          "contentSha256": "0bf3bcff1b7312ef9f78ebdc0d49e4d35d6f84a5b6eb76a1e22eb67a06c44171",
+          "bodyChars": 160,
+          "relevance": "partial",
+          "reason": "文化美食旅行是文化沉浸背景，不直接支持泰餐课/爱尔兰舞/韩式陶艺/西语四项具体经历。",
+          "sourceHistoryIndices": [
+            79
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": [
+            "多事件合并头的最新来源ID不是所有较早地名/经历的完整出处，需历史版本与原始消息核对。"
+          ]
+        },
+        {
+          "personaId": "19",
+          "questionId": "d6d4a4e8-96c4-4b72-bdd3-204b44ec1826",
+          "ordinal": 2,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791304228280_f66c65e6",
+          "version": 0,
+          "contentSha256": "54be421b19b86ea45ae9a4cff65721dd0dea66106cb4dddcb00de50e0f188c7c",
+          "bodyChars": 42,
+          "relevance": "direct",
+          "reason": "泰国当地烹饪课、传统食谱与市场文化直接对应泰餐课程选项，原9明确体验积极。",
+          "sourceHistoryIndices": [
+            9
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": []
+        },
+        {
+          "personaId": "19",
+          "questionId": "d6d4a4e8-96c4-4b72-bdd3-204b44ec1826",
+          "ordinal": 3,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791304613974_02555bbf",
+          "version": 0,
+          "contentSha256": "45aab170cceaf468841666ba1b5ef421698ab97dead49eb2a58cef54fd278178",
+          "bodyChars": 81,
+          "relevance": "partial",
+          "reason": "当地文化美食行程支持文化体验背景，但没有四个选项的具体课程事实。",
+          "sourceHistoryIndices": [
+            65,
+            67
+          ],
+          "sourceRoles": [
+            "user",
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": []
+        },
+        {
+          "personaId": "19",
+          "questionId": "d6d4a4e8-96c4-4b72-bdd3-204b44ec1826",
+          "ordinal": 4,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791305018263_7b0f4635",
+          "version": 10,
+          "contentSha256": "7bc3dcf3d718f1aa484ef98e0a8f0c3a44abf905146e16def75ccfc307bc1ad1",
+          "bodyChars": 115,
+          "relevance": "unrelated",
+          "reason": "财务社区教育没有当地文化传统或四个候选文化课程的依据。",
+          "sourceHistoryIndices": [
+            125
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": [
+            "多事件合并头的最新来源ID不是所有较早地名/经历的完整出处，需历史版本与原始消息核对。"
+          ]
+        },
+        {
+          "personaId": "15",
+          "questionId": "0034a537-925f-448b-b275-eae07f3d9ae5",
+          "ordinal": 1,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791305713349_8bf0a87c",
+          "version": 0,
+          "contentSha256": "1febe2444553c0a1a308fa60ce8efaa00b20dcd44645f84e160776fb245b1f44",
+          "bodyChars": 60,
+          "relevance": "direct",
+          "reason": "古董硬币整理、无价值和不愿继续投入直接支持四个回应中的硬币态度区分，原51/53有直接依据。",
+          "sourceHistoryIndices": [
+            51,
+            53
+          ],
+          "sourceRoles": [
+            "user",
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": []
+        },
+        {
+          "personaId": "15",
+          "questionId": "0034a537-925f-448b-b275-eae07f3d9ae5",
+          "ordinal": 2,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791306425337_03d5a3ed",
+          "version": 14,
+          "contentSha256": "ad8ba56f3537f22f37f3047932bae8e7bb49e466c4ef05d6b7e52953d07d6768",
+          "bodyChars": 121,
+          "relevance": "partial",
+          "reason": "园艺过去放弃/后来重新开始可以检验园艺候选描述，但不直接回答家中旧物和硬币体验。",
+          "sourceHistoryIndices": [
+            135
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": [
+            "合并头最新source IDs不支撑全部较早事实，需结合原始历史及版本；阶段对比在此头中保留。"
+          ]
+        },
+        {
+          "personaId": "15",
+          "questionId": "0034a537-925f-448b-b275-eae07f3d9ae5",
+          "ordinal": 3,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791306356043_1540eb12",
+          "version": 13,
+          "contentSha256": "758d2129c1da6e53f2c366ba521c033a6a7c86cbc5147308e262b83cd4685aa2",
+          "bodyChars": 145,
+          "relevance": "unrelated",
+          "reason": "加密货币兴趣不是古董硬币收藏；词面coin/币重合不能作为旧物题的实质依据。",
+          "sourceHistoryIndices": [
+            133
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": [
+            "合并头最新source IDs不支撑全部较早事实，需结合原始历史及版本；阶段对比在此头中保留。"
+          ]
+        },
+        {
+          "personaId": "15",
+          "questionId": "0034a537-925f-448b-b275-eae07f3d9ae5",
+          "ordinal": 4,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791306170375_3ef1dbc8",
+          "version": 9,
+          "contentSha256": "8c2ec827c792943f8fd87b2eb7672f7c352a2836adffeac5097faebf7af9df9c",
+          "bodyChars": 100,
+          "relevance": "unrelated",
+          "reason": "经济主题桌游体验与家中旧物及硬币态度无关。",
+          "sourceHistoryIndices": [
+            118
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": [
+            "合并头最新source IDs不支撑全部较早事实，需结合原始历史及版本；阶段对比在此头中保留。"
+          ]
+        },
+        {
+          "personaId": "15",
+          "questionId": "4b803069-7679-411e-8310-d885e6ed1e7d",
+          "ordinal": 1,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791305874808_19520e50",
+          "version": 1,
+          "contentSha256": "f7f364a660ac455bd23e7eae8e880f2dc31d0c9f233bae9e0003c1d8ad1ec370",
+          "bodyChars": 98,
+          "relevance": "direct",
+          "reason": "线上投资社区过去回避和新社区参与的阶段对比直接对应选项b/c的历史区分，原76/77提供新参与体验。",
+          "sourceHistoryIndices": [
+            76,
+            77
+          ],
+          "sourceRoles": [
+            "user",
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": [
+            "合并头最新source IDs不支撑全部较早事实，需结合原始历史及版本；阶段对比在此头中保留。"
+          ]
+        },
+        {
+          "personaId": "15",
+          "questionId": "4b803069-7679-411e-8310-d885e6ed1e7d",
+          "ordinal": 2,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791305713349_fc013ddf",
+          "version": 0,
+          "contentSha256": "99307f606c8ecde026bf5aaa00758a2994fa5516305da67b52cffececdc37909",
+          "bodyChars": 67,
+          "relevance": "partial",
+          "reason": "投资研讨会的推销问题是学习资源背景，不能等同线上社区偏好。",
+          "sourceHistoryIndices": [
+            59,
+            60
+          ],
+          "sourceRoles": [
+            "user",
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": []
+        },
+        {
+          "personaId": "15",
+          "questionId": "4b803069-7679-411e-8310-d885e6ed1e7d",
+          "ordinal": 3,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791306107432_ee1289ed",
+          "version": 0,
+          "contentSha256": "41efac9977c1464757f6f58bd9f66d87c855e18d167f132a0c368c4f503527b0",
+          "bodyChars": 59,
+          "relevance": "partial",
+          "reason": "金融社交大会是互动背景，但不是线上投资论坛的具体态度。",
+          "sourceHistoryIndices": [
+            103
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": []
+        },
+        {
+          "personaId": "15",
+          "questionId": "4b803069-7679-411e-8310-d885e6ed1e7d",
+          "ordinal": 4,
+          "scope": "c52ddf65534b7b4603508435",
+          "id": "m_1791306356043_1540eb12",
+          "version": 13,
+          "contentSha256": "758d2129c1da6e53f2c366ba521c033a6a7c86cbc5147308e262b83cd4685aa2",
+          "bodyChars": 145,
+          "relevance": "partial",
+          "reason": "加密货币课程与交易是投资兴趣背景，不说明对线上论坛的历史偏好。",
+          "sourceHistoryIndices": [
+            133
+          ],
+          "sourceRoles": [
+            "user"
+          ],
+          "causalContributionEstablished": false,
+          "limits": [
+            "合并头最新source IDs不支撑全部较早事实，需结合原始历史及版本；阶段对比在此头中保留。"
+          ]
+        }
+      ],
+      "annotationFiles": [
+        {
+          "personaId": "9",
+          "path": "annotations/persona-9.json",
+          "sha256": "5488f1da8e270125ef1cf1caaf2fe5250d9fd8736ecec0c09a725b123787c580",
+          "stage": "AFTER_NATIVE_RESPONSES_BEFORE_NEW_OFFICIAL_SCORES_GENERATED"
+        },
+        {
+          "personaId": "4",
+          "path": "annotations/persona-4.json",
+          "sha256": "d88b855afce65e14506dd91de94d8951e9231814a474fe67d771ff1d6a0b8011",
+          "stage": "AFTER_NATIVE_RESPONSES_BEFORE_NEW_OFFICIAL_SCORES_GENERATED"
+        },
+        {
+          "personaId": "12",
+          "path": "annotations/persona-12.json",
+          "sha256": "d114b0507af6c6d2f806fc823fdf44e2b9b383f31614c7f24df2ee66fdc239ce",
+          "stage": "AFTER_NATIVE_RESPONSES_BEFORE_NEW_OFFICIAL_SCORES_GENERATED"
+        },
+        {
+          "personaId": "14",
+          "path": "annotations/persona-14.json",
+          "sha256": "605418cea8a168aa6aa0683e37aedc87aaef2aa3bc5ae9eb19f36a5f6b738a08",
+          "stage": "AFTER_NATIVE_RESPONSES_BEFORE_NEW_OFFICIAL_SCORES_GENERATED"
+        },
+        {
+          "personaId": "3",
+          "path": "annotations/persona-3.json",
+          "sha256": "e41e76028e0f74caa71e045888dfb33df1eda76c6df93b262380048db21972f8",
+          "stage": "AFTER_NATIVE_RESPONSES_BEFORE_NEW_OFFICIAL_SCORES_GENERATED"
+        },
+        {
+          "personaId": "17",
+          "path": "annotations/persona-17.json",
+          "sha256": "280b7c6a68bec7d2378ece3e9245af1823c7d9aee97603adeabd7dc40ac0d078",
+          "stage": "AFTER_NATIVE_RESPONSES_BEFORE_NEW_OFFICIAL_SCORES_GENERATED"
+        },
+        {
+          "personaId": "19",
+          "path": "annotations/persona-19.json",
+          "sha256": "4225d3196983b5e8d66d0985571e9373bd11d79371468d555300d40e60723602",
+          "stage": "AFTER_NATIVE_RESPONSES_BEFORE_NEW_OFFICIAL_SCORES_GENERATED"
+        },
+        {
+          "personaId": "15",
+          "path": "annotations/persona-15.json",
+          "sha256": "bd9c2e9830f871d913ef4109bccc8af20488c87c0bbf37c547ae447a46fd20cd",
+          "stage": "AFTER_NATIVE_RESPONSES_BEFORE_NEW_OFFICIAL_SCORES_GENERATED"
+        }
+      ],
+      "notBlind": true,
+      "correction": {
+        "status": "DIAGNOSTIC_INTERPRETATION_QUALIFIED",
+        "recordedAt": "2026-10-06T15:37:26.236800+00:00",
+        "supersededAnnotationSha256": "d114b0507af6c6d2f806fc823fdf44e2b9b383f31614c7f24df2ee66fdc239ce",
+        "originalAnnotationUnchanged": true,
+        "correction": "选择题要求挑选最合适的模型回应；被评估的回应本身可能是闲聊。因此，仅凭评测是选择题或有答案协议，不能断言闲聊Skill超出适用范围。",
+        "retainedFacts": [
+          "Skill正文被实际读取三次。",
+          "研讨会题的推理显式引用Skill的简短共情要求以评估选项。",
+          "历史中25负向与44正向研讨会均存在，记忆头丢掉了44例外。",
+          "最后一题实际输出带了共情和开放追问。"
+        ],
+        "notEstablished": [
+          "Skill违反排除条件的确定结论。",
+          "Skill导致错误或提高正确率的因果结论。"
+        ],
+        "currentInterpretation": "正文消费和规则使用均有真实证据；规则是否正确辅助判断，须与选项事实、历史阶段和官方评分分别审阅。观察到语气标准进入决策不自动等于误用。",
+        "scorerKeysRead": false,
+        "newModelRequests": 0
+      },
+      "correctionSha256": "8c5bf8a0bd1d8331286dd7d0ba7c9e14afbf68b50444f7abf6ee2d097aab69ba",
+      "limits": "Relevance is judged against the task/options, not factual fidelity or causal benefit; dataset mismatch noted. Prior cohort exposure exists even for prescore annotations."
+    },
+    "bodyLengths": {
+      "firstRequestMemoryChars": {
+        "count": 502,
+        "min": 17,
+        "median": 67.0,
+        "p95": 165,
+        "max": 228,
+        "sum": 40799
+      },
+      "storedSkillMarkdownChars": {
+        "count": 6,
+        "min": 563,
+        "median": 951.0,
+        "p95": 1256,
+        "max": 1256,
+        "sum": 5692
+      },
+      "naturallyLoadedSkillBodyChars": {
+        "count": 11,
+        "min": 459,
+        "median": 888,
+        "p95": 1135,
+        "max": 1135,
+        "sum": 9482
+      },
+      "unit": "Unicode code points, not tokens"
+    },
+    "naturalSkillBodyLoads": 11,
+    "foregroundToolCounts": {
+      "rsi_profile_read": 3,
+      "rsi_memory_search": 4,
+      "skill": 11,
+      "rsi_conversation_search": 8
+    },
+    "observedDecisions": [
+      {
+        "personaId": "9",
+        "questionId": "a719edb3-a43f-4792-b820-fb45293c4e19",
+        "evidence": "实际模型先读画像并搜索博客/新闻，最终文字显式引用新闻邮件和博客原话；固定前四条自动记忆无直接新闻依据。",
+        "causalContributionEstablished": false
+      },
+      {
+        "personaId": "9",
+        "questionId": "b502d7dc-2345-41a3-8a22-0fb9ff719c9e",
+        "evidence": "实际模型搜索线上论坛毒性，最终选择c；自动记忆第4条与毒性原因相符，但完整原始历史也同时存在。",
+        "causalContributionEstablished": false
+      },
+      {
+        "personaId": "4",
+        "questionId": "8c6f3412-d822-4131-9a51-184e6da3f476",
+        "evidence": "实际最终回答显式使用过去播客压力类比并选d，与记忆和原始历史同时一致；不能仅据此识别资产的因果贡献。",
+        "causalContributionEstablished": false
+      },
+      {
+        "personaId": "4",
+        "questionId": "bd39c6a3-3ebb-4f12-a9b5-f690ebdf5bca",
+        "evidence": "实际回答明确引用用户原话“never fond of making infographics”选a；固定前四条记忆均没有直接的信息图偏好，回答可由完整历史支持。",
+        "causalContributionEstablished": false
+      },
+      {
+        "personaId": "12",
+        "questionId": "194ce23e-d6d7-46f9-99b0-a0eba223a0ee",
+        "evidence": "最终回答按题目的dynamic/experiential wording选择a，未显式说明记忆贡献。",
+        "causalContributionEstablished": false
+      },
+      {
+        "personaId": "12",
+        "questionId": "a64ba818-abee-404e-9a38-f440b74bcca7",
+        "evidence": "自然读取闲聊Skill后选择b，与原27负面桌游经历相符；完整历史中62还有正向的另一场桌游，不能证明资产本身带来改善。",
+        "causalContributionEstablished": false
+      },
+      {
+        "personaId": "12",
+        "questionId": "8be28bb6-049f-4735-8957-a15234c138f4",
+        "evidence": "最终推理显式说选项c违反Skill要求（太长、太多建议），并以Skill的共情简短标准选a；同时承认44正向、25负向。属于可观察的规则使用，不是已验证的因果收益。",
+        "explicitAssetRuleUsedInDecision": true,
+        "causalBenefitEstablished": false
+      },
+      {
+        "personaId": "12",
+        "questionId": "cb4799ed-15e8-4dda-a716-b81fa1d6d9da",
+        "evidence": "实际答复增加共情和开放追问后选a，形式与所读闲聊Skill一致，但没有显式证明其选项判断来自资产。",
+        "causalContributionEstablished": false
+      },
+      {
+        "personaId": "14",
+        "questionId": "a30c10c5-145a-49b0-b3d5-1479bf3c6797",
+        "evidence": "音乐表达题实际读取代码重构Skill后回答a，未给出决策解释，不能证明答案来自Skill；可以确认这次读取的任务适配性很弱。",
+        "causalContributionEstablished": false
+      },
+      {
+        "personaId": "14",
+        "questionId": "e86a1aad-0117-4021-9c68-f923f4111d5f",
+        "evidence": "实际回答明确说要承认重返写作的意愿、验证负面反馈担忧，并选择a，与记忆第1条及完整历史相符。",
+        "causalContributionEstablished": false
+      },
+      {
+        "personaId": "3",
+        "questionId": "9c209ff7-a6a8-48d8-ab38-e0b8aa2aaef7",
+        "evidence": "实际回答逐字引用已送达memory-scope中的课程/交友条目，并引用其他烹饪偏好记忆及原始历史的fun/love cooking，明确用这些依据排除a并选d。",
+        "explicitAssetFactUsedInDecision": true,
+        "causalBenefitEstablished": false
+      },
+      {
+        "personaId": "3",
+        "questionId": "945fb104-45bd-457f-a9a8-19620159e47d",
+        "evidence": "实际回答自述结合Memory/Scene与历史，以旅行疲惫、放松及创意约束选b；原始历史152的疲惫也同时可用，固定样本仍含146计划，不能单凭自述确定每条资产的贡献。",
+        "causalContributionEstablished": false
+      },
+      {
+        "personaId": "17",
+        "questionId": "5e856191-b76f-47ec-b5a4-f04893d8a313",
+        "evidence": "前台自然memory_search readathon/fantasy；实际最终回答区分曾享受阅读马拉松和后来限时压力，并选c读书俱乐部。相关L1以及完整原历史同时提供这些事实，不能建立资产的独立因果收益。",
+        "causalContributionEstablished": false
+      },
+      {
+        "personaId": "17",
+        "questionId": "59eb073a-174e-4115-aa22-b40eb447b1a2",
+        "evidence": "实际回答明确识别绘画题与阅读选项错配；以结构、压力、质量优先类比选择d。自述memory/profile均为文学，未明确逐条引用固定样本，不能据此判定某条资产决定答案。",
+        "causalContributionEstablished": false
+      },
+      {
+        "personaId": "19",
+        "questionId": "0441a1ba-0d67-47a1-a910-00306910a6e3",
+        "evidence": "实际自然加载多话题聊天Skill后只输出c，没有说明使用哪条规则；证明正文进入请求，不能建立某条规则的决策贡献。",
+        "causalContributionEstablished": false
+      },
+      {
+        "personaId": "19",
+        "questionId": "d6d4a4e8-96c4-4b72-bdd3-204b44ec1826",
+        "evidence": "自然conversation_search分别查询泰餐课、爱尔兰舞和韩式陶艺，最后输出b；直接泰餐Memory与完整原历史/主动L0搜索同时可用，不能归因其中一条路径。",
+        "causalContributionEstablished": false
+      },
+      {
+        "personaId": "15",
+        "questionId": "0034a537-925f-448b-b275-eae07f3d9ae5",
+        "evidence": "自然L0搜索及Memory搜索后，实际回答逐字引用60字硬币记忆，用负向经历排除a/c并选d。与完整原历史及L0搜索同源，证明事实参与判断，不证明独立因果收益。",
+        "explicitAssetFactUsedInDecision": true,
+        "causalBenefitEstablished": false
+      },
+      {
+        "personaId": "15",
+        "questionId": "4b803069-7679-411e-8310-d885e6ed1e7d",
+        "evidence": "实际回答逐字引用过去避开投资论坛与后来加入新社区的Memory头，然后以过去回避选b；中间却又泛称用户不喜欢论坛，弱化了阶段差异。完整历史同时提供相同事实，因果收益未建立。",
+        "explicitAssetFactUsedInDecision": true,
+        "causalBenefitEstablished": false
+      }
+    ],
+    "causalBenefitEstablished": false,
+    "rawResultsAndPreviousStudiesUnchanged": true,
+    "embeddingTokensNotReportedAsZero": true,
+    "nativeLearningCostByTaskId": {
+      "l1-extraction": {
+        "calls": 146,
+        "knownInputTokens": 696952,
+        "knownOutputTokens": 110961,
+        "knownTotalTokens": 807913,
+        "unknownUsage": 0
+      },
+      "l1-conflict-detection": {
+        "calls": 114,
+        "knownInputTokens": 411208,
+        "knownOutputTokens": 50278,
+        "knownTotalTokens": 461486,
+        "unknownUsage": 0
+      },
+      "skill-extract": {
+        "calls": 124,
+        "knownInputTokens": 1250604,
+        "knownOutputTokens": 12883,
+        "knownTotalTokens": 1263487,
+        "unknownUsage": 0
+      },
+      "scene-extract": {
+        "calls": 97,
+        "knownInputTokens": 683500,
+        "knownOutputTokens": 65981,
+        "knownTotalTokens": 749481,
+        "unknownUsage": 0
+      },
+      "persona-generation": {
+        "calls": 46,
+        "knownInputTokens": 180694,
+        "knownOutputTokens": 19340,
+        "knownTotalTokens": 200034,
+        "unknownUsage": 0
+      }
+    },
+    "frozenInputsCheckedBeforeReporting": {
+      "matches": true,
+      "fileCount": 215
+    },
+    "naturalSkillToolCalls": 11,
+    "naturalSkillToolAttempts": 11,
+    "skillBodyRequestExposures": 11,
+    "skillConsumptionCountingNote": "Tool calls count natural loader invocations; body request exposures can repeat a previously loaded body. They are distinct from causal contribution."
+  },
+  "closedBoundaries": {
+    "status": "PASS_CLOSED_BOUNDARIES",
+    "closedArms": 16,
+    "qualityScoringNotPerformed": true,
+    "arms": [
+      {
+        "personaId": "9",
+        "arm": "baseline",
+        "historySha256": "9e2fe184ea148c35a015673e599c36d07078b0de33e4afda795fc56852a5a35d",
+        "requests": 4,
+        "nativeCompletedAnswers": 4,
+        "assetFrozen": false,
+        "knownTokens": 105048,
+        "unknownUsage": 0
+      },
+      {
+        "personaId": "9",
+        "arm": "rsi",
+        "historySha256": "9e2fe184ea148c35a015673e599c36d07078b0de33e4afda795fc56852a5a35d",
+        "requests": 80,
+        "nativeCompletedAnswers": 4,
+        "assetFrozen": true,
+        "knownTokens": 813397,
+        "unknownUsage": 0
+      },
+      {
+        "personaId": "4",
+        "arm": "rsi",
+        "historySha256": "44e9e30a2b6edf52ba895fd435da61321cc50c0b50e256a8ddad668830a27731",
+        "requests": 52,
+        "nativeCompletedAnswers": 4,
+        "assetFrozen": true,
+        "knownTokens": 399134,
+        "unknownUsage": 0
+      },
+      {
+        "personaId": "4",
+        "arm": "baseline",
+        "historySha256": "44e9e30a2b6edf52ba895fd435da61321cc50c0b50e256a8ddad668830a27731",
+        "requests": 4,
+        "nativeCompletedAnswers": 4,
+        "assetFrozen": false,
+        "knownTokens": 81964,
+        "unknownUsage": 0
+      },
+      {
+        "personaId": "12",
+        "arm": "baseline",
+        "historySha256": "ae5351540907afb670ac4f5280cbf628776a3dd91304a6d348a7c2b3f2f98bb8",
+        "requests": 4,
+        "nativeCompletedAnswers": 4,
+        "assetFrozen": false,
+        "knownTokens": 124642,
+        "unknownUsage": 0
+      },
+      {
+        "personaId": "12",
+        "arm": "rsi",
+        "historySha256": "ae5351540907afb670ac4f5280cbf628776a3dd91304a6d348a7c2b3f2f98bb8",
+        "requests": 74,
+        "nativeCompletedAnswers": 4,
+        "assetFrozen": true,
+        "knownTokens": 675884,
+        "unknownUsage": 0
+      },
+      {
+        "personaId": "14",
+        "arm": "rsi",
+        "historySha256": "2677cfeddcdd0a9cad82321c500564bd654036a894dc9a1dc1f407f4a74fbe67",
+        "requests": 77,
+        "nativeCompletedAnswers": 4,
+        "assetFrozen": true,
+        "knownTokens": 635883,
+        "unknownUsage": 0
+      },
+      {
+        "personaId": "14",
+        "arm": "baseline",
+        "historySha256": "2677cfeddcdd0a9cad82321c500564bd654036a894dc9a1dc1f407f4a74fbe67",
+        "requests": 4,
+        "nativeCompletedAnswers": 4,
+        "assetFrozen": false,
+        "knownTokens": 130055,
+        "unknownUsage": 0
+      },
+      {
+        "personaId": "3",
+        "arm": "baseline",
+        "historySha256": "865cf4a1e61a42408517b87375566380bfa3f72be5f11844531a0fa8ac0fdd60",
+        "requests": 4,
+        "nativeCompletedAnswers": 4,
+        "assetFrozen": false,
+        "knownTokens": 117001,
+        "unknownUsage": 0
+      },
+      {
+        "personaId": "3",
+        "arm": "rsi",
+        "historySha256": "865cf4a1e61a42408517b87375566380bfa3f72be5f11844531a0fa8ac0fdd60",
+        "requests": 70,
+        "nativeCompletedAnswers": 4,
+        "assetFrozen": true,
+        "knownTokens": 602844,
+        "unknownUsage": 0
+      },
+      {
+        "personaId": "17",
+        "arm": "rsi",
+        "historySha256": "e59aff7724e1697953546170825771638f1712a6e9e610a25ba9a22d5faffad5",
+        "requests": 70,
+        "nativeCompletedAnswers": 4,
+        "assetFrozen": true,
+        "knownTokens": 616135,
+        "unknownUsage": 0
+      },
+      {
+        "personaId": "17",
+        "arm": "baseline",
+        "historySha256": "e59aff7724e1697953546170825771638f1712a6e9e610a25ba9a22d5faffad5",
+        "requests": 4,
+        "nativeCompletedAnswers": 4,
+        "assetFrozen": false,
+        "knownTokens": 129443,
+        "unknownUsage": 0
+      },
+      {
+        "personaId": "19",
+        "arm": "baseline",
+        "historySha256": "598e94350f2de4ab4075634192e1c90e42f61f1aa9946aa749734278bd2a4c3b",
+        "requests": 4,
+        "nativeCompletedAnswers": 4,
+        "assetFrozen": false,
+        "knownTokens": 107364,
+        "unknownUsage": 0
+      },
+      {
+        "personaId": "19",
+        "arm": "rsi",
+        "historySha256": "598e94350f2de4ab4075634192e1c90e42f61f1aa9946aa749734278bd2a4c3b",
+        "requests": 84,
+        "nativeCompletedAnswers": 4,
+        "assetFrozen": true,
+        "knownTokens": 747751,
+        "unknownUsage": 0
+      },
+      {
+        "personaId": "15",
+        "arm": "rsi",
+        "historySha256": "14595e23d9b99594486687ee408d8a1790803d471152489cc89284e87b6da8d7",
+        "requests": 74,
+        "nativeCompletedAnswers": 4,
+        "assetFrozen": true,
+        "knownTokens": 696363,
+        "unknownUsage": 0
+      },
+      {
+        "personaId": "15",
+        "arm": "baseline",
+        "historySha256": "14595e23d9b99594486687ee408d8a1790803d471152489cc89284e87b6da8d7",
+        "requests": 4,
+        "nativeCompletedAnswers": 4,
+        "assetFrozen": false,
+        "knownTokens": 98311,
+        "unknownUsage": 0
+      }
+    ]
+  },
+  "formatReview": [
+    {
+      "personaId": "9",
+      "arm": "baseline",
+      "questionId": "b502d7dc-2345-41a3-8a22-0fb9ff719c9e",
+      "correct": false,
+      "formatDiagnostic": {
+        "valid": false,
+        "reason": "NON_SINGLE_CHOICE_TAIL",
+        "choice": null
+      },
+      "completed": true,
+      "answerAvailable": true,
+      "responseSha256": "8acf517926ec2ce33800f98df790d4940f0fd4a49e98e25885ebe000ffd13fb0",
+      "response": "<final_answer>(c)\n\nThe user explicitly stated earlier: \"I decided to leave the online film forum where I was active. The interactions I had there turned quite negative over time... As a passionate film enthusiast, it was disheartening to see the community I once enjoyed devolve into such toxicity.\"\n\nTherefore, the correct reason for leaving was toxic/negative interactions, not \"lack of engaging content\" (a), \"misunderstanding about the rules\" (b), or just generic \"community shifts\" (d). Option (c) correctly identifies the past experience as being shaped by toxic discussions and advises prioritizing supportive/constructive spaces, which aligns perfectly with the context.\n\n(c)",
+      "classification": "EXPLANATION_NAMES_OTHER_CHOICES_AFTER_CORRECT_C",
+      "officialScoreUnchanged": true
+    },
+    {
+      "personaId": "9",
+      "arm": "rsi",
+      "questionId": "436e377a-98ba-44fc-809c-1743bbf4e033",
+      "correct": true,
+      "formatDiagnostic": {
+        "valid": false,
+        "reason": "NON_SINGLE_CHOICE_TAIL",
+        "choice": null
+      },
+      "completed": true,
+      "answerAvailable": true,
+      "responseSha256": "740a9bf08c75e80e9cc0c1754ae0c3fef4b04664fed65f2ee42280375296c7ce",
+      "response": "<final_answer>\n(c) Attending local art exhibits can be quite rewarding, especially if you enjoy connecting with creative individuals and exploring diverse perspectives. It can be a great opportunity to meet artists, learn about their work, and expand your network, much like you have experienced in other creative settings. Embracing new experiences often leads to unexpected connections and inspirations.\n</final_answer>",
+      "classification": "ONE_CHOICE_WITH_EXTRA_RESPONSE_PROSE",
+      "officialScoreUnchanged": true
+    },
+    {
+      "personaId": "14",
+      "arm": "rsi",
+      "questionId": "8d52f6de-0bc5-4cac-8873-ca57060186b3",
+      "correct": true,
+      "formatDiagnostic": {
+        "valid": false,
+        "reason": "NON_SINGLE_CHOICE_TAIL",
+        "choice": null
+      },
+      "completed": true,
+      "answerAvailable": true,
+      "responseSha256": "b2bd4cdf008c2f943adad11c9b0fa6479d698a16ca06bf23158a37f21ea394eb",
+      "response": "<final_answer>\n(d) I remember you like organizing study groups! It's great that you're finding ways to tackle those exam preparations. Keep it up!\n</final_answer>",
+      "classification": "ONE_CHOICE_WITH_EXTRA_RESPONSE_PROSE",
+      "officialScoreUnchanged": true
+    }
+  ],
+  "diagnosticToolHashes": {
+    "dsh-rsi-audit-closed-boundaries.py": "8889f4c621208cd7df1b697b88c6e5ef2302597105b36fd5ad2b039e523a5e6b",
+    "dsh-rsi-native-v2-final-audit.py": "b353b6c4ec64058e50499f91eee4bab7fa3a5dfaad363759b79927646186d572",
+    "dsh-rsi-make-review-pack.py": "06de79c6c54c41ef92e2c716910fca48fd0bbd8fdc294732772fc2d280a0fe3b"
+  },
+  "postRunAppendOnlyDiagnostics": {
+    "baselineDiagnostics": 8,
+    "newModelRequests": 0,
+    "baselineToolResultsAbsentVerifiedByNativeStopAndJournals": true,
+    "offlineAggregationCorrections": [
+      "Initial aggregation assumed baseline diagnostics had already been produced; append-only original diagnostic script generated them after termination.",
+      "Initial aggregation assumed empty tool-results files were emitted; native journals and model stop reasons verify absence of baseline tool execution."
+    ],
+    "originalRunAndScoringFilesUnchanged": true
+  },
+  "codingOutcomeReference": "docs/evidence/continuous-complete-outcome-20261005.json",
+  "previousFailedStudiesUnchanged": true,
+  "noAdditionalRealModelTrialsScheduled": true
+}
