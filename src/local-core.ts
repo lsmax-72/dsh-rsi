@@ -13,6 +13,8 @@ import {
 } from './core-entry.js';
 import { withinSkillReviewBudget, GENERATED_SKILL_BODY_MAX_CHARS, GENERATED_SKILL_BODY_DRAFT_CHARS } from './skill-review-budget.js';
 
+const PROFILE_TIME_PROVENANCE='Profile source-time provenance: memory created_at and recording timestamps, scene META created/updated, and the current runtime date are processing metadata, not historical activity dates. Preserve calendar event claims only when supported by original source facts. Keep unanchored relative times relative; use unknown date or relative order for Evolution when no source date is established. Existing generated scenes/personas are derived summaries, not independent evidence for their inherited calendar claims. Keep native file META and profile update timestamps as recording/update metadata; do not erase explicit source-supported event dates.';
+
 /** Validate host configuration before any learning dispatch; source selection remains native. */
 export function validateSkillTranscriptWindow(value:any={}) {
   if(!value || typeof value!=='object' || Array.isArray(value))throw Object.assign(new Error('Skill 来源窗口必须是原生参数对象'),{code:'INVALID_CONFIG'});
@@ -67,7 +69,7 @@ export async function openLocalCore(dataDir: string, runner: any, logger: any, s
     // but restore the original error per invocation, including when an old persona exists.
     const profileErrors=new AsyncLocalStorage<{error?:unknown}>();
     const profileRunner={run:async(params:any)=>{
-      try{return await runner.run(params);}
+      try{return await runner.run({...params,systemPrompt:`${params.systemPrompt ?? ''}\n${PROFILE_TIME_PROVENANCE}`});}
       catch(error){const operation=profileErrors.getStore();if(operation)operation.error=error;throw error;}
     }};
     const profileOperation=async<T>(operation:()=>Promise<T>)=>{
