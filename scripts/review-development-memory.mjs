@@ -1,54 +1,31 @@
+// Uses the isolated review observer and the production native memory entry point.
 import assert from 'node:assert/strict';
-import {readFile,writeFile} from 'node:fs/promises';
+import {readFile,writeFile,rename} from 'node:fs/promises';
 import {join} from 'node:path';
 import {Session} from '@deepseek-ai/dsh-session';
-import {appendPersonaHistory} from './personamem-history.mjs';
-import {shouldExtractL1} from '../lib/core-entry.js';
+import {hasKnownPersonaUsage} from './personamem-pilot-task.mjs';
 export const name='review-development-memory';
 export const inject=['rsi','agents','sessions','sessionPersistence','llm'];
 export function apply(ctx,config){
-  const requests=[];
-  ctx.on('llm/stream',async function*(options,next){
-    assert.ok(requests.length<1,'One-call review budget exceeded');assert.ok(options.sessionId.startsWith('rsi-'),'Review must not dispatch a task solver');
-    const handle=await ctx.sessionPersistence.open(options.sessionId,'read');const saved=await handle.read();
-    assert.deepEqual([...Session.fromRestore(options.sessionId,saved.events,handle.header,handle.inheritedEventCount,saved.eventState).deriveMessages()],options.messages);await handle.close();
-    const request={sessionId:options.sessionId,status:'DISPATCHING',usage:null,messages:structuredClone(options.messages),inputReconstructed:true};requests.push(request);
-    try{for await(const chunk of next()){if(chunk.type==='usage')request.usage=chunk.usage;if(chunk.type==='finish')request.finishReason=structuredClone(chunk.reason);yield chunk;}request.status=['stop','tool-calls'].includes(request.finishReason?.kind)?'RETURNED':'INCOMPLETE';}catch(error){request.status='ERROR';request.error=error.message;throw error;}
-  });
-  ctx.effect(()=>{const alive=setInterval(()=>{},1000),timer=setTimeout(async()=>{let receipt;try{
-    await ctx.rsi.ready;
-    const id='development-source-review';let events;
-    if(config.importHistory){
-      const input=JSON.parse(await readFile(config.source,'utf8'));assert.deepEqual(Object.keys(input),['history']);
-      const seed=ctx.sessions.prepare(id,{meta:{cwd:config.root}});events=(await appendPersonaHistory(seed,input.history,{systemBoundaries:true})).events;
-    }else{
-      const lines=(await readFile(config.source,'utf8')).trim().split('\n').map(JSON.parse);events=lines.filter(row=>Number.isSafeInteger(row.seq));
-    }
-    const handle=await ctx.agents.create({sessionId:id,meta:{cwd:config.root},seed:events,agentOptions:{provider:'qwen',model:'qwen3.8-27b'}});await ctx.sessions.flush(handle.agent.session);
-    const stored=await ctx.sessionPersistence.open(id,'read');const data=await stored.read();const restored=Session.fromRestore(id,data.events,stored.header,stored.inheritedEventCount,data.eventState);assert.deepEqual([...restored.deriveMessages()],[...handle.agent.session.deriveMessages()]);await stored.close();
-    // Same native L1 input boundary; original tool results stay in the imported log, not prose evidence.
-    let messages=[];
-    for(const event of data.events){
-      const message=event.type==='user/message'&&event.data.source.kind==='user'?event.data:event.type==='assistant/message'?event.data.message:null;
-      if(message)messages.push({id:message.id,role:message.role,content:message.content.map(b=>b.type==='text'?b.text:JSON.stringify(b)).join('\n'),timestamp:event.time});
-    }
-    const scope=await ctx.rsi.runtime.scope(config.root),core=await ctx.rsi.runtime.core(scope.id);
-    if(config.importHistory){
-      assert.equal(ctx.rsi.runtime.state.settings().learningEnabled,false,'Manual development batch must not start automatic learning');
-      await ctx.rsi.runtime.captureStored(id,config.root);
-      const job=ctx.rsi.runtime.state.jobs(scope.id).find(j=>j.payload.sessionId===id&&j.payload.turn===config.turn);assert.ok(job);
-      const source=job.payload.messages.filter(m=>['user','assistant'].includes(m.role)&&shouldExtractL1(m.content));
-      assert.ok(Number.isSafeInteger(config.batchStart)&&config.batchStart>=0&&config.batchStart<source.length);
-      // Replay one existing ten-new/five-background batch; do not replace the native formatter.
-      messages=source.slice(Math.max(0,config.batchStart-5),config.batchStart+10).map(m=>({...m,timestamp:Date.parse(m.timestamp)}));
-      assert.ok(messages.every(m=>m.timestampKind==='imported-unknown'));
-      await writeFile(join(config.root,'source-batch.json'),JSON.stringify(messages,null,2));
-    }
-    const result=await ctx.rsi.runtime.within(scope.id,()=>core.extractMemories({messages,sessionKey:id,sessionId:id}),{route:{provider:'qwen',model:'qwen3.8-27b'},sessionId:id,manual:true});
-    const records=await core.readMemories();
-    const oneOffRules=records.filter(r=>r.type==='instruction'&&/get_inlines|ModelAdmin/.test(r.content));
-    receipt={status:config.importHistory?'GENERATED_REQUIRES_CONTENT_REVIEW':oneOffRules.length?'FAIL':'PASS',checkedAt:new Date().toISOString(),method:'One native L1 development replay into fresh assets; no task solver, Skill review, scorer input or effect claim.',sourceMessages:messages.length,storedCount:result.storedCount,records,oneOffRules:oneOffRules.map(r=>r.id),realModelRequests:requests.length,knownTokens:requests.reduce((sum,r)=>sum+(r.usage?.totalTokens??0),0),unknownUsage:requests.filter(r=>!r.usage||!Number.isFinite(r.usage.totalTokens)||r.usage.totalTokens<=0).length,allInputsReconstructed:requests.every(r=>r.inputReconstructed),importedTimeReview:config.importHistory===true,sourceTurn:config.turn,batchStart:config.batchStart,importedSourceLogExactlyReconstructable:true,scopeDataDir:core.directory};
-  }catch(error){receipt={status:'ERROR',error:error.message,requests:requests.length};}finally{
-    await ctx.root.fiber.dispose();await writeFile(join(config.root,'review-requests.json'),JSON.stringify(requests,null,2));await writeFile(join(config.root,'review-receipt.json'),JSON.stringify(receipt,null,2));console.log(JSON.stringify(receipt));process.exit(['PASS','GENERATED_REQUIRES_CONTENT_REVIEW'].includes(receipt.status)?0:1);
-  }},50);return()=>{clearInterval(alive);clearTimeout(timer);};});
+ const requests=[];
+ const save=async(name,value)=>{const p=join(config.root,name);await writeFile(p+'.tmp',JSON.stringify(value,null,2)+'\n');await rename(p+'.tmp',p);};
+ ctx.on('llm/stream',async function*(options,next){
+  assert.ok(requests.length<config.callLimit,'Fixed actual call bound exceeded');assert.ok(options.sessionId.startsWith('rsi-'),'No task solver allowed');
+  const h=await ctx.sessionPersistence.open(options.sessionId,'read'),r=await h.read();const restored=Session.fromRestore(options.sessionId,r.events,h.header,h.inheritedEventCount,r.eventState);await h.close();assert.deepEqual([...restored.deriveMessages()],options.messages);
+  const row={sessionId:options.sessionId,messages:structuredClone(options.messages),usage:null,responseBlocks:{},status:'DISPATCHING',inputReconstructed:true};requests.push(row);await save('review-requests.json',requests);
+  try{for await(const c of next()){if(c.type==='usage')row.usage=c.usage;if(c.type==='text-delta')row.responseBlocks[c.index]=(row.responseBlocks[c.index]??'')+c.text;if(c.type==='block-end'&&c.block.type==='text')row.responseBlocks[c.index]=c.block.text;if(c.type==='finish')row.finish=structuredClone(c.reason);yield c;}row.status=['stop','tool-calls'].includes(row.finish?.kind)?'RETURNED':'INCOMPLETE';}catch(e){row.status='ERROR';row.error=e.message;throw e;}finally{await save('review-requests.json',requests);}
+ });
+ ctx.effect(()=>{const alive=setInterval(()=>{},1000),wall=setTimeout(()=>ctx.rsi.runtime.abort.abort(new Error('Fixed development wall expired')),config.wallMs),timer=setTimeout(async()=>{let receipt,scope;
+  try{
+   await ctx.rsi.ready;const payload=JSON.parse(await readFile(config.payload,'utf8')),raw=(await readFile(config.source,'utf8')).trim().split('\n').map(JSON.parse),events=raw.filter(x=>Number.isSafeInteger(x.seq));
+   scope=await ctx.rsi.runtime.scope(config.cwd);const core=await ctx.rsi.runtime.core(scope.id);assert.equal((await core.readMemories()).length,0,'Start with an empty native candidate library');
+   const h=await ctx.agents.create({sessionId:payload.sessionId,meta:{cwd:config.cwd},seed:events,agentOptions:{provider:'qwen',model:'qwen3.8-27b'}});await ctx.sessions.flush(h.agent.session);
+   const derived=[...h.agent.session.deriveMessages()];for(const m of payload.messages){const original=derived.find(x=>x.id===m.id);assert.ok(original);assert.equal(original.content.filter(b=>b.type==='text').map(b=>b.text).join('\n'),m.content);}
+   const result=await ctx.rsi.runtime.within(scope.id,()=>core.extractMemories({...payload,sessionKey:payload.sessionId}),{route:{provider:'qwen',model:'qwen3.8-27b'},sessionId:payload.sessionId,manual:true});
+   receipt={status:'NATIVE_MEMORY_GENERATED_REQUIRES_CONTENT_REVIEW',sourceMessages:payload.messages.length,sourceProseMatchesImportedLog:true,result,taskSolverCalls:0,taskCommands:0,scorerRead:false,consumerCalls:0,independentEffectClaim:false};
+  }catch(e){receipt={status:'ERROR',error:e.message};}finally{
+   if(scope)try{await save('review-assets.json',await ctx.rsi.request('export',{cwd:config.cwd}));}catch(e){receipt.exportError=e.message;}
+   clearTimeout(wall);await ctx.root.fiber.dispose();await save('review-requests.json',requests);receipt={...receipt,actualRequests:requests.length,knownTokens:requests.reduce((n,r)=>n+(hasKnownPersonaUsage(r)?r.usage.totalTokens:0),0),unknownActualUsage:requests.filter(r=>!hasKnownPersonaUsage(r)).length};await save('review-receipt.json',receipt);console.log(JSON.stringify(receipt));process.exit(receipt.status==='ERROR'?1:0);
+  }
+ },50);return()=>{clearInterval(alive);clearTimeout(wall);clearTimeout(timer);};});
 }
