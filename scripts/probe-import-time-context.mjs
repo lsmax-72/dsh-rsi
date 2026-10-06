@@ -17,16 +17,19 @@ try {
   await extract(messages.map((m,i)=>i===25?m:{...m,timestampKind:'imported-unknown'}),'mixed-import');
   await extract(messages.map(m=>({...m,timestampKind:'unsupported'})),'unsupported-marker');
   assert.equal(calls.length,3);const [normal,mixed,unsupported]=calls;
-  assert.equal(normal.prompt,mixed.prompt);assert.equal(normal.prompt,unsupported.prompt);
+  assert.equal(normal.prompt,unsupported.prompt);assert.notEqual(normal.prompt,mixed.prompt);
   assert.ok(!normal.systemPrompt.includes('Historical time provenance'));assert.equal(normal.systemPrompt,unsupported.systemPrompt);
   const prefix=mixed.systemPrompt.split('\nHistorical time provenance')[0];assert.equal(prefix,normal.systemPrompt);
   const ids=JSON.parse(mixed.systemPrompt.match(/Historical time provenance for message IDs (\[[^\n]*?\]):/)[1]);
   const visible=messages.filter(m=>mixed.prompt.includes(`[${m.id}]`));
+  let expected=normal.prompt;
+  for(const m of visible.filter(m=>m.id!=='source-25'))expected=expected.replace(`[${m.id}] [${m.role}] [${new Date(m.timestamp).toISOString()}]:`,`[${m.id}] [${m.role}] [original_time:unknown; recorded_at:${new Date(m.timestamp).toISOString()}]:`);
+  assert.equal(mixed.prompt,expected,'Only source-line time provenance labels may differ');
   assert.deepEqual(ids,visible.filter(m=>m.id!=='source-25').map(m=>m.id));assert.ok(ids.length>0&&ids.length<25);
   assert.ok(!ids.includes('source-0')&&!mixed.prompt.includes('[source-0]'),'Native window drops earlier sources; annotation must not reintroduce them');
   assert.ok(mixed.prompt.includes('2020年5月1日'));assert.ok(!ids.includes('source-25'));
   assert.ok(mixed.systemPrompt.includes('Preserve explicit dates in source prose'));
   assert.ok(visible.every(m=>mixed.prompt.includes(new Date(m.timestamp).toISOString())),'Native timestamp formatter stays unchanged');
-  const receipt={status:'PASS_NATIVE_TIME_CONTEXT_BOUNDARIES',nativeSourceWindowAndUserPromptUnchanged:true,normalAndUnsupportedMarkerSystemPromptsIdentical:true,existingProductionSystemPromptPrefixUnchanged:true,unknownTimeIdsOnlyActuallyDelivered:true,mixedCurrentSourceExcludedFromUnknownIds:true,explicitSourceDatePreserved:true,nativeTimestampFormatAndValuesPreserved:true,sourceMessages:messages.length,nativeVisibleSourceMessages:visible.length,annotatedIds:ids,realModelRequests:0,fixtureRunnerCalls:calls.length,embeddingTestDouble:true,generatedDateQualityClaim:false,probeSha256:createHash('sha256').update(await readFile(fileURLToPath(import.meta.url))).digest('hex')};
+  const receipt={status:'PASS_NATIVE_TIME_CONTEXT_BOUNDARIES',nativeSourceWindowAndProseUnchanged:true,onlyUnknownSourceTimeLabelsChanged:true,normalAndUnsupportedMarkerSystemPromptsIdentical:true,existingProductionSystemPromptPrefixUnchanged:true,unknownTimeIdsOnlyActuallyDelivered:true,mixedCurrentSourceExcludedFromUnknownIds:true,explicitSourceDatePreserved:true,nativeTimestampFormatAndValuesPreserved:true,sourceMessages:messages.length,nativeVisibleSourceMessages:visible.length,annotatedIds:ids,realModelRequests:0,fixtureRunnerCalls:calls.length,embeddingTestDouble:true,generatedDateQualityClaim:false,probeSha256:createHash('sha256').update(await readFile(fileURLToPath(import.meta.url))).digest('hex')};
   await writeFile(output,JSON.stringify(receipt,null,2)+'\n',{flag:'wx'});console.log(JSON.stringify(receipt));
 }finally{core?.close();await rm(root,{recursive:true,force:true});}

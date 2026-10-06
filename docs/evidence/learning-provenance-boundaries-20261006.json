@@ -1,0 +1,16 @@
+{
+  "status": "PASS_NATIVE_LEARNING_PROVENANCE_BOUNDARIES",
+  "realModelRequests": 0,
+  "fixtureRunnerCalls": 6,
+  "nativePromptPrefixSha256": "0ed83c6534e4688d72cc45fc6844b6e2fddf4e892adba9f7c08db654fb425938",
+  "nativeSkillUserPromptUnchanged": true,
+  "importedSkillTimeNoteOnlyInImportedScope": true,
+  "concurrentNormalAndPostFailureReviewUnaffected": true,
+  "userPreferenceSourceRuleDelivered": true,
+  "unknownRecordingTimeExplicitlyLabelledAtNativeL1Source": true,
+  "explicit2020SourceDatePreserved": true,
+  "nativeConflictPromptUnchangedWithAdditionalSystemProvenance": true,
+  "nativeMergePersistenceAndVectorCheckPassed": true,
+  "fixtureOutputsAreNotGeneratedQualityEvidence": true,
+  "probeSha256": "06165abf781acd8f8b465205ecccfe8a02310527ca24228a521d2278fdbc0580"
+}
