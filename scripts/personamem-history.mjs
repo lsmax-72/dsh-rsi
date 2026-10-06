@@ -11,7 +11,7 @@ export function personaHistoryContext(history) {
 }
 
 /** Import public history as native events; this performs no model dispatch or asset write. */
-export async function appendPersonaHistory(session,history,{systemBoundaries=false}={}) {
+export async function appendPersonaHistory(session,history,{systemBoundaries=false,sourceLabel='PersonaMem-v1'}={}) {
   const events=[],append=(...args)=>{const event=session.append(...args);events.push(event);return event;};
   let turn=1;const turnBoundaries=[0];
   append('turn/start',{turn});
@@ -31,11 +31,11 @@ export async function appendPersonaHistory(session,history,{systemBoundaries=fal
     // Event time remains the real import clock; the dataset supplies no historical message time.
     const content=[{type:'text',text:row.content}];let message;
     if(row.role==='user'){
-      message=createUserMessage({content,source:{kind:'user',dataset:'PersonaMem-v1',datasetIndex:index,timestampKind:'imported-unknown'}});
+      message=createUserMessage({content,source:{kind:'user',dataset:sourceLabel,datasetIndex:index,timestampKind:'imported-unknown'}});
       append('user/message',message,{surfaceOp:'append'});
     }else if(row.role==='assistant'){
       // Dataset responses are imported evidence, never attributed to the current qwen route.
-      message=createAssistantMessage({content,source:{provider:'dataset',model:'PersonaMem-v1',timestampKind:'imported-unknown'}});
+      message=createAssistantMessage({content,source:{provider:'dataset',model:sourceLabel,timestampKind:'imported-unknown'}});
       append('assistant/message',{turn,step:1,message,stream:[]},{surfaceOp:'append'});
     }else{
       message=createSystemMessage(row.content);

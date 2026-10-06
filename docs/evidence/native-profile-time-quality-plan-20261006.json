@@ -1,0 +1,73 @@
+{
+  "status": "PREDECLARED_SYNTHETIC_NATIVE_PROFILE_TIME_QUALITY_CHECK",
+  "recordedAt": "2026-10-06T12:44:17.094457+00:00",
+  "root": "/private/tmp/dsh-rsi-profile-time-quality-20261006",
+  "model": "qwen3.8-27b",
+  "provider": "qwen",
+  "thinking": "off",
+  "actualCallsMax": 6,
+  "outerWallSecondsMax": 420,
+  "nativeCallTimeoutMs": 180000,
+  "nativeMaxIterations": 16,
+  "maxOutputTokens": 4096,
+  "automaticRetries": 0,
+  "taskCommands": 0,
+  "scorerRead": false,
+  "personalSessionsRead": false,
+  "consumerCalls": 0,
+  "freshLibrary": true,
+  "historyKind": "six synthetic source messages; original timestamps unknown",
+  "explicitSourceDate": "2024-03-01 pottery",
+  "relativeSourceDates": [
+    "上周烹饪播客",
+    "下周计划披萨",
+    "以前竞技游戏; 最近偏好轻松创作"
+  ],
+  "triggerMode": "manual native record -> extractMemories -> extractScenes -> native PersonaTrigger/generatePersona; not scheduler validation",
+  "assetScope": "isolated workspace only; no global replication; no Skill requested",
+  "isolation": "host data-only storage scope; not task execution Docker sandbox",
+  "preflight": {
+    "status": "NO_DISPATCH_PREFLIGHT_PASSED",
+    "sourceMessages": 6,
+    "sourceProseMatchesDurableLog": true,
+    "layers": {
+      "L0": 6,
+      "L1": 0,
+      "L2": 0,
+      "L3": 0
+    },
+    "actualRequests": 0,
+    "knownTokens": 0,
+    "unknownActualUsage": 0,
+    "embeddingTokenUsage": null,
+    "taskSolverCalls": 0,
+    "taskCommands": 0,
+    "consumerCalls": 0,
+    "scorerRead": false,
+    "independentEffectClaim": false,
+    "triggerMode": "manual native sequence, not automatic scheduler validation"
+  },
+  "qualityRubric": {
+    "explicitDate": "L1 and any L2/L3 mention of the pottery event must preserve 2024-03-01 or equivalent source date; omission is coverage loss, not invented date",
+    "unknownDates": "No absolute calendar anchor for relative cooking/planning/preference change, including runtime year derived from recording time",
+    "clockMetadata": "Native scene META created/updated and persona last-update may use runtime time; historical Evolution date claims are factual and must be source-supported",
+    "facts": "No stronger generic dislike of games, no invented success of the planned pizza",
+    "sourceLineage": "L1 source IDs must be from exact imported original messages; model inputs reconstructable from native durable sessions",
+    "qualityDecision": "manual content audit of actual bodies; file existence, completed turn or byte equality is insufficient"
+  },
+  "failureRule": "Any cap/timeout/failure ends this run; retain partial writes and unknown usage; no resume/retry/budget increase",
+  "effectClaim": false,
+  "frozenFiles": {
+    "/Users/lsmax/Coder/dsh-rsi/scripts/review-profile-time.mjs": "233497b0bdcb10795deeb64206be2d4c2e19df492970348db8098982eb7725e0",
+    "/Users/lsmax/Coder/dsh-rsi/scripts/personamem-history.mjs": "b75c340c03728c0f5c422ed189a0f78d8d0fb39b123560071c1cd337309fa953",
+    "/Users/lsmax/Coder/dsh-rsi/src/local-core.ts": "e86ea47799c9d29fcf9110af804d458b272fb3c06a158eda94f3445a6c808657",
+    "/Users/lsmax/Coder/dsh-rsi/src/runtime.ts": "19cd05f4e7a8caba72a061fb72de9a7a10b80fa55c7d8ef161c2416170eb6035",
+    "/Users/lsmax/Coder/dsh-rsi/src/model-bridge.ts": "939baafd1b197d7ce3390d990d144f581b2dc5e9895f00b7694c7376c89dcec6",
+    "/Users/lsmax/Coder/dsh-rsi/lib/index.js": "3f1d0b1a81da8bdabfa4fe408ac51af33293c73e97b10dbc706d0470ef63d996",
+    "/Users/lsmax/Coder/dsh-rsi/lib/local-core.js": "9591cc5b3b6ba3564f3b4f26a56fac89035b53d53c415b043535318d7236ce8c",
+    "/Users/lsmax/Coder/dsh-rsi/lib/model-bridge.js": "b0a76eb74a1dae123ac58735f21f4405f62c891817b40570cd6dcd7a17f0fcc7",
+    "/private/tmp/dsh-rsi-profile-time-quality-20261006/history.json": "d20705cc2cfce77c4cbb52c34159198bdb583dae7754a26075b9b5af7729d86e",
+    "/private/tmp/dsh-rsi-profile-time-quality-20261006/patch.json": "f9d4c04dc679d40c21679d95f1bbdd2dbcdd9e0bc017797e8b291219c1f53078",
+    "/private/tmp/dsh-rsi-profile-time-quality-20261006/relay.py": "8aee7f5149aba3d31f46bbc668e59a02dd3a12b927fd4f9331a61e40a56a6900"
+  }
+}
