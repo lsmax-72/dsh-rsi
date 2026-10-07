@@ -1,0 +1,139 @@
+{
+  "status": "SYNTHETIC_SCOPE_QUALITY_SPEC",
+  "model": "qwen3.8-27b",
+  "provider": "qwen",
+  "thinking": "off",
+  "cases": [
+    {
+      "id": "explicit-change",
+      "historyBefore": [
+        {
+          "role": "system",
+          "content": "这是一段合成用户的历史对话。用户消息记录个人自述，助手消息记录当时的回应；原始活动日期未知。"
+        },
+        {
+          "role": "user",
+          "content": "我一直喜欢收藏实体电影海报，尤其是喜欢的电影的印刷海报。我享受挑选和保存纸质海报的过程，希望以后谈论收藏时记住我喜欢实体收藏这个偏好。"
+        },
+        {
+          "role": "assistant",
+          "content": "我已记录你描述的实体电影海报收藏偏好。以后讨论收藏时会结合你当时明确表达的兴趣，同时以你后续的说明更新理解。"
+        }
+      ],
+      "historyAfter": [
+        {
+          "role": "system",
+          "content": "这是一段合成用户的历史对话。用户消息记录个人自述，助手消息记录当时的回应；原始活动日期未知。"
+        },
+        {
+          "role": "user",
+          "content": "最近我已经处理掉实体电影海报，决定今后不再购买或收藏任何纸质海报。我仍然喜欢电影，但现在只保存数字海报，不再做实体收藏。请记住这是我当前偏好的明确改变。"
+        },
+        {
+          "role": "assistant",
+          "content": "我已看到你对近期收藏活动与当前偏好的补充说明。后续讨论会依据你明确表达的变化和限定条件，不把单次活动自动概括成其他偏好。"
+        }
+      ],
+      "question": "按我现在的收藏偏好，你会建议我怎样处理一张新发现的电影海报？请说明当前偏好与过去有什么区别。"
+    },
+    {
+      "id": "retain-exception",
+      "historyBefore": [
+        {
+          "role": "system",
+          "content": "这是一段合成用户的历史对话。用户消息记录个人自述，助手消息记录当时的回应；原始活动日期未知。"
+        },
+        {
+          "role": "user",
+          "content": "我一直喜欢收藏实体电影海报，尤其是喜欢的电影的印刷海报。我享受挑选和保存纸质海报的过程，希望以后谈论收藏时记住我喜欢实体收藏这个偏好。"
+        },
+        {
+          "role": "assistant",
+          "content": "我已记录你描述的实体电影海报收藏偏好。以后讨论收藏时会结合你当时明确表达的兴趣，同时以你后续的说明更新理解。"
+        }
+      ],
+      "historyAfter": [
+        {
+          "role": "system",
+          "content": "这是一段合成用户的历史对话。用户消息记录个人自述，助手消息记录当时的回应；原始活动日期未知。"
+        },
+        {
+          "role": "user",
+          "content": "我最近减少了实体海报收藏，今后其他导演的电影只保存数字海报。但宫崎骏的电影是明确例外：我仍然保留他的纸质海报，也愿意继续购买他的实体海报。这不是完全停止实体收藏。"
+        },
+        {
+          "role": "assistant",
+          "content": "我已看到你对近期收藏活动与当前偏好的补充说明。后续讨论会依据你明确表达的变化和限定条件，不把单次活动自动概括成其他偏好。"
+        }
+      ],
+      "question": "按我现在的偏好，你会怎样分别建议我处理宫崎骏和其他导演的新电影海报？"
+    },
+    {
+      "id": "no-preference-change",
+      "historyBefore": [
+        {
+          "role": "system",
+          "content": "这是一段合成用户的历史对话。用户消息记录个人自述，助手消息记录当时的回应；原始活动日期未知。"
+        },
+        {
+          "role": "user",
+          "content": "我一直喜欢收藏实体电影海报，尤其是喜欢的电影的印刷海报。我享受挑选和保存纸质海报的过程，希望以后谈论收藏时记住我喜欢实体收藏这个偏好。"
+        },
+        {
+          "role": "assistant",
+          "content": "我已记录你描述的实体电影海报收藏偏好。以后讨论收藏时会结合你当时明确表达的兴趣，同时以你后续的说明更新理解。"
+        }
+      ],
+      "historyAfter": [
+        {
+          "role": "system",
+          "content": "这是一段合成用户的历史对话。用户消息记录个人自述，助手消息记录当时的回应；原始活动日期未知。"
+        },
+        {
+          "role": "user",
+          "content": "最近我卖掉了一些重复印刷、没有收藏价值的电影海报，只是为了减少重复占用空间。我仍然喜欢并继续收藏实体电影海报，也保留心爱的海报。我没有改成只收数字海报。"
+        },
+        {
+          "role": "assistant",
+          "content": "我已看到你对近期收藏活动与当前偏好的补充说明。后续讨论会依据你明确表达的变化和限定条件，不把单次活动自动概括成其他偏好。"
+        }
+      ],
+      "question": "最近卖掉部分海报后，你会建议我停止实体海报收藏吗？请依据我当前的实际偏好说明。"
+    }
+  ],
+  "budgets": {
+    "backgroundCalls": 20,
+    "consumerCalls": 4,
+    "totalCalls": 24,
+    "wallSeconds": 600,
+    "maxOutputTokens": 4096,
+    "nativeMaxIterations": 8,
+    "nativeCallTimeoutMs": 180000
+  },
+  "qualityRubric": {
+    "explicit-change": [
+      "Prior physical preference retained as past, current digital-only preference preserved.",
+      "No current recommendation to buy physical posters."
+    ],
+    "retain-exception": [
+      "Digital general preference and Miyazaki physical exception both preserved.",
+      "No claim that every physical collection stopped."
+    ],
+    "no-preference-change": [
+      "Selling duplicates does not erase continuing physical preference.",
+      "No digital-only preference invented."
+    ]
+  },
+  "mechanismRubric": [
+    "Both original sessions imported through native v4 events.",
+    "First-stage persona actually present in shared scope.",
+    "Subsequent native shared conflict prompt sees old shared ID.",
+    "Live memory heads have only source-supported source IDs.",
+    "Final consumer actual requests contain full source history and memory body/identity.",
+    "Question session not learned and asset content/versions unchanged.",
+    "Every request reconstructs from its durable log prefix."
+  ],
+  "failureRule": "Each case once; no automatic retries, resume, budget increases, or choosing a favorable attempt. Any request cap, timeout, or technical failure closes that case. Remaining predeclared independent cases still run.",
+  "scope": "Synthetic quality diagnostic, not an accuracy benchmark or causal asset-effect test. Queue processing and profile rebuild explicitly invoked to control stage timing; native import, extraction, conflict, writer and consumers remain production paths. No task commands.",
+  "skillPolicy": "Native Skill review runs normally; no skill is forced from preference prose. Existing separate Skill consumption receipt remains valid only for its tested code."
+}

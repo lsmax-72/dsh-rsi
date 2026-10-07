@@ -62,6 +62,7 @@ def main():
     parser.add_argument('--persona-fixture-closed-profile-failure',action='store_true',help='Fixture only: complete history job, close an independent native profile quota failure, then answer with frozen assets')
     parser.add_argument('--persona-fixture-closed-learning-failure',action='store_true',help='Fixture only: store native assets then abort Skill review; verify opt-in foreground continuation, zero real models')
     parser.add_argument('--fixture-answer-stop',choices=['stop','max-tokens','error-after-text'],default='stop',help='PersonaMem fixture only: native finish reason; never modifies a real provider')
+    parser.add_argument('--scope-quality-protocol',type=Path,help='Frozen synthetic cross-scope quality diagnostic; no scorer or task tools')
     parser.add_argument('--persona-input',type=Path,help='Public PersonaMem input only; answers must be absent')
     parser.add_argument('--persona-protocol',type=Path,help='Frozen independent PersonaMem manifest; validates user, questions, public hash and budgets before dispatch')
     parser.add_argument('--persona-fixture-questions',type=int,choices=[2,4],default=2,help='Fixture-only question count; real independent cases require a frozen manifest')
@@ -85,6 +86,7 @@ def main():
     parser.add_argument('--wall-seconds', type=int, default=1200)
     parser.add_argument('--settle-seconds', type=int, default=90)
     args = parser.parse_args()
+    if args.scope_quality_protocol and (args.arm!='rsi' or args.persona_input or args.formal or args.phases or args.seed_assets or args.seed_sessions or args.profile_recovery or args.learning_pool or args.baseline_history): parser.error('Scope quality requires a fresh RSI-only diagnostic')
     if args.persona_fixture_closed_profile_failure and not (args.fixture and args.fixture_learning and args.persona_input and args.arm=='rsi'): parser.error('Closed-profile control requires a native PersonaMem RSI learning fixture')
     if args.persona_fixture_closed_profile_failure and args.persona_fixture_closed_learning_failure: parser.error('Use one declared fixture failure mode')
     if args.persona_fixture_closed_learning_failure and not (args.fixture and args.fixture_learning and args.persona_input and args.arm=='rsi'): parser.error('Closed-learning failure control requires a native PersonaMem RSI learning fixture')
@@ -107,7 +109,7 @@ def main():
         parser.error('Interruption control must use a fixture, not a paid model request.')
     if args.arm == 'baseline' and args.seed_assets:
         parser.error('Baseline cannot receive RSI assets.')
-    if not args.fixture and not args.persona_input and not args.profile_recovery and not args.baseline_date:
+    if not args.fixture and not args.persona_input and not args.profile_recovery and not args.scope_quality_protocol and not args.baseline_date:
         parser.error('Real runs require --baseline-date from the scorer image HEAD at the base source tree; current time changes Django development version.')
     if not args.fixture and not os.environ.get('RSI_MODEL_UPSTREAM'):
         parser.error('Real preflight requires the authorized RSI_MODEL_UPSTREAM environment variable.')
@@ -160,6 +162,22 @@ def main():
         next(row for row in patch if row['id']=='tools')['config']['mode']='native'
         driver['config']['phases']=[{'name':q['id']} for q in public['questions']]
         services[:]=[row for row in services if row['id'] not in ['rsi-fs','rsi-files','rsi-search','rsi-shell','rsi-shell-env','rsi-bash','rsi-ptc']]
+    if args.scope_quality_protocol:
+        frozen=json.loads(args.scope_quality_protocol.read_text())
+        if frozen.get('status')!='FROZEN_SYNTHETIC_SCOPE_QUALITY' or frozen.get('model')!='qwen3.8-27b': parser.error('Scope quality protocol must be frozen for qwen3.8-27b')
+        case=next((c for c in frozen['cases'] if c['id']==args.instance),None)
+        if case is None or set(case)!=set(['id','historyBefore','historyAfter','question']): parser.error('Unexpected public diagnostic input; rubric stays on reviewer side')
+        budgets=frozen['budgets']
+        if (args.dispatch_limit,args.learning_call_budget,learning_limit,args.request_limit,args.wall_seconds)!=(budgets['consumerCalls'],budgets['backgroundCalls'],budgets['backgroundCalls'],budgets['totalCalls'],budgets['wallSeconds']): parser.error('Scope quality budgets differ from frozen protocol')
+        if not args.fixture:
+            if subprocess.check_output(['docker','image','inspect','--format','{{.Id}}',args.image],text=True).strip()!=frozen['taskImageId']: parser.error('Frozen scope runtime base image changed')
+            if subprocess.check_output(['git','rev-parse','HEAD'],cwd=project,text=True).strip()!=frozen['revision'] or subprocess.check_output(['git','status','--porcelain'],cwd=project,text=True).strip(): parser.error('Frozen scope quality requires its clean source revision')
+            if any(hashlib.sha256((project/file).read_bytes()).hexdigest()!=sha for file,sha in frozen['inputSha256'].items()): parser.error('Scope diagnostic implementation changed')
+            if hashlib.sha256(os.environ['RSI_MODEL_UPSTREAM'].encode()).hexdigest()!=frozen['upstreamSha256']: parser.error('Declared model service changed')
+        driver['name']='/opt/rsi/scripts/review-scope-quality.mjs'
+        driver['config']['scopeQuality']=True
+        next(row for row in patch if row['id']=='tools')['config']['mode']='native'
+        services[:]=[row for row in services if row['id'] not in ['rsi-fs','rsi-files','rsi-search','rsi-shell','rsi-shell-env','rsi-bash','rsi-ptc']]
     if args.profile_recovery:
         driver['name']='/opt/rsi/scripts/recover-native-profiles.mjs'
         services[:]=[row for row in services if row['id'] not in ['rsi-fs','rsi-files','rsi-search','rsi-shell','rsi-shell-env','rsi-bash','rsi-ptc']]
@@ -168,9 +186,10 @@ def main():
     else:
         service = next(s for s in services if s['id']=='rsi')
         service['config']['settings']={'dailyCallBudget':args.learning_call_budget}
+        if args.scope_quality_protocol: service['config']['settings'].update(learningEnabled=False,maxTokens=4096,maxIterations=8,timeoutMs=180000)
         if args.fixture:
-            service['config']['settings']['learningEnabled']=args.fixture_learning
-            if args.fixture_learning: service['config'].update(provider='pilot-fixture',model='fixture')
+            service['config']['settings']['learningEnabled']=False if args.scope_quality_protocol else args.fixture_learning
+            if args.fixture_learning or args.scope_quality_protocol: service['config'].update(provider='pilot-fixture',model='fixture')
     embedding_model=None
     if args.arm=='rsi':
         embedding_model=(args.embedding_model or project/'.artifacts/models/embeddinggemma-300m-qat-Q8_0.gguf').resolve()
@@ -207,6 +226,10 @@ def main():
             root=Path(temp)
             shutil.copytree(project/'lib',root/'lib')
             shutil.copy2(project/'scripts/pilot-task.mjs',root/'pilot-task.mjs')
+            if args.scope_quality_protocol:
+                shutil.copy2(project/'scripts/review-scope-quality.mjs',root/'review-scope-quality.mjs')
+                shutil.copy2(project/'scripts/personamem-history.mjs',root/'personamem-history.mjs')
+                (root/'scope-quality.json').write_text(json.dumps(case,ensure_ascii=False))
             if args.profile_recovery:shutil.copy2(project/'scripts/recover-native-profiles.mjs',root/'recover-native-profiles.mjs')
             if args.persona_input:
                 shutil.copy2(project/'scripts/personamem-pilot-task.mjs',root/'personamem-pilot-task.mjs')
@@ -222,6 +245,7 @@ def main():
             dockerfile = f'FROM {args.image}\nUSER root\nCOPY package.json package-lock.json /opt/rsi/\nRUN cd /opt/rsi && npm ci --ignore-scripts\nCOPY lib /opt/rsi/lib\nCOPY pilot-task.mjs audit-session-requests.mjs task-input.mjs pilot.json /opt/rsi/scripts/\nENV NODE_LLAMA_CPP_GPU=false\n'
             if args.persona_input:
                 dockerfile += 'COPY personamem-pilot-task.mjs personamem-history.mjs personamem-learning-policy.mjs personamem-native-learning-policy.mjs /opt/rsi/scripts/\nCOPY personamem.json /opt/rsi/personamem.json\n'
+            if args.scope_quality_protocol:dockerfile += 'COPY review-scope-quality.mjs personamem-history.mjs scope-quality.json /opt/rsi/scripts/\n'
             if args.profile_recovery:dockerfile += 'COPY recover-native-profiles.mjs /opt/rsi/scripts/\n'
             if embedding_model:
                 shutil.copy2(embedding_model,root/'embedding.gguf')
@@ -272,7 +296,7 @@ def main():
             'dispatchLimit':args.dispatch_limit,'learningCallBudget':args.learning_call_budget,'learningDispatchLimit':learning_limit, 'fixtureLearning':args.fixture_learning,
             'wallSecondsPerPhase':args.wall_seconds,'settleSecondsPerPhase':args.settle_seconds,
             'embeddingModelSha256':model_sha if embedding_model else None,'embeddingProvider':'native-local' if embedding_model else None,
-            'formalBenchmark':args.formal or bool(args.persona_protocol),'personaProtocolSha256':hashlib.sha256(args.persona_protocol.read_bytes()).hexdigest() if args.persona_protocol else None,'instanceId':args.instance, 'sourceSessionsRestored':bool(args.seed_sessions or args.baseline_history),'baselineRawHistoryRestored':bool(args.baseline_history), 'effectivePatch':patch},indent=2))
+            'scopeQualityProtocolSha256':hashlib.sha256(args.scope_quality_protocol.read_bytes()).hexdigest() if args.scope_quality_protocol else None,'syntheticQualityDiagnostic':bool(args.scope_quality_protocol),'formalBenchmark':args.formal or bool(args.persona_protocol),'personaProtocolSha256':hashlib.sha256(args.persona_protocol.read_bytes()).hexdigest() if args.persona_protocol else None,'instanceId':args.instance, 'sourceSessionsRestored':bool(args.seed_sessions or args.baseline_history),'baselineRawHistoryRestored':bool(args.baseline_history), 'effectivePatch':patch},indent=2))
         phase_count = len(driver['config'].get('phases',[{}]))
         until = time.monotonic() + phase_count*(args.wall_seconds+args.settle_seconds)+90
         killed = False

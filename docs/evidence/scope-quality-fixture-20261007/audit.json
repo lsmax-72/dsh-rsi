@@ -1,0 +1,169 @@
+{
+  "status": "MECHANISM_PASS_CONTENT_REVIEW_PENDING",
+  "fixture": true,
+  "caseId": "explicit-change",
+  "checks": {
+    "completed": true,
+    "oldSharedPersonaPresent": true,
+    "oldSharedIdInAfterConflict": true,
+    "memoryDeliveredWithContentIdentity": true,
+    "allMemorySourceIdsKnown": true,
+    "durablePrefixReconstruction": true,
+    "fullHistoryRetained": true,
+    "consumerNotLearned": true,
+    "gatewayMatchesDispatches": true
+  },
+  "receipt": {
+    "status": "COMPLETED_REQUIRES_CONTENT_REVIEW",
+    "fixture": true,
+    "caseId": "explicit-change",
+    "fullHistoryRetained": true,
+    "questionLearned": false,
+    "independentEffectClaim": false,
+    "taskCommands": 0,
+    "backgroundCalls": 13,
+    "consumerCalls": 1,
+    "actualRequests": 14,
+    "knownTokens": 280,
+    "unknownActualUsage": 0,
+    "embeddingTokenUsage": null,
+    "allInputsReconstructed": true,
+    "triggerMode": "Explicit production queue processing and manual native profile rebuild; automatic timing not tested."
+  },
+  "phaseCost": {
+    "background/l1-extraction": {
+      "requests": 2,
+      "knownTokens": 40,
+      "inputTokens": 26,
+      "outputTokens": 14,
+      "unknownUsage": 0
+    },
+    "background/skill-extract-scope-explicit-change-before:1": {
+      "requests": 1,
+      "knownTokens": 20,
+      "inputTokens": 13,
+      "outputTokens": 7,
+      "unknownUsage": 0
+    },
+    "background/scene-extract-1791372394295": {
+      "requests": 2,
+      "knownTokens": 40,
+      "inputTokens": 26,
+      "outputTokens": 14,
+      "unknownUsage": 0
+    },
+    "background/persona-generation": {
+      "requests": 4,
+      "knownTokens": 80,
+      "inputTokens": 52,
+      "outputTokens": 28,
+      "unknownUsage": 0
+    },
+    "background/l1-conflict-detection": {
+      "requests": 1,
+      "knownTokens": 20,
+      "inputTokens": 13,
+      "outputTokens": 7,
+      "unknownUsage": 0
+    },
+    "background/skill-extract-scope-explicit-change-after:1": {
+      "requests": 1,
+      "knownTokens": 20,
+      "inputTokens": 13,
+      "outputTokens": 7,
+      "unknownUsage": 0
+    },
+    "background/scene-extract-1791372398732": {
+      "requests": 2,
+      "knownTokens": 40,
+      "inputTokens": 26,
+      "outputTokens": 14,
+      "unknownUsage": 0
+    },
+    "consumer/consumer": {
+      "requests": 1,
+      "knownTokens": 20,
+      "inputTokens": 13,
+      "outputTokens": 7,
+      "unknownUsage": 0
+    }
+  },
+  "deliveries": [
+    {
+      "id": "m_1791372395794_0448a157",
+      "scope": "global",
+      "version": 2,
+      "content": "我一直喜欢收藏实体电影海报，尤其是喜欢的电影的印刷海报。我享受挑选和保存纸质海报的过程，希望以后谈论收藏时记住我喜欢实体收藏这个偏好。 最近我已经处理掉实体电影海报，决定今后不再购买或收藏任何纸质海报。我仍然喜欢电影，但现在只保存数字海报，不再做实体收藏。请记住这是我当前偏好的明确改变。",
+      "sourceIds": [
+        "6b4f5ab0-7b13-4ae2-a4ce-a9952d0d861a",
+        "e91e924c-0b65-4748-be16-eafc3ba3b448"
+      ],
+      "sourceIdsKnown": true,
+      "consumerRequests": [
+        1
+      ]
+    }
+  ],
+  "sharedConflictVisibility": [
+    {
+      "request": 8,
+      "visibleOldIds": [
+        "m_1791372392898_f78cf203"
+      ],
+      "scope": "global"
+    }
+  ],
+  "profiles": {
+    "workspace": [],
+    "global": [
+      {
+        "path": "persona.md",
+        "text": "# 夹具画像\n最近我已经处理掉实体电影海报，决定今后不再购买或收藏任何纸质海报。我仍然喜欢电影，但现在只保存数字海报，不再做实体收藏。请记住这是我当前偏好的明确改变。\n\n---\n## 🗺️ Scene Navigation (Scene Index)\n*以下是当前场景记忆的索引，可根据需要 read 读取详细内容。*\n\n### Path: scene_blocks/电影海报收藏.md\n**热度**: 1 | **更新**: 2026-10-07T00:00:00Z\nSummary: 电影海报偏好\n\n📌 使用说明：\n- Path 是 scene block 的绝对路径，可直接使用 **read** 工具读取完整内容（参数: filePath）\n- 热度：该场景被记忆命中的累计次数，越高越重要\n- Summary：场景的核心要点摘要\n"
+      },
+      {
+        "path": "scene_blocks/电影海报收藏.md",
+        "text": "-----META-START-----\ncreated: 2026-10-07T00:00:00Z\nupdated: 2026-10-07T00:00:00Z\nsummary: 电影海报偏好\nheat: 1\n-----META-END-----\n\n最近我已经处理掉实体电影海报，决定今后不再购买或收藏任何纸质海报。我仍然喜欢电影，但现在只保存数字海报，不再做实体收藏。请记住这是我当前偏好的明确改变。"
+      }
+    ]
+  },
+  "answer": {
+    "response": "夹具消费完成。最近我已经处理掉实体电影海报，决定今后不再购买或收藏任何纸质海报。我仍然喜欢电影，但现在只保存数字海报，不再做实体收藏。请记住这是我当前偏好的明确改变。",
+    "reason": {
+      "kind": "completed"
+    },
+    "fullHistoryRetained": true
+  },
+  "embedding": {
+    "calls": 11,
+    "failedCalls": 0,
+    "tokenUsage": null,
+    "inputCharacters": 779
+  },
+  "semanticQuality": null,
+  "independentEffectClaim": false,
+  "artifactSha256": {
+    "sources.json": "0017f62a485781ed0b5916822255ba388dafb079333540d6e0d3c83dd7f8a41b",
+    "scope-explicit-change-before.events.json": "a193417215a66c6e400a7c8a9a2910931162c4d8071a5b6cdd47d53e40ba405d",
+    "consumer-isolation.json": "c0d16fd5745b2443d96f75c3122bb8e764ce523f32cec9ab6f43064d793b972f",
+    "scope-consumer-explicit-change.events.json": "b4f71e36ffaba1e0062e984fba511da2d4d37058ebd1db99709c375b2457f4bb",
+    "rsi-fecd91e2-6acc-4fc0-810b-363076efaa85.events.json": "efdbf8c6eba069652f3f14a04df92e1f8c4b6991f379c5152d521be7d97a0649",
+    "rsi-ba0af9d3-e51b-4d42-947e-7ed75c095f7c.events.json": "26110a30d4a0cb10f280e08e6fe47220bf56765f9af0d560f8bae69737d95e9b",
+    "rsi-98b61009-960d-47d6-b9df-73764801f07b.events.json": "d597fabdfd8b9cb4541934ef6eb3545818d59e7d2655a966e52cf60a72dfaca2",
+    "after-assets.json": "0a6eedfc76a3812451ce23b1b7048120ff2baf9c4eceac59491a9cd35a0457ec",
+    "snapshot.json": "3052ccc8a7cfb0eff535e7cc416ab91b0f2bd515d100f2d51b4b6fff03e596ff",
+    "frozen-assets.json": "c70bd855d4ffcf6170a9b7ee150785610830c16976c63ae4125726c47f9816f4",
+    "scope-explicit-change-after.events.json": "3c19fbeefc42c288982dde48a61ae3a5eabc0b84ea98eb6c45e1c0a440d3bc1a",
+    "final-assets.json": "ef3c03c1f76851c2426030e63b2cebdb485eeae66747839222cf77035c9b34cb",
+    "rsi-4643adaf-b978-459c-8524-f95bd8ca63f0.events.json": "50adcc1b5ab8c012b9ba8e6b8d3939e3878c9505d8541ebc507daebf8754cbe9",
+    "stages.json": "6c4c85b38d519b5e773d8846856032e2061487d917804d56b88d88edc2ff4466",
+    "rsi-61219cfb-d714-403e-ad82-150911092290.events.json": "a3d4fc4f857b01d55a63ab19790187cd7636c0be2136820a6319e10ed1200638",
+    "rsi-58e3108d-4142-4194-a7f6-181461049432.events.json": "305c55574f190fbf6a7396a40454e0704acae89e7fbb63de460a990d7ef22004",
+    "rsi-1357824d-539d-48b6-8578-9aaa35cf858e.events.json": "76b2d3ed88613a4b1b07a4d8f47aecc147a9fc872e24bf3786c22da3f51dd30a",
+    "model-requests.json": "9fbfe5468b4ca2c370d03a26c29f69bd68b73d996eba883daae066fdb9c98f6f",
+    "rsi-23eb254d-08fe-431f-85fc-3aba0e5776dd.events.json": "b087b95c0db6af46524655d5283eff42cc4f9cf7c071a67403a0a08efa50d4b4",
+    "answer.json": "49ac526df6f91a237486871e25bffdb34866bb6ed6482f4602ee023b7971ecf1",
+    "before-assets.json": "af8c32fba01136daa5da6897813d1713f41092e339777aa5398d736516dae936",
+    "receipt.json": "e5e50af4efe0290c43d2e4a0b690a21743bc5169d31ff951ab4cc6f0d91faf7d",
+    "rsi-a6509303-a61e-4fc0-91a5-0a26df7b7308.events.json": "8a7c32923e6473613a023d37f021590cf01654870351c2de98210b3a92a10b16"
+  }
+}

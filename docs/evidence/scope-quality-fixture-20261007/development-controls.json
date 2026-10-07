@@ -1,0 +1,28 @@
+{
+  "realQwenCalls": 0,
+  "fixtureAttempts": [
+    {
+      "attempt": 1,
+      "error": "Fixture route not registered for qwen; zero fixture streams."
+    },
+    {
+      "attempt": 2,
+      "error": "Synthetic history lacked protected system head; zero consumer streams."
+    },
+    {
+      "attempt": 3,
+      "error": "Consumer history assertion incorrectly required original system role and exact block equality."
+    },
+    {
+      "attempt": 4,
+      "status": "PASS",
+      "fixtureStreams": 14
+    }
+  ],
+  "independentPrefixAudit": {
+    "pass": true,
+    "requests": 14,
+    "tamperedInputRejected": true
+  },
+  "legacyFrameAudit": "Imported assistant events invalidate its per-dispatch frame-position assumption. New audit uses actual observed prefixEndSeq; old experiment audits and scores are unchanged."
+}

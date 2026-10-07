@@ -1,0 +1,17 @@
+{
+  "status": "COMPLETED_REQUIRES_CONTENT_REVIEW",
+  "fixture": true,
+  "caseId": "explicit-change",
+  "fullHistoryRetained": true,
+  "questionLearned": false,
+  "independentEffectClaim": false,
+  "taskCommands": 0,
+  "backgroundCalls": 13,
+  "consumerCalls": 1,
+  "actualRequests": 14,
+  "knownTokens": 280,
+  "unknownActualUsage": 0,
+  "embeddingTokenUsage": null,
+  "allInputsReconstructed": true,
+  "triggerMode": "Explicit production queue processing and manual native profile rebuild; automatic timing not tested."
+}
