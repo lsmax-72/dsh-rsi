@@ -1,0 +1,99 @@
+[
+  {
+    "caseId": "explicit-change",
+    "consumerRequests": 0,
+    "skills": [
+      {
+        "scope": "c52ddf65534b7b4603508435",
+        "id": "skl-zIEJsOMcVNuW",
+        "name": "movie-poster-physical-collection",
+        "version": 2,
+        "bodyCharacters": 292,
+        "bodySha256": "acabc39bd08d5876830220002a9b2332f90964f421ef78bfee8282cc51609eea",
+        "actualBodyDeliveries": []
+      }
+    ],
+    "profiles": [
+      {
+        "scope": "global",
+        "path": "persona.md",
+        "bodyCharacters": 1130,
+        "bodySha256": "685889620ca952c67b84a9c3938c1d82ff6918fde47522b26d7abd180af1eee4",
+        "actualBodyDeliveries": [],
+        "presentation": "Native stripSceneNavigation(saved).trim(); navigation separately injected"
+      }
+    ],
+    "qualityJudgment": null,
+    "newModelCalls": 0
+  },
+  {
+    "caseId": "retain-exception",
+    "consumerRequests": 2,
+    "skills": [
+      {
+        "scope": "c52ddf65534b7b4603508435",
+        "id": "skl-6KvwgcFeHCvx",
+        "name": "user-film-poster-collection",
+        "version": 2,
+        "bodyCharacters": 365,
+        "bodySha256": "ec9f18d32f34b51fd0695b50cbde38693176806680c4c0a7f19a4b067b1ef9aa",
+        "actualBodyDeliveries": [
+          {
+            "consumerRequest": 2,
+            "callId": "call_3bf8a122535a47a58e4bca2f"
+          }
+        ]
+      }
+    ],
+    "profiles": [
+      {
+        "scope": "global",
+        "path": "persona.md",
+        "bodyCharacters": 1052,
+        "bodySha256": "5d5568c880af2bdf388428f428336c204340e727519c7a52bf6902d120e58058",
+        "actualBodyDeliveries": [
+          1,
+          2
+        ],
+        "presentation": "Native stripSceneNavigation(saved).trim(); navigation separately injected"
+      }
+    ],
+    "qualityJudgment": null,
+    "newModelCalls": 0
+  },
+  {
+    "caseId": "no-preference-change",
+    "consumerRequests": 2,
+    "skills": [
+      {
+        "scope": "c52ddf65534b7b4603508435",
+        "id": "skl-eBk7oZvEOOJs",
+        "name": "user-collects-physical-movie-posters",
+        "version": 2,
+        "bodyCharacters": 374,
+        "bodySha256": "57e8ea3e920d6ba703661267ea6f4685a3533fa530e4a78cc95f8575c6316ed6",
+        "actualBodyDeliveries": [
+          {
+            "consumerRequest": 2,
+            "callId": "call_02340197e332441b87bdcbe8"
+          }
+        ]
+      }
+    ],
+    "profiles": [
+      {
+        "scope": "global",
+        "path": "persona.md",
+        "bodyCharacters": 1242,
+        "bodySha256": "cfaf4ecf815d1dafa711cc4cffaede50a336344aecfa44ccd7206a23b2de99ca",
+        "actualBodyDeliveries": [
+          1,
+          2
+        ],
+        "presentation": "Native stripSceneNavigation(saved).trim(); navigation separately injected"
+      }
+    ],
+    "qualityJudgment": null,
+    "newModelCalls": 0
+  }
+]

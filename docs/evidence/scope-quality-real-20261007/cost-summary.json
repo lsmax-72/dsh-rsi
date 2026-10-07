@@ -1,0 +1,69 @@
+{
+  "status": "DIAGNOSTIC_NOT_FULLY_PASSED",
+  "codeRevision": "95d1ee0c3d04d5f45e0349438f36727241a41615",
+  "caseCount": 3,
+  "completed": 2,
+  "budgetClosed": 1,
+  "backgroundRequests": 60,
+  "consumerRequests": 4,
+  "knownChatTokens": 263528,
+  "unknownChatUsage": 0,
+  "embedding": {
+    "calls": 37,
+    "failedCalls": 0,
+    "inputCharacters": 2059,
+    "tokens": null
+  },
+  "costByTask": {
+    "background/l1-extraction": {
+      "requests": 6,
+      "inputTokens": 11051,
+      "outputTokens": 1634,
+      "knownTokens": 12685,
+      "unknownUsage": 0
+    },
+    "background/l1-conflict-detection": {
+      "requests": 5,
+      "inputTokens": 7118,
+      "outputTokens": 853,
+      "knownTokens": 7971,
+      "unknownUsage": 0
+    },
+    "Skill": {
+      "requests": 24,
+      "inputTokens": 126639,
+      "outputTokens": 1892,
+      "knownTokens": 128531,
+      "unknownUsage": 0
+    },
+    "scene": {
+      "requests": 12,
+      "inputTokens": 55580,
+      "outputTokens": 3900,
+      "knownTokens": 59480,
+      "unknownUsage": 0
+    },
+    "persona": {
+      "requests": 13,
+      "inputTokens": 39503,
+      "outputTokens": 4469,
+      "knownTokens": 43972,
+      "unknownUsage": 0
+    },
+    "consumer/consumer": {
+      "requests": 4,
+      "inputTokens": 10486,
+      "outputTokens": 403,
+      "knownTokens": 10889,
+      "unknownUsage": 0
+    }
+  },
+  "independentEffectClaim": false,
+  "newModelCallsDuringAudit": 0,
+  "gates": {
+    "allRequestReconstruction": true,
+    "allCasesCompleted": false,
+    "allDerivedContentSupported": false,
+    "pairedDiagnosticMayStart": false
+  }
+}

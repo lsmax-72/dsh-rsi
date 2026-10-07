@@ -1,0 +1,98 @@
+{
+  "reviewType": "MANUAL_OPEN_SOURCE_REVIEW_NOT_BLIND",
+  "rubric": "docs/evidence/scope-quality-spec-20261007.json plus source-supported content checks in protocol",
+  "cases": [
+    {
+      "caseId": "explicit-change",
+      "completion": "BUDGET_EXHAUSTED",
+      "l1CurrentFact": "PASS_PARTIAL",
+      "l1PastAsPast": "Only native version history retains past; current head does not present transition explicitly.",
+      "workspaceInstruction": "FAIL_STALE_CURRENT_CONSTRAINT",
+      "scene": "FAIL_STALE_CURRENT_AND_UNSUPPORTED_NARRATIVE",
+      "persona": "NOT_REBUILT_STALE_FILE_PENDING",
+      "skill": "Current digital-only fact preserved in version 2; not consumed.",
+      "answer": "NOT_OBSERVED",
+      "overall": "NOT_PASSED",
+      "evidence": [
+        {
+          "layer": "workspaceL1",
+          "quote": "用户要求 AI 以后在谈论收藏话题时，记住并考虑其喜欢实体收藏这一偏好。",
+          "reason": "After explicit current change this old instruction remains a live current head, version 0, with no past qualifier. Global persona conflict request 12 does not see its ID."
+        },
+        {
+          "layer": "workspaceScene",
+          "quote": "未来在相关场景（收藏推荐、藏品讨论、购买建议等）中应默认朝实体收藏方向理解。",
+          "reason": "Contradicts new digital-only statement; scene derived from old instruction."
+        },
+        {
+          "layer": "budget",
+          "quote": "HOST_LEARNING_QUOTA",
+          "reason": "20 dispatched background requests used; workspace persona second request blocked before dispatch, shared rebuild and consumer not reached. Global profile invalidation remains pending, not evidence stale file was injected."
+        }
+      ]
+    },
+    {
+      "caseId": "retain-exception",
+      "completion": "COMPLETED",
+      "l1": "PASS_KEY_FACTS",
+      "scene": "FAIL_UNSUPPORTED_INFERENCE",
+      "persona": "FAIL_UNSUPPORTED_INFERENCE",
+      "skill": "PASS_KEY_FACTS_AND_PAST_CURRENT",
+      "answer": "PASS_PREDECLARED_PREFERENCE_CRITERIA_WITH_UNSUPPORTED_STRATEGY_LABEL",
+      "overall": "NOT_PASSED",
+      "evidence": [
+        {
+          "layer": "scene",
+          "quote": "出于精简考量",
+          "reason": "Source states reduced physical collection and exception, but not motive or cost/space management."
+        },
+        {
+          "layer": "persona",
+          "quote": "收藏讲究\"少而精\"，倾向精简、降低维护成本",
+          "reason": "Unsupported long-term preference and motive. Childhood-memory passage is explicitly a guess; labelling it does not make it source-supported."
+        },
+        {
+          "layer": "answer",
+          "quote": "更符合你“精简、少而精”的收藏策略",
+          "reason": "Correct two branches, but repeats unsupported label present in delivered profile. Content overlap alone does not identify its causal source."
+        }
+      ]
+    },
+    {
+      "caseId": "no-preference-change",
+      "completion": "COMPLETED",
+      "l1": "PASS_KEY_FACTS",
+      "scene": "FAIL_UNSUPPORTED_INFERENCE_AND_ACTIVITY_DATE",
+      "persona": "FAIL_UNSUPPORTED_INFERENCE_AND_ACTIVITY_DATE",
+      "skill": "PASS_KEY_FACTS",
+      "answer": "PASS_PREDECLARED_PREFERENCE_CRITERIA_WITH_UNSUPPORTED_AESTHETIC_LABEL",
+      "overall": "NOT_PASSED",
+      "evidence": [
+        {
+          "layer": "persona",
+          "quote": "性别倾向使用\"他\"，但样本极少，暂不确定",
+          "reason": "No original user sex/gender evidence; generated narrative pronouns are not user evidence."
+        },
+        {
+          "layer": "scene",
+          "quote": "近期（2026-10）",
+          "reason": "Source activity dates explicitly unknown. Import/persistence clock is not occurrence date."
+        },
+        {
+          "layer": "persona",
+          "quote": "坚定偏好实体纸质收藏，拒绝将其数字化",
+          "reason": "Source says did not switch to digital-only; stronger categorical rejection is unsupported."
+        },
+        {
+          "layer": "answer",
+          "quote": "更精选、更有质感",
+          "reason": "Source supports duplicate removal and continuing physical collection, not tactile/aesthetic priority."
+        }
+      ]
+    }
+  ],
+  "answerCoreCriteriaPassed": 2,
+  "answerObserved": 2,
+  "overallPassed": 0,
+  "independentEffectClaim": false
+}

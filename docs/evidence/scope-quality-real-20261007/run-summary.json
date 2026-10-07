@@ -1,0 +1,17 @@
+[
+  {
+    "caseId": "explicit-change",
+    "exitCode": 1,
+    "elapsedSeconds": 143.305
+  },
+  {
+    "caseId": "retain-exception",
+    "exitCode": 0,
+    "elapsedSeconds": 167.072
+  },
+  {
+    "caseId": "no-preference-change",
+    "exitCode": 0,
+    "elapsedSeconds": 189.404
+  }
+]

@@ -1,0 +1,198 @@
+{
+  "status": "FROZEN_SYNTHETIC_SCOPE_QUALITY",
+  "model": "qwen3.8-27b",
+  "provider": "qwen",
+  "thinking": "off",
+  "cases": [
+    {
+      "id": "explicit-change",
+      "historyBefore": [
+        {
+          "role": "system",
+          "content": "这是一段合成用户的历史对话。用户消息记录个人自述，助手消息记录当时的回应；原始活动日期未知。"
+        },
+        {
+          "role": "user",
+          "content": "我一直喜欢收藏实体电影海报，尤其是喜欢的电影的印刷海报。我享受挑选和保存纸质海报的过程，希望以后谈论收藏时记住我喜欢实体收藏这个偏好。"
+        },
+        {
+          "role": "assistant",
+          "content": "我已记录你描述的实体电影海报收藏偏好。以后讨论收藏时会结合你当时明确表达的兴趣，同时以你后续的说明更新理解。"
+        }
+      ],
+      "historyAfter": [
+        {
+          "role": "system",
+          "content": "这是一段合成用户的历史对话。用户消息记录个人自述，助手消息记录当时的回应；原始活动日期未知。"
+        },
+        {
+          "role": "user",
+          "content": "最近我已经处理掉实体电影海报，决定今后不再购买或收藏任何纸质海报。我仍然喜欢电影，但现在只保存数字海报，不再做实体收藏。请记住这是我当前偏好的明确改变。"
+        },
+        {
+          "role": "assistant",
+          "content": "我已看到你对近期收藏活动与当前偏好的补充说明。后续讨论会依据你明确表达的变化和限定条件，不把单次活动自动概括成其他偏好。"
+        }
+      ],
+      "question": "按我现在的收藏偏好，你会建议我怎样处理一张新发现的电影海报？请说明当前偏好与过去有什么区别。"
+    },
+    {
+      "id": "retain-exception",
+      "historyBefore": [
+        {
+          "role": "system",
+          "content": "这是一段合成用户的历史对话。用户消息记录个人自述，助手消息记录当时的回应；原始活动日期未知。"
+        },
+        {
+          "role": "user",
+          "content": "我一直喜欢收藏实体电影海报，尤其是喜欢的电影的印刷海报。我享受挑选和保存纸质海报的过程，希望以后谈论收藏时记住我喜欢实体收藏这个偏好。"
+        },
+        {
+          "role": "assistant",
+          "content": "我已记录你描述的实体电影海报收藏偏好。以后讨论收藏时会结合你当时明确表达的兴趣，同时以你后续的说明更新理解。"
+        }
+      ],
+      "historyAfter": [
+        {
+          "role": "system",
+          "content": "这是一段合成用户的历史对话。用户消息记录个人自述，助手消息记录当时的回应；原始活动日期未知。"
+        },
+        {
+          "role": "user",
+          "content": "我最近减少了实体海报收藏，今后其他导演的电影只保存数字海报。但宫崎骏的电影是明确例外：我仍然保留他的纸质海报，也愿意继续购买他的实体海报。这不是完全停止实体收藏。"
+        },
+        {
+          "role": "assistant",
+          "content": "我已看到你对近期收藏活动与当前偏好的补充说明。后续讨论会依据你明确表达的变化和限定条件，不把单次活动自动概括成其他偏好。"
+        }
+      ],
+      "question": "按我现在的偏好，你会怎样分别建议我处理宫崎骏和其他导演的新电影海报？"
+    },
+    {
+      "id": "no-preference-change",
+      "historyBefore": [
+        {
+          "role": "system",
+          "content": "这是一段合成用户的历史对话。用户消息记录个人自述，助手消息记录当时的回应；原始活动日期未知。"
+        },
+        {
+          "role": "user",
+          "content": "我一直喜欢收藏实体电影海报，尤其是喜欢的电影的印刷海报。我享受挑选和保存纸质海报的过程，希望以后谈论收藏时记住我喜欢实体收藏这个偏好。"
+        },
+        {
+          "role": "assistant",
+          "content": "我已记录你描述的实体电影海报收藏偏好。以后讨论收藏时会结合你当时明确表达的兴趣，同时以你后续的说明更新理解。"
+        }
+      ],
+      "historyAfter": [
+        {
+          "role": "system",
+          "content": "这是一段合成用户的历史对话。用户消息记录个人自述，助手消息记录当时的回应；原始活动日期未知。"
+        },
+        {
+          "role": "user",
+          "content": "最近我卖掉了一些重复印刷、没有收藏价值的电影海报，只是为了减少重复占用空间。我仍然喜欢并继续收藏实体电影海报，也保留心爱的海报。我没有改成只收数字海报。"
+        },
+        {
+          "role": "assistant",
+          "content": "我已看到你对近期收藏活动与当前偏好的补充说明。后续讨论会依据你明确表达的变化和限定条件，不把单次活动自动概括成其他偏好。"
+        }
+      ],
+      "question": "最近卖掉部分海报后，你会建议我停止实体海报收藏吗？请依据我当前的实际偏好说明。"
+    }
+  ],
+  "budgets": {
+    "backgroundCalls": 20,
+    "consumerCalls": 4,
+    "totalCalls": 24,
+    "wallSeconds": 600,
+    "maxOutputTokens": 4096,
+    "nativeMaxIterations": 8,
+    "nativeCallTimeoutMs": 180000
+  },
+  "qualityRubric": {
+    "explicit-change": [
+      "Prior physical preference retained as past, current digital-only preference preserved.",
+      "No current recommendation to buy physical posters."
+    ],
+    "retain-exception": [
+      "Digital general preference and Miyazaki physical exception both preserved.",
+      "No claim that every physical collection stopped."
+    ],
+    "no-preference-change": [
+      "Selling duplicates does not erase continuing physical preference.",
+      "No digital-only preference invented."
+    ]
+  },
+  "mechanismRubric": [
+    "Both original sessions imported through native v4 events.",
+    "First-stage persona actually present in shared scope.",
+    "Subsequent native shared conflict prompt sees old shared ID.",
+    "Live memory heads have only source-supported source IDs.",
+    "Final consumer actual requests contain full source history and memory body/identity.",
+    "Question session not learned and asset content/versions unchanged.",
+    "Every request reconstructs from its durable log prefix."
+  ],
+  "failureRule": "Each case once; no automatic retries, resume, budget increases, or choosing a favorable attempt. Any request cap, timeout, or technical failure closes that case. Remaining predeclared independent cases still run.",
+  "scope": "Synthetic quality diagnostic, not an accuracy benchmark or causal asset-effect test. Queue processing and profile rebuild explicitly invoked to control stage timing; native import, extraction, conflict, writer and consumers remain production paths. No task commands.",
+  "skillPolicy": "Native Skill review runs normally; no skill is forced from preference prose. Existing separate Skill consumption receipt remains valid only for its tested code.",
+  "revision": "95d1ee0c3d04d5f45e0349438f36727241a41615",
+  "taskImageId": "sha256:4f5b70ce22f74489172e3c798162475ee246324270fdd6124d733b879ec7639b",
+  "upstreamSha256": "05926659b81033a5db687f79bd015b5ec66a441ffa0e98de4fe9010f1ed651b6",
+  "inputSha256": {
+    "adapters/client-card.tsx": "c382face82f5c119faa5b1565da806a89bfc94cf066639fad7650c856bfa1145",
+    "adapters/client-split-label.ts": "3fc925a3338a77acf5ef116a2227b6d851e4d5ed1a5727bd1abd082662d749b0",
+    "adapters/local-obs-logger.ts": "5ea163d91f573b203e06bdb6eb5a49cea905b5fd0625816e7d16ec00b6e00525",
+    "adapters/local-observability.ts": "b6cf3c5b7c6be3bc4eefd1652ac804f86c0b3d18d4c0df92520ae0a48f17ebf1",
+    "adapters/required-runner.ts": "eae3621a64e439084bd8f32056f3778b7194ec37071251d9a54693cd24ab2717",
+    "adapters/skill-format.ts": "d8b817a849474b118e830f9e1fe942951600471dbb7a784c90cb66005dedc32d",
+    "docs/evidence/scope-quality-spec-20261007.json": "d787762012daf35affcbf22f948ef03c8dc46b6c5887e0b42e47648a436f24b1",
+    "lib/chunk-7RJNN32W.js": "1386d9814cc920970a9acb064dcb4d5a17901b6bc96eb0a97e1ac971611dc662",
+    "lib/chunk-7RJNN32W.js.map": "7661b72c38c67340342aa5a4219bc4e8cafd6ac17f3250389d053c04ef9eb9f6",
+    "lib/chunk-AGFSJXLQ.js": "9a0d18cb2185882f2b87b2f90f093fa1b403b61dc0b0b955053e9e52e58e6436",
+    "lib/chunk-AGFSJXLQ.js.map": "7ec130fa3419a63e96377898350f464eb76056d96a966286c5e0fc8210caa410",
+    "lib/chunk-EAQJATLH.js": "09c34106af0abd24357d8e9284a9119d72818f6983700ba60205e3bbdb4476eb",
+    "lib/chunk-EAQJATLH.js.map": "ed562b0bba7ee7214e56ac7f728054b3496bec4597c94a4eb7b4179e6f5cb1c9",
+    "lib/chunk-HTX3NLTN.js": "56eeb2f1c611f86b65b41a59f83f80566a9ff28e00407515d1a1d7b400223b91",
+    "lib/chunk-HTX3NLTN.js.map": "3d1fc06119591097ef4b553764e50e04f452b3921f467e0caf803f3bfb72d382",
+    "lib/chunk-PCEZL6WO.js": "99e640aa390eb1211c49581dbbb7357b3d57ec0d72f5a329161bcc6cad1e4c76",
+    "lib/chunk-PCEZL6WO.js.map": "8189fa122584fc74f897ff0c69edc7e55040a7eba0f84e26173b396633e56f05",
+    "lib/client.js": "4a612271d5d22c547effb60bb56094d6438ef4f92e157fc0f95e9344a15aea9c",
+    "lib/core-entry.js": "866b82710e6bb7a841d8aa58eab968156e495bb31a60deae361cb51271e2ca4b",
+    "lib/core-entry.js.map": "ed562b0bba7ee7214e56ac7f728054b3496bec4597c94a4eb7b4179e6f5cb1c9",
+    "lib/index.js": "b42df361c17e895c64c890aedb8b19f3baa5629177868d7220069d97e1f3e27d",
+    "lib/index.js.map": "cb9d3aa35616e0d7c7f80ad6841682a8a5d3acaec2f2f252b8741a81fd1faf88",
+    "lib/local-core.js": "e8537cc8c105246fc590245f050260d3c53861df464552b3a4590c31a9e99375",
+    "lib/local-core.js.map": "ed562b0bba7ee7214e56ac7f728054b3496bec4597c94a4eb7b4179e6f5cb1c9",
+    "lib/model-bridge.js": "a0b645c2b6f6445c026dbd32c015f9f9c7d6f37a4d5b0d4f66fdaf579e3f3e58",
+    "lib/model-bridge.js.map": "ed562b0bba7ee7214e56ac7f728054b3496bec4597c94a4eb7b4179e6f5cb1c9",
+    "lib/rpc-contract.js": "47907de51c155d343f8f00452e96d2d9fd58ac9b7b71a784006c95e943c770fa",
+    "lib/rpc-contract.js.map": "ed562b0bba7ee7214e56ac7f728054b3496bec4597c94a4eb7b4179e6f5cb1c9",
+    "package-lock.json": "734cf109cbbdb7aed157d8d4af335df8f1e049674fe588a74caaafe2453f18bf",
+    "package.json": "48405b486dd977fff89ea283485c693623d72eb1ae75cbd745cf3f249b0e4947",
+    "scripts/audit-scope-quality.py": "31e1060a8e5a27f990a5b62cfcdc0f6dc668159094abec6b86e0a490bbd4ee0e",
+    "scripts/audit-scope-requests.mjs": "0d49eb35efaf7794d41d7b299f5d755de67ca1b59a08a8d432161eaff76e4f0c",
+    "scripts/container/pilot.patch.json": "cb267ede15e38569e19d8765f0a79a84bfdf7b9939293bb5c9c7ba575199943d",
+    "scripts/model-gateway.py": "626873384609d8b50f989aa255e5757545bd0cf5c7345063dc41e2c6b2058869",
+    "scripts/personamem-history.mjs": "b75c340c03728c0f5c422ed189a0f78d8d0fb39b123560071c1cd337309fa953",
+    "scripts/probe-runner.py": "e861263c40b3bfb4d9a043a61fd592c9bb8a504064682f0e90ef576ae75966db",
+    "scripts/review-scope-quality.mjs": "9b196abc2b1b3984c72d4f8df47cd9e04fda8493103237e7f6b97dbfa44713cc",
+    "src/asset-pages.ts": "e87d656279ca2009c7d89ffcbde08eaf4108064d91aa0ec4040ab64dfe839d02",
+    "src/client/assets.tsx": "44941af8ac4f2c9fecf0e3f78a3349acc786c291f27897e109880c83cf9a0311",
+    "src/client/hub.tsx": "46283e6d96dea0775b1c92bb09353a47c189ce0e7b349ed4961de4a382ff8001",
+    "src/client/index.tsx": "d20a72b3b7c006d904055fbc4c7c9f5d76dca76bc0679dc460065c2bc0449635",
+    "src/client/styles.ts": "f1a41dd876447be2c74189c5767977c85041eca3cd2714aff60bfc2a15fe72ae",
+    "src/core-entry.ts": "4cbdd2190dadc358115073e5e9f0e3bd309cac0b7c3832f10e5f55ed019f9ef4",
+    "src/index.ts": "205c9766f8722a1dc305b30f64a8be40f22b08eaa14d2288c99375289d4e8ec5",
+    "src/local-core.ts": "9921b48712ab406f5fae12e57d1ba4e4e73e27fe84ef6539098d1e5b80dcdc52",
+    "src/model-bridge.ts": "939baafd1b197d7ce3390d990d144f581b2dc5e9895f00b7694c7376c89dcec6",
+    "src/native-embedding.ts": "a80c9a9df1152c86394b1d9816d236cfa82cde6428d8aed330fda7ac5fe71138",
+    "src/recall-context.ts": "9ffb218fb42fcb17bc297a30678d937e5dac0707c53059d6659f72d78b7e86ad",
+    "src/resources.ts": "5a09763acbe7b3c6f7f4c5d0e5f008a45178597467f02f52ad504951203141fb",
+    "src/rpc-contract.ts": "e54585fd30537f583999f4d485c92f79a14eabb6b04c5a862d72c4b4ebd3ccf5",
+    "src/runtime.ts": "ee314b8994db8ac2dceb134445089991f211c758dcbe8964542daa1379cf16cc",
+    "src/shared-memory.ts": "83ec2ac2004e460d73897698e8d38cb2c1e8c7958556a314a188030dc835a5c4",
+    "src/skill-review-budget.ts": "a1737cc6ba6b74ace90537d76c2b60cc9fe7f7c1a8b13d3b4df09e2889142ba8",
+    "src/state.ts": "f178c6045e62d7a3df47f533df71fcc0f270bb83d25e98f3464f174eda6210e6"
+  }
+}

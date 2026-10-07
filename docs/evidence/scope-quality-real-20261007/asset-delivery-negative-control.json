@@ -1,0 +1,9 @@
+{
+  "kind": "OFFLINE_ARTIFACT_TAMPER_CONTROL",
+  "originalArtifactsChanged": false,
+  "newModelCalls": 0,
+  "mutation": "Changed Miyazaki text only in consumer tool body copy",
+  "exitCode": 1,
+  "expectedRejection": "retain-exception: loaded Skill body/version mismatch",
+  "rejected": true
+}

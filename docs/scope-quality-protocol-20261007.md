@@ -18,4 +18,4 @@
 
 零模型夹具先核对入口和证据格式，其生成内容不计质量成绩。夹具开发失败全部保留，不计为 qwen 调用。真实案例任何一层内容不合格均记录具体源文与输出；不能因消费者有完整历史而答对就宣称资产质量通过。全部门槛通过后，才另外登记固定开发题配对诊断；本协议不授权自动扩大题单或开始新正式 benchmark。
 
-夹具入口已通过：[机制与费用](evidence/scope-quality-fixture-20261007/audit.json)、[14 个请求独立游标重建](evidence/scope-quality-fixture-20261007/reconstruction.json)。被篡改输入拒绝；[开发失败](evidence/scope-quality-fixture-20261007/development-controls.json)均保留，真实 qwen 调用为0。含导入助手帧的历史不能按旧脚本“第几个助手帧”推算派发位置，使用实际观察到的 prefixEndSeq 独立重建。尚未执行真实三例。
+夹具入口已通过：[机制与费用](evidence/scope-quality-fixture-20261007/audit.json)、[14 个请求独立游标重建](evidence/scope-quality-fixture-20261007/reconstruction.json)。被篡改输入拒绝；[开发失败](evidence/scope-quality-fixture-20261007/development-controls.json)均保留，真实 qwen 调用为0。含导入助手帧的历史不能按旧脚本“第几个助手帧”推算派发位置，使用实际观察到的 prefixEndSeq 独立重建。真实三例已按冻结协议各执行一次，完成两例、一例后台预算截止；64次请求重建通过，但派生内容质量未全部通过。详见[真实诊断结果](scope-quality-outcome-20261007.md)，本轮关闭，不续跑或扩大题单。
