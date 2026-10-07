@@ -1,0 +1,165 @@
+{
+  "status": "PASS",
+  "realModelRequests": 0,
+  "fixtureCalls": [
+    {
+      "kind": "extract",
+      "mode": "initial"
+    },
+    {
+      "kind": "skill",
+      "mode": "initial"
+    },
+    {
+      "kind": "extract",
+      "mode": "update"
+    },
+    {
+      "kind": "dedup",
+      "mode": "update",
+      "oldVisible": true
+    },
+    {
+      "kind": "dedup",
+      "mode": "update",
+      "oldVisible": true
+    },
+    {
+      "kind": "skill",
+      "mode": "update"
+    },
+    {
+      "kind": "profile",
+      "mode": "update",
+      "layer": "l2",
+      "nativeStrategyDelivered": true,
+      "requestReconstructed": true
+    },
+    {
+      "kind": "profile",
+      "mode": "update",
+      "layer": "l2",
+      "nativeStrategyDelivered": true,
+      "requestReconstructed": true
+    },
+    {
+      "kind": "profile",
+      "mode": "update",
+      "layer": "l3",
+      "nativeStrategyDelivered": true,
+      "requestReconstructed": true
+    },
+    {
+      "kind": "profile",
+      "mode": "update",
+      "layer": "l3",
+      "nativeStrategyDelivered": true,
+      "requestReconstructed": true
+    },
+    {
+      "kind": "extract",
+      "mode": "skip"
+    },
+    {
+      "kind": "dedup",
+      "mode": "skip",
+      "oldVisible": true
+    },
+    {
+      "kind": "skill",
+      "mode": "skip"
+    },
+    {
+      "kind": "extract",
+      "mode": "skip-episodic"
+    },
+    {
+      "kind": "dedup",
+      "mode": "skip-episodic",
+      "oldVisible": true
+    },
+    {
+      "kind": "skill",
+      "mode": "skip-episodic"
+    },
+    {
+      "kind": "extract",
+      "mode": "update"
+    },
+    {
+      "kind": "dedup",
+      "mode": "update",
+      "oldVisible": true
+    },
+    {
+      "kind": "skill",
+      "mode": "update"
+    },
+    {
+      "kind": "extract",
+      "mode": "batch"
+    },
+    {
+      "kind": "dedup",
+      "mode": "batch",
+      "oldVisible": true
+    },
+    {
+      "kind": "dedup",
+      "mode": "batch",
+      "oldVisible": true
+    },
+    {
+      "kind": "skill",
+      "mode": "batch"
+    },
+    {
+      "kind": "extract",
+      "mode": "demote"
+    },
+    {
+      "kind": "dedup",
+      "mode": "demote",
+      "oldVisible": true
+    },
+    {
+      "kind": "skill",
+      "mode": "demote"
+    }
+  ],
+  "checks": [
+    "native-runtime-process-shared-candidates-across-source-sessions",
+    "native-conflict-sees-and-retires-older-workspace-instruction",
+    "unprocessed-same-batch-heads-excluded-from-candidates",
+    "other-workspace-isolated",
+    "unrelated-shared-head-preserved",
+    "native-skip-for-persona-and-episodic-keeps-shared-head",
+    "native-version-and-source-history-preserved",
+    "dedup-failure-resumes-without-reextracting",
+    "destination-written-before-old-target-removal",
+    "interrupted-move-finishes-without-new-conflict-call-or-version",
+    "completed-job-noop",
+    "interrupted-move-counted-once-in-native-checkpoint",
+    "demotion-removes-global-head",
+    "automatic-and-explicit-profile-staleness-guard",
+    "empty-global-profile-rebuild",
+    "nonempty-global-native-profile-rebuild-and-consumption",
+    "same-batch-later-update-sees-previous-shared-head",
+    "head-vector-consistency",
+    "native-L2-L3-custom-strategy-and-protocol-guards-in-actual-requests",
+    "profile-requests-reconstruct-with-strategy-from-durable-log"
+  ],
+  "limits": [
+    "Fixture decisions test scope plumbing, not semantic correctness or real answer gains.",
+    "Jobs enter Runtime.process directly; capture/scheduler is covered by the existing host regression."
+  ],
+  "restart": {
+    "status": "PASS",
+    "modelRequests": 0,
+    "completedMovesRetained": true
+  },
+  "hostVersion": "0.2.0-rc.2",
+  "checkedAt": "2026-10-07T16:37:09.597288+00:00",
+  "isolatedHome": true,
+  "diagnostics": []
+}

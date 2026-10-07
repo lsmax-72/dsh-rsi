@@ -7,20 +7,45 @@ const fingerprint=(value:any)=>createHash('sha256').update((JSON.stringify(value
 const selectHeads=(core:any,ids:string[])=>core.memory.queryL1Records().filter((row:any)=>ids.includes(row.record_id));
 const stale=()=>Object.assign(new Error('通用记忆在决策后变化，需重新检查冲突'),{code:'SHARED_MEMORY_CHANGED'});
 
-/** A second native dedup pass sees shared heads; it never reads another workspace. */
-export async function planSharedMemories(shared:any,records:any[]) {
+/** Merge native cosine-ranked results from the two physical stores visible to this workspace.
+ * Unprocessed staged records are excluded so an earlier decision cannot retire a later job item.
+ */
+function visibleMemoryStore(workspace:any,shared:any,excluded:string[]) {
+  const stores=[workspace.memory,shared.memory];
+  if(fingerprint(workspace.embeddingService.getProviderInfo())!==fingerprint(shared.embeddingService.getProviderInfo()))throw new Error('范围向量模型不一致');
+  return {
+    countL1:()=>stores.reduce((n,store)=>n+store.countL1(),0),
+    // This adapter requires the already-validated vector path; never compare per-DB BM25 scores.
+    isFtsAvailable:()=>false,
+    searchL1Vector:async(vector:any,k:number,text:string)=>{
+      const rows=(await Promise.all(stores.map(store=>store.searchL1Vector(vector,k+excluded.length,text)))).flat().filter(row=>!excluded.includes(row.record_id));
+      if(rows.some(row=>!Number.isFinite(row.score)))throw new Error('原生向量候选分数无效');
+      return rows.sort((a,b)=>b.score-a.score || a.record_id.localeCompare(b.record_id)).slice(0,k);
+    },
+  };
+}
+
+/** Native dedup sees shared and current-workspace heads, never another workspace. */
+export async function planSharedMemories(shared:any,records:any[],workspace?:any,excluded=records.map(r=>r.id)) {
   if(!records.length)return [];
   let runnerError:any;
   const llmRunner={run:async(params:any)=>{try{return await shared.runner.run({...params,systemPrompt:params.systemPrompt+'\nMemory timestamps are recording metadata, not event dates. Preserve source-supported preference changes and exceptions. Do not infer calendar dates or stronger preferences from generated summaries.'});}catch(error){runnerError=error;throw error;}}};
-  const decisions=await withEmbeddingIntegrity(()=>batchDedup({memories:records.map(r=>({...r,record_id:r.id})),config:{},logger:shared.logger,vectorStore:shared.memory,embeddingService:shared.embeddingService,llmRunner}));
+  const decisions=await withEmbeddingIntegrity(()=>batchDedup({memories:records.map(r=>({...r,record_id:r.id})),config:{},logger:shared.logger,vectorStore:workspace?visibleMemoryStore(workspace,shared,excluded) as any:shared.memory,embeddingService:shared.embeddingService,llmRunner}));
   // Native dedup falls back to store on runner failure; that is not a completed shared update.
   if(runnerError)throw runnerError;
-  const heads=new Map((await shared.readMemories()).map((r:any)=>[r.id,r]));
+  const heads=new Map<string,any>(),targetScopes:Record<string,string>={};
+  for(const [scope,core] of [['shared',shared],...(workspace?[['workspace',workspace]]:[])] as any){
+    for(const row of await core.readMemories()){
+      if(excluded.includes(row.id))continue;
+      if(heads.has(row.id))throw new Error('可见范围中的记忆 ID 重复，拒绝选择不明确目标');
+      heads.set(row.id,row);targetScopes[row.id]=scope;
+    }
+  }
   return records.map(record=>{
     const decision=decisions.find(d=>d.record_id===record.id);
     if(!decision)throw new Error('原生通用冲突决策缺失');
     const targets=decision.target_ids.map(id=>{const target=heads.get(id);if(!target)throw new Error('通用冲突目标不在可见范围');return target;});
-    return {decision,targets};
+    return {decision,targets,targetScopes:Object.fromEntries(targets.map((r:any)=>[r.id,targetScopes[r.id]]))};
   });
 }
 
@@ -30,6 +55,9 @@ export async function planSharedMemories(shared:any,records:any[]) {
  */
 export async function applySharedMemory(workspace:any,shared:any,record:any,plan:any,onChanged:(core:any)=>void) {
   const {decision,targets}=plan;
+  // Older durable plans only targeted shared records; retain their recovery semantics.
+  const localTargets=decision.target_ids.filter((id:string)=>plan.targetScopes?.[id]==='workspace');
+  const sharedTargets=decision.target_ids.filter((id:string)=>!localTargets.includes(id));
   if(decision.action==='skip'){
     onChanged(workspace);
     if(selectHeads(workspace,[record.id]).length && (!workspace.memory.deleteL1Batch([record.id]) || selectHeads(workspace,[record.id]).length))throw new Error('重复记忆未从工作区移除');
@@ -41,8 +69,9 @@ export async function applySharedMemory(workspace:any,shared:any,record:any,plan
   const key=fingerprint({record,plan});
   const existing=(await destination.readMemories()).find((r:any)=>r.id===record.id);
   const resumed=existing?.metadata?.rsi_scope_write===key;
-  const current=new Map((await shared.readMemories()).map((r:any)=>[r.id,r]));
-  if(targets.some((r:any)=>current.has(r.id)?fingerprint(current.get(r.id))!==fingerprint(r):!resumed))throw stale();
+  // Compare enriched source-bearing records, not raw SQLite rows.
+  const recordsByScope={workspace:new Map((await workspace.readMemories()).map((r:any)=>[r.id,r])),shared:new Map((await shared.readMemories()).map((r:any)=>[r.id,r]))};
+  if(targets.some((r:any)=>{const scope=localTargets.includes(r.id)?'workspace':'shared';return recordsByScope[scope].has(r.id)?fingerprint(recordsByScope[scope].get(r.id))!==fingerprint(r):!resumed;}))throw stale();
   // Invalidate before changing either head: automatic recall and explicit profile reads agree.
   onChanged(workspace);onChanged(shared);
   let saved=existing;
@@ -54,7 +83,7 @@ export async function applySharedMemory(workspace:any,shared:any,record:any,plan
       queryL1Records:({recordIds}:any)=>{
         if(recordIds.some((id:string)=>!ids.includes(id)))throw new Error('记忆写入越过计划范围');
         // Physical scope is the authorization boundary, not the new event's session ID.
-        const all=[...selectHeads(workspace,[record.id]),...selectHeads(shared,decision.target_ids)];
+        const all=[...selectHeads(workspace,[record.id,...localTargets]),...selectHeads(shared,sharedTargets)];
         return all.filter(row=>recordIds.includes(row.record_id));
       },
       deleteL1Batch:(recordIds:string[])=>guard(()=>{if(recordIds.some(id=>!ids.includes(id)))throw new Error('记忆删除越过计划范围');return true;}),
@@ -74,7 +103,7 @@ export async function applySharedMemory(workspace:any,shared:any,record:any,plan
     destination.assertMemoryIndexed(saved);
   }
   if(resumed)destination.assertMemoryIndexed(existing);
-  for(const [core,ids] of [[workspace,[record.id]],[shared,decision.target_ids]] as const){
+  for(const [core,ids] of [[workspace,[record.id,...localTargets]],[shared,sharedTargets]] as const){
     const candidates=ids.filter((id:string)=>core!==destination || id!==record.id);
     // A previous attempt may have finished one side of the cleanup already.
     const remove=candidates.length?selectHeads(core,candidates).map((row:any)=>row.record_id):[];

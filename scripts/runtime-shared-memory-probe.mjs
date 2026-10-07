@@ -2,14 +2,25 @@ import assert from 'node:assert/strict';
 import {mkdir,writeFile} from 'node:fs/promises';
 import {join} from 'node:path';
 import {LlmAdapter} from '@deepseek-ai/dsh-llm';
+import {Session} from '@deepseek-ai/dsh-session';
 export const name='rsi-runtime-shared-memory-probe';
-export const inject=['rsi','llm'];
+export const inject=['rsi','llm','sessionPersistence'];
 export function apply(ctx,config){
   let mode='initial',sourceId='scope-old',oldId,failDedup=false;const calls=[],profileReplies=[];
   class Fixture extends LlmAdapter{
     async *stream(options){
       if(profileReplies.length){
-        const block=profileReplies.shift();calls.push({kind:'profile',mode});
+        const block=profileReplies.shift();
+        const text=options.messages.flatMap(m=>m.content).filter(b=>b.type==='text').map(b=>b.text).join('\n');
+        const layer=profileReplies.length>=2?'l2':'l3';
+        assert.ok(text.indexOf('<CUSTOM_MEMORY_STRATEGY')>1000,'Native prompt remains before custom strategy');
+        assert.ok(text.includes(`memory_prompt_id="dsh-rsi-source-grounding" version="1" layer="${layer}"`));
+        assert.ok(text.includes('<SYSTEM_CUSTOM_STRATEGY_GUARD priority="highest">'));
+        assert.ok(text.includes('没有依据的洞察栏目留空'));assert.ok(text.includes('仅是记录/处理元数据'));
+        assert.ok(text.includes(layer==='l2'?'Scene Markdown/META 协议':'persona.md 目标'));
+        const h=await ctx.sessionPersistence.open(options.sessionId,'read');
+        try{const saved=await h.read();const restored=Session.fromRestore(options.sessionId,saved.events,h.header,h.inheritedEventCount,saved.eventState);assert.deepEqual([...restored.deriveMessages()],options.messages);}finally{await h.close();}
+        calls.push({kind:'profile',mode,layer,nativeStrategyDelivered:true,requestReconstructed:true});
         yield {type:'block-start',index:0,blockType:block.type};yield {type:'block-end',index:0,block};yield {type:'usage',usage:{inputTokens:13,outputTokens:7,totalTokens:20}};yield {type:'finish',reason:{kind:block.type==='tool-call'?'tool-calls':'stop'}};return;
       }
       const prompt=options.messages.flatMap(m=>m.content).filter(b=>b.type==='text').map(b=>b.text).join('\n');
@@ -22,7 +33,7 @@ export function apply(ctx,config){
         calls.push({kind,mode,oldVisible:true});
         if(failDedup){failDedup=false;throw new Error('FIXTURE_SHARED_DEDUP_FAILURE');}
         const ids=[...prompt.matchAll(/### 第 \d+ 条新记忆 \(record_id: ([^)]+)\)/g)].map(m=>m[1]);assert.equal(ids.length,1);
-        output=JSON.stringify([{record_id:ids[0],action:mode.startsWith('skip')?'skip':'merge',target_ids:mode.startsWith('skip')?[]:[oldId],merged_content:'用户过去收藏实体海报，目前改用数字收藏。',merged_type:mode==='demote'?'episodic':'persona',merged_priority:80}]);
+        output=JSON.stringify([{record_id:ids[0],action:mode.startsWith('skip')?'skip':'merge',target_ids:mode.startsWith('skip')?[]:[oldId,...(prompt.includes('old-workspace-instruction')?['old-workspace-instruction']:[])],merged_content:'用户过去收藏实体海报，目前改用数字收藏。',merged_type:mode==='demote'?'episodic':'persona',merged_priority:80}]);
         if(mode==='batch')oldId=ids[0];
       }else assert.ok(prompt.includes('Skill Review Agent'),'Unexpected fixture call');
       if(kind!=='dedup')calls.push({kind,mode});
@@ -40,12 +51,13 @@ export function apply(ctx,config){
     let turn=0;
     const enqueue=()=>{turn++;const sessionId='scope-session-'+turn;rt.state.enqueue({scope,sessionId,turn:1,endSeq:1,cwd,messages:[{id:sourceId,role:'user',content:'这是一条用于验证偏好跨会话变化的完整用户消息：我现在减少实体电影海报，转用数字收藏，并希望保留偏好变化的依据。',timestamp:new Date(Date.now()+turn).toISOString()}],route:{provider:'rsi-probe',model:'fixture'},reason:{kind:'completed'}});const job=rt.state.jobs(scope).find(j=>j.session===sessionId);rt.state.updateJob(job.id,'pending',{recorded:true});return {sessionId,id:job.id};};
     let job=enqueue();await rt.process(scope,job.sessionId);const first=(await live())[0];assert.ok(first);oldId=first.id;assert.equal((await work.readMemories()).length,0);
+    await work.storeMemory({id:'old-workspace-instruction',sessionKey:'older-local-session',sessionId:'older-local-session',content:'用户要求以后收藏建议沿用实体海报偏好。',type:'instruction',priority:80,scene_name:'海报偏好',source_message_ids:['scope-old-instruction'],metadata:{}});
     const unrelated=await global.storeMemory({id:'unrelated-global',sessionKey:'unrelated',sessionId:'unrelated',content:'用户喜欢蓝色。',type:'persona',priority:50,scene_name:'颜色',source_message_ids:['unrelated-source'],metadata:{}});
     await global.profile.writeFile('persona.md','# STALE_PROFILE');rt.state.set('profile-invalid:global',0);assert.equal(await rt.readProfile(cwd,join(global.profileDir,'persona.md')),'# STALE_PROFILE');
     mode='update';sourceId='scope-new';failDedup=true;job=enqueue();const extractionBefore=calls.filter(x=>x.kind==='extract').length;await assert.rejects(rt.process(scope,job.sessionId),/FIXTURE_SHARED_DEDUP_FAILURE/);
     assert.ok(rt.state.jobs(scope).find(j=>j.id===job.id).stages.memoryBatches.pending);assert.ok((await live()).some(r=>r.id===oldId));
     await rt.process(scope,job.sessionId);assert.equal(calls.filter(x=>x.kind==='extract').length,extractionBefore+1);
-    let merged=(await live())[0];assert.notEqual(merged.id,oldId);assert.ok(merged.version>first.version);assert.deepEqual(new Set(merged.source_message_ids),new Set(['scope-old','scope-new']));assert.equal((await work.readMemories()).length,0);assert.equal(global.memory.queryL1Records().filter(r=>r.record_id===oldId).length,0);
+    let merged=(await live())[0];assert.notEqual(merged.id,oldId);assert.ok(merged.version>first.version);assert.deepEqual(new Set(merged.source_message_ids),new Set(['scope-old','scope-old-instruction','scope-new']));assert.equal((await work.readMemories()).length,0);assert.equal(global.memory.queryL1Records().filter(r=>r.record_id===oldId).length,0);
     await assert.rejects(rt.readProfile(cwd,join(global.profileDir,'persona.md')),e=>e.code==='PROFILE_STALE');assert.ok(!(await rt.recall(cwd,'收藏海报')).text.includes('STALE_PROFILE'));
     profileReplies.push({type:'tool-call',id:'write-scene',name:'write',arguments:JSON.stringify({path:'海报偏好.md',content:'-----META-START-----\ncreated: 2026-10-07T00:00:00Z\nupdated: 2026-10-07T00:00:00Z\nsummary: 数字收藏\nheat: 1\n-----META-END-----\n\n用户过去收藏实体海报，目前改用数字收藏。'})},{type:'text',text:'Saved.'},{type:'tool-call',id:'write-persona',name:'write',arguments:JSON.stringify({path:'persona.md',content:'# UPDATED_PROFILE\n用户目前改用数字收藏。'})},{type:'text',text:'Saved.'});
     await rt.request('settings',{cwd,settings:{learningEnabled:false}});await rt.request('rebuildProfile',{cwd,scope:'global'});assert.equal(profileReplies.length,0);assert.ok((await rt.readProfile(cwd,join(global.profileDir,'persona.md'))).includes('UPDATED_PROFILE'));assert.ok((await rt.recall(cwd,'收藏海报')).text.includes('UPDATED_PROFILE'));await rt.request('settings',{cwd,settings:{learningEnabled:true}});
@@ -67,6 +79,6 @@ export function apply(ctx,config){
     const preserved=(await global.readMemories()).find(r=>r.id==='unrelated-global');assert.equal(preserved.content,unrelated.content);assert.equal(preserved.version,unrelated.version);assert.deepEqual(preserved.source_message_ids,unrelated.source_message_ids);global.memory.deleteL1Batch(['unrelated-global']);
     await rt.request('settings',{cwd,settings:{learningEnabled:false}});
     await rt.request('rebuildProfile',{cwd,scope:'global'});assert.equal(!!rt.state.get('profile-invalid:global'),false);await assert.rejects(rt.readProfile(cwd,join(global.profileDir,'persona.md')));
-    await writeFile(join(config.root,'result.json'),JSON.stringify({status:'PASS',realModelRequests:0,fixtureCalls:calls,checks:['native-runtime-process-shared-candidates-across-source-sessions','other-workspace-isolated','unrelated-shared-head-preserved','native-skip-for-persona-and-episodic-keeps-shared-head','native-version-and-source-history-preserved','dedup-failure-resumes-without-reextracting','destination-written-before-old-target-removal','interrupted-move-finishes-without-new-conflict-call-or-version','completed-job-noop','interrupted-move-counted-once-in-native-checkpoint','demotion-removes-global-head','automatic-and-explicit-profile-staleness-guard','empty-global-profile-rebuild','nonempty-global-native-profile-rebuild-and-consumption','same-batch-later-update-sees-previous-shared-head','head-vector-consistency'],limits:['Fixture decisions test scope plumbing, not semantic correctness or real answer gains.','Jobs enter Runtime.process directly; capture/scheduler is covered by the existing host regression.']}));process.exit(0);
+    await writeFile(join(config.root,'result.json'),JSON.stringify({status:'PASS',realModelRequests:0,fixtureCalls:calls,checks:['native-runtime-process-shared-candidates-across-source-sessions','native-conflict-sees-and-retires-older-workspace-instruction','unprocessed-same-batch-heads-excluded-from-candidates','other-workspace-isolated','unrelated-shared-head-preserved','native-skip-for-persona-and-episodic-keeps-shared-head','native-version-and-source-history-preserved','dedup-failure-resumes-without-reextracting','destination-written-before-old-target-removal','interrupted-move-finishes-without-new-conflict-call-or-version','completed-job-noop','interrupted-move-counted-once-in-native-checkpoint','demotion-removes-global-head','automatic-and-explicit-profile-staleness-guard','empty-global-profile-rebuild','nonempty-global-native-profile-rebuild-and-consumption','same-batch-later-update-sees-previous-shared-head','head-vector-consistency','native-L2-L3-custom-strategy-and-protocol-guards-in-actual-requests','profile-requests-reconstruct-with-strategy-from-durable-log'],limits:['Fixture decisions test scope plumbing, not semantic correctness or real answer gains.','Jobs enter Runtime.process directly; capture/scheduler is covered by the existing host regression.']}));process.exit(0);
   }catch(error){console.error(error.stack);process.exit(1);}},0);return()=>{clearInterval(alive);clearTimeout(timer);};});
 }

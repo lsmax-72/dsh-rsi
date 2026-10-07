@@ -1,0 +1,38 @@
+{
+  "status": "PASS_NATIVE_SKILL_PREFIX_IDS",
+  "controls": [
+    {
+      "mode": "full",
+      "delivered": 1,
+      "firstViewByIdSucceeded": true
+    },
+    {
+      "mode": "relevant",
+      "delivered": 20,
+      "firstViewByIdSucceeded": true
+    },
+    {
+      "mode": "recent",
+      "delivered": 20,
+      "firstViewByIdSucceeded": true
+    },
+    {
+      "mode": "none",
+      "noPrefix": true
+    },
+    {
+      "mode": "none",
+      "noPrefix": true
+    }
+  ],
+  "realModelRequests": 0,
+  "embeddingFixture": true,
+  "fixtureRunnerCalls": 7,
+  "queryFixtureCalls": 2,
+  "toolCalls": 8,
+  "nativeSqliteAndSkillTools": true,
+  "nativePrefetchCallCountsPreserved": true,
+  "originalNamesAndFrontmatterPreserved": true,
+  "optimisticVersionControlPreserved": true,
+  "qualityOrModelCallReductionClaim": false
+}

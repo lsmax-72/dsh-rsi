@@ -239,7 +239,7 @@ export class Runtime {
                   for(;pending.index<pending.records.length;pending.index++){
                     // Reuse native conflict detection after prior moves, so later records see live heads.
                     if(!pending.plans[pending.index]){
-                      [pending.plans[pending.index]]=await planSharedMemories(global,[pending.records[pending.index]]);
+                      [pending.plans[pending.index]]=await planSharedMemories(global,[pending.records[pending.index]],core,pending.records.slice(pending.index).map((r:any)=>r.id));
                       this.state.updateJob(job.id,'running',stages);
                     }
                     await applySharedMemory(core,global,pending.records[pending.index],pending.plans[pending.index],changed=>{this.state.set(`profile-invalid:${changed.scope}`,Date.now());this.invalidate();});
