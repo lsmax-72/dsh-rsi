@@ -1,0 +1,1199 @@
+{
+  "groups": {
+    "baseline-foreground": {
+      "calls": 32,
+      "input": 870654,
+      "output": 23174,
+      "total": 893828,
+      "unknown": 0
+    },
+    "baseline-background": {
+      "calls": 0,
+      "input": 0,
+      "output": 0,
+      "total": 0,
+      "unknown": 0
+    },
+    "rsi-foreground": {
+      "calls": 54,
+      "input": 1696529,
+      "output": 8461,
+      "total": 1704990,
+      "unknown": 0
+    },
+    "rsi-background": {
+      "calls": 527,
+      "input": 3222958,
+      "output": 259443,
+      "total": 3482401,
+      "unknown": 0
+    }
+  },
+  "nQuestionsPerArm": 32,
+  "perQuestion": {
+    "baseline": 27932.125,
+    "rsiForeground": 53280.9375,
+    "foregroundIncrement": 25348.8125,
+    "backgroundAmortized": 108825.03125,
+    "fullRsi": 162105.96875
+  },
+  "amortization": {
+    "totalBackground": 3482401,
+    "formula": "C_rsi(N)=3482401+53280.9375*N; C_base(N)=27932.125*N; delta/N=25348.8125+3482401/N",
+    "breakEvenPossibleAtCurrentMean": false
+  },
+  "byNativeTask": {
+    "l1-extraction": {
+      "calls": 146,
+      "input": 696952,
+      "output": 110961,
+      "total": 807913,
+      "unknown": 0
+    },
+    "l1-conflict-detection": {
+      "calls": 114,
+      "input": 411208,
+      "output": 50278,
+      "total": 461486,
+      "unknown": 0
+    },
+    "skill-extract": {
+      "calls": 124,
+      "input": 1250604,
+      "output": 12883,
+      "total": 1263487,
+      "unknown": 0
+    },
+    "scene-extract": {
+      "calls": 97,
+      "input": 683500,
+      "output": 65981,
+      "total": 749481,
+      "unknown": 0
+    },
+    "persona-generation": {
+      "calls": 46,
+      "input": 180694,
+      "output": 19340,
+      "total": 200034,
+      "unknown": 0
+    }
+  },
+  "foregroundHistoryChecks": [
+    {
+      "persona": "12",
+      "arm": "baseline",
+      "foreground": {
+        "calls": 4,
+        "input": 122802,
+        "output": 1840,
+        "total": 124642,
+        "unknown": 0
+      },
+      "background": {
+        "calls": 0,
+        "input": 0,
+        "output": 0,
+        "total": 0,
+        "unknown": 0
+      },
+      "historyMessages": 175,
+      "historyChars": 159223,
+      "allForegroundCarryIdenticalHistory": true,
+      "checks": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "publicHistoryChars": 164041,
+      "publicHistoryCount": 181,
+      "allPublicHistoryContentPresent": true,
+      "publicHistoryChecks": [
+        {
+          "sessionId": "persona-12-question-194ce23e-d6d7-46f9-99b0-a0eba223a0ee",
+          "phase": "194ce23e-d6d7-46f9-99b0-a0eba223a0ee",
+          "prefixEndSeq": 224,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-12-question-a64ba818-abee-404e-9a38-f440b74bcca7",
+          "phase": "a64ba818-abee-404e-9a38-f440b74bcca7",
+          "prefixEndSeq": 224,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-12-question-8be28bb6-049f-4735-8957-a15234c138f4",
+          "phase": "8be28bb6-049f-4735-8957-a15234c138f4",
+          "prefixEndSeq": 224,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-12-question-cb4799ed-15e8-4dda-a716-b81fa1d6d9da",
+          "phase": "cb4799ed-15e8-4dda-a716-b81fa1d6d9da",
+          "prefixEndSeq": 224,
+          "missingPublicHistoryIndices": []
+        }
+      ]
+    },
+    {
+      "persona": "14",
+      "arm": "baseline",
+      "foreground": {
+        "calls": 4,
+        "input": 127763,
+        "output": 2292,
+        "total": 130055,
+        "unknown": 0
+      },
+      "background": {
+        "calls": 0,
+        "input": 0,
+        "output": 0,
+        "total": 0,
+        "unknown": 0
+      },
+      "historyMessages": 177,
+      "historyChars": 156292,
+      "allForegroundCarryIdenticalHistory": true,
+      "checks": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "publicHistoryChars": 161650,
+      "publicHistoryCount": 183,
+      "allPublicHistoryContentPresent": true,
+      "publicHistoryChecks": [
+        {
+          "sessionId": "persona-14-question-a30c10c5-145a-49b0-b3d5-1479bf3c6797",
+          "phase": "a30c10c5-145a-49b0-b3d5-1479bf3c6797",
+          "prefixEndSeq": 226,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-14-question-e86a1aad-0117-4021-9c68-f923f4111d5f",
+          "phase": "e86a1aad-0117-4021-9c68-f923f4111d5f",
+          "prefixEndSeq": 226,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-14-question-8d52f6de-0bc5-4cac-8873-ca57060186b3",
+          "phase": "8d52f6de-0bc5-4cac-8873-ca57060186b3",
+          "prefixEndSeq": 226,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-14-question-4b742ee7-077d-4cce-9c27-51dfe81fcdc4",
+          "phase": "4b742ee7-077d-4cce-9c27-51dfe81fcdc4",
+          "prefixEndSeq": 226,
+          "missingPublicHistoryIndices": []
+        }
+      ]
+    },
+    {
+      "persona": "15",
+      "arm": "baseline",
+      "foreground": {
+        "calls": 4,
+        "input": 93746,
+        "output": 4565,
+        "total": 98311,
+        "unknown": 0
+      },
+      "background": {
+        "calls": 0,
+        "input": 0,
+        "output": 0,
+        "total": 0,
+        "unknown": 0
+      },
+      "historyMessages": 146,
+      "historyChars": 119703,
+      "allForegroundCarryIdenticalHistory": true,
+      "checks": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "publicHistoryChars": 122667,
+      "publicHistoryCount": 150,
+      "allPublicHistoryContentPresent": true,
+      "publicHistoryChecks": [
+        {
+          "sessionId": "persona-15-question-0034a537-925f-448b-b275-eae07f3d9ae5",
+          "phase": "0034a537-925f-448b-b275-eae07f3d9ae5",
+          "prefixEndSeq": 183,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-15-question-4b803069-7679-411e-8310-d885e6ed1e7d",
+          "phase": "4b803069-7679-411e-8310-d885e6ed1e7d",
+          "prefixEndSeq": 183,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-15-question-d0b826d3-9805-416c-a8a8-343ffe1c9098",
+          "phase": "d0b826d3-9805-416c-a8a8-343ffe1c9098",
+          "prefixEndSeq": 183,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-15-question-29c557de-15e3-43c5-b416-de5d4f1845e5",
+          "phase": "29c557de-15e3-43c5-b416-de5d4f1845e5",
+          "prefixEndSeq": 183,
+          "missingPublicHistoryIndices": []
+        }
+      ]
+    },
+    {
+      "persona": "17",
+      "arm": "baseline",
+      "foreground": {
+        "calls": 4,
+        "input": 126467,
+        "output": 2976,
+        "total": 129443,
+        "unknown": 0
+      },
+      "background": {
+        "calls": 0,
+        "input": 0,
+        "output": 0,
+        "total": 0,
+        "unknown": 0
+      },
+      "historyMessages": 174,
+      "historyChars": 159782,
+      "allForegroundCarryIdenticalHistory": true,
+      "checks": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "publicHistoryChars": 164084,
+      "publicHistoryCount": 180,
+      "allPublicHistoryContentPresent": true,
+      "publicHistoryChecks": [
+        {
+          "sessionId": "persona-17-question-5e856191-b76f-47ec-b5a4-f04893d8a313",
+          "phase": "5e856191-b76f-47ec-b5a4-f04893d8a313",
+          "prefixEndSeq": 223,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-17-question-59eb073a-174e-4115-aa22-b40eb447b1a2",
+          "phase": "59eb073a-174e-4115-aa22-b40eb447b1a2",
+          "prefixEndSeq": 223,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-17-question-9ac098cd-a109-412a-ad1a-ad90f2f8a6d3",
+          "phase": "9ac098cd-a109-412a-ad1a-ad90f2f8a6d3",
+          "prefixEndSeq": 223,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-17-question-f0f1c22f-ab86-4d6f-a017-6cdb7f5e88f4",
+          "phase": "f0f1c22f-ab86-4d6f-a017-6cdb7f5e88f4",
+          "prefixEndSeq": 223,
+          "missingPublicHistoryIndices": []
+        }
+      ]
+    },
+    {
+      "persona": "19",
+      "arm": "baseline",
+      "foreground": {
+        "calls": 4,
+        "input": 104417,
+        "output": 2947,
+        "total": 107364,
+        "unknown": 0
+      },
+      "background": {
+        "calls": 0,
+        "input": 0,
+        "output": 0,
+        "total": 0,
+        "unknown": 0
+      },
+      "historyMessages": 147,
+      "historyChars": 129785,
+      "allForegroundCarryIdenticalHistory": true,
+      "checks": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "publicHistoryChars": 134560,
+      "publicHistoryCount": 152,
+      "allPublicHistoryContentPresent": true,
+      "publicHistoryChecks": [
+        {
+          "sessionId": "persona-19-question-0441a1ba-0d67-47a1-a910-00306910a6e3",
+          "phase": "0441a1ba-0d67-47a1-a910-00306910a6e3",
+          "prefixEndSeq": 190,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-19-question-d6d4a4e8-96c4-4b72-bdd3-204b44ec1826",
+          "phase": "d6d4a4e8-96c4-4b72-bdd3-204b44ec1826",
+          "prefixEndSeq": 190,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-19-question-fcfde00b-be10-4c52-922d-85cf7ae9f556",
+          "phase": "fcfde00b-be10-4c52-922d-85cf7ae9f556",
+          "prefixEndSeq": 190,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-19-question-28200b70-034f-4c0c-bde7-21754136740d",
+          "phase": "28200b70-034f-4c0c-bde7-21754136740d",
+          "prefixEndSeq": 190,
+          "missingPublicHistoryIndices": []
+        }
+      ]
+    },
+    {
+      "persona": "3",
+      "arm": "baseline",
+      "foreground": {
+        "calls": 4,
+        "input": 112647,
+        "output": 4354,
+        "total": 117001,
+        "unknown": 0
+      },
+      "background": {
+        "calls": 0,
+        "input": 0,
+        "output": 0,
+        "total": 0,
+        "unknown": 0
+      },
+      "historyMessages": 154,
+      "historyChars": 139115,
+      "allForegroundCarryIdenticalHistory": true,
+      "checks": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "publicHistoryChars": 143915,
+      "publicHistoryCount": 159,
+      "allPublicHistoryContentPresent": true,
+      "publicHistoryChecks": [
+        {
+          "sessionId": "persona-3-question-9c209ff7-a6a8-48d8-ab38-e0b8aa2aaef7",
+          "phase": "9c209ff7-a6a8-48d8-ab38-e0b8aa2aaef7",
+          "prefixEndSeq": 197,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-3-question-945fb104-45bd-457f-a9a8-19620159e47d",
+          "phase": "945fb104-45bd-457f-a9a8-19620159e47d",
+          "prefixEndSeq": 197,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-3-question-d3767473-d464-42c1-9ead-7a61d922f120",
+          "phase": "d3767473-d464-42c1-9ead-7a61d922f120",
+          "prefixEndSeq": 197,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-3-question-a966820a-8b42-4ec9-8427-958468f98d3b",
+          "phase": "a966820a-8b42-4ec9-8427-958468f98d3b",
+          "prefixEndSeq": 197,
+          "missingPublicHistoryIndices": []
+        }
+      ]
+    },
+    {
+      "persona": "4",
+      "arm": "baseline",
+      "foreground": {
+        "calls": 4,
+        "input": 79670,
+        "output": 2294,
+        "total": 81964,
+        "unknown": 0
+      },
+      "background": {
+        "calls": 0,
+        "input": 0,
+        "output": 0,
+        "total": 0,
+        "unknown": 0
+      },
+      "historyMessages": 111,
+      "historyChars": 103491,
+      "allForegroundCarryIdenticalHistory": true,
+      "checks": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "publicHistoryChars": 106719,
+      "publicHistoryCount": 115,
+      "allPublicHistoryContentPresent": true,
+      "publicHistoryChecks": [
+        {
+          "sessionId": "persona-4-question-8c6f3412-d822-4131-9a51-184e6da3f476",
+          "phase": "8c6f3412-d822-4131-9a51-184e6da3f476",
+          "prefixEndSeq": 148,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-4-question-bd39c6a3-3ebb-4f12-a9b5-f690ebdf5bca",
+          "phase": "bd39c6a3-3ebb-4f12-a9b5-f690ebdf5bca",
+          "prefixEndSeq": 148,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-4-question-8dbe465c-85ad-4663-a517-da7b86418cde",
+          "phase": "8dbe465c-85ad-4663-a517-da7b86418cde",
+          "prefixEndSeq": 148,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-4-question-64e6edb1-2675-4bec-bac5-ac3cffb7a36c",
+          "phase": "64e6edb1-2675-4bec-bac5-ac3cffb7a36c",
+          "prefixEndSeq": 148,
+          "missingPublicHistoryIndices": []
+        }
+      ]
+    },
+    {
+      "persona": "9",
+      "arm": "baseline",
+      "foreground": {
+        "calls": 4,
+        "input": 103142,
+        "output": 1906,
+        "total": 105048,
+        "unknown": 0
+      },
+      "background": {
+        "calls": 0,
+        "input": 0,
+        "output": 0,
+        "total": 0,
+        "unknown": 0
+      },
+      "historyMessages": 145,
+      "historyChars": 126629,
+      "allForegroundCarryIdenticalHistory": true,
+      "checks": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "publicHistoryChars": 131374,
+      "publicHistoryCount": 150,
+      "allPublicHistoryContentPresent": true,
+      "publicHistoryChecks": [
+        {
+          "sessionId": "persona-9-question-a719edb3-a43f-4792-b820-fb45293c4e19",
+          "phase": "a719edb3-a43f-4792-b820-fb45293c4e19",
+          "prefixEndSeq": 188,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-9-question-b502d7dc-2345-41a3-8a22-0fb9ff719c9e",
+          "phase": "b502d7dc-2345-41a3-8a22-0fb9ff719c9e",
+          "prefixEndSeq": 188,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-9-question-b35349e0-993b-452a-bb5e-67668833b39b",
+          "phase": "b35349e0-993b-452a-bb5e-67668833b39b",
+          "prefixEndSeq": 188,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-9-question-436e377a-98ba-44fc-809c-1743bbf4e033",
+          "phase": "436e377a-98ba-44fc-809c-1743bbf4e033",
+          "prefixEndSeq": 188,
+          "missingPublicHistoryIndices": []
+        }
+      ]
+    },
+    {
+      "persona": "12",
+      "arm": "rsi",
+      "foreground": {
+        "calls": 7,
+        "input": 239867,
+        "output": 1302,
+        "total": 241169,
+        "unknown": 0
+      },
+      "background": {
+        "calls": 67,
+        "input": 397259,
+        "output": 37456,
+        "total": 434715,
+        "unknown": 0
+      },
+      "historyMessages": 175,
+      "historyChars": 159223,
+      "allForegroundCarryIdenticalHistory": true,
+      "checks": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "publicHistoryChars": 164041,
+      "publicHistoryCount": 181,
+      "allPublicHistoryContentPresent": true,
+      "publicHistoryChecks": [
+        {
+          "sessionId": "persona-12-question-194ce23e-d6d7-46f9-99b0-a0eba223a0ee",
+          "phase": "194ce23e-d6d7-46f9-99b0-a0eba223a0ee",
+          "prefixEndSeq": 227,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-12-question-a64ba818-abee-404e-9a38-f440b74bcca7",
+          "phase": "a64ba818-abee-404e-9a38-f440b74bcca7",
+          "prefixEndSeq": 227,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-12-question-a64ba818-abee-404e-9a38-f440b74bcca7",
+          "phase": "a64ba818-abee-404e-9a38-f440b74bcca7",
+          "prefixEndSeq": 232,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-12-question-8be28bb6-049f-4735-8957-a15234c138f4",
+          "phase": "8be28bb6-049f-4735-8957-a15234c138f4",
+          "prefixEndSeq": 227,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-12-question-8be28bb6-049f-4735-8957-a15234c138f4",
+          "phase": "8be28bb6-049f-4735-8957-a15234c138f4",
+          "prefixEndSeq": 232,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-12-question-cb4799ed-15e8-4dda-a716-b81fa1d6d9da",
+          "phase": "cb4799ed-15e8-4dda-a716-b81fa1d6d9da",
+          "prefixEndSeq": 227,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-12-question-cb4799ed-15e8-4dda-a716-b81fa1d6d9da",
+          "phase": "cb4799ed-15e8-4dda-a716-b81fa1d6d9da",
+          "prefixEndSeq": 232,
+          "missingPublicHistoryIndices": []
+        }
+      ]
+    },
+    {
+      "persona": "14",
+      "arm": "rsi",
+      "foreground": {
+        "calls": 5,
+        "input": 177195,
+        "output": 163,
+        "total": 177358,
+        "unknown": 0
+      },
+      "background": {
+        "calls": 72,
+        "input": 423352,
+        "output": 35173,
+        "total": 458525,
+        "unknown": 0
+      },
+      "historyMessages": 177,
+      "historyChars": 156292,
+      "allForegroundCarryIdenticalHistory": true,
+      "checks": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "publicHistoryChars": 161650,
+      "publicHistoryCount": 183,
+      "allPublicHistoryContentPresent": true,
+      "publicHistoryChecks": [
+        {
+          "sessionId": "persona-14-question-a30c10c5-145a-49b0-b3d5-1479bf3c6797",
+          "phase": "a30c10c5-145a-49b0-b3d5-1479bf3c6797",
+          "prefixEndSeq": 229,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-14-question-a30c10c5-145a-49b0-b3d5-1479bf3c6797",
+          "phase": "a30c10c5-145a-49b0-b3d5-1479bf3c6797",
+          "prefixEndSeq": 234,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-14-question-e86a1aad-0117-4021-9c68-f923f4111d5f",
+          "phase": "e86a1aad-0117-4021-9c68-f923f4111d5f",
+          "prefixEndSeq": 229,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-14-question-8d52f6de-0bc5-4cac-8873-ca57060186b3",
+          "phase": "8d52f6de-0bc5-4cac-8873-ca57060186b3",
+          "prefixEndSeq": 229,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-14-question-4b742ee7-077d-4cce-9c27-51dfe81fcdc4",
+          "phase": "4b742ee7-077d-4cce-9c27-51dfe81fcdc4",
+          "prefixEndSeq": 229,
+          "missingPublicHistoryIndices": []
+        }
+      ]
+    },
+    {
+      "persona": "15",
+      "arm": "rsi",
+      "foreground": {
+        "calls": 7,
+        "input": 197323,
+        "output": 1084,
+        "total": 198407,
+        "unknown": 0
+      },
+      "background": {
+        "calls": 67,
+        "input": 463503,
+        "output": 34453,
+        "total": 497956,
+        "unknown": 0
+      },
+      "historyMessages": 146,
+      "historyChars": 119703,
+      "allForegroundCarryIdenticalHistory": true,
+      "checks": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "publicHistoryChars": 122667,
+      "publicHistoryCount": 150,
+      "allPublicHistoryContentPresent": true,
+      "publicHistoryChecks": [
+        {
+          "sessionId": "persona-15-question-0034a537-925f-448b-b275-eae07f3d9ae5",
+          "phase": "0034a537-925f-448b-b275-eae07f3d9ae5",
+          "prefixEndSeq": 186,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-15-question-0034a537-925f-448b-b275-eae07f3d9ae5",
+          "phase": "0034a537-925f-448b-b275-eae07f3d9ae5",
+          "prefixEndSeq": 193,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-15-question-4b803069-7679-411e-8310-d885e6ed1e7d",
+          "phase": "4b803069-7679-411e-8310-d885e6ed1e7d",
+          "prefixEndSeq": 186,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-15-question-d0b826d3-9805-416c-a8a8-343ffe1c9098",
+          "phase": "d0b826d3-9805-416c-a8a8-343ffe1c9098",
+          "prefixEndSeq": 186,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-15-question-d0b826d3-9805-416c-a8a8-343ffe1c9098",
+          "phase": "d0b826d3-9805-416c-a8a8-343ffe1c9098",
+          "prefixEndSeq": 191,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-15-question-29c557de-15e3-43c5-b416-de5d4f1845e5",
+          "phase": "29c557de-15e3-43c5-b416-de5d4f1845e5",
+          "prefixEndSeq": 186,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-15-question-29c557de-15e3-43c5-b416-de5d4f1845e5",
+          "phase": "29c557de-15e3-43c5-b416-de5d4f1845e5",
+          "prefixEndSeq": 191,
+          "missingPublicHistoryIndices": []
+        }
+      ]
+    },
+    {
+      "persona": "17",
+      "arm": "rsi",
+      "foreground": {
+        "calls": 6,
+        "input": 216655,
+        "output": 1038,
+        "total": 217693,
+        "unknown": 0
+      },
+      "background": {
+        "calls": 64,
+        "input": 370971,
+        "output": 27471,
+        "total": 398442,
+        "unknown": 0
+      },
+      "historyMessages": 174,
+      "historyChars": 159782,
+      "allForegroundCarryIdenticalHistory": true,
+      "checks": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "publicHistoryChars": 164084,
+      "publicHistoryCount": 180,
+      "allPublicHistoryContentPresent": true,
+      "publicHistoryChecks": [
+        {
+          "sessionId": "persona-17-question-5e856191-b76f-47ec-b5a4-f04893d8a313",
+          "phase": "5e856191-b76f-47ec-b5a4-f04893d8a313",
+          "prefixEndSeq": 225,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-17-question-5e856191-b76f-47ec-b5a4-f04893d8a313",
+          "phase": "5e856191-b76f-47ec-b5a4-f04893d8a313",
+          "prefixEndSeq": 230,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-17-question-59eb073a-174e-4115-aa22-b40eb447b1a2",
+          "phase": "59eb073a-174e-4115-aa22-b40eb447b1a2",
+          "prefixEndSeq": 225,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-17-question-9ac098cd-a109-412a-ad1a-ad90f2f8a6d3",
+          "phase": "9ac098cd-a109-412a-ad1a-ad90f2f8a6d3",
+          "prefixEndSeq": 225,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-17-question-f0f1c22f-ab86-4d6f-a017-6cdb7f5e88f4",
+          "phase": "f0f1c22f-ab86-4d6f-a017-6cdb7f5e88f4",
+          "prefixEndSeq": 225,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-17-question-f0f1c22f-ab86-4d6f-a017-6cdb7f5e88f4",
+          "phase": "f0f1c22f-ab86-4d6f-a017-6cdb7f5e88f4",
+          "prefixEndSeq": 230,
+          "missingPublicHistoryIndices": []
+        }
+      ]
+    },
+    {
+      "persona": "19",
+      "arm": "rsi",
+      "foreground": {
+        "calls": 8,
+        "input": 246111,
+        "output": 265,
+        "total": 246376,
+        "unknown": 0
+      },
+      "background": {
+        "calls": 76,
+        "input": 467800,
+        "output": 33575,
+        "total": 501375,
+        "unknown": 0
+      },
+      "historyMessages": 147,
+      "historyChars": 129785,
+      "allForegroundCarryIdenticalHistory": true,
+      "checks": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "publicHistoryChars": 134560,
+      "publicHistoryCount": 152,
+      "allPublicHistoryContentPresent": true,
+      "publicHistoryChecks": [
+        {
+          "sessionId": "persona-19-question-0441a1ba-0d67-47a1-a910-00306910a6e3",
+          "phase": "0441a1ba-0d67-47a1-a910-00306910a6e3",
+          "prefixEndSeq": 193,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-19-question-0441a1ba-0d67-47a1-a910-00306910a6e3",
+          "phase": "0441a1ba-0d67-47a1-a910-00306910a6e3",
+          "prefixEndSeq": 198,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-19-question-d6d4a4e8-96c4-4b72-bdd3-204b44ec1826",
+          "phase": "d6d4a4e8-96c4-4b72-bdd3-204b44ec1826",
+          "prefixEndSeq": 193,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-19-question-d6d4a4e8-96c4-4b72-bdd3-204b44ec1826",
+          "phase": "d6d4a4e8-96c4-4b72-bdd3-204b44ec1826",
+          "prefixEndSeq": 202,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-19-question-fcfde00b-be10-4c52-922d-85cf7ae9f556",
+          "phase": "fcfde00b-be10-4c52-922d-85cf7ae9f556",
+          "prefixEndSeq": 193,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-19-question-fcfde00b-be10-4c52-922d-85cf7ae9f556",
+          "phase": "fcfde00b-be10-4c52-922d-85cf7ae9f556",
+          "prefixEndSeq": 198,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-19-question-28200b70-034f-4c0c-bde7-21754136740d",
+          "phase": "28200b70-034f-4c0c-bde7-21754136740d",
+          "prefixEndSeq": 193,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-19-question-28200b70-034f-4c0c-bde7-21754136740d",
+          "phase": "28200b70-034f-4c0c-bde7-21754136740d",
+          "prefixEndSeq": 198,
+          "missingPublicHistoryIndices": []
+        }
+      ]
+    },
+    {
+      "persona": "3",
+      "arm": "rsi",
+      "foreground": {
+        "calls": 6,
+        "input": 191674,
+        "output": 2729,
+        "total": 194403,
+        "unknown": 0
+      },
+      "background": {
+        "calls": 64,
+        "input": 373860,
+        "output": 34581,
+        "total": 408441,
+        "unknown": 0
+      },
+      "historyMessages": 154,
+      "historyChars": 139115,
+      "allForegroundCarryIdenticalHistory": true,
+      "checks": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "publicHistoryChars": 143915,
+      "publicHistoryCount": 159,
+      "allPublicHistoryContentPresent": true,
+      "publicHistoryChecks": [
+        {
+          "sessionId": "persona-3-question-9c209ff7-a6a8-48d8-ab38-e0b8aa2aaef7",
+          "phase": "9c209ff7-a6a8-48d8-ab38-e0b8aa2aaef7",
+          "prefixEndSeq": 199,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-3-question-945fb104-45bd-457f-a9a8-19620159e47d",
+          "phase": "945fb104-45bd-457f-a9a8-19620159e47d",
+          "prefixEndSeq": 199,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-3-question-d3767473-d464-42c1-9ead-7a61d922f120",
+          "phase": "d3767473-d464-42c1-9ead-7a61d922f120",
+          "prefixEndSeq": 199,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-3-question-d3767473-d464-42c1-9ead-7a61d922f120",
+          "phase": "d3767473-d464-42c1-9ead-7a61d922f120",
+          "prefixEndSeq": 204,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-3-question-a966820a-8b42-4ec9-8427-958468f98d3b",
+          "phase": "a966820a-8b42-4ec9-8427-958468f98d3b",
+          "prefixEndSeq": 199,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-3-question-a966820a-8b42-4ec9-8427-958468f98d3b",
+          "phase": "a966820a-8b42-4ec9-8427-958468f98d3b",
+          "prefixEndSeq": 204,
+          "missingPublicHistoryIndices": []
+        }
+      ]
+    },
+    {
+      "persona": "4",
+      "arm": "rsi",
+      "foreground": {
+        "calls": 5,
+        "input": 118798,
+        "output": 1063,
+        "total": 119861,
+        "unknown": 0
+      },
+      "background": {
+        "calls": 47,
+        "input": 253414,
+        "output": 25859,
+        "total": 279273,
+        "unknown": 0
+      },
+      "historyMessages": 111,
+      "historyChars": 103491,
+      "allForegroundCarryIdenticalHistory": true,
+      "checks": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "publicHistoryChars": 106719,
+      "publicHistoryCount": 115,
+      "allPublicHistoryContentPresent": true,
+      "publicHistoryChecks": [
+        {
+          "sessionId": "persona-4-question-8c6f3412-d822-4131-9a51-184e6da3f476",
+          "phase": "8c6f3412-d822-4131-9a51-184e6da3f476",
+          "prefixEndSeq": 150,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-4-question-bd39c6a3-3ebb-4f12-a9b5-f690ebdf5bca",
+          "phase": "bd39c6a3-3ebb-4f12-a9b5-f690ebdf5bca",
+          "prefixEndSeq": 150,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-4-question-8dbe465c-85ad-4663-a517-da7b86418cde",
+          "phase": "8dbe465c-85ad-4663-a517-da7b86418cde",
+          "prefixEndSeq": 150,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-4-question-8dbe465c-85ad-4663-a517-da7b86418cde",
+          "phase": "8dbe465c-85ad-4663-a517-da7b86418cde",
+          "prefixEndSeq": 155,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-4-question-64e6edb1-2675-4bec-bac5-ac3cffb7a36c",
+          "phase": "64e6edb1-2675-4bec-bac5-ac3cffb7a36c",
+          "prefixEndSeq": 150,
+          "missingPublicHistoryIndices": []
+        }
+      ]
+    },
+    {
+      "persona": "9",
+      "arm": "rsi",
+      "foreground": {
+        "calls": 10,
+        "input": 308906,
+        "output": 817,
+        "total": 309723,
+        "unknown": 0
+      },
+      "background": {
+        "calls": 70,
+        "input": 472799,
+        "output": 30875,
+        "total": 503674,
+        "unknown": 0
+      },
+      "historyMessages": 145,
+      "historyChars": 126629,
+      "allForegroundCarryIdenticalHistory": true,
+      "checks": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "publicHistoryChars": 131374,
+      "publicHistoryCount": 150,
+      "allPublicHistoryContentPresent": true,
+      "publicHistoryChecks": [
+        {
+          "sessionId": "persona-9-question-a719edb3-a43f-4792-b820-fb45293c4e19",
+          "phase": "a719edb3-a43f-4792-b820-fb45293c4e19",
+          "prefixEndSeq": 191,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-9-question-a719edb3-a43f-4792-b820-fb45293c4e19",
+          "phase": "a719edb3-a43f-4792-b820-fb45293c4e19",
+          "prefixEndSeq": 198,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-9-question-b502d7dc-2345-41a3-8a22-0fb9ff719c9e",
+          "phase": "b502d7dc-2345-41a3-8a22-0fb9ff719c9e",
+          "prefixEndSeq": 191,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-9-question-b502d7dc-2345-41a3-8a22-0fb9ff719c9e",
+          "phase": "b502d7dc-2345-41a3-8a22-0fb9ff719c9e",
+          "prefixEndSeq": 196,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-9-question-b35349e0-993b-452a-bb5e-67668833b39b",
+          "phase": "b35349e0-993b-452a-bb5e-67668833b39b",
+          "prefixEndSeq": 191,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-9-question-b35349e0-993b-452a-bb5e-67668833b39b",
+          "phase": "b35349e0-993b-452a-bb5e-67668833b39b",
+          "prefixEndSeq": 196,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-9-question-b35349e0-993b-452a-bb5e-67668833b39b",
+          "phase": "b35349e0-993b-452a-bb5e-67668833b39b",
+          "prefixEndSeq": 201,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-9-question-b35349e0-993b-452a-bb5e-67668833b39b",
+          "phase": "b35349e0-993b-452a-bb5e-67668833b39b",
+          "prefixEndSeq": 206,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-9-question-436e377a-98ba-44fc-809c-1743bbf4e033",
+          "phase": "436e377a-98ba-44fc-809c-1743bbf4e033",
+          "prefixEndSeq": 191,
+          "missingPublicHistoryIndices": []
+        },
+        {
+          "sessionId": "persona-9-question-436e377a-98ba-44fc-809c-1743bbf4e033",
+          "phase": "436e377a-98ba-44fc-809c-1743bbf4e033",
+          "prefixEndSeq": 196,
+          "missingPublicHistoryIndices": []
+        }
+      ]
+    }
+  ],
+  "exactIdenticalBackgroundMessageDuplicates": [],
+  "roleContentBackgroundMessageDuplicates": [],
+  "skillSystemChars": {
+    "calls": 124,
+    "total": 2175952,
+    "hostSuffixTotal": 547832,
+    "hostSuffixMin": 4418,
+    "hostSuffixMax": 4418
+  },
+  "limitations": [
+    "Only whole-request usage is exact; component character counts are not component token estimates.",
+    "Identical requests prove repeated payload, not unnecessary processing; different prompts may reuse source facts without being duplicate jobs.",
+    "Embedding usage is unreported and excluded; do not call it zero.",
+    "Token totals are not monetary costs; pricing and cached-token billing are not reconstructed."
+  ],
+  "rsiFirstRequestCost": {
+    "calls": 32,
+    "input": 973564,
+    "output": 6573,
+    "total": 980137,
+    "unknown": 0
+  },
+  "rsiFollowupRequestCost": {
+    "calls": 22,
+    "input": 722965,
+    "output": 1888,
+    "total": 724853,
+    "unknown": 0
+  },
+  "inputSha256": {
+    "persona-12-baseline/state/pilot/persona-12/model-requests.json": "32fe34bcf8b02004ad2394b6a30777e180721e045b0c56bfb7303e90f033dcd2",
+    "public/persona-12.json": "e2f9c3c9928191c963e6e2a9b4f61a9b0582d1f18d36499b48a73e97967bcc7f",
+    "persona-14-baseline/state/pilot/persona-14/model-requests.json": "6a014c042f3f7fc7147c28295085c318c0cd7e9cbfedb5d15e4bfffe00ebb513",
+    "public/persona-14.json": "64e2c0586cb2aab6abf37a29d01405bfd6309b1edffff6d3f167bce6e1cf2351",
+    "persona-15-baseline/state/pilot/persona-15/model-requests.json": "41209aa1196bcb59e03d60b9516561fea8c3787bd547ffd4b1d91f2b5f411f79",
+    "public/persona-15.json": "23b76c1ab6cddada2861305583c029da5263d44f51d3ecf0d80ee0c8e167b14a",
+    "persona-17-baseline/state/pilot/persona-17/model-requests.json": "82be90708ad29b08484bb7c48a70e77435408174f2f62d6167c3049c6e7156e3",
+    "public/persona-17.json": "455fa98d3237c5b3e555b6734c16cb22d97696fdbd8ae44276588bcb1302a9d3",
+    "persona-19-baseline/state/pilot/persona-19/model-requests.json": "a7aa52aeefdcd781219c60fca50cb3fda3377301989dcaa6dd47858d7ed9a856",
+    "public/persona-19.json": "a389ef9d644d1e484ca2e79ad0e3c9fa958dcf86b7ee6e1fe0c2963292e3c850",
+    "persona-3-baseline/state/pilot/persona-3/model-requests.json": "12e93a4c4ef404c6c63ccd757db2e985c572aa1c992bbe990bb52f13862a87e5",
+    "public/persona-3.json": "88353a13c148e3cbb7aed4436f505d2c77520116292bceb9cef78820d61d1a5c",
+    "persona-4-baseline/state/pilot/persona-4/model-requests.json": "958f828d59aeb0ca7e0973c5fbff38cbd254318c9d3babeaa840808e2bae5e51",
+    "public/persona-4.json": "0582d05028b52aea5d76028cf813301b29bdb6dc02668aabb83d5c1aa4569ec4",
+    "persona-9-baseline/state/pilot/persona-9/model-requests.json": "ff8d731760a5b7a5cf102e00decc5e65c4507df7d6dcea045ac57331b36807e1",
+    "public/persona-9.json": "f7492183f2478258793c0ef4bbcf2656fa7d5569d43c6b2cd5c69489d264eb2f",
+    "persona-12-rsi/state/pilot/persona-12/model-requests.json": "da1c99b1b3588789d8e3809eaf1a165c813389483656f15a63205f074a568e30",
+    "persona-12-rsi/state/pilot/persona-12/native-learning-runs.json": "30aef1ca32622e3d21988187993546f9142b68788a1034cc371de13192ebe9d8",
+    "persona-14-rsi/state/pilot/persona-14/model-requests.json": "3e067c5e76c13770e7d99c7be2fe06cbd53216558890a9ee15a1c6074003060b",
+    "persona-14-rsi/state/pilot/persona-14/native-learning-runs.json": "34832f2d865937c4b75e1e402bb8e37bf328a0a04e636384166eaba6152846e1",
+    "persona-15-rsi/state/pilot/persona-15/model-requests.json": "dfdf3f581cb0e2e4d2371c488085d1f0eca27817750b50d5d39fafe16a92e124",
+    "persona-15-rsi/state/pilot/persona-15/native-learning-runs.json": "e143e59f25cd4eed14fa26bd9ef94a747b7bfe27f9fb01957b1a370350b1cf36",
+    "persona-17-rsi/state/pilot/persona-17/model-requests.json": "7b548478bcd6969e7c63b298b189ac221204bec47482ac947058577f513410d8",
+    "persona-17-rsi/state/pilot/persona-17/native-learning-runs.json": "0410f4b09558f2437d6efc3ce218e2c799645666af5110e244837ff6981d3345",
+    "persona-19-rsi/state/pilot/persona-19/model-requests.json": "62d40b6603b22016ab109200ea13b5e410efb4eae3ba8266dfe3b1b24e854851",
+    "persona-19-rsi/state/pilot/persona-19/native-learning-runs.json": "3dffcceb34ec2440ccb077f8a23af5bb0802874071ff01fc3bd71cda622ecb71",
+    "persona-3-rsi/state/pilot/persona-3/model-requests.json": "bf78875f0a29c27dc49a794b8696cab2acdf8f956b61ed41d434490e175d1b72",
+    "persona-3-rsi/state/pilot/persona-3/native-learning-runs.json": "de23601de15fe8d110a68ae1db9cf62bbe97ad2877883780d61d09a904d9f127",
+    "persona-4-rsi/state/pilot/persona-4/model-requests.json": "cb7ba6eb3eb49d912e02ba347a057f2165238129d1816ff337a005e5f339b45d",
+    "persona-4-rsi/state/pilot/persona-4/native-learning-runs.json": "15e9c2435ac23dd439406bef74575c9c9a7789996986d9ac149ecb3a97619bd4",
+    "persona-9-rsi/state/pilot/persona-9/model-requests.json": "695299170456db54a8ac877f44f68b9b23b83a9e3be9d92efa664efa22364804",
+    "persona-9-rsi/state/pilot/persona-9/native-learning-runs.json": "0d49ea9d868ffe6ae22107b28e499f8ec04f69f41dd2a727ec1d1fa675a6d72d"
+  },
+  "extraForegroundPublicHistoryChars": 3070975,
+  "extraForegroundHistoryChars": 2973269
+}
