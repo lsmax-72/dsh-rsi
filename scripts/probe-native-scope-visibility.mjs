@@ -1,0 +1,25 @@
+import assert from 'node:assert/strict';
+import {mkdtemp,writeFile,readFile} from 'node:fs/promises';
+import {existsSync} from 'node:fs';
+import {parseArgs} from 'node:util';
+import {createHash} from 'node:crypto';
+import {join} from 'node:path';
+import {pathToFileURL} from 'node:url';
+const {values}=parseArgs({options:{project:{type:'string'},output:{type:'string'}}});
+assert.ok(values.project && values.output,'Use --project and a new --output path');
+const project=values.project;assert.ok(!existsSync(values.output),'Preserve prior probe evidence');
+const inputSha256={};
+for(const file of ['src/runtime.ts','src/local-core.ts','lib/local-core.js','scripts/fixture-embedding.mjs','vendor/core/src/core/record/l1-dedup.ts'])inputSha256[file]=createHash('sha256').update(await readFile(join(project,file))).digest('hex');
+const {openLocalCore}=await import(pathToFileURL(join(project,'lib/local-core.js')));
+const {fixtureEmbedding}=await import(pathToFileURL(join(project,'scripts/fixture-embedding.mjs')));
+const root=await mkdtemp('/private/tmp/dsh-rsi-scope-visibility-'),evidence=[];const logger={info(){},warn(){},error(){},debug(){}};
+const old='用户收藏经典电影海报，重视海报艺术与历史价值。',later='用户出售经典电影海报，转向数字收藏。';let phase='old',current;
+const runner={async run(p){assert.ok(['l1-extraction','l1-conflict-detection'].includes(p.taskId),'Unknown fixture task: '+p.taskId);if(p.taskId==='l1-extraction')return JSON.stringify([{scene_name:'电影海报',message_ids:[phase+'-source'],memories:[{content:phase==='old'?old:later,type:phase==='old'?'persona':'episodic',priority:75,source_message_ids:[phase+'-source'],metadata:{}}]}]);const ids=[...p.prompt.matchAll(/### 第 \d+ 条新记忆 \(record_id: ([^)]+)\)/g)].map(m=>m[1]);current.prompts.push(p.prompt);return JSON.stringify(ids.map(id=>({record_id:id,action:'store',target_ids:[]})));}};
+let workspace,global;let receipt;
+try{workspace=await openLocalCore(join(root,'workspace'),runner,logger,fixtureEmbedding());global=await openLocalCore(join(root,'global'),runner,logger,fixtureEmbedding());
+const extract=()=>workspace.extractMemories({sessionKey:'fixture-session',sessionId:'fixture-session',messages:[{id:phase+'-source',role:'user',content:phase==='old'?old:later,timestamp:Date.now()}]});
+current={case:'initial',prompts:[]};const first=await extract(),record=first.records.find(r=>r.type==='persona');assert.ok(record);await global.storeMemory(record);assert.equal(workspace.memory.deleteL1Batch([record.id]),true);
+phase='later';current={case:'migrated-to-global',prompts:[]};await extract();current.globalOldId=record.id;current.globalOldPresent=(await global.readMemories()).some(r=>r.id===record.id);current.oldVisibleToConflict=current.prompts.some(p=>p.includes(record.id));assert.ok(current.globalOldPresent);assert.equal(current.oldVisibleToConflict,false);evidence.push(current);
+await workspace.storeMemory(record);current={case:'same-workspace-positive-control',prompts:[]};await extract();current.oldVisibleToConflict=current.prompts.some(p=>p.includes(record.id));assert.equal(current.oldVisibleToConflict,true);evidence.push(current);
+receipt={status:'PASS_SCOPE_LOCAL_CONFLICT_VISIBILITY',realModelRequests:0,embedding:'deterministic fixture; no semantic-quality claim',inputSha256,root,evidence,limits:['Host persona migration reproduced through actual native core APIs; host scheduler not executed.','No answer quality or real-user preference claim.']};
+}catch(e){receipt={status:'FAIL',realModelRequests:0,root,error:e.stack,evidence};}finally{workspace?.close();global?.close();await writeFile(values.output,JSON.stringify(receipt,null,2)+'\n',{flag:'wx'});console.log(JSON.stringify({status:receipt.status,root,error:receipt.error}));if(receipt.status==='FAIL')process.exitCode=1;}

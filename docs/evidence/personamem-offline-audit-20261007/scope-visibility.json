@@ -1,0 +1,33 @@
+{
+  "status": "PASS_SCOPE_LOCAL_CONFLICT_VISIBILITY",
+  "realModelRequests": 0,
+  "embedding": "deterministic fixture; no semantic-quality claim",
+  "inputSha256": {
+    "src/runtime.ts": "e1be4444470911d7d98fcf78d3061594ef76fe050db58ae5c1486d627ba61e16",
+    "src/local-core.ts": "8f4c5d1d3e56b943cd0679453e93a0355fb2a7e1cb6bbd6cd0bc01efe6c6ea2e",
+    "lib/local-core.js": "c92659a9dcb73a31b50b029ef33032d72564a2f2bb943dce2bb1fa0186ef5de6",
+    "scripts/fixture-embedding.mjs": "7c1fd1ac91bc93de8156df475c62bf00ac43c4fae95ef2aee0f443d140db2b46",
+    "vendor/core/src/core/record/l1-dedup.ts": "3a23f2b2ae1b55ef374dad10310e1dd68024c48a25c9e49e921e23acc357a9ad"
+  },
+  "root": "/private/tmp/dsh-rsi-scope-visibility-jcaHo0",
+  "evidence": [
+    {
+      "case": "migrated-to-global",
+      "prompts": [],
+      "globalOldId": "m_1791352609755_d6e90327",
+      "globalOldPresent": true,
+      "oldVisibleToConflict": false
+    },
+    {
+      "case": "same-workspace-positive-control",
+      "prompts": [
+        "**输出语言**：`merged_content` 使用与候选池中已有记忆相同的语言。\n\n## 统一候选记忆池（共 2 条已有记忆）\n\n[\n  {\n    \"record_id\": \"m_1791352609849_72d8dcdf\",\n    \"content\": \"用户出售经典电影海报，转向数字收藏。\",\n    \"type\": \"episodic\",\n    \"priority\": 75,\n    \"scene_name\": \"电影海报\",\n    \"timestamps\": [\n      \"2026-10-07T05:56:49.850Z\"\n    ]\n  },\n  {\n    \"record_id\": \"m_1791352609755_d6e90327\",\n    \"content\": \"用户收藏经典电影海报，重视海报艺术与历史价值。\",\n    \"type\": \"persona\",\n    \"priority\": 75,\n    \"scene_name\": \"电影海报\",\n    \"timestamps\": [\n      \"2026-10-07T05:56:49.851Z\"\n    ]\n  }\n]\n\n══════════════════════════════════════════════════\n\n## 待判断的新记忆（共 1 条）\n\n### 第 1 条新记忆 (record_id: m_1791352609852_68dd3136)\n{\n  \"record_id\": \"m_1791352609852_68dd3136\",\n  \"content\": \"用户出售经典电影海报，转向数字收藏。\",\n  \"type\": \"episodic\",\n  \"priority\": 75,\n  \"scene_name\": \"电影海报\"\n}\n\n【关联候选 ID】[\"m_1791352609849_72d8dcdf\",\"m_1791352609755_d6e90327\"]\n\n请逐条判断并输出决策 JSON 数组。当某条新记忆的候选列表为空时，该条直接输出 action=store。"
+      ],
+      "oldVisibleToConflict": true
+    }
+  ],
+  "limits": [
+    "Host persona migration reproduced through actual native core APIs; host scheduler not executed.",
+    "No answer quality or real-user preference claim."
+  ]
+}

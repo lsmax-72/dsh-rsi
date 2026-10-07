@@ -1,0 +1,70 @@
+{
+  "status": "SAVED_SCOPE_SEPARATION_CONFIRMED",
+  "newQwenRequests": 0,
+  "oldGlobalMemory": {
+    "id": "m_1791296051835_3efbd292",
+    "content": "用户开始收藏老电影海报，看重其背后的艺术与历史价值。",
+    "type": "persona",
+    "priority": 65,
+    "scene_name": "我（AI）在和用户（电影创作者）回顾其近期在电影领域的多项进展与成就",
+    "source_message_ids": [
+      "66e7d06e-06d9-4527-8887-cc032c921ec9"
+    ],
+    "metadata": {},
+    "timestamps": [
+      "2026-10-06T14:14:29.297Z"
+    ],
+    "createdAt": "2026-10-06T14:14:29.297Z",
+    "updatedAt": "2026-10-06T14:14:29.297Z",
+    "version": 0,
+    "sessionKey": "persona-9-history",
+    "sessionId": "persona-9-history",
+    "taskId": "",
+    "teamId": "default",
+    "userId": "default",
+    "agentId": "default",
+    "scope": "global"
+  },
+  "laterWorkspaceMemory": {
+    "id": "m_1791296238884_3fd88060",
+    "content": "用户为了缓解居住空间的物理杂乱并转向更现代的展示方式，出售了多年收藏的多张经典及cult电影海报。",
+    "type": "episodic",
+    "priority": 75,
+    "scene_name": "我（AI）在和用户（电影爱好者）分享其近期的观影、收藏与艺术探索经历",
+    "source_message_ids": [
+      "1822060c-9b25-4e0a-8b72-0321974c622f"
+    ],
+    "metadata": {},
+    "timestamps": [
+      "2026-10-06T14:17:35.397Z"
+    ],
+    "createdAt": "2026-10-06T14:17:35.397Z",
+    "updatedAt": "2026-10-06T14:17:35.397Z",
+    "version": 0,
+    "sessionKey": "persona-9-history",
+    "sessionId": "persona-9-history",
+    "taskId": "",
+    "teamId": "default",
+    "userId": "default",
+    "agentId": "default",
+    "scope": "c52ddf65534b7b4603508435"
+  },
+  "conflictRequest": {
+    "source": ".artifacts/personamem-native-v2-replication-20261006/persona-9-rsi/state/pilot/persona-9/model-requests.json",
+    "arrayIndex": 25,
+    "sessionId": "rsi-fd65c8dd-945a-438f-b1c3-d079640389b4",
+    "oldGlobalIdPresent": false,
+    "newWorkspaceIdPresent": true
+  },
+  "finalGlobalProfileContainsNostalgicCollector": true,
+  "inputSha256": {
+    ".artifacts/personamem-native-v2-replication-20261006/persona-9-rsi/state/pilot/persona-9/learning.json": "cb6ba993201d42a40d2f25294536eb92280a255f1156586166d723ec69741402",
+    ".artifacts/personamem-native-v2-replication-20261006/persona-9-rsi/state/pilot/persona-9/model-requests.json": "695299170456db54a8ac877f44f68b9b23b83a9e3be9d92efa664efa22364804",
+    ".artifacts/personamem-native-v2-replication-20261006/persona-9-rsi/state/assets/scopes/global/profile/profiles/team%3Adefault%7Cagent%3Adefault/persona.md": "89fbca807a8bc9ed70864c838864e90d810e5c1815e015e8faf677469c4c6d1a"
+  },
+  "limits": [
+    "Source-level scope routing and saved candidate visibility only.",
+    "Selling some posters does not imply all collecting preferences ceased.",
+    "No causal claim about the wrong answer."
+  ]
+}
