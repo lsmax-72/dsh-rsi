@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "realModelRequests": 0,
+  "fixtureRunnerCalls": 4,
+  "checks": [
+    "native-same-batch-store-then-merge",
+    "intermediate-record-removed-from-native-head-and-vector",
+    "live-head-content-and-vector-timestamp-match",
+    "failed-upsert-still-rejected",
+    "native-delete-return-remains-synchronous-boolean"
+  ]
+}

@@ -215,7 +215,7 @@ dsh --profile rsi-dev --no-open
 | 安装包 | 本机 macOS ARM64 检查通过；远程 Linux/macOS/Windows 的源码构建与生产包安装检查全部通过，见 [CI 回执](docs/evidence/package-ci-20261003.json) |
 | 容器执行 | Linux 容器内真实工具与固定响应资产闭环通过；固定模型网关边界与 qwen 工具调用通过 |
 | PersonaMem完整开发复验 | 8用户/32题：21/32 对20/32，已知聊天token为5.80倍；8位学习均完成，64个正常回答、613次日志重建通过；不是独立盲测，见[完整报告](docs/personamem-native-v2-outcome-20261007.md) |
-| 负结果离线复盘 | 32对回答逐题核验；新增发现通用偏好迁移后对工作区冲突检查不可见，尚未修复；见[复盘](docs/personamem-offline-audit-20261007.md)与[范围诊断](docs/native-scope-lifecycle-audit-20261007.md) |
+| 负结果离线复盘 | 32对回答逐题核验；通用偏好跨范围更新缺口已完成[适配修复与零模型验收](docs/shared-memory-lifecycle-repair-20261007.md)，真实质量和收益待验证；见[复盘](docs/personamem-offline-audit-20261007.md)与[范围诊断](docs/native-scope-lifecycle-audit-20261007.md) |
 | 固定编程连续学习 | 8题：5/8对3/8，后四题均2/4；39个保存快照检查，8题无自然Skill正文加载，见[结果与诊断](docs/continuous-learning-outcome-20261005.md) |
 | 历史20题开发记录 | 原冻结8/20对10/20、费用与未知用量保留；题单已用于开发，后续回归不能再作为独立盲测，见[历史报告](docs/formal-results-20261003.md) |
 

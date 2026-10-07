@@ -11,6 +11,7 @@ export { LocalStorageBackend } from '../vendor/core/src/core/storage/local-backe
 export { MemoryPipelineManager } from '../vendor/core/src/utils/pipeline-manager.js';
 export { VectorStore, buildFtsQuery } from '../vendor/core/src/core/store/sqlite.js';
 export { queryMemoryRecords } from '../vendor/core/src/core/record/l1-reader.js';
+export { batchDedup } from '../vendor/core/src/core/record/l1-dedup.js';
 export { writeMemory } from '../vendor/core/src/core/record/l1-writer.js';
 export { recordConversation } from '../vendor/core/src/core/conversation/l0-recorder.js';
 export { SceneExtractor } from '../vendor/core/src/core/scene/scene-extractor.js';

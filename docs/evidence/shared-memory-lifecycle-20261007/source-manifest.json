@@ -1,0 +1,17 @@
+{
+  "baseCommit": "07624c0",
+  "nativeRevision": "e09899c2136fb6bc27ecc68505e32bdb637cdfa8",
+  "sourceSha256": {
+    "src/shared-memory.ts": "83ec2ac2004e460d73897698e8d38cb2c1e8c7958556a314a188030dc835a5c4",
+    "src/runtime.ts": "ee314b8994db8ac2dceb134445089991f211c758dcbe8964542daa1379cf16cc",
+    "src/local-core.ts": "9921b48712ab406f5fae12e57d1ba4e4e73e27fe84ef6539098d1e5b80dcdc52",
+    "src/core-entry.ts": "4cbdd2190dadc358115073e5e9f0e3bd309cac0b7c3832f10e5f55ed019f9ef4",
+    "scripts/runtime-shared-memory-probe.mjs": "2b8d5f77c2c29d1d6d5eb0cf56605909678fdb922bb3b713d9b8f347c656e27d",
+    "scripts/probe-runtime.py": "6fe69b6d2906c7e42ebe2b8637d56cc8fbadbdf09f1987164513a34bf9ba2dc9"
+  },
+  "externalModelCalls": 0,
+  "notes": [
+    "Main runtime receipt covers the final source hashes. Other regression receipts were collected earlier in this repair; their covered native files remain unchanged.",
+    "Fixture development failures were ENOENT for an uncreated directory; an unsupported recordIds filter in native SQLite; and a rebuild request made before disabling learning. All occurred in disposable test profiles; none called qwen."
+  ]
+}

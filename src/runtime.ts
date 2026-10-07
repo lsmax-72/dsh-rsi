@@ -8,6 +8,7 @@ import { copyResources,versionResources } from './resources.js';
 import { State, workspace, type Settings } from './state.js';
 import { listAllSkills, listAllVersions } from './asset-pages.js';
 import { fitRecallScope, recallToolGuide } from './recall-context.js';
+import {planSharedMemories,applySharedMemory} from './shared-memory.js';
 import { createReadyEmbedding } from './native-embedding.js';
 import { FileLogger, withLocalDiagnostics, diagnosticEvent } from '../adapters/local-observability.js';
 
@@ -34,6 +35,10 @@ export class Runtime {
   stopping = false;
   invalidate = () => {};
   captureQueue: Promise<any> = Promise.resolve();
+  sharedMemoryQueue: Promise<any> = Promise.resolve();
+  async sharedMemory<T>(operation:()=>Promise<T>):Promise<T> {
+    const pending=this.sharedMemoryQueue.then(operation);this.sharedMemoryQueue=pending.catch(()=>{});return pending;
+  }
   constructor(readonly ctx: any, readonly config: any, readonly directory: string, readonly suppliedEmbedding?:any) {
     this.skillTranscriptWindow=validateSkillTranscriptWindow(config.skillTranscriptWindow);
     this.state = new State(directory, config.settings);
@@ -108,15 +113,18 @@ export class Runtime {
       const core = await this.core(scope);
       const invalid=!!this.state.get(`profile-invalid:${scope}`);if(invalid)await rm(join(core.directory,'profile'),{recursive:true,force:true});
       const result = await core.extractScenes(invalid?'':cursor);
-      const global = await this.core('global');
-      const globalInvalid=!!this.state.get('profile-invalid:global');if(globalInvalid)await rm(join(global.directory,'profile'),{recursive:true,force:true});
-      const globalResult = await global.extractScenes(globalInvalid?'':(this.state.get('global-l2-cursor') ?? ''));
-      if (!globalResult.skipped) { await global.generatePersona(); this.state.set('global-l2-cursor',globalResult.latestCursor);this.state.set('profile-invalid:global',0); }
+      await this.sharedMemory(async()=>{
+        const global = await this.core('global');
+        const globalInvalid=!!this.state.get('profile-invalid:global');if(globalInvalid)await rm(join(global.directory,'profile'),{recursive:true,force:true});
+        const globalResult = await global.extractScenes(globalInvalid?'':(this.state.get('global-l2-cursor') ?? ''));
+        if (!globalResult.skipped) { await global.generatePersona(globalInvalid); this.state.set('global-l2-cursor',globalResult.latestCursor);this.state.set('profile-invalid:global',0); }
+        else if(globalInvalid && !(await global.layerCounts()).L2)this.state.set('profile-invalid:global',0);
+      });
       return result;
     })));
     pipeline.setL3Runner(async () => this.tracked(this.within(scope,async () => {
-      const started = Date.now(); const generated=await (await this.core(scope)).generatePersona();
-      if (generated && (this.state.get<number>(`profile-invalid:${scope}`) ?? 0) <= started) this.state.set(`profile-invalid:${scope}`,0);
+      const started = Date.now(),core=await this.core(scope); const generated=await core.generatePersona(!!this.state.get(`profile-invalid:${scope}`));
+      if ((generated || !(await core.layerCounts()).L2) && (this.state.get<number>(`profile-invalid:${scope}`) ?? 0) <= started) this.state.set(`profile-invalid:${scope}`,0);
       this.invalidate();
     })));
     pipeline.setPersister(async (states: any) => this.state.set(`pipeline:${scope}`,states));
@@ -218,13 +226,32 @@ export class Runtime {
             // Persist each finished batch so a later truncation retries only the unfinished suffix.
             const progress=stages.memoryBatches ?? {next:0,stored:0};
             for(let next=progress.next;next<messages.length;next+=10){
-              const result=await core.extractMemories({messages:messages.slice(Math.max(0,next-5),next+10),newMessageCount:Math.min(10,messages.length-next),sessionKey:sessionId,sessionId});
-              const global=await this.core('global');
-              for(const record of result.records.filter((r:any)=>r.type==='persona')){
-                const saved=await global.storeMemory(record);if(!saved || !(await global.readMemories()).some((row:any)=>row.id===saved.id))throw new Error('全局偏好写入失败');
-                core.memory.deleteL1Batch([record.id]);
+              if(!progress.pending){
+                const result=await core.extractMemories({messages:messages.slice(Math.max(0,next-5),next+10),newMessageCount:Math.min(10,messages.length-next),sessionKey:sessionId,sessionId});
+                const heads=new Map((await core.readMemories()).map((r:any)=>[r.id,r]));
+                progress.pending={records:[...new Set(result.records.map((r:any)=>r.id))].map(id=>heads.get(id)).filter(Boolean),storedCount:result.storedCount,index:0};
+                stages.memoryBatches=progress;this.state.updateJob(job.id,'running',stages);
               }
-              progress.next=Math.min(next+10,messages.length);progress.stored+=result.storedCount;
+              const global=await this.core('global'),pending=progress.pending;
+              await this.sharedMemory(async()=>{
+                pending.plans ??=[];
+                try{
+                  for(;pending.index<pending.records.length;pending.index++){
+                    // Reuse native conflict detection after prior moves, so later records see live heads.
+                    if(!pending.plans[pending.index]){
+                      [pending.plans[pending.index]]=await planSharedMemories(global,[pending.records[pending.index]]);
+                      this.state.updateJob(job.id,'running',stages);
+                    }
+                    await applySharedMemory(core,global,pending.records[pending.index],pending.plans[pending.index],changed=>{this.state.set(`profile-invalid:${changed.scope}`,Date.now());this.invalidate();});
+                    // Persist the next write index before another record can start.
+                    this.state.updateJob(job.id,'running',{...stages,memoryBatches:{...progress,pending:{...pending,index:pending.index+1}}});
+                  }
+                }catch(error:any){
+                  if(error.code==='SHARED_MEMORY_CHANGED'){pending.records=pending.records.slice(pending.index);pending.index=0;delete pending.plans;this.state.updateJob(job.id,'running',stages);}
+                  throw error;
+                }
+              });
+              progress.next=Math.min(next+10,messages.length);progress.stored+=pending.storedCount;delete progress.pending;
               stages.memoryBatches=progress;this.state.updateJob(job.id,'running',stages);
             }
             stages.memory={stored:progress.stored};this.state.updateJob(job.id,'running',stages);
@@ -289,6 +316,7 @@ export class Runtime {
     for(const scope of [entry.id,'global']){
       const core=await this.core(scope),key=isAbsolute(path)?relative(core.profileDir,resolve(path)):path;
       if(/^(?:scene_blocks\/[^/]+\.md|persona\.md|\.metadata\/scene_index\.json)$/.test(key)){
+        if(this.state.get(`profile-invalid:${scope}`))throw Object.assign(new Error('画像正在等待原生重建，暂不提供旧内容'),{code:'PROFILE_STALE'});
         const content=await core.profile.readFile(key);if(content!==null)return content;
       }
     }

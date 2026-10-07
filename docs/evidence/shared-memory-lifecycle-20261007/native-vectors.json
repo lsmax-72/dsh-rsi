@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-07T10:51:34.276Z",
+  "embedding": "Explicit deterministic test double; no semantic/model-quality claim",
+  "realModelRequests": 0,
+  "dimensions": 768,
+  "legacyReindexed": {
+    "L0": 1,
+    "L1": 1
+  },
+  "finalVectors": {
+    "L0": 2,
+    "L1": 3
+  },
+  "embeddingCalls": 18,
+  "checks": [
+    "real-sqlite-vec-extension",
+    "native-legacy-reindex-L0-and-L1",
+    "L0-write-vector",
+    "native-L1-dedup-and-write-vector",
+    "edit-updates-vector",
+    "native-FTS-plus-vector-RRF",
+    "vector-only-query-with-zero-keyword-hits",
+    "embedding-error-does-not-silently-fallback",
+    "partial-index-recovered-by-native-reindex",
+    "index-write-failure-not-success",
+    "invalid-output-rejected",
+    "embedding-cost-count-chars-time-and-unknown-token"
+  ]
+}

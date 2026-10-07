@@ -86,6 +86,7 @@ export async function openLocalCore(dataDir: string, runner: any, logger: any, s
     const personaTrigger = new PersonaTrigger({dataDir:profileDir,interval:parseConfig({}).persona.triggerEveryN,logger,storage:profile});
     return {
       skills, resources, versioning, memory, embeddingService, resourceDir, profile,profileDir,checkpoint,personaTrigger,
+      history,runner,logger,directory:dataDir,assertMemoryIndexed:assertIndexed,
       async layerCounts(){return {L0:memory.countL0(),L1:(await queryMemoryRecords(memory)).length,L2:(await readSceneIndex(profileDir,profile)).length,L3:stripSceneNavigation(await profile.readFile('persona.md') ?? '').trim()?1:0};},
       async readLayer(layer:string,offset=0){
         if(layer==='L0'){const result=memory.queryL0Paginated({limit:50,offset});return {items:result.rows,total:result.total};}
