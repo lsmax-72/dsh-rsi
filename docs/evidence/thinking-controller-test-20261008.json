@@ -1,0 +1,14 @@
+{
+  "status": "PASS_OFFLINE_THINKING_CONTROLLER",
+  "realProviderRequests": 0,
+  "dockerOperations": 0,
+  "checks": [
+    "missing reasoning-token detail remains unknown without inferring tokens from Unicode chars",
+    "actual run_case consumes real reconstruction array and raw SSE usage-list shape",
+    "on/off command shares 40 calls 1200 seconds and zero RSI/history",
+    "saved attempts cannot dispatch again",
+    "invalid reconstruction unknown usage or missing initial hashes halt; post-scoring failures preserve saved grade",
+    "serial controller stops at first failed arm and explicit resume never retries it"
+  ],
+  "execution": "actual run_case/run with local monkeyexecute artifact fixtures; no task or official scorer dispatched"
+}

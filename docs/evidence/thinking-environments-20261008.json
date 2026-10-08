@@ -1,0 +1,214 @@
+{
+  "status": "PASS_PUBLIC_ENVIRONMENT_IDENTITIES",
+  "checkedAt": 1791456377.931093,
+  "selection": "All eight previously exposed continuous-development tasks in their original preregistered order; no outcome selection.",
+  "pairs": 8,
+  "plannedRuns": 16,
+  "realModelRequests": 0,
+  "containerRuns": 0,
+  "imageDownloads": 0,
+  "checkedImages": 16,
+  "scope": "Read-only file hashes and cached Docker image IDs; not runtime isolation, task execution or a score.",
+  "environments": [
+    {
+      "instanceId": "django__django-11848",
+      "environmentFile": ".artifacts/next-evaluation-20261004/environments/django__django-11848-audited/environment.json",
+      "environmentSha256": "c78d62de601541c22a94d6011984cbad66ee86436642cee39d83647811c0db6d",
+      "publicInputSha256": "333a089376a4a46a894f15734b4bd24a2a366ac7fd35a1c5a6daf554c694a1c2",
+      "publicMetadata": {
+        "repo": "django/django",
+        "base_commit": "f0adf3b9b7a19cdee05368ff0c0c2d087f011180",
+        "version": "3.1"
+      },
+      "taskTag": "dsh-rsi-formal:django__django-11848",
+      "taskImageId": "sha256:7155e37164684c18bc73523ee5865ef60e757e48679bd652ddf187975afcf9ff",
+      "scorerKey": "swebench/sweb.eval.x86_64.django_1776_django-11848:latest",
+      "scorerImageId": "sha256:08eac9219e5d4b15b445fde26c587157a0ad8a2d9209e4b1e266259edf51bb4b",
+      "baselineDate": "@1786771386 +0000",
+      "expectedTree": "523bee2a370238733dd0eb7883dbefccab44ca64",
+      "expectedVersion": "3.1",
+      "checks": {
+        "instanceMatches": true,
+        "publicInputHashMatches": true,
+        "taskImageIdMatches": true,
+        "scorerImageIdMatches": true,
+        "publicRepoMatches": true
+      }
+    },
+    {
+      "instanceId": "django__django-11551",
+      "environmentFile": ".artifacts/next-evaluation-20261004/environments/django__django-11551-audited/environment.json",
+      "environmentSha256": "e63f17627b8f0c6f8fcde99a37dfb878b967b00637dfcf7b9df8f6c71c387bd0",
+      "publicInputSha256": "eb3f8375c52d441aac33926313f77b04898d1037e957314a08dd8227ac4ff7c4",
+      "publicMetadata": {
+        "repo": "django/django",
+        "base_commit": "7991111af12056ec9a856f35935d273526338c1f",
+        "version": "3.0"
+      },
+      "taskTag": "dsh-rsi-formal:django__django-11551",
+      "taskImageId": "sha256:170bf21103e6cbe977df939385189d9a3b2dfd846cc45f558e5c3ae15abd895f",
+      "scorerKey": "swebench/sweb.eval.x86_64.django_1776_django-11551:latest",
+      "scorerImageId": "sha256:2c2327cffde3e63d1d2631235539e57622eb3c60b118302148ce0e6fe109a0dd",
+      "baselineDate": "@1786582999 +0000",
+      "expectedTree": "4067b5171a44f6d559c6d44cda34338c75b73ecc",
+      "expectedVersion": "3.0.dev20260813010319",
+      "checks": {
+        "instanceMatches": true,
+        "publicInputHashMatches": true,
+        "taskImageIdMatches": true,
+        "scorerImageIdMatches": true,
+        "publicRepoMatches": true
+      }
+    },
+    {
+      "instanceId": "django__django-12262",
+      "environmentFile": ".artifacts/next-evaluation-20261004/environments/django__django-12262-audited/environment.json",
+      "environmentSha256": "bfd7579b6cea3a70d544b605e81e8a9c67019002b9c5af4115e43b8032e6e8c4",
+      "publicInputSha256": "ac874fd869201ba5fdf50ebe04e525aaf612459ef3c5d9063d8d729deaf5db66",
+      "publicMetadata": {
+        "repo": "django/django",
+        "base_commit": "69331bb851c34f05bc77e9fc24020fe6908b9cd5",
+        "version": "3.1"
+      },
+      "taskTag": "dsh-rsi-formal:django__django-12262",
+      "taskImageId": "sha256:0ff8892168baa887cc0faf549b8b32896513b14a4b491c9383008d53c15cfc9f",
+      "scorerKey": "swebench/sweb.eval.x86_64.django_1776_django-12262:latest",
+      "scorerImageId": "sha256:23c0777e08a37bd0643f7638eaca9c57d1ee16fca79b6312b8d6de7fd1b5e7da",
+      "baselineDate": "@1786583262 +0000",
+      "expectedTree": "88307fafa4610ef0c958cab7d18d723d63d5f495",
+      "expectedVersion": "3.1",
+      "checks": {
+        "instanceMatches": true,
+        "publicInputHashMatches": true,
+        "taskImageIdMatches": true,
+        "scorerImageIdMatches": true,
+        "publicRepoMatches": true
+      }
+    },
+    {
+      "instanceId": "django__django-11815",
+      "environmentFile": ".artifacts/next-evaluation-20261004/environments/django__django-11815-audited/environment.json",
+      "environmentSha256": "d10402ce5633cf074c052d0bbe15b7b4cc34b7d0fabbc30283f6d7b4876b14f8",
+      "publicInputSha256": "55f205e8b6420e868712d1fb07d7b7e8a183a19abcad6df34757a1830a36b4db",
+      "publicMetadata": {
+        "repo": "django/django",
+        "base_commit": "e02f67ef2d03d48128e7a118bf75f0418e24e8ac",
+        "version": "3.1"
+      },
+      "taskTag": "dsh-rsi-formal:django__django-11815",
+      "taskImageId": "sha256:fdf1a4b94996c3490b75c9c516375385e3b8588624255d1ec323cf1dadbf513d",
+      "scorerKey": "swebench/sweb.eval.x86_64.django_1776_django-11815:latest",
+      "scorerImageId": "sha256:19b66392c9872e6d07b331b0ed59466c3e6c3588bc4cdd89f56f8767dc774f8a",
+      "baselineDate": "@1786771356 +0000",
+      "expectedTree": "8430cb2f3f1806789da2328fbfceba20942cede1",
+      "expectedVersion": "3.1",
+      "checks": {
+        "instanceMatches": true,
+        "publicInputHashMatches": true,
+        "taskImageIdMatches": true,
+        "scorerImageIdMatches": true,
+        "publicRepoMatches": true
+      }
+    },
+    {
+      "instanceId": "django__django-11880",
+      "environmentFile": ".artifacts/next-evaluation-20261004/environments/django__django-11880-audited/environment.json",
+      "environmentSha256": "c8100597d5a32aa85e8e1d78ae57d3ae8b51f040b805f993c75ffdd794d7b5ef",
+      "publicInputSha256": "1c97bfc653c099677760245a1edff8272a2a5ecf87aeef60c1b6660ae485b9bf",
+      "publicMetadata": {
+        "repo": "django/django",
+        "base_commit": "06909fe084f87a65459a83bd69d7cdbe4fce9a7c",
+        "version": "3.1"
+      },
+      "taskTag": "dsh-rsi-formal:django__django-11880",
+      "taskImageId": "sha256:879d5f7860e77fbba81140187765010199ccb953d7d65e7ae6712c2c159b75ac",
+      "scorerKey": "swebench/sweb.eval.x86_64.django_1776_django-11880:latest",
+      "scorerImageId": "sha256:ce0c7fd75b0fe8d24632c627359c5e2bc1a4922843d889870931f80f2f98c311",
+      "baselineDate": "@1786583118 +0000",
+      "expectedTree": "6966e9d3189249a2332a1352596058b57ad96452",
+      "expectedVersion": "3.1",
+      "checks": {
+        "instanceMatches": true,
+        "publicInputHashMatches": true,
+        "taskImageIdMatches": true,
+        "scorerImageIdMatches": true,
+        "publicRepoMatches": true
+      }
+    },
+    {
+      "instanceId": "django__django-11790",
+      "environmentFile": ".artifacts/next-evaluation-20261004/environments/django__django-11790-audited/environment.json",
+      "environmentSha256": "1045069a5fb715773fae9f3976ac32d32f6821a406663b4cc0e4eb2114ecdcc4",
+      "publicInputSha256": "0ce6f44b6f84fbb21f6c4c7c76736d02c8b6cca09f036a623b3d3b992d70ab3b",
+      "publicMetadata": {
+        "repo": "django/django",
+        "base_commit": "b1d6b35e146aea83b171c1b921178bbaae2795ed",
+        "version": "3.1"
+      },
+      "taskTag": "dsh-rsi-formal:django__django-11790",
+      "taskImageId": "sha256:fbf999ef8c7a44d3069b7556462dbf6940ae1631daf40dc0bf607fd5db6ae844",
+      "scorerKey": "swebench/sweb.eval.x86_64.django_1776_django-11790:latest",
+      "scorerImageId": "sha256:061b5e37b0dfc15512b9604c843618b47aece8e603d08d0926c3990e0e9b3ac4",
+      "baselineDate": "@1786583088 +0000",
+      "expectedTree": "616cc5cf3c5e7ab5043a4d0773e46698db77937e",
+      "expectedVersion": "3.1",
+      "checks": {
+        "instanceMatches": true,
+        "publicInputHashMatches": true,
+        "taskImageIdMatches": true,
+        "scorerImageIdMatches": true,
+        "publicRepoMatches": true
+      }
+    },
+    {
+      "instanceId": "django__django-11999",
+      "environmentFile": ".artifacts/next-evaluation-20261004/environments/django__django-11999-audited/environment.json",
+      "environmentSha256": "b18929170b0f3d6c8b8049cd861d0f00cd04b9e69fb1f5eb09a3b1888515273a",
+      "publicInputSha256": "78704a602a3422b6d308635da23918979af3c60b3363f697342fb73505aa7705",
+      "publicMetadata": {
+        "repo": "django/django",
+        "base_commit": "84633905273fc916e3d17883810d9969c03f73c2",
+        "version": "3.1"
+      },
+      "taskTag": "dsh-rsi-formal:django__django-11999",
+      "taskImageId": "sha256:b497489d496e8e584c8e42a7eb87c9b090ade0c416989d80bc89984c4821b479",
+      "scorerKey": "swebench/sweb.eval.x86_64.django_1776_django-11999:latest",
+      "scorerImageId": "sha256:3c7e7f035f611b17f2093ee6409364bc28cce8b9bac266b9590db762d197607e",
+      "baselineDate": "@1786771424 +0000",
+      "expectedTree": "8dae32f550d93a832d6ddfd137fa7d25f78e1297",
+      "expectedVersion": "3.1",
+      "checks": {
+        "instanceMatches": true,
+        "publicInputHashMatches": true,
+        "taskImageIdMatches": true,
+        "scorerImageIdMatches": true,
+        "publicRepoMatches": true
+      }
+    },
+    {
+      "instanceId": "django__django-11740",
+      "environmentFile": ".artifacts/next-evaluation-20261004/environments/django__django-11740-audited/environment.json",
+      "environmentSha256": "3012466c42ecdb8d167d86f26ebfd5a698cb157a7191618a1da0f33d354e43dd",
+      "publicInputSha256": "ffd0cfea5fd6dba0cfb150c64f2332ef6bb5eec437d0db2eecf53a7b341bf9c0",
+      "publicMetadata": {
+        "repo": "django/django",
+        "base_commit": "003bb34b218adb23d1a7e67932a6ba9b3c4dcc81",
+        "version": "3.0"
+      },
+      "taskTag": "dsh-rsi-formal:django__django-11740",
+      "taskImageId": "sha256:022ae47083056729245e8ac88a5cb0f22c031f94f54275285e2d6d3845afe333",
+      "scorerKey": "swebench/sweb.eval.x86_64.django_1776_django-11740:latest",
+      "scorerImageId": "sha256:6a057a8a78fefed32c70c306c4843a12a9a83147a75e20a523d2fa7bdca392f4",
+      "baselineDate": "@1786583048 +0000",
+      "expectedTree": "65f310d34189ab338a608477aa384c447493a657",
+      "expectedVersion": "3.0",
+      "checks": {
+        "instanceMatches": true,
+        "publicInputHashMatches": true,
+        "taskImageIdMatches": true,
+        "scorerImageIdMatches": true,
+        "publicRepoMatches": true
+      }
+    }
+  ]
+}
