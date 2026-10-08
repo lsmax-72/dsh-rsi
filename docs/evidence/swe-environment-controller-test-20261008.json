@@ -1,0 +1,38 @@
+{
+  "zeroModelFixture104": true,
+  "prefixOrder": true,
+  "realModelRequests": 0,
+  "imageDownloads": 0,
+  "STOP": {
+    "status": "STOPPED",
+    "pass": true,
+    "error": null
+  },
+  "LOW_DISK": {
+    "status": "STOPPED_LOW_DISK",
+    "pass": true,
+    "error": null
+  },
+  "PARTIAL": {
+    "status": "HALTED",
+    "pass": true,
+    "error": "Partial environment requires manual review: /private/tmp/swe-env-negative-partial-v2-20261008/django__django-9296"
+  },
+  "INPUT_CHANGED": {
+    "status": "HALTED",
+    "pass": true,
+    "error": "Frozen preparation input changed: /Users/lsmax/Coder/dsh-rsi/scripts/prepare-swe-environments.py"
+  },
+  "LOCK": {
+    "pass": true
+  },
+  "COMPLETED_RECEIPT_CHANGED": {
+    "pass": true
+  },
+  "RESUME_COMPLETED": {
+    "pass": true
+  },
+  "scriptSha256": "f493e1b33133c76251c5b6b1b302ef6713325b2a2f078caeb7e9ed95f67b1fa5",
+  "specSha256": "d27204b6a22a5b39a0d9e16f4ee40e050c17b620988203a64843992b72474216",
+  "fixtureRoot": "/private/tmp/swe-env-controller-fixture-v2-20261008"
+}
