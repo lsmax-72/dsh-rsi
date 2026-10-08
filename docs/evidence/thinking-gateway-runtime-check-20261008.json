@@ -1,0 +1,128 @@
+{
+  "status": "PASS_EIGHT_CACHED_GATEWAY_RUNTIMES",
+  "checkedAt": 1791457224.240511,
+  "pythonExecutable": "/usr/bin/python3",
+  "gatewaySourceSha256": "649f835f4f2363b88d5e5fefabc865cee0af343f3d16f73cc70da21b9031e09c",
+  "realProviderRequests": 0,
+  "taskAgentRuns": 0,
+  "imageDownloads": 0,
+  "containerRuns": 16,
+  "network": "none",
+  "checks": "Actual cached task image IDs; >=3.9 compile/import, synthetic ResponseAudit, relay loopback listener bind and close; no serve_forever or upstream request",
+  "environments": [
+    {
+      "instanceId": "django__django-11848",
+      "taskImageId": "sha256:7155e37164684c18bc73523ee5865ef60e757e48679bd652ddf187975afcf9ff",
+      "returnCode": 0,
+      "result": {
+        "status": "PASS_COMPILE_IMPORT_AUDIT_LISTENER_BIND",
+        "executable": "/usr/bin/python3",
+        "version": "3.10.12 (main, Jun 22 2026, 18:55:27) [GCC 11.4.0]",
+        "reasoningFixtureChars": 7,
+        "listenerBoundAndClosed": true,
+        "realProviderRequests": 0
+      },
+      "stderr": ""
+    },
+    {
+      "instanceId": "django__django-11551",
+      "taskImageId": "sha256:170bf21103e6cbe977df939385189d9a3b2dfd846cc45f558e5c3ae15abd895f",
+      "returnCode": 0,
+      "result": {
+        "status": "PASS_COMPILE_IMPORT_AUDIT_LISTENER_BIND",
+        "executable": "/usr/bin/python3",
+        "version": "3.10.12 (main, Jun 22 2026, 18:55:27) [GCC 11.4.0]",
+        "reasoningFixtureChars": 7,
+        "listenerBoundAndClosed": true,
+        "realProviderRequests": 0
+      },
+      "stderr": ""
+    },
+    {
+      "instanceId": "django__django-12262",
+      "taskImageId": "sha256:0ff8892168baa887cc0faf549b8b32896513b14a4b491c9383008d53c15cfc9f",
+      "returnCode": 0,
+      "result": {
+        "status": "PASS_COMPILE_IMPORT_AUDIT_LISTENER_BIND",
+        "executable": "/usr/bin/python3",
+        "version": "3.10.12 (main, Jun 22 2026, 18:55:27) [GCC 11.4.0]",
+        "reasoningFixtureChars": 7,
+        "listenerBoundAndClosed": true,
+        "realProviderRequests": 0
+      },
+      "stderr": ""
+    },
+    {
+      "instanceId": "django__django-11815",
+      "taskImageId": "sha256:fdf1a4b94996c3490b75c9c516375385e3b8588624255d1ec323cf1dadbf513d",
+      "returnCode": 0,
+      "result": {
+        "status": "PASS_COMPILE_IMPORT_AUDIT_LISTENER_BIND",
+        "executable": "/usr/bin/python3",
+        "version": "3.10.12 (main, Jun 22 2026, 18:55:27) [GCC 11.4.0]",
+        "reasoningFixtureChars": 7,
+        "listenerBoundAndClosed": true,
+        "realProviderRequests": 0
+      },
+      "stderr": ""
+    },
+    {
+      "instanceId": "django__django-11880",
+      "taskImageId": "sha256:879d5f7860e77fbba81140187765010199ccb953d7d65e7ae6712c2c159b75ac",
+      "returnCode": 0,
+      "result": {
+        "status": "PASS_COMPILE_IMPORT_AUDIT_LISTENER_BIND",
+        "executable": "/usr/bin/python3",
+        "version": "3.10.12 (main, Jun 22 2026, 18:55:27) [GCC 11.4.0]",
+        "reasoningFixtureChars": 7,
+        "listenerBoundAndClosed": true,
+        "realProviderRequests": 0
+      },
+      "stderr": ""
+    },
+    {
+      "instanceId": "django__django-11790",
+      "taskImageId": "sha256:fbf999ef8c7a44d3069b7556462dbf6940ae1631daf40dc0bf607fd5db6ae844",
+      "returnCode": 0,
+      "result": {
+        "status": "PASS_COMPILE_IMPORT_AUDIT_LISTENER_BIND",
+        "executable": "/usr/bin/python3",
+        "version": "3.10.12 (main, Jun 22 2026, 18:55:27) [GCC 11.4.0]",
+        "reasoningFixtureChars": 7,
+        "listenerBoundAndClosed": true,
+        "realProviderRequests": 0
+      },
+      "stderr": ""
+    },
+    {
+      "instanceId": "django__django-11999",
+      "taskImageId": "sha256:b497489d496e8e584c8e42a7eb87c9b090ade0c416989d80bc89984c4821b479",
+      "returnCode": 0,
+      "result": {
+        "status": "PASS_COMPILE_IMPORT_AUDIT_LISTENER_BIND",
+        "executable": "/usr/bin/python3",
+        "version": "3.10.12 (main, Jun 22 2026, 18:55:27) [GCC 11.4.0]",
+        "reasoningFixtureChars": 7,
+        "listenerBoundAndClosed": true,
+        "realProviderRequests": 0
+      },
+      "stderr": ""
+    },
+    {
+      "instanceId": "django__django-11740",
+      "taskImageId": "sha256:022ae47083056729245e8ac88a5cb0f22c031f94f54275285e2d6d3845afe333",
+      "returnCode": 0,
+      "result": {
+        "status": "PASS_COMPILE_IMPORT_AUDIT_LISTENER_BIND",
+        "executable": "/usr/bin/python3",
+        "version": "3.10.12 (main, Jun 22 2026, 18:55:27) [GCC 11.4.0]",
+        "reasoningFixtureChars": 7,
+        "listenerBoundAndClosed": true,
+        "realProviderRequests": 0
+      },
+      "stderr": ""
+    }
+  ],
+  "runtimeHarnessRuns": 8,
+  "versionOnlyRuns": 8
+}

@@ -320,7 +320,7 @@ def main():
                 '--read-only','--tmpfs','/tmp:rw,uid=1000,gid=1000,mode=700,size=128m','--cap-drop','ALL','--security-opt','no-new-privileges','--memory','256m','--pids-limit','32',
                 '-e','RSI_MODEL_UPSTREAM='+os.environ['RSI_MODEL_UPSTREAM'],
                 '-e','RSI_MODEL_REQUEST_LIMIT='+str(relay_limit),
-                image,'python3','/opt/rsi/scripts/model-gateway.py'],text=True).strip()
+                image,'/usr/bin/python3','/opt/rsi/scripts/model-gateway.py'],text=True).strip()
             containers.append(gateway)
             command('docker','network','connect','bridge',gateway)
         startup = ('cp -a /opt/seed-assets /state/assets && ' if args.seed_assets else '')

@@ -41,14 +41,16 @@ def summarize(root,s):
   arms={r['thinking']:r for r in rows if r['instanceId']==e['instanceId']}
   pair={'instanceId':e['instanceId'],'off':arms.get('off'),'on':arms.get('on')}
   if len(arms)==2:
-   a,b=arms['off'],arms['on'];pair['sameInitialMessagesAndTools']=a.get('firstRequest')==b.get('firstRequest') and bool(a.get('firstRequest'))
-   pair['resolvedDifference']=int(b['resolved'])-int(a['resolved']) if all(type(x.get('resolved')) is bool for x in [a,b]) else None
+   a,b=arms['off'],arms['on'];valid=lambda r:bool(r.get('firstRequest')) and all(re.fullmatch('[0-9a-f]{64}',r['firstRequest'].get(k) or '') for k in ['messagesSha256','toolsSha256']) and r['firstRequest'].get('maxOutputTokens')==8192
+   pair['sameInitialMessagesAndTools']=valid(a) and valid(b) and a['firstRequest']==b['firstRequest']
+   pair['resolvedDifference']=int(b['resolved'])-int(a['resolved']) if all(x['status']=='CLOSED_GRADED' and type(x.get('resolved')) is bool for x in [a,b]) else None
   pairs.append(pair)
  totals={}
  for mode in ['off','on']:
-  group=[r for r in rows if r['thinking']==mode];graded=[r for r in group if type(r.get('resolved')) is bool]
-  totals[mode]={'runs':len(group),'graded':len(graded),'solved':sum(r['resolved'] for r in graded),'passRate':sum(r['resolved'] for r in graded)/8,'knownInputTokens':sum(r.get('inputTokens',0) for r in group),'knownOutputTokens':sum(r.get('outputTokens',0) for r in group),'knownTotalTokens':sum(r.get('totalTokens',0) for r in group),'unknownUsageRequests':sum(r.get('unknownUsageRequests',0) for r in group),'thinkingTokens':sum(r['thinkingTokens'] for r in group) if group and all(r.get('thinkingTokens') is not None for r in group) else None,'foregroundCalls':sum(r.get('calls',0) for r in group),'agentWallSeconds':sum(r.get('agentWallSeconds',0) for r in group),'timeouts':sum(bool(r.get('timedOut')) for r in group),'modelErrors':sum(r.get('modelErrors',0) for r in group),'toolErrors':sum(r.get('toolErrors',0) for r in group),'outputTruncations':sum(r.get('outputTruncations',0) for r in group)}
- complete=len(rows)==16 and all(r['status']=='CLOSED_GRADED' for r in rows) and all(p.get('sameInitialMessagesAndTools') for p in pairs)
+  group=[r for r in rows if r['thinking']==mode];graded=[r for r in group if r['status']=='CLOSED_GRADED' and type(r.get('resolved')) is bool]
+  totals[mode]={'runs':len(group),'graded':len(graded),'solved':sum(r['resolved'] for r in graded),'passRate':sum(r['resolved'] for r in graded)/8 if len(graded)==8 else None,'observedPassRate':sum(r['resolved'] for r in graded)/len(graded) if graded else None,'invalidOrInfrastructure':len(group)-len(graded),'knownInputTokens':sum(r.get('inputTokens',0) for r in group),'knownOutputTokens':sum(r.get('outputTokens',0) for r in group),'knownTotalTokens':sum(r.get('totalTokens',0) for r in group),'unknownUsageRequests':sum(r.get('unknownUsageRequests',0) for r in group),'thinkingTokens':sum(r['thinkingTokens'] for r in group) if group and all(r.get('thinkingTokens') is not None for r in group) else None,'foregroundCalls':sum(r.get('calls',0) for r in group),'agentWallSeconds':sum(r.get('agentWallSeconds',0) for r in group),'timeouts':sum(bool(r.get('timedOut')) for r in group),'modelErrors':sum(r.get('modelErrors',0) for r in group),'toolErrors':sum(r.get('toolErrors',0) for r in group),'outputTruncations':sum(r.get('outputTruncations',0) for r in group)}
+ expected={(id,mode) for id in IDS for mode in ['on','off']}
+ complete=len(rows)==16 and {(r['instanceId'],r['thinking']) for r in rows}==expected and all(r['status']=='CLOSED_GRADED' and type(r.get('resolved')) is bool for r in rows) and all(p.get('sameInitialMessagesAndTools') for p in pairs)
  result={'status':'COMPLETE' if complete else 'PARTIAL_DEVELOPMENT','pairs':pairs,'totals':totals,'netSolvedOnMinusOff':totals['on']['solved']-totals['off']['solved'],'confidenceInterval':None,'reason':'Eight exposed cases, one run per mode; configuration development only, no RSI-effect or stable-generalization claim','formal100Started':False}
  write(root/'summary.json',result);return result
 
@@ -99,6 +101,7 @@ def run(root,s,resume):
  lock=root/'batch.lock';fd=os.open(lock,os.O_CREAT|os.O_EXCL|os.O_WRONLY);os.write(fd,str(os.getpid()).encode());os.close(fd)
  try:
   (root/'launch.lock').unlink(missing_ok=True)
+  write(root/'state.json',{'status':'RUNNING','completedRuns':0,'plannedRuns':16})
   saved=[read(p) for p in root.glob('*.record.json')];require(resume or not saved,'Explicit resume required');require(all(r['status']=='CLOSED_GRADED' for r in saved),'Incomplete attempt cannot be retried')
   keys=[(r['instanceId'],r['thinking']) for r in saved];require(len(keys)==len(set(keys)) and all(id in IDS and mode in ['on','off'] for id,mode in keys),'Unexpected saved attempt')
   for index,e in enumerate(s['environments']):
