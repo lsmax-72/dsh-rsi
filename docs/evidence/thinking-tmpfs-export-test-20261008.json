@@ -1,0 +1,14 @@
+{
+  "status": "PASS_ACTUAL_TMPFS_GATEWAY_EXPORT",
+  "containerRuns": 1,
+  "realProviderRequests": 0,
+  "taskAgentRuns": 0,
+  "network": "none",
+  "oldDockerCpReturnCode": 1,
+  "method": "live-container-exec-tar",
+  "exportedFiles": 3,
+  "fixtureResponseSha256": "28fe95f8f262a9e7b3b6bed98f5832653a94a9822b4c8b3b7f44bb03c2f094cb",
+  "exactBytesMatch": true,
+  "hostBinds": [],
+  "rootfsReadOnly": true
+}

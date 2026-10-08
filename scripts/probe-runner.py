@@ -11,6 +11,7 @@ import shutil
 import sqlite3
 import subprocess
 import tempfile
+import tarfile
 import time
 import uuid
 
@@ -18,6 +19,30 @@ import uuid
 def command(*args, **kwargs):
     return subprocess.run(args, check=True, text=True, **kwargs)
 
+
+
+def export_gateway_evidence(gateway, output):
+    # Docker's archive API misses tmpfs mounts on this host; read through the
+    # live container before cleanup. Never recreate missing original bytes.
+    archive = output / 'gateway-evidence-export.tar'
+    with archive.open('wb') as stream:
+        result = subprocess.run(['docker', 'exec', gateway, '/usr/bin/python3', '-c',
+            "import sys,tarfile; t=tarfile.open(fileobj=sys.stdout.buffer,mode='w|'); t.add('/tmp/gateway-evidence',arcname='gateway-evidence'); t.close()"],
+            stdout=stream, stderr=subprocess.PIPE, timeout=30)
+    receipt = {'method':'live-container-exec-tar', 'returncode':result.returncode,
+               'stderr':result.stderr.decode(errors='replace'), 'rawArchiveSha256':hashlib.sha256(archive.read_bytes()).hexdigest()}
+    if result.returncode == 0:
+        with tarfile.open(archive) as saved:
+            for item in saved:
+                if item.isdir(): continue
+                name = Path(item.name)
+                if not item.isfile() or len(name.parts) != 2 or name.parts[0] != 'gateway-evidence' or not re.fullmatch(r'request-[0-9]+\.(request\.json|response\.bin|summary\.json)',name.name):
+                    raise ValueError('Unexpected gateway archive member')
+                target = output / name; target.parent.mkdir(exist_ok=True)
+                target.write_bytes(saved.extractfile(item).read())
+        receipt['exportedFiles'] = len(list((output/'gateway-evidence').iterdir()))
+    (output/'gateway-evidence-export.json').write_text(json.dumps(receipt)+'\n')
+    return receipt
 
 
 def discard_exported_npm_cache(output):
@@ -374,8 +399,9 @@ def main():
         if gateway:
             wirelogs=subprocess.run(['docker','logs',gateway],capture_output=True,text=True)
             (output/'gateway.log').write_text(wirelogs.stdout)
-            wirecopy=subprocess.run(['docker','cp',gateway+':/tmp/gateway-evidence',str(output/'gateway-evidence')],capture_output=True,text=True)
-            (output/'gateway-evidence-export.json').write_text(json.dumps({'returncode':wirecopy.returncode,'stderr':wirecopy.stderr}))
+            try: export_gateway_evidence(gateway,output)
+            except (OSError,subprocess.TimeoutExpired,ValueError,tarfile.TarError) as error:
+                (output/'gateway-evidence-export.json').write_text(json.dumps({'returncode':1,'method':'live-container-exec-tar','error':str(error)}))
         for cid in reversed(containers): subprocess.run(['docker','rm','-f',cid],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
         # If export failed, retain the experiment volume for recovery instead of destroying evidence.
         if not started or exported: subprocess.run(['docker','volume','rm',volume],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
