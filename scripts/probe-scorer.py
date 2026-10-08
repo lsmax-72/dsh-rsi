@@ -37,6 +37,16 @@ def isolated_client():
     return client
 
 
+def negative_control(row):
+    if row['instance_id']=='django__django-10973':
+        # Keep the multiline SIGINT test passing so the unmodified official parser
+        # records its identifier; deliberately break the ordinary password tests.
+        original="+            subprocess_env['PGPASSWORD'] = str(passwd)"
+        assert row['patch'].count(original)==1,'Control source changed; review before scoring'
+        return row['patch'].replace(original,"+            subprocess_env['PGPASSWORD'] = 'RSI-deliberately-wrong-password'")
+    return 'diff --git a/django/__init__.py b/django/__init__.py\n--- a/django/__init__.py\n+++ b/django/__init__.py\n@@ -0,0 +1 @@\n+# RSI incorrect preflight patch: deliberately leaves the issue unresolved.\n'
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--dataset',type=Path,required=True,help='Official SWE-bench Verified parquet; grader-only data')
@@ -54,7 +64,7 @@ def main():
         (work/(instance+'.spec.json')).write_text(json.dumps(dataclasses.asdict(spec)))
         for condition in ['oracle','wrong']:
             # Gold/test patches stay in this scorer process; never export them to task containers.
-            patch=row['patch'] if condition=='oracle' else 'diff --git a/django/__init__.py b/django/__init__.py\n--- a/django/__init__.py\n+++ b/django/__init__.py\n@@ -0,0 +1 @@\n+# RSI incorrect preflight patch: deliberately leaves the issue unresolved.\n'
+            patch=row['patch'] if condition=='oracle' else negative_control(row)
             prediction={'instance_id':instance,'model_name_or_path':'rsi-scorer-preflight','model_patch':patch}
             run_id='rsi-'+condition+'-'+uuid.uuid4().hex[:10]
             result=run_instance(spec,prediction,False,False,client,run_id,timeout=300)
@@ -65,6 +75,7 @@ def main():
             assert parsed and set(spec.FAIL_TO_PASS).issubset(states),'Missing real FAIL_TO_PASS test outcomes'
             assert report[instance]['resolved']==(condition=='oracle'),report
             case={'instanceId':instance,'condition':condition,'resolved':report[instance]['resolved'],
+                  'negativeControl':'password-corruption-with-parser-covered-multiline-test' if condition=='wrong' and instance=='django__django-10973' else 'unrelated-nonempty-patch' if condition=='wrong' else None,
                   'failToPassTests':len(spec.FAIL_TO_PASS),'parsedTests':len(states),'runId':run_id,
                   'testLogSha256':hashlib.sha256(log.read_bytes()).hexdigest()}
             cases.append(case);print(json.dumps(case),flush=True)
