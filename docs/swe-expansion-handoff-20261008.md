@@ -1,31 +1,17 @@
-# 切换模型后的执行计划
+# 当前交接边界（2026-10-08）
 
-用户已切换并要求提供独立启动入口，自己启动。环境准备已STOPPED，已完成2/104；本轮真实模型调用0次。交付时保持STOP，由用户运行入口后显式恢复。原恢复步骤保留为背景，当前按一键入口文档执行。
+用户最新要求优先于旧4前序+100独立配对方案：正式应是100题连续序列、空历史/空资产启动、无4前序，固定100题集合以seed20261008一次随机排序，同组历史及RSI原生资产累积、每题源码重置。Thinking和正式预算待预实验确认。正式100题禁止启动；本轮只授权8道已曝光开发题的On/Off预实验。
 
-## 已完成
+## 已有证据
 
-- 清理确认过的128处 npm 下载缓存，释放49.77GiB，保留任务日志、资产和评分证据；新导出不再复制下载缓存。
-- 4道前序 + 100道独立后序配对的公开题单、两路后台控制器和环境准备脚本已提交。运行控制器15项离线检查通过；环境控制器104题模拟及停止/恢复检查通过。
-- 干净官方 swebench 3.0.0 评分环境：50个官方文件哈希完整；2题正负对照共4项实际通过。不得使用旧的改过parser的环境。
-- 首次镜像准备被Python3.6默认ASCII编码阻断，旧目录保留；明确UTF-8修复后v2首题9296已成功，随后开始11141。
-- 本地最新提交8759b7f（以及此前缓存/协议/控制器等提交）尚未推送。按lsmax身份继续。
+旧公开题单、104环境准备、固定快照runner、一键编排和fixture证据保留，不能标成新连续方案已完成。干净官方评分环境有50个源文件发行哈希一致及两题正/负四项健康控制PASS。首次环境准备的ASCII失败原始目录保留，UTF-8修复后已得到真实公开源码环境；其他环境是否完成须实时读取state，不能从旧进度推断。
 
-## 恢复顺序
+工作目录 `/Users/lsmax/Coder/dsh-rsi`；dataset为 `/Users/lsmax/Coder/EvoAgentBench/data/swebench/data/test-00000-of-00001.parquet`；评分Python为 `.artifacts/swe-scorer-venv/bin/python`；GGUF为 `.artifacts/models/embeddinggemma-300m-qat-Q8_0.gguf`。已有环境根 `.artifacts/swe-expansion-environments-v2-20261008` 只作材料。保留所有原始日志、资产、评分证据、失败尝试与冻结快照。
 
-1. 查看git状态、v2准备状态和磁盘。读取协议与评分控制文档，确认当前任务是否完成，不能启动两个准备进程。旧失败目录不覆盖、不自动重试。
-2. 用户说继续后，若准备已停止且无未完成题目录，移除v2的STOP，后台启动已有脚本 `run` 恢复；已完成项校验哈希并跳过。如当前仍在途，等待其结束再恢复。低于15GiB停止并汇报，不自行清理共享Docker缓存。
-3. 把已验证提交推到origin/main。全部104个环境READY后，核对代码/依赖/公开源码/模型/预算/评分与输入隔离证据；构建lib并确保仓库干净，使用run-swe-expansion.py freeze生成不可变协议。环境准备完成不能称正式实验完成。
-4. 启动正式后台批次：qwen3.8-27b、thinking off、并发2；按固定协议运行，不逐题依赖Codex调度。异常停止新派发，无自动重试；保留在途日志与未知usage，不把INFRA计为任务失败。
-5. 208次执行完成后统一分析100个配对：官方成功率、净差和区间、全链路token、资产实际消费和诊断指标。负结果照实保留。此轮是固定4题前序的资产迁移，不是100题顺序持续学习，也不覆盖所有仓库。完成SWE-bench后再安排PersonaMem。
+## 当前推进
 
-## 位置与命令
+先实现并验证Thinking专用预实验：固定此前连续开发8题全集及原预注册顺序，每题On/Off顺序交替，共16次串行独立任务，真实请求标志与服务推理内容留证，官方判分隔离。题单及结论范围见 `docs/thinking-preexperiment-protocol-20261008.md`。不把开发结果和新100题混分，不按成绩追加预实验题。
 
-工作目录 `/Users/lsmax/Coder/dsh-rsi`。环境根目录 `.artifacts/swe-expansion-environments-v2-20261008`。
+预实验结束后报告成功对数、配对变化、耗时、已知token、未知usage和截断/服务异常。先核验模式、usage和INFRA完整性，再以官方通过题数为主；平局结合全部前台known token、墙钟与截断。差1题也只给暂定开发建议，不能称稳定结论；不得自行给差值或成本阈值、替用户确定正式配置或启动100题。随后按用户确认结果固定正式预算与Thinking，实现新的连续runner、持久化原始序列顺序与每20题报告，验证两组隔离、评分不回流、暂停恢复及输入冻结。
 
-```sh
-python3 scripts/prepare-swe-environments.py status --output .artifacts/swe-expansion-environments-v2-20261008
-```
-
-正常终端可查进程；Codex沙箱os.kill权限可能使workerAlive误报false，须用获准权限的ps核对。恢复前阅读 `docs/swe-expansion-protocol-20261008.md`；正式执行用 `python3 scripts/run-swe-expansion.py --help` 核对当前CLI，不能猜参数。
-
-干净评分Python `.artifacts/swe-scorer-venv/bin/python`；健康回执 `.artifacts/swe-expansion-scorer-health-v2-20261008/receipt.json`。数据集 `/Users/lsmax/Coder/EvoAgentBench/data/swebench/data/test-00000-of-00001.parquet`；GGUF `.artifacts/models/embeddinggemma-300m-qat-Q8_0.gguf`。对比组保留各自4题原始历史，RSI另带自然资产；判分和答案不进入学习或任务上下文。
+旧正式入口start应禁用。新方案验收并重新冻结后，才交付用户自行启动命令。新序列有历史依赖，不给iid置信区间；阶段曲线不直接证明学习收益。SWE-bench本轮完成统一分析后才推进PersonaMem。Git操作继续使用有效lsmax身份；是否提交或push按当前授权执行，不从历史文档推导新授权。

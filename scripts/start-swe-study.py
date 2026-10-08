@@ -116,6 +116,7 @@ def main():
         for root in [Path(saved['environments']),Path(saved['output'])]:
             if root.exists(): (root/'STOP').touch()
         print('STOP requested; in-flight work finishes and preserves evidence');return
+    raise SystemExit('Fixed-prefix study is superseded. Formal 100-task continuous study waits for Thinking and budget confirmation; use the Thinking preexperiment entry only.')
     os.environ.setdefault('RSI_MODEL_UPSTREAM','http://10.195.214.152:8100/v1')
     if a.action=='_run':
         with (control/'worker.lock').open('a') as lock:

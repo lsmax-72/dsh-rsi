@@ -159,6 +159,7 @@ def main():
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('mode',choices=['freeze','start','run','status','report','validate','plan']);p.add_argument('--output',type=Path,required=True)
  for n in ['spec','dataset','scorer-python','environments','embedding-model']:p.add_argument('--'+n,type=Path)
  p.add_argument('--resume',action='store_true');a=p.parse_args();a.output=a.output.resolve()
+ if a.mode in ['freeze','start','run']:raise SystemExit('Fixed-prefix study is superseded; formal continuous study waits for Thinking and budget confirmation.')
  if a.mode=='freeze':print(json.dumps({'status':freeze(a)['status']}));return
  if a.mode=='plan':
   s=read(a.spec) if a.spec else read(a.output/'protocol.json');n=len(s['manifest']['heldOut']);b=s['budgets'];print(json.dumps({'prefixTasks':4,'evaluationPairs':n,'taskRuns':2*(4+n),'maxForegroundCalls':2*(4+n)*b['foregroundCalls'],'maxBackgroundCalls':b['prefixBackgroundCalls']+n*b['heldOutBackgroundCalls'],'workers':s['workers'],'realModelRequests':0},indent=2));return
