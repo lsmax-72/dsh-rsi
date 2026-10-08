@@ -47,7 +47,7 @@ def main():
         image=client.images.pull(key,platform='linux/amd64')
     harness=client.images.get('dsh-rsi-container-check:amd64')
     inspect_code=inspect.getsource(compare_public_trees)+"""\nimport subprocess,json,django,hashlib
-run=lambda *a:subprocess.check_output(['git','-C','/testbed',*a],universal_newlines=True).strip()
+run=lambda *a:subprocess.check_output(['git','-C','/testbed',*a],universal_newlines=True,encoding='utf-8').strip()
 print(json.dumps({'headCommit':run('rev-parse','HEAD'),'headTime':run('show','-s','--format=%ct','HEAD'),
 'headTree':run('rev-parse','HEAD^{tree}'),'baseTree':run('rev-parse',BASE+'^{tree}'),'djangoVersion':django.get_version(),
 'publicTreeAudit':compare_public_trees(run('ls-tree','-r','-z',BASE),run('ls-tree','-r','-z','HEAD'))}))

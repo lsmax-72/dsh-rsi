@@ -22,15 +22,17 @@
 
 ## 独立环境准备
 
-干净评分环境 `.artifacts/swe-scorer-venv/bin/python` 使用 `swebench==3.0.0`，50个官方源码发行哈希一致。新增正式题的空补丁负控制与既有公开任务的正/负控制健康检查正在后台进行，尚不宣称通过。后台脚本只逐题调用既有 `prepare-task-image.py`，先前序后后序，不启动真实模型；固定spec、dataset和准备脚本哈希，记录HEAD、逐例日志、环境与公开输入哈希。宿主可用空间不足15GiB时保守停止；不自动删除镜像。已有不完整环境目录要求人工审阅，不自动重试。STOP文件在当前准备任务结束后阻止下一题。
+干净评分环境 `.artifacts/swe-scorer-venv/bin/python` 使用 `swebench==3.0.0`，50个官方源码发行哈希一致。既有两道公开任务的正/负控制共四项健康检查已PASS，全部FAIL_TO_PASS标识可由原始官方parser解析；详见 `docs/scorer-health-control-20261008.md`。正式评估仍按冻结协议独立判分。后台脚本只逐题调用既有 `prepare-task-image.py`，先前序后后序，不启动真实模型；固定spec、dataset和准备脚本哈希，记录HEAD、逐例日志、环境与公开输入哈希。宿主可用空间不足15GiB时保守停止；不自动删除镜像。已有不完整环境目录要求人工审阅，不自动重试。STOP文件在当前准备任务结束后阻止下一题。
 
 ```sh
 python3 scripts/prepare-swe-environments.py start \
   --spec docs/evidence/swe-expansion-spec-20261008.json \
   --dataset /Users/lsmax/Coder/EvoAgentBench/data/swebench/data/test-00000-of-00001.parquet \
   --python .artifacts/swe-scorer-venv/bin/python \
-  --output .artifacts/swe-expansion-environments-20261008
-python3 scripts/prepare-swe-environments.py status --output .artifacts/swe-expansion-environments-20261008
+  --output .artifacts/swe-expansion-environments-v2-20261008
+python3 scripts/prepare-swe-environments.py status --output .artifacts/swe-expansion-environments-v2-20261008
 ```
 
 `start` 创建独立会话后台进程，无需Codex在线；`run --output ...` 用于STOP/磁盘停止后的人工恢复，必须保持输入不变、已完成回执一致且不存在未完成题目录。出现HALTED先审阅，不把准备错误算为模型任务失败。全部104环境完成后标记READY，正式研究冻结与模型执行仍是后续步骤。
+
+首次环境准备目录 `.artifacts/swe-expansion-environments-20261008` 保留为失败尝试：第一题9296在官方Python3.6镜像中读取含非ASCII路径的Git树时触发默认ASCII解码错误，完成环境0个、模型请求0次。仅将Git输出解码明确设为UTF-8；重新人工启动v2目录，题单、预算与源码身份守卫不变，不是自动重试或模型任务失败。
