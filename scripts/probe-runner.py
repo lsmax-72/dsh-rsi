@@ -65,8 +65,31 @@ def verify_seed(assets, sessions):
     return {'sourceSessionIds':sorted(sources),'requiredSessionIds':sorted(required),'inputSha256':hashes,'priorTaskLogs':prior_tasks}
 
 
+def verify_thinking_wire(output,mode):
+    rows=[json.loads(line) for line in (output/'gateway.log').read_text().splitlines() if line.strip()]
+    sent=[r for r in rows if r.get('request') and r.get('model')]
+    summaries=[r for r in rows if 'responseRequest' in r]
+    assert sent and len(sent)==len(summaries),'Missing complete wire response evidence'
+    assert {r['request'] for r in sent}=={r['responseRequest'] for r in summaries},'Wire evidence IDs differ'
+    assert all(r['enableThinking'] is (mode=='on') for r in sent),'Thinking switch not delivered'
+    for r in summaries:
+        assert r['responseComplete'] and r['parseErrors']==0,'Unfinished or unparseable upstream response'
+        if 'event-stream' in r['contentType']:assert r['sseDone'],'SSE did not close with DONE'
+        for key,path in [('requestSha256','rawRequest'),('responseSha256','rawResponse')]:
+            assert hashlib.sha256((output/'gateway-evidence'/r[path]).read_bytes()).hexdigest()==r[key],'Wire evidence bytes changed'
+    chars=sum(r['reasoningChars'] for r in summaries)
+    ledgers=list((output/'state/pilot').glob('*/model-requests.json'))
+    nativeChars=sum(r.get('reasoningChars',0) for path in ledgers for r in json.loads(path.read_text()))
+    if ledgers:assert (nativeChars>0 if mode=='on' else nativeChars==0),'Service reasoning was not faithfully exposed by the native provider'
+    assert (chars>0 if mode=='on' else chars==0),'Requested Thinking mode has no matching real service reasoning'
+    result={'status':'PASS_ACTUAL_THINKING_WIRE','thinking':mode,'requests':len(sent),'reasoningChars':chars,'reasoningContentChars':sum(r['reasoningContentChars'] for r in summaries),'nativeReasoningChars':nativeChars if ledgers else None,'responseModels':sorted({model for r in summaries for model in r['responseModels']}),'systemFingerprints':sorted({fp for r in summaries for fp in r['systemFingerprints']}),'weightsHash':None,'rawEvidence':'gateway-evidence'}
+    (output/'thinking-wire.json').write_text(json.dumps(result,indent=2)+'\n');return result
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--verify-thinking-wire',action='store_true',help='Strict service reasoning audit for this independent baseline preexperiment only')
+    parser.add_argument('--thinking',choices=['on','off'],default='off',help='Baseline independent SWE task only: opt in to actual provider reasoning')
     parser.add_argument('--image', default='dsh-rsi-pilot2:django-11292', help='Prepared task image; source is /opt/task-source')
     parser.add_argument('--embedding-model',type=Path,help='Pinned native local GGUF copied read-only into the experiment image; no host bind')
     parser.add_argument('--arm', choices=['baseline', 'rsi'], required=True)
@@ -129,6 +152,8 @@ def main():
         parser.error('Real preflight requires the authorized RSI_MODEL_UPSTREAM environment variable.')
     for value in [args.dispatch_limit,args.request_limit,args.wall_seconds]:
         if value < 1: parser.error('Limits must be positive.')
+    if args.thinking=='on':args.verify_thinking_wire=True
+    if args.verify_thinking_wire and (args.arm!='baseline' or not args.formal or args.fixture or args.persona_input or args.scope_quality_protocol or args.phases or args.baseline_history or args.seed_assets or learning_limit!=0 or args.learning_pool):parser.error('Thinking wire verification requires an independent formal baseline SWE task with zero learning')
     output = args.output.resolve()
     output.mkdir(parents=True,exist_ok=True)
     if any(output.iterdir()): parser.error('Output must be empty; preserve every prior attempt.')
@@ -136,7 +161,9 @@ def main():
     patch = json.loads((project/'scripts/container/pilot.patch.json').read_text())
     services = patch[-1]['insert']
     driver = next(s for s in services if s['id']=='rsi-pilot-task')
-    driver['config'] = {'arm':args.arm, 'instanceId':args.instance, 'fixture':args.fixture,
+    provider=next(s for s in services if s['id']=='rsi-qwen')['config']['providers']['qwen']
+    provider['reasoning']='low' if args.thinking=='on' else 'off'
+    driver['config'] = {'arm':args.arm, 'thinking':args.thinking, 'instanceId':args.instance, 'fixture':args.fixture,
         'fixtureAnswerStop':args.fixture_answer_stop,'interruptCheckpoint':args.interrupt_checkpoint, 'baselineDate':args.baseline_date, 'dispatchLimit':args.dispatch_limit,
         'learningCallBudget':args.learning_call_budget, 'learningDispatchLimit':learning_limit, 'fixtureLearning':args.fixture_learning, 'wallTimeMs':args.wall_seconds*1000,
         'settleMs':args.settle_seconds*1000,'formal':args.formal,'expectedTree':args.expected_tree,'expectedVersion':args.expected_version}
@@ -228,6 +255,7 @@ def main():
     # Persona limits apply per question; the relay sees the sum of all question budgets.
     foreground_limit=args.dispatch_limit*(len(public['questions']) if args.persona_input else 1)
     relay_limit=min(args.request_limit,foreground_limit+learning_limit)
+    gateway = None
     containers = []
     started = False
     exported = False
@@ -240,6 +268,7 @@ def main():
             root=Path(temp)
             shutil.copytree(project/'lib',root/'lib')
             shutil.copy2(project/'scripts/pilot-task.mjs',root/'pilot-task.mjs')
+            shutil.copy2(project/'scripts/model-gateway.py',root/'model-gateway.py')
             if args.scope_quality_protocol:
                 shutil.copy2(project/'scripts/review-scope-quality.mjs',root/'review-scope-quality.mjs')
                 shutil.copy2(project/'scripts/personamem-history.mjs',root/'personamem-history.mjs')
@@ -256,7 +285,7 @@ def main():
             # Only public problem metadata already present in the prepared task image is reused.
             shutil.copy2(project/'package.json',root/'package.json')
             shutil.copy2(project/'package-lock.json',root/'package-lock.json')
-            dockerfile = f'FROM {args.image}\nUSER root\nCOPY package.json package-lock.json /opt/rsi/\nRUN cd /opt/rsi && npm ci --ignore-scripts\nCOPY lib /opt/rsi/lib\nCOPY pilot-task.mjs audit-session-requests.mjs task-input.mjs pilot.json /opt/rsi/scripts/\nENV NODE_LLAMA_CPP_GPU=false\n'
+            dockerfile = f'FROM {args.image}\nUSER root\nCOPY package.json package-lock.json /opt/rsi/\nRUN cd /opt/rsi && npm ci --ignore-scripts\nCOPY lib /opt/rsi/lib\nCOPY model-gateway.py pilot-task.mjs audit-session-requests.mjs task-input.mjs pilot.json /opt/rsi/scripts/\nENV NODE_LLAMA_CPP_GPU=false\n'
             if args.persona_input:
                 dockerfile += 'COPY personamem-pilot-task.mjs personamem-history.mjs personamem-learning-policy.mjs personamem-native-learning-policy.mjs /opt/rsi/scripts/\nCOPY personamem.json /opt/rsi/personamem.json\n'
             if args.scope_quality_protocol:dockerfile += 'COPY review-scope-quality.mjs personamem-history.mjs scope-quality.json /opt/rsi/scripts/\n'
@@ -288,10 +317,10 @@ def main():
         gateway = None
         if not args.fixture:
             gateway = subprocess.check_output(['docker','run','-d','--network',network,'--network-alias','model',
-                '--read-only','--cap-drop','ALL','--security-opt','no-new-privileges','--memory','256m','--pids-limit','32',
+                '--read-only','--tmpfs','/tmp:rw,uid=1000,gid=1000,mode=700,size=128m','--cap-drop','ALL','--security-opt','no-new-privileges','--memory','256m','--pids-limit','32',
                 '-e','RSI_MODEL_UPSTREAM='+os.environ['RSI_MODEL_UPSTREAM'],
                 '-e','RSI_MODEL_REQUEST_LIMIT='+str(relay_limit),
-                'dsh-rsi-pilot2:gateway','python3','/opt/rsi/scripts/model-gateway.py'],text=True).strip()
+                image,'python3','/opt/rsi/scripts/model-gateway.py'],text=True).strip()
             containers.append(gateway)
             command('docker','network','connect','bridge',gateway)
         startup = ('cp -a /opt/seed-assets /state/assets && ' if args.seed_assets else '')
@@ -304,7 +333,7 @@ def main():
         assert info['Config']['User']=='1000:1000' and info['HostConfig']['ReadonlyRootfs'] and not info['HostConfig']['Binds']
         assert len(info['Mounts'])==1 and info['Mounts'][0]['Name']==volume
         assert len(info['NetworkSettings']['Networks'])==1
-        (output/'policy.json').write_text(json.dumps({'arm':args.arm,'imageId':info['Image'],
+        (output/'policy.json').write_text(json.dumps({'arm':args.arm,'thinking':args.thinking,'verifyThinkingWire':args.verify_thinking_wire,'imageId':info['Image'],'gatewayImageId':info['Image'] if gateway else None,'gatewaySourceSha256':hashlib.sha256((project/'scripts/model-gateway.py').read_bytes()).hexdigest(),
             'user':info['Config']['User'],'networkInternal':True,'rootfsReadOnly':True,'hostBinds':[],
             'experimentOwnedVolume':True,'fixture':args.fixture,'requestLimit':relay_limit,
             'dispatchLimit':args.dispatch_limit,'learningCallBudget':args.learning_call_budget,'learningDispatchLimit':learning_limit, 'fixtureLearning':args.fixture_learning,
@@ -342,6 +371,11 @@ def main():
             copied=subprocess.run(['docker','cp',containers[-1]+':/state/.',str(output/'state')],capture_output=True,text=True)
             (output/'export-status.json').write_text(json.dumps({'returncode':copied.returncode,'stderr':copied.stderr}))
             exported=copied.returncode==0
+        if gateway:
+            wirelogs=subprocess.run(['docker','logs',gateway],capture_output=True,text=True)
+            (output/'gateway.log').write_text(wirelogs.stdout)
+            wirecopy=subprocess.run(['docker','cp',gateway+':/tmp/gateway-evidence',str(output/'gateway-evidence')],capture_output=True,text=True)
+            (output/'gateway-evidence-export.json').write_text(json.dumps({'returncode':wirecopy.returncode,'stderr':wirecopy.stderr}))
         for cid in reversed(containers): subprocess.run(['docker','rm','-f',cid],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
         # If export failed, retain the experiment volume for recovery instead of destroying evidence.
         if not started or exported: subprocess.run(['docker','volume','rm',volume],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
@@ -366,6 +400,8 @@ def main():
                 (output/'budget-settlement.json').write_text(json.dumps(pool.snapshot(),indent=2));pool.close()
         subprocess.run(['docker','network','rm',network],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
         subprocess.run(['docker','image','rm',image],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+
+    if args.verify_thinking_wire:verify_thinking_wire(output,args.thinking)
 
 
 if __name__=='__main__': main()

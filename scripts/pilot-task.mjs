@@ -79,16 +79,19 @@ export function apply(ctx, config) {
       } finally {await handle.close();}
     }
     const request = {sessionId:options.sessionId, phase:background?'learning':currentPhase,
-      messages:structuredClone(options.messages), status:'DISPATCHING', usage:null, observedAt:Date.now()};
+      messages:structuredClone(options.messages), status:'DISPATCHING', usage:null, reasoningBlocks:[], reasoningDeltas:[], finish:null, observedAt:Date.now()};
     requests.push(request); patch(); ledger();
     try {
       for await (const chunk of next()) {
+        if (chunk.type === 'reasoning-delta') request.reasoningDeltas.push({index:chunk.index,text:chunk.text});
+        if (chunk.type === 'block-end' && chunk.block.type === 'reasoning') {request.reasoningBlocks.push(structuredClone(chunk.block)); ledger();}
+        if (chunk.type === 'finish') {request.finish=structuredClone(chunk.reason); ledger();}
         if (chunk.type === 'usage') {request.usage = chunk.usage; ledger();}
         yield chunk;
       }
       request.status = 'RETURNED';
     } catch (error) {request.status = 'ERROR'; request.error = error.message; throw error;}
-    finally {request.finishedAt = Date.now(); ledger();}
+    finally {request.reasoningChars=request.reasoningDeltas.reduce((n,b)=>n+[...(b.text??'')].length,0);request.reasoningSha256=createHash('sha256').update(JSON.stringify({blocks:request.reasoningBlocks,deltas:request.reasoningDeltas})).digest('hex');request.finishedAt = Date.now(); ledger();}
   });
   ctx.on('tools/result', (execution, result) => {
     results.push({name:execution.name,callId:execution.callId,args:execution.arguments,isError:result.isError===true,phase:currentPhase,requestOrdinal:foreground,observedAt:Date.now(),patchSha256:patch()});
