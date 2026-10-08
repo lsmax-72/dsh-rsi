@@ -20,6 +20,20 @@ def command(*args, **kwargs):
 
 
 
+def discard_exported_npm_cache(output):
+    # Downloaded package blobs are not experimental evidence or source-state inputs.
+    # Keep npm logs and all task, session, asset, and grader artifacts.
+    target = output / 'state/user/.npm/_cacache'
+    status = 'NOT_PRESENT'
+    if target.exists() or target.is_symlink():
+        if target.is_symlink() or target.resolve() != target.absolute():
+            status = 'PRESERVED_UNSAFE_PATH'
+        else:
+            shutil.rmtree(target)
+            status = 'OMITTED_REBUILDABLE_DOWNLOAD_CACHE'
+    (output / 'export-cache-policy.json').write_text(json.dumps({'path':'state/user/.npm/_cacache','status':status}) + '\n')
+
+
 def verify_seed(assets, sessions):
     # Validate only provenance and frozen input bytes; learning stays in the native core.
     hashes={kind:{str(file.relative_to(directory)):hashlib.sha256(file.read_bytes()).hexdigest()
@@ -314,6 +328,7 @@ def main():
         (output/'state.json').write_text(json.dumps({'container':state,'deliberatelyKilled':killed}))
         copied=command('docker','cp',cid+':/state/.',str(output/'state'),capture_output=True)
         exported=True
+        discard_exported_npm_cache(output)
         if gateway: (output/'gateway.log').write_text(subprocess.check_output(['docker','logs',gateway],text=True))
         receipt=output/'state/pilot'/args.instance/'receipt.json'
         if args.interrupt_checkpoint: assert killed and state['ExitCode']==137
