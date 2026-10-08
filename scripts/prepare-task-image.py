@@ -3,9 +3,31 @@
 import argparse
 import hashlib
 import importlib.util
+import inspect
 import json
 from pathlib import Path
 import subprocess
+
+
+def compare_public_trees(base, head):
+    def entries(text):
+        result = {}
+        for entry in text.split('\0'):
+            if not entry:
+                continue
+            fields, path = entry.split('\t', 1)
+            mode, kind, blob = fields.split()
+            if path in result:
+                raise ValueError('Duplicate Git tree path')
+            result[path] = (mode, kind, blob)
+        return result
+    a, b = entries(base), entries(head)
+    same = a.keys() == b.keys() and all(a[k][1:] == b[k][1:] for k in a)
+    changed = [k for k in a if k in b and a[k][0] != b[k][0]]
+    mode_only = same and all({a[k][0], b[k][0]} == {'100644', '100755'} for k in changed)
+    identity = '\n'.join(repr((k, a[k][1:])) for k in sorted(a))
+    return {'samePathsTypesAndBlobs':same, 'onlyExecutableModesDiffer':mode_only,
+            'changedModePaths':len(changed), 'baseContentIdentitySha256':hashlib.sha256(identity.encode()).hexdigest()}
 
 
 def main():
@@ -24,16 +46,17 @@ def main():
         print(json.dumps({'instanceId':args.instance,'phase':'pull-official-image'}),flush=True)
         image=client.images.pull(key,platform='linux/amd64')
     harness=client.images.get('dsh-rsi-container-check:amd64')
-    inspect_code="""import subprocess,json,django
+    inspect_code=inspect.getsource(compare_public_trees)+"""\nimport subprocess,json,django,hashlib
 run=lambda *a:subprocess.check_output(['git','-C','/testbed',*a],universal_newlines=True).strip()
 print(json.dumps({'headCommit':run('rev-parse','HEAD'),'headTime':run('show','-s','--format=%ct','HEAD'),
-'headTree':run('rev-parse','HEAD^{tree}'),'baseTree':run('rev-parse',BASE+'^{tree}'),'djangoVersion':django.get_version()}))
+'headTree':run('rev-parse','HEAD^{tree}'),'baseTree':run('rev-parse',BASE+'^{tree}'),'djangoVersion':django.get_version(),
+'publicTreeAudit':compare_public_trees(run('ls-tree','-r','-z',BASE),run('ls-tree','-r','-z','HEAD'))}))
 """.replace('BASE',repr(row['base_commit']))
     command=['docker','run','--platform','linux/amd64','--rm','--network','none','--read-only','--cap-drop','ALL','--security-opt','no-new-privileges',
         '--memory','2g','--pids-limit','256','-w','/testbed','-e','PYTHONDONTWRITEBYTECODE=1',image.id,
         '/opt/miniconda3/envs/testbed/bin/python','-c',inspect_code]
     environment=json.loads(subprocess.check_output(command,text=True))
-    if environment['headTree']!=environment['baseTree']:raise RuntimeError('Official image source is not the public base tree')
+    if environment['headTree']!=environment['baseTree'] and not environment['publicTreeAudit']['onlyExecutableModesDiffer']:raise RuntimeError('Official image differs in public paths, object types or source blobs')
     # The dataset and hidden test/gold patches never enter the Docker build context.
     public={key:row[key] for key in ['instance_id','repo','base_commit','problem_statement','version']}
     (output/'task.json').write_text(json.dumps(public)+'\n')
