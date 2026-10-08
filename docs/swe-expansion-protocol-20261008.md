@@ -36,3 +36,7 @@ python3 scripts/prepare-swe-environments.py status --output .artifacts/swe-expan
 `start` 创建独立会话后台进程，无需Codex在线；`run --output ...` 用于STOP/磁盘停止后的人工恢复，必须保持输入不变、已完成回执一致且不存在未完成题目录。出现HALTED先审阅，不把准备错误算为模型任务失败。全部104环境完成后标记READY，正式研究冻结与模型执行仍是后续步骤。
 
 首次环境准备目录 `.artifacts/swe-expansion-environments-20261008` 保留为失败尝试：第一题9296在官方Python3.6镜像中读取含非ASCII路径的Git树时触发默认ASCII解码错误，完成环境0个、模型请求0次。仅将Git输出解码明确设为UTF-8；重新人工启动v2目录，题单、预算与源码身份守卫不变，不是自动重试或模型任务失败。
+
+## 用户自行启动（最新执行入口）
+
+使用 [独立后台指南](swe-study-launch-guide.md) 的 `python3 -B scripts/start-swe-study.py start`。用户启动后自动恢复准备、冻结与执行，无需Codex在线；提供脚本时保持暂停，不代启动正式任务。

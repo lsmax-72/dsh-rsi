@@ -1,0 +1,15 @@
+{
+  "status": "PASS_OFFLINE_STUDY_CONTROLLER",
+  "realModelRequests": 0,
+  "dockerOperations": 0,
+  "checks": [
+    "real phase subprocesses complete build freeze run report and independent controller returns",
+    "separate detached controller process completes all phases and exits without live caller orchestration",
+    "preparation subprocess failure is HALTED and never freezes or runs",
+    "launch fingerprint change rejects every phase before dispatch",
+    "STOP dispatches nothing and explicit closed-state continuation reuses frozen protocol",
+    "HALTED preparation has no automatic retry",
+    "actual CLI subprocess status and STOP work and live worker lock rejects second start"
+  ],
+  "phaseExecution": "real local fixture subprocesses; public orchestration import seam"
+}
