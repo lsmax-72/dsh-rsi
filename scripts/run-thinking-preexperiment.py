@@ -25,15 +25,33 @@ def validate(s):
  require(code()==s['codeHashes'] and sha(DATA)==s['datasetSha256'],'Frozen code or dataset changed')
  require(hashlib.sha256(os.environ.get('RSI_MODEL_UPSTREAM','').encode()).hexdigest()==s['upstreamSha256'],'Model service changed')
  require(model_identity()==s['modelIdentity'],'Reported model deployment changed')
+ if s.get('carriedCompletedCase'):
+  c=s['carriedCompletedCase'];audit=P/c['auditFile'];require(sha(audit)==c['auditSha256'],'Carried audit changed');load_carried(audit)
  for e in s['environments']:
   f=P/e['environmentFile'];require(sha(f)==e['environmentSha256'] and sha(f.parent/'task.json')==e['publicInputSha256'],'Frozen public environment changed')
   for tag,key in [(e['taskTag'],'taskImageId'),(e['scorerKey'],'scorerImageId')]:require(checked(['docker','image','inspect','--format','{{.Id}}',tag])==e[key],'Frozen image changed')
-def freeze(root):
+def load_carried(audit):
+ spec=importlib.util.spec_from_file_location('completed_case_audit',P/'scripts/audit-thinking-completed-run.py');m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m);return m.carry(audit)
+
+def freeze(root,carry_audit=None):
  require(not root.exists(),'Preserve old experiment directory');require(not checked(['git','status','--porcelain']),'Commit implementation before freeze')
  env=read(ENV);require([e['instanceId'] for e in env['environments']]==IDS,'Only the eight exposed development tasks are permitted')
  checked([SCORER,'-B','-c',"import importlib.util; s=importlib.util.spec_from_file_location('scorer','scripts/probe-scorer.py'); m=importlib.util.module_from_spec(s); s.loader.exec_module(m); m.verify_distribution()"])
  s={'status':'FROZEN_THINKING_DEVELOPMENT','revision':checked(['git','rev-parse','HEAD']),'codeHashes':code(),'datasetSha256':sha(DATA),'upstreamSha256':hashlib.sha256(os.environ['RSI_MODEL_UPSTREAM'].encode()).hexdigest(),'environments':env['environments'],'model':'qwen3.8-27b','modelIdentity':model_identity(),'weightsHash':None,'budgets':{'foregroundCalls':40,'wallSeconds':1200,'maxOutputTokens':8192,'learningCalls':0},'pairs':8,'plannedRuns':16,'serial':True,'independentEmptyHistory':True,'rsiEnabled':False,'formal100Allowed':False,'selection':'All previously exposed eight continuous-development cases, original registered order, no outcome selection','createdAt':time.time()}
- validate(s);root.mkdir(parents=True);write(root/'protocol.json',s);(root/'protocol.sha256').write_text(sha(root/'protocol.json')+'\n');return s
+ carried=None
+ if carry_audit:
+  carried,previous,evidence=load_carried(carry_audit)
+  for k in ['datasetSha256','upstreamSha256','modelIdentity','budgets','environments']:
+   require(previous[k]==s[k],'Carried case task/model/budget changed: '+k)
+  # Only lifecycle/export/controller files may differ; model and Agent inputs
+  # remain exactly the frozen implementation used by the completed case.
+  exceptions={'scripts/probe-runner.py','scripts/run-thinking-preexperiment.py','scripts/probe-gateway-export.py','scripts/audit-thinking-completed-run.py','scripts/probe-thinking-carry.py'}
+  require(all(k in exceptions or s['codeHashes'].get(k)==v for k,v in previous['codeHashes'].items()),'Task implementation changed across evidence repair')
+  require(all(k in exceptions or k in previous['codeHashes'] for k in s['codeHashes']),'Unexpected task implementation added')
+  s['carriedCompletedCase']={'auditFile':str(carry_audit.relative_to(P)),'auditSha256':sha(carry_audit),'sourceRevision':previous['revision'],'rawWireBytesAvailable':False,'reason':'Retain completed first On run; post-completion raw export repair only, no model replay or rescore'}
+ validate(s);root.mkdir(parents=True);write(root/'protocol.json',s);(root/'protocol.sha256').write_text(sha(root/'protocol.json')+'\n')
+ if carried:write(root/(carried['instanceId']+'-'+carried['thinking']+'-0.record.json'),carried)
+ return s
 
 def summarize(root,s):
  rows=[read(p) for p in sorted(root.glob('*.record.json'))];pairs=[]
@@ -51,7 +69,7 @@ def summarize(root,s):
   totals[mode]={'runs':len(group),'graded':len(graded),'solved':sum(r['resolved'] for r in graded),'passRate':sum(r['resolved'] for r in graded)/8 if len(graded)==8 else None,'observedPassRate':sum(r['resolved'] for r in graded)/len(graded) if graded else None,'invalidOrInfrastructure':len(group)-len(graded),'knownInputTokens':sum(r.get('inputTokens',0) for r in group),'knownOutputTokens':sum(r.get('outputTokens',0) for r in group),'knownTotalTokens':sum(r.get('totalTokens',0) for r in group),'unknownUsageRequests':sum(r.get('unknownUsageRequests',0) for r in group),'thinkingTokens':sum(r['thinkingTokens'] for r in group) if group and all(r.get('thinkingTokens') is not None for r in group) else None,'foregroundCalls':sum(r.get('calls',0) for r in group),'agentWallSeconds':sum(r.get('agentWallSeconds',0) for r in group),'timeouts':sum(bool(r.get('timedOut')) for r in group),'modelErrors':sum(r.get('modelErrors',0) for r in group),'toolErrors':sum(r.get('toolErrors',0) for r in group),'outputTruncations':sum(r.get('outputTruncations',0) for r in group)}
  expected={(id,mode) for id in IDS for mode in ['on','off']}
  complete=len(rows)==16 and {(r['instanceId'],r['thinking']) for r in rows}==expected and all(r['status']=='CLOSED_GRADED' and type(r.get('resolved')) is bool for r in rows) and all(p.get('sameInitialMessagesAndTools') for p in pairs)
- result={'status':'COMPLETE' if complete else 'PARTIAL_DEVELOPMENT','pairs':pairs,'totals':totals,'netSolvedOnMinusOff':totals['on']['solved']-totals['off']['solved'],'confidenceInterval':None,'reason':'Eight exposed cases, one run per mode; configuration development only, no RSI-effect or stable-generalization claim','formal100Started':False}
+ result={'status':'COMPLETE' if complete else 'PARTIAL_DEVELOPMENT','pairs':pairs,'totals':totals,'netSolvedOnMinusOff':totals['on']['solved']-totals['off']['solved'],'confidenceInterval':None,'reason':'Eight exposed cases, one run per mode; configuration development only, no RSI-effect or stable-generalization claim','formal100Started':False,'rawWireEvidenceGaps':[{'instanceId':r['instanceId'],'thinking':r['thinking'],'audit':r.get('auditRepair',{}).get('auditFile')} for r in rows if r.get('auditRepair')]}
  write(root/'summary.json',result);return result
 
 def execute(argv,log):
@@ -117,8 +135,8 @@ def run(root,s,resume):
  finally:lock.unlink(missing_ok=True)
 
 def main():
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('mode',choices=['freeze','start','run','status','stop','report']);p.add_argument('--output',type=Path,default=P/'.artifacts/thinking-preexperiment-20261008');p.add_argument('--resume',action='store_true');a=p.parse_args();root=a.output.resolve();os.environ.setdefault('RSI_MODEL_UPSTREAM','http://10.195.214.152:8100/v1')
- if a.mode=='freeze':freeze(root);print('FROZEN_8_EXPOSED_PAIRS');return
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('mode',choices=['freeze','start','run','status','stop','report']);p.add_argument('--output',type=Path,default=P/'.artifacts/thinking-preexperiment-20261008');p.add_argument('--resume',action='store_true');p.add_argument('--carry-completed-audit',type=Path,help='Explicitly retain the audited completed first On run, no replay');a=p.parse_args();root=a.output.resolve();os.environ.setdefault('RSI_MODEL_UPSTREAM','http://10.195.214.152:8100/v1')
+ if a.mode=='freeze':freeze(root,a.carry_completed_audit.resolve() if a.carry_completed_audit else None);print('FROZEN_8_EXPOSED_PAIRS');return
  if a.mode=='status':
   state=read(root/'state.json') if (root/'state.json').exists() else {'status':'NOT_STARTED'};rows=[read(f) for f in root.glob('*.record.json')];state.update(completedRuns=sum(r['status']=='CLOSED_GRADED' for r in rows),plannedRuns=16,activeOrFailed=[{k:r.get(k) for k in ['instanceId','thinking','status','error']} for r in rows if r['status']!='CLOSED_GRADED']);print(json.dumps(state,ensure_ascii=False,indent=2));return
  if a.mode=='stop':(root/'STOP').touch();print('STOP requested');return

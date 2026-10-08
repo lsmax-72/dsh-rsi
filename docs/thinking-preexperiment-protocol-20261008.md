@@ -29,3 +29,9 @@ On的机制证据包括实际请求标志和服务返回的推理内容/相关�
 ## 首次启动的基础设施修复
 
 首次批次 `.artifacts/thinking-preexperiment-20261008` 在第一题On执行前因网关PATH解释器过旧发生SyntaxError，零请求到达模型服务；原生连接尝试和官方空补丁诊断报告保留，但不能计作Thinking任务失败。只将网关解释器固定为 `/usr/bin/python3`；8个实际任务镜像逐项验证Python3.10.12、编译/导入/监听准备通过，见 `docs/evidence/thinking-gateway-runtime-check-20261008.json`。修订代码后人工冻结新批次 `.artifacts/thinking-preexperiment-v2-20261008`，不覆盖原证据或自动重试旧状态；16次真实任务预算不增加。
+
+## 首例完成后的原始证据导出修复
+
+v2首题11848 On正常完成17次模型调用、无模型/工具错误、无超时，官方评分已完成。随后严格字节审计发现`docker cp`不能读取网关tmpfs：已复现容器仍运行时也失败，并非模型或求解失败。改用运行中的`docker exec`归档原字节，禁网、只读、无host bind的真实容器测试通过（见`docs/evidence/thinking-tmpfs-export-test-20261008.json`）。
+
+该例原请求/响应字节已无法恢复；不得声称严格raw hash审计通过。实际开关日志17/17为On，17个完整服务响应、原生reasoning与usage逐项一致，原生日志重建通过，官方补丁/判分保留；独立审计见`docs/evidence/thinking-completed-case-audit-20261008.json`。为避免按已知结果重跑或删题，新批次通过显式`--carry-completed-audit`引用该已完成例，不覆盖v2的HALTED记录、不重跑模型或评分。新冻结验证源码/任务/模型/预算身份，只有导出与控制生命周期改变；后续从同题Off开始，仍共16次真实任务执行。汇总与结论必须披露该例raw字节缺口，不能将日志核验等同于原始字节完整存档。
