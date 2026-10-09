@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """Eight exposed independent baseline pairs; detached and serial, no RSI or formal study dispatch."""
-import argparse, hashlib, importlib.util, json, os, re, subprocess, sys, time, urllib.request
+import argparse, hashlib, importlib.util, json, os, re, subprocess, sys, time, urllib.request, signal
 from pathlib import Path
 P=Path(__file__).resolve().parent.parent
 ENV=P/'docs/evidence/thinking-environments-20261008.json'
 DATA=Path('/Users/lsmax/Coder/EvoAgentBench/data/swebench/data/test-00000-of-00001.parquet')
 SCORER=P/'.artifacts/swe-scorer-venv/bin/python'
+TERMINAL={'CLOSED_GRADED','CLOSED_INFRA'}
 IDS=['django__django-'+n for n in ['11848','11551','12262','11815','11880','11790','11999','11740']]
 def read(p):return json.loads(p.read_text())
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
@@ -45,7 +46,7 @@ def freeze(root,carry_audit=None):
    require(previous[k]==s[k],'Carried case task/model/budget changed: '+k)
   # Only lifecycle/export/controller files may differ; model and Agent inputs
   # remain exactly the frozen implementation used by the completed case.
-  exceptions={'scripts/probe-runner.py','scripts/run-thinking-preexperiment.py','scripts/probe-gateway-export.py','scripts/audit-thinking-completed-run.py','scripts/probe-thinking-carry.py'}
+  exceptions={'scripts/probe-runner.py','scripts/run-thinking-preexperiment.py','scripts/probe-gateway-export.py','scripts/audit-thinking-completed-run.py','scripts/probe-thinking-carry.py','scripts/report-thinking-preexperiment.py','scripts/probe-thinking-budget.py','scripts/probe-thinking-preexperiment.py'}
   require(all(k in exceptions or s['codeHashes'].get(k)==v for k,v in previous['codeHashes'].items()),'Task implementation changed across evidence repair')
   require(all(k in exceptions or k in previous['codeHashes'] for k in s['codeHashes']),'Unexpected task implementation added')
   s['carriedCompletedCase']={'auditFile':str(carry_audit.relative_to(P)),'auditSha256':sha(carry_audit),'sourceRevision':previous['revision'],'rawWireBytesAvailable':False,'reason':'Retain completed first On run; post-completion raw export repair only, no model replay or rescore'}
@@ -68,20 +69,58 @@ def summarize(root,s):
   group=[r for r in rows if r['thinking']==mode];graded=[r for r in group if r['status']=='CLOSED_GRADED' and type(r.get('resolved')) is bool]
   totals[mode]={'runs':len(group),'graded':len(graded),'solved':sum(r['resolved'] for r in graded),'passRate':sum(r['resolved'] for r in graded)/8 if len(graded)==8 else None,'observedPassRate':sum(r['resolved'] for r in graded)/len(graded) if graded else None,'invalidOrInfrastructure':len(group)-len(graded),'knownInputTokens':sum(r.get('inputTokens',0) for r in group),'knownOutputTokens':sum(r.get('outputTokens',0) for r in group),'knownTotalTokens':sum(r.get('totalTokens',0) for r in group),'unknownUsageRequests':sum(r.get('unknownUsageRequests',0) for r in group),'thinkingTokens':sum(r['thinkingTokens'] for r in group) if group and all(r.get('thinkingTokens') is not None for r in group) else None,'foregroundCalls':sum(r.get('calls',0) for r in group),'agentWallSeconds':sum(r.get('agentWallSeconds',0) for r in group),'timeouts':sum(bool(r.get('timedOut')) for r in group),'modelErrors':sum(r.get('modelErrors',0) for r in group),'toolErrors':sum(r.get('toolErrors',0) for r in group),'outputTruncations':sum(r.get('outputTruncations',0) for r in group)}
  expected={(id,mode) for id in IDS for mode in ['on','off']}
- complete=len(rows)==16 and {(r['instanceId'],r['thinking']) for r in rows}==expected and all(r['status']=='CLOSED_GRADED' and type(r.get('resolved')) is bool for r in rows) and all(p.get('sameInitialMessagesAndTools') for p in pairs)
- result={'status':'COMPLETE' if complete else 'PARTIAL_DEVELOPMENT','pairs':pairs,'totals':totals,'netSolvedOnMinusOff':totals['on']['solved']-totals['off']['solved'],'confidenceInterval':None,'reason':'Eight exposed cases, one run per mode; configuration development only, no RSI-effect or stable-generalization claim','formal100Started':False,'rawWireEvidenceGaps':[{'instanceId':r['instanceId'],'thinking':r['thinking'],'audit':r.get('auditRepair',{}).get('auditFile')} for r in rows if r.get('auditRepair')]}
+ complete=len(rows)==16 and {(r['instanceId'],r['thinking']) for r in rows}==expected and all(r['status'] in TERMINAL for r in rows)
+ valid_pairs=all(p['on'] and p['off'] and p['on']['status']==p['off']['status']=='CLOSED_GRADED' and p.get('sameInitialMessagesAndTools') for p in pairs)
+ result={'status':'COMPLETE' if complete else 'PARTIAL_DEVELOPMENT','pairs':pairs,'totals':totals,'netSolvedOnMinusOff':totals['on']['solved']-totals['off']['solved'] if valid_pairs else None,'confidenceInterval':None,'reason':'Eight exposed cases, one run per mode; configuration development only, no RSI-effect or stable-generalization claim','formal100Started':False,'costComplete':not any(r.get('unknownUsageRequests',0) for r in rows),'rawWireEvidenceGaps':[{'instanceId':r['instanceId'],'thinking':r['thinking'],'audit':r.get('auditRepair',{}).get('auditFile')} for r in rows if r.get('auditRepair')]}
  write(root/'summary.json',result);return result
 
-def execute(argv,log):
- with log.open('x') as stream:return subprocess.run([str(x) for x in argv],cwd=P,stdout=stream,stderr=subprocess.STDOUT).returncode
+def recover_timed_out_process(argv):
+ # Only experiment-owned containers carrying this exact output label are touched.
+ if '--output' not in [str(x) for x in argv]:return
+ out=Path(argv[[str(x) for x in argv].index('--output')+1]);events=[]
+ try:
+  ids=subprocess.check_output(['docker','ps','-aq','--filter','label=dsh-rsi-output='+str(out.resolve())],text=True,timeout=20).split()
+  containers=[json.loads(subprocess.check_output(['docker','inspect',cid],text=True,timeout=20))[0] for cid in ids]
+  for info in containers:
+   if info['Config']['Labels'].get('dsh-rsi-role')=='task':
+    subprocess.run(['docker','stop','--time','10',info['Id']],capture_output=True,timeout=25)
+    result=subprocess.run(['docker','cp',info['Id']+':/state/.',str(out/'state')],capture_output=True,text=True,timeout=30)
+    events.append({'container':info['Id'],'role':'task','stateExportCode':result.returncode,'stderr':result.stderr})
+  spec=importlib.util.spec_from_file_location('wire_export',P/'scripts/probe-runner.py');module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+  for info in containers:
+   if info['Config']['Labels'].get('dsh-rsi-role')=='gateway':
+    result=module.export_gateway_evidence(info['Id'],out);events.append({'container':info['Id'],'role':'gateway','export':result})
+    logs=subprocess.check_output(['docker','logs',info['Id']],text=True,timeout=20);(out/'gateway.log').write_text(logs)
+ except Exception as error:events.append({'recoveryError':str(error)})
+ finally:
+  for cid in locals().get('ids',[]):
+   try:subprocess.run(['docker','rm','-f',cid],capture_output=True,timeout=20)
+   except Exception as error:events.append({'container':cid,'cleanupError':str(error)})
+  if out.exists():write(out/'outer-timeout-recovery.json',{'events':events,'volumesRetained':True,'noTaskReplay':True})
+
+def execute(argv,log,timeout=None):
+ argv=[str(x) for x in argv]
+ limit=timeout if timeout is not None else (1800 if Path(argv[2]).name=='probe-runner.py' else 420)
+ with log.open('x') as stream:
+  process=subprocess.Popen(argv,cwd=P,stdout=stream,stderr=subprocess.STDOUT,start_new_session=True)
+  try:return process.wait(timeout=limit)
+  except subprocess.TimeoutExpired:
+   os.killpg(process.pid,signal.SIGTERM)
+   try:process.wait(timeout=5)
+   except subprocess.TimeoutExpired:os.killpg(process.pid,signal.SIGKILL);process.wait(timeout=5)
+   stream.write('\nOUTER_PROCESS_TIMEOUT: process stopped, no automatic retry\n');stream.flush()
+   if Path(argv[2]).name=='probe-runner.py':recover_timed_out_process(argv)
+   return 124
 
 def run_case(root,s,e,mode):
  id=e['instanceId'];out=root/(id+'-'+mode+'-0');record=root/(out.name+'.record.json')
  require(not out.exists() and not record.exists(),'Existing attempt cannot be retried')
+ fatal=True
  rec={'instanceId':id,'thinking':mode,'status':'RUNNING','attempt':0,'startedAt':time.time(),'output':str(out),'resolved':None};write(record,rec)
  try:
   validate(s)
-  argv=[sys.executable,'-B',P/'scripts/probe-runner.py','--formal','--arm','baseline','--thinking',mode,'--verify-thinking-wire','--image',e['taskTag'],'--instance',id,'--output',out,'--dispatch-limit','40','--request-limit','40','--learning-call-budget','0','--learning-dispatch-limit','0','--wall-seconds','1200','--settle-seconds','0','--baseline-date',e['baselineDate'],'--expected-tree',e['expectedTree'],'--expected-version',e['expectedVersion']]
+  fatal=False
+  argv=[sys.executable,'-B',P/'scripts/probe-runner.py','--formal','--arm','baseline','--thinking',mode,'--verify-thinking-wire','--allow-budget-abort','--image',e['taskTag'],'--instance',id,'--output',out,'--dispatch-limit','40','--request-limit','40','--learning-call-budget','0','--learning-dispatch-limit','0','--wall-seconds','1200','--settle-seconds','0','--baseline-date',e['baselineDate'],'--expected-tree',e['expectedTree'],'--expected-version',e['expectedVersion']]
   rc=execute(argv,root/(out.name+'.runner.log'));rec['runnerReturnCode']=rc
   pilot=out/'state/pilot'/id;ledger=read(pilot/'model-requests.json') if (pilot/'model-requests.json').exists() else [];tools=read(pilot/'tool-results.json') if (pilot/'tool-results.json').exists() else []
   phases=read(pilot/'phases.json') if (pilot/'phases.json').exists() else []
@@ -96,23 +135,37 @@ def run_case(root,s,e,mode):
   reported=[next((u for u in reversed(r.get('usage',[])) if isinstance(u,dict) and type(u.get('total_tokens')) is int),None) for r in responses]
   reasoning=[(u.get('completion_tokens_details') or {}).get('reasoning_tokens') if u else None for u in reported]
   rec['rawServiceUsage']=reported
+  metered=[];recovered=[]
+  for index,request in enumerate(ledger):
+   native=request.get('usage') or {};raw=reported[index] if index<len(reported) else None
+   native_ok=all(type(native.get(k)) is int and native[k]>=0 for k in ['inputTokens','outputTokens','totalTokens']) and native['totalTokens']>0
+   raw_ok=bool(raw) and all(type(raw.get(k)) is int and raw[k]>=0 for k in ['prompt_tokens','completion_tokens','total_tokens']) and raw['total_tokens']>0
+   if native_ok:metered.append(native)
+   elif raw_ok:
+    metered.append({'inputTokens':raw['prompt_tokens'],'outputTokens':raw['completion_tokens'],'totalTokens':raw['total_tokens']});recovered.append(index+1)
+  rec.update(inputTokens=sum(u['inputTokens'] for u in metered),outputTokens=sum(u['outputTokens'] for u in metered),totalTokens=sum(u['totalTokens'] for u in metered),unknownUsageRequests=len(ledger)-len(metered),usageRecoveredFromService=recovered)
+  rec['costComplete']=rec['unknownUsageRequests']==0 and (pilot/'model-requests.json').exists()
   rec['thinkingTokens']=sum(reasoning) if len(reasoning)==len(responses) and reasoning and all(type(n) is int for n in reasoning) else None
   rec['serviceThinkingEvidence']=read(out/'thinking-wire.json') if (out/'thinking-wire.json').exists() else None
   if ledger and (pilot/'prediction.patch').exists():
    g=out/'grading.json';grc=execute([SCORER,'-B',P/'scripts/score-prediction.py','--dataset',DATA,'--instance',id,'--prediction',pilot/'prediction.patch','--work-dir',out/'grader-only','--output',g],out/'scorer.log');rec['scorerReturnCode']=grc
    if g.exists():grade=read(g);rec.update(resolved=grade.get('resolved'),grading=str(g),patchSha256=grade.get('patchSha256'))
+  if sent:require(all(w['enableThinking'] is (mode=='on') and w['model']=='qwen3.8-27b' for w in sent),'Actual model/Thinking toggle mismatch')
+  fatal=False
   require(bool(rec.get('firstRequest')) and all(re.fullmatch('[0-9a-f]{64}',rec['firstRequest'].get(k) or '') for k in ['messagesSha256','toolsSha256']) and rec['firstRequest']['maxOutputTokens']==8192,'Missing actual prompt/tools/output cap evidence')
   require(rc==0 and ledger and rec['serviceThinkingEvidence'],'Runner or actual Thinking verification failed')
-  require(len(sent)==len(ledger) and len(ledger)<=40 and not rec['unknownUsageRequests'],'Delivery/call cap/usage needs review')
+  require(len(sent)==len(ledger) and len(ledger)<=40,'Delivery/call cap needs review')
   require(all(r['phase']!='learning' for r in ledger),'Unexpected automatic learning')
   initial=read(pilot/'initial.json');require(initial['assets'] is None and not any(n.startswith('rsi_') for n in initial['toolSchemas']),'Baseline contains RSI')
   receipt=read(pilot/'receipt.json');reconstruction=read(pilot/'reconstruction.json')
   require(receipt['arm']=='baseline' and receipt['formalBenchmark'] is True and receipt['fixture'] is False and receipt['instanceId']==id and receipt['backgroundDispatches']==0 and isinstance(reconstruction,list) and len(reconstruction)==len(ledger) and all(c.get('matches') is True for c in reconstruction),'Native request reconstruction failed')
+  fatal=False
   require(rec.get('scorerReturnCode')==0 and type(rec['resolved']) is bool,'Missing official score')
   require(not (out/'source-snapshot.json').exists(),'Unexpected inherited task history')
+  fatal=False
   if rec['modelErrors']:raise RuntimeError('Model/service error needs review, saved patch score retained')
   rec['status']='CLOSED_GRADED'
- except Exception as error:rec.update(status='HALTED',error=str(error))
+ except Exception as error:rec.update(status='HALTED' if fatal else 'CLOSED_INFRA',error=str(error))
  rec['finishedAt']=time.time();write(record,rec);return rec
 
 def run(root,s,resume):
@@ -120,16 +173,18 @@ def run(root,s,resume):
  try:
   (root/'launch.lock').unlink(missing_ok=True)
   write(root/'state.json',{'status':'RUNNING','completedRuns':0,'plannedRuns':16})
-  saved=[read(p) for p in root.glob('*.record.json')];require(resume or not saved,'Explicit resume required');require(all(r['status']=='CLOSED_GRADED' for r in saved),'Incomplete attempt cannot be retried')
+  saved=[read(p) for p in root.glob('*.record.json')];require(resume or not saved,'Explicit resume required');require(all(r['status'] in TERMINAL for r in saved),'Incomplete attempt cannot be retried')
   keys=[(r['instanceId'],r['thinking']) for r in saved];require(len(keys)==len(set(keys)) and all(id in IDS and mode in ['on','off'] for id,mode in keys),'Unexpected saved attempt')
   for index,e in enumerate(s['environments']):
    for mode in (['on','off'] if index%2==0 else ['off','on']):
     if (e['instanceId'],mode) in keys:continue
     if (root/'STOP').exists():write(root/'state.json',{'status':'STOPPED'});summarize(root,s);return
-    r=run_case(root,s,e,mode);summary=summarize(root,s);write(root/'state.json',{'status':'RUNNING' if r['status']=='CLOSED_GRADED' else 'HALTED','lastRun':r,'completedRuns':sum(p['status']=='CLOSED_GRADED' for p in [read(f) for f in root.glob('*.record.json')])})
-    if r['status']!='CLOSED_GRADED':return
+    r=run_case(root,s,e,mode);summary=summarize(root,s);write(root/'state.json',{'status':'RUNNING' if r['status'] in TERMINAL else 'HALTED','lastRun':r,'completedRuns':sum(p['status'] in TERMINAL for p in [read(f) for f in root.glob('*.record.json')])})
+    if r['status'] not in TERMINAL:return
     pair=next(p for p in summary['pairs'] if p['instanceId']==e['instanceId'])
-    if pair['on'] and pair['off']:require(pair['sameInitialMessagesAndTools'],'Paired first prompt/tools/output cap differ')
+    if pair['on'] and pair['off'] and pair['on']['status']==pair['off']['status']=='CLOSED_GRADED' and not pair['sameInitialMessagesAndTools']:
+     r.update(status='CLOSED_INFRA',error='Paired first prompt/tools/output cap differ; score retained as diagnostic')
+     write(root/(r['instanceId']+'-'+r['thinking']+'-0.record.json'),r);summarize(root,s)
   result=summarize(root,s);require(result['status']=='COMPLETE','Incomplete result inventory');write(root/'state.json',{'status':'COMPLETE','completedRuns':16,'summary':str(root/'summary.json')})
  except Exception as error:write(root/'state.json',{'status':'HALTED','controllerError':str(error)});summarize(root,s)
  finally:lock.unlink(missing_ok=True)
@@ -138,7 +193,7 @@ def main():
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('mode',choices=['freeze','start','run','status','stop','report']);p.add_argument('--output',type=Path,default=P/'.artifacts/thinking-preexperiment-20261008');p.add_argument('--resume',action='store_true');p.add_argument('--carry-completed-audit',type=Path,help='Explicitly retain the audited completed first On run, no replay');a=p.parse_args();root=a.output.resolve();os.environ.setdefault('RSI_MODEL_UPSTREAM','http://10.195.214.152:8100/v1')
  if a.mode=='freeze':freeze(root,a.carry_completed_audit.resolve() if a.carry_completed_audit else None);print('FROZEN_8_EXPOSED_PAIRS');return
  if a.mode=='status':
-  state=read(root/'state.json') if (root/'state.json').exists() else {'status':'NOT_STARTED'};rows=[read(f) for f in root.glob('*.record.json')];state.update(completedRuns=sum(r['status']=='CLOSED_GRADED' for r in rows),plannedRuns=16,activeOrFailed=[{k:r.get(k) for k in ['instanceId','thinking','status','error']} for r in rows if r['status']!='CLOSED_GRADED']);print(json.dumps(state,ensure_ascii=False,indent=2));return
+  state=read(root/'state.json') if (root/'state.json').exists() else {'status':'NOT_STARTED'};rows=[read(f) for f in root.glob('*.record.json')];state.update(completedRuns=sum(r['status'] in TERMINAL for r in rows),plannedRuns=16,activeOrFailed=[{k:r.get(k) for k in ['instanceId','thinking','status','error']} for r in rows if r['status'] not in TERMINAL]);print(json.dumps(state,ensure_ascii=False,indent=2));return
  if a.mode=='stop':(root/'STOP').touch();print('STOP requested');return
  s=read(root/'protocol.json');require((root/'protocol.sha256').read_text().strip()==sha(root/'protocol.json'),'Protocol changed')
  if a.mode=='report':summarize(root,s);print(root/'summary.json');return

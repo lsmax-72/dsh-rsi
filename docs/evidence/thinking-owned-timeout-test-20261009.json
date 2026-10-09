@@ -1,0 +1,12 @@
+{
+  "status": "PASS_ACTUAL_OWNED_CONTAINER_TIMEOUT_CLEANUP",
+  "containerRuns": 2,
+  "realProviderRequests": 0,
+  "taskAgentRuns": 0,
+  "network": "none",
+  "ownedContainerRemoved": true,
+  "otherOutputContainerUntouched": true,
+  "hostBinds": [],
+  "missingStateExportRecordedNotInvented": true,
+  "labelsUseResolvedOutputPath": true
+}

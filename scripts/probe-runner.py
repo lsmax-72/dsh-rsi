@@ -90,29 +90,39 @@ def verify_seed(assets, sessions):
     return {'sourceSessionIds':sorted(sources),'requiredSessionIds':sorted(required),'inputSha256':hashes,'priorTaskLogs':prior_tasks}
 
 
-def verify_thinking_wire(output,mode):
+def verify_thinking_wire(output,mode,allow_budget_abort=False,write_result=True):
     rows=[json.loads(line) for line in (output/'gateway.log').read_text().splitlines() if line.strip()]
     sent=[r for r in rows if r.get('request') and r.get('model')]
     summaries=[r for r in rows if 'responseRequest' in r]
     assert sent and len(sent)==len(summaries),'Missing complete wire response evidence'
     assert {r['request'] for r in sent}=={r['responseRequest'] for r in summaries},'Wire evidence IDs differ'
     assert all(r['enableThinking'] is (mode=='on') for r in sent),'Thinking switch not delivered'
+    ledgers=list((output/'state/pilot').glob('*/model-requests.json'))
+    phases=[r for path in (output/'state/pilot').glob('*/phases.json') for r in json.loads(path.read_text())]
+    timed_out=any('wall time' in json.dumps(r.get('stopReason',{})).lower() for r in phases)
+    budget_aborted=[]
     for r in summaries:
-        assert r['responseComplete'] and r['parseErrors']==0,'Unfinished or unparseable upstream response'
-        if 'event-stream' in r['contentType']:assert r['sseDone'],'SSE did not close with DONE'
+        assert r['parseErrors']==0,'Unparseable upstream response'
+        complete=r['responseComplete'] and ('event-stream' not in r['contentType'] or r['sseDone'])
+        if not complete:
+            assert allow_budget_abort and timed_out and r['responseRequest']==max(x['request'] for x in sent) and r['error']=='CLIENT_DISCONNECTED','Unfinished upstream response outside declared budget cancellation'
+            budget_aborted.append(r['responseRequest'])
         for key,path in [('requestSha256','rawRequest'),('responseSha256','rawResponse')]:
             assert hashlib.sha256((output/'gateway-evidence'/r[path]).read_bytes()).hexdigest()==r[key],'Wire evidence bytes changed'
     chars=sum(r['reasoningChars'] for r in summaries)
-    ledgers=list((output/'state/pilot').glob('*/model-requests.json'))
     nativeChars=sum(r.get('reasoningChars',0) for path in ledgers for r in json.loads(path.read_text()))
-    if ledgers:assert (nativeChars>0 if mode=='on' else nativeChars==0),'Service reasoning was not faithfully exposed by the native provider'
+    if ledgers:
+        assert nativeChars==chars,'Service/native reasoning audit differs'
+        assert (nativeChars>0 if mode=='on' else nativeChars==0),'Service reasoning was not faithfully exposed by the native provider'
     assert (chars>0 if mode=='on' else chars==0),'Requested Thinking mode has no matching real service reasoning'
-    result={'status':'PASS_ACTUAL_THINKING_WIRE','thinking':mode,'requests':len(sent),'reasoningChars':chars,'reasoningContentChars':sum(r['reasoningContentChars'] for r in summaries),'nativeReasoningChars':nativeChars if ledgers else None,'responseModels':sorted({model for r in summaries for model in r['responseModels']}),'systemFingerprints':sorted({fp for r in summaries for fp in r['systemFingerprints']}),'weightsHash':None,'rawEvidence':'gateway-evidence'}
-    (output/'thinking-wire.json').write_text(json.dumps(result,indent=2)+'\n');return result
+    result={'status':'PASS_ACTUAL_THINKING_WIRE','thinking':mode,'requests':len(sent),'reasoningChars':chars,'reasoningContentChars':sum(r['reasoningContentChars'] for r in summaries),'nativeReasoningChars':nativeChars if ledgers else None,'responseModels':sorted({model for r in summaries for model in r['responseModels']}),'systemFingerprints':sorted({fp for r in summaries for fp in r['systemFingerprints']}),'weightsHash':None,'rawEvidence':'gateway-evidence','budgetAbortedRequestIds':budget_aborted,'allResponsesComplete':not budget_aborted}
+    if write_result:(output/'thinking-wire.json').write_text(json.dumps(result,indent=2)+'\n')
+    return result
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--allow-budget-abort',action='store_true',help='Thinking preexperiment only: audit exact partial bytes at a declared task wall-time cancellation')
     parser.add_argument('--verify-thinking-wire',action='store_true',help='Strict service reasoning audit for this independent baseline preexperiment only')
     parser.add_argument('--thinking',choices=['on','off'],default='off',help='Baseline independent SWE task only: opt in to actual provider reasoning')
     parser.add_argument('--image', default='dsh-rsi-pilot2:django-11292', help='Prepared task image; source is /opt/task-source')
@@ -178,6 +188,7 @@ def main():
     for value in [args.dispatch_limit,args.request_limit,args.wall_seconds]:
         if value < 1: parser.error('Limits must be positive.')
     if args.thinking=='on':args.verify_thinking_wire=True
+    if args.allow_budget_abort and not args.verify_thinking_wire:parser.error('Budget-abort audit requires actual Thinking wire verification')
     if args.verify_thinking_wire and (args.arm!='baseline' or not args.formal or args.fixture or args.persona_input or args.scope_quality_protocol or args.phases or args.baseline_history or args.seed_assets or learning_limit!=0 or args.learning_pool):parser.error('Thinking wire verification requires an independent formal baseline SWE task with zero learning')
     output = args.output.resolve()
     output.mkdir(parents=True,exist_ok=True)
@@ -341,7 +352,7 @@ def main():
         command('docker','volume','create',volume,stdout=subprocess.DEVNULL)
         gateway = None
         if not args.fixture:
-            gateway = subprocess.check_output(['docker','run','-d','--network',network,'--network-alias','model',
+            gateway = subprocess.check_output(['docker','run','-d','--label','dsh-rsi-output='+str(output),'--label','dsh-rsi-role=gateway','--network',network,'--network-alias','model',
                 '--read-only','--tmpfs','/tmp:rw,uid=1000,gid=1000,mode=700,size=128m','--cap-drop','ALL','--security-opt','no-new-privileges','--memory','256m','--pids-limit','32',
                 '-e','RSI_MODEL_UPSTREAM='+os.environ['RSI_MODEL_UPSTREAM'],
                 '-e','RSI_MODEL_REQUEST_LIMIT='+str(relay_limit),
@@ -351,7 +362,7 @@ def main():
         startup = ('cp -a /opt/seed-assets /state/assets && ' if args.seed_assets else '')
         startup += ('mkdir -p /state/home && cp -a /opt/seed-sessions /state/home/sessions && ' if args.seed_assets or args.baseline_history else '')
         startup += 'exec dsh --profile sdk-minimal --patch /opt/rsi/scripts/pilot.json'
-        cid = subprocess.check_output(['docker','create','--platform','linux/amd64','--init','--network',network,*policy,
+        cid = subprocess.check_output(['docker','create','--label','dsh-rsi-output='+str(output),'--label','dsh-rsi-role=task','--platform','linux/amd64','--init','--network',network,*policy,
             '--mount',f'type=volume,source={volume},target=/state','-e','QWEN_API_KEY=EMPTY',image,'sh','-c',startup],text=True).strip()
         containers.append(cid)
         info = json.loads(subprocess.check_output(['docker','inspect',cid],text=True))[0]
@@ -427,7 +438,7 @@ def main():
         subprocess.run(['docker','network','rm',network],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
         subprocess.run(['docker','image','rm',image],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
 
-    if args.verify_thinking_wire:verify_thinking_wire(output,args.thinking)
+    if args.verify_thinking_wire:verify_thinking_wire(output,args.thinking,args.allow_budget_abort)
 
 
 if __name__=='__main__': main()

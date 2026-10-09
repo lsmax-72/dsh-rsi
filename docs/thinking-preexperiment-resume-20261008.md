@@ -37,3 +37,13 @@ python3 /Users/lsmax/Coder/dsh-rsi/scripts/report-thinking-preexperiment.py --ou
 ```
 
 当前已启动分析进程，不需要再次启动。`--wait`等待批次终态后分析；不加该参数立即分析，未完成时不选择Thinking。原始字节缺失的首例On仍如实披露，其他已完成例完整核验原字节hash；不能称全批原始字节证据毫无缺口。当前仅2个完整配对，不能根据两组不同已完成题数比较通过率。
+
+## 2026-10-09 后续接续
+
+v4在第四题On正常预算取消后因旧严格完整流/usage规则停止。用户已授权正常任务级异常继续；详见协议修订。新批次保留已有8次实际执行，不重跑；只运行剩余8次。固定结果入口为：
+
+```bash
+cat /Users/lsmax/Coder/dsh-rsi/.artifacts/thinking-preexperiment-current/report.md
+```
+
+该入口指向当前批次；报告在批次终态后自动生成。原各代批次、失败日志及计量缺口保留，稳定入口不修改历史文件。正式100题继续禁止启动。
