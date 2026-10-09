@@ -13,6 +13,7 @@ def main():
    out=get('--output');id=cmd[cmd.index('--instance')+1];mode=cmd[cmd.index('--thinking')+1];pilot=out/'state/pilot'/id;pilot.mkdir(parents=True);usage={'inputTokens':11,'outputTokens':7,'totalTokens':18}
    if fault['kind']=='null-usage':usage={'inputTokens':None,'outputTokens':None,'totalTokens':None}
    m.write(pilot/'model-requests.json',[{'sessionId':'task','phase':'task','status':'RETURNED','usage':usage,'finish':{'kind':'stop'}}]);m.write(pilot/'tool-results.json',[]);m.write(pilot/'phases.json',[{'wallMs':1000,'stopReason':{'kind':'completed'}}]);m.write(pilot/'initial.json',{'assets':None,'toolSchemas':['bash']});m.write(pilot/'receipt.json',{'arm':'baseline','backgroundDispatches':0,'formalBenchmark':True,'fixture':False,'instanceId':id});m.write(pilot/'reconstruction.json',[{'sessionId':'task','request':1,'matches':fault['kind']!='bad-reconstruction','responseFramePresent':True}]);(pilot/'prediction.patch').write_text('fixture patch')
+   if fault['kind']=='missing-native-ledger':(pilot/'model-requests.json').unlink()
    first={'request':1,'model':'qwen3.8-27b','enableThinking':mode=='on','messagesSha256':'a'*64,'toolsSha256':'b'*64,'maxOutputTokens':8192,'temperature':None}
    if fault['kind']=='missing-first':first.pop('messagesSha256');first.pop('toolsSha256')
    response={'responseRequest':1,'usage':[{'prompt_tokens':11,'completion_tokens':7,'total_tokens':18,'completion_tokens_details':{'reasoning_tokens':4 if mode=='on' else 0}}]}
@@ -40,6 +41,8 @@ def main():
    if failure=='null-usage':assert rec['status']=='CLOSED_GRADED' and not rec['costComplete'] and rec['unknownUsageRequests']==1,rec
    else:assert rec['status']=='CLOSED_INFRA',rec
    if failure!='missing-first':assert rec['resolved'] is False,'Saved patch grading should survive case audit failure'
+  fault['kind']='missing-native-ledger';root=base/'missing-native-ledger';root.mkdir();rec=m.run_case(root,s,e,'on');assert rec['status']=='CLOSED_INFRA' and rec['calls']==1 and rec['totalTokens']==18 and rec['usageRecoveredFromService']==[1],rec
+  checks.append('missing native export retains actually reported service cost and flags the task as infrastructure')
   checks.append('unknown usage keeps valid grade and lower-bound cost; case audit errors remain diagnostic infrastructure')
   fault['kind']='bad-reconstruction';root=base/'controller';root.mkdir();m.run(root,s,False)
   rows=[m.read(f) for f in root.glob('*.record.json')];assert len(rows)==2 and all(r['status']=='CLOSED_INFRA' for r in rows),'Both modes must run despite case audit errors'

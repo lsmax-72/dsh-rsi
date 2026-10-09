@@ -136,15 +136,15 @@ def run_case(root,s,e,mode):
   reasoning=[(u.get('completion_tokens_details') or {}).get('reasoning_tokens') if u else None for u in reported]
   rec['rawServiceUsage']=reported
   metered=[];recovered=[]
-  for index,request in enumerate(ledger):
-   native=request.get('usage') or {};raw=reported[index] if index<len(reported) else None
+  for index in range(max(len(ledger),len(sent))):
+   request=ledger[index] if index<len(ledger) else {};native=request.get('usage') or {};raw=reported[index] if index<len(reported) else None
    native_ok=all(type(native.get(k)) is int and native[k]>=0 for k in ['inputTokens','outputTokens','totalTokens']) and native['totalTokens']>0
    raw_ok=bool(raw) and all(type(raw.get(k)) is int and raw[k]>=0 for k in ['prompt_tokens','completion_tokens','total_tokens']) and raw['total_tokens']>0
    if native_ok:metered.append(native)
    elif raw_ok:
     metered.append({'inputTokens':raw['prompt_tokens'],'outputTokens':raw['completion_tokens'],'totalTokens':raw['total_tokens']});recovered.append(index+1)
-  rec.update(inputTokens=sum(u['inputTokens'] for u in metered),outputTokens=sum(u['outputTokens'] for u in metered),totalTokens=sum(u['totalTokens'] for u in metered),unknownUsageRequests=len(ledger)-len(metered),usageRecoveredFromService=recovered)
-  rec['costComplete']=rec['unknownUsageRequests']==0 and (pilot/'model-requests.json').exists()
+  rec.update(inputTokens=sum(u['inputTokens'] for u in metered),outputTokens=sum(u['outputTokens'] for u in metered),totalTokens=sum(u['totalTokens'] for u in metered),unknownUsageRequests=max(len(ledger),len(sent))-len(metered),nativeCalls=len(ledger),wireCalls=len(sent),calls=max(len(ledger),len(sent)),usageRecoveredFromService=recovered)
+  rec['costComplete']=rec['unknownUsageRequests']==0 and bool(ledger or sent)
   rec['thinkingTokens']=sum(reasoning) if len(reasoning)==len(responses) and reasoning and all(type(n) is int for n in reasoning) else None
   rec['serviceThinkingEvidence']=read(out/'thinking-wire.json') if (out/'thinking-wire.json').exists() else None
   if ledger and (pilot/'prediction.patch').exists():
