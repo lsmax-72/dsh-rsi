@@ -38,8 +38,16 @@ def main():
     if template==controller.IDS[3] and mode=='on':r.update(status='CLOSED_GRADED',serviceThinkingEvidence=evidence,costComplete=False)
     write(analysis/(id+'-'+mode+'.record.json'),r)
   result=reporter.analyze(analysis);assert not result['errors'],result['errors'];assert result['recommendationThinking']=='on' and result['paired']['onOnly']==1 and result['onToOffTokenRatio'] is None and result['totals']['on']['unknownUsageRequests']==1 and not result['costComplete'];assert '≥1,046,024' in (analysis/'report.md').read_text();checks.append('full report includes canceled-task official win; missing usage is a lower bound, not an exact cost ratio')
-  # With equal official outcomes the missing cost cannot decide a token tie.
-  file=analysis/(controller.IDS[3]+'-on.record.json');r=read(file);r['resolved']=False;write(Path(r['grading']),{**read(Path(r['grading'])),'resolved':False});write(file,r);result=reporter.analyze(analysis);assert result['recommendationThinking'] is None and not result['errors'];checks.append('equal scores with missing total usage cannot select a mode by incomplete token totals')
+  # A complete cost below the other lower bound proves ordering despite missing usage.
+  file=analysis/(controller.IDS[3]+'-on.record.json');r=read(file);r['resolved']=False;write(Path(r['grading']),{**read(Path(r['grading'])),'resolved':False});write(file,r);result=reporter.analyze(analysis);assert result['recommendationThinking']=='off' and not result['errors'] and result['onToOffTokenRatio'] is None and result['onToOffTokenRatioLowerBound']>1;checks.append('full equal-score report selects complete Off cost below incomplete On lower bound, without fabricating exact ratio')
+  def costs(off,on,off_complete,on_complete):return {'off':{'totalTokens':off,'costComplete':off_complete,'agentWallSeconds':2},'on':{'totalTokens':on,'costComplete':on_complete,'agentWallSeconds':1}}
+  assert reporter.cost_choice(costs(10,11,True,False))=='off'
+  assert reporter.cost_choice(costs(11,10,False,True))=='on'
+  assert reporter.cost_choice(costs(10,9,True,False)) is None
+  assert reporter.cost_choice(costs(10,10,True,False)) is None
+  assert reporter.cost_choice(costs(10,11,False,False)) is None
+  assert reporter.cost_choice(costs(10,10,True,True))=='on'
+  checks.append('cost intervals checked in both directions; overlap/equal bounds stay undecided and complete token tie uses wall time')
  result={'status':'PASS_THINKING_BUDGET_AND_BATCH_CONTINUATION','realProviderRequests':0,'scorerInvocations':0,'dockerOperations':0,'checks':checks,'fixtureScoresAreExperimentResults':False}
  if a.output:write(a.output,result)
  print(json.dumps(result,ensure_ascii=False))
