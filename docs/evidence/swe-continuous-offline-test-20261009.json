@@ -1,0 +1,17 @@
+{
+  "status": "PASS_OFFLINE_CONTINUOUS_RUNNER",
+  "realModelRequests": 0,
+  "scorerInvocations": 0,
+  "syntheticScoresAreExperimentResults": false,
+  "checks": [
+    "budget confirmation, Thinking Off and empty-start gates enforced",
+    "real run_arm command passes prior own sessions/RSI assets and frozen order, never grader files",
+    "scorer failure keeps verified natural state and proceeds to later pair",
+    "all four cases close and resume never replays them",
+    "INFRA is excluded from official complete pass rate/net difference",
+    "closed-checkpoint tampering rejected",
+    "STOP prevents dispatch and ambiguous RUNNING cannot replay",
+    "100-pair synthetic report creates five stage/cumulative blocks with no iid interval or asset reset",
+    "real saved partial-byte Thinking audit requires a proven shutdown/time-budget boundary, not any incomplete response"
+  ]
+}

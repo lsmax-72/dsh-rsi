@@ -166,6 +166,9 @@ export class Runtime {
       for (let index=0;index<events.length;index++) {
         const event = events[index];
         if (event.type === 'request/header') route = event.data.header.config;
+        // A native fork already has these turns under its parent source. Learn
+        // only child-owned turns instead of re-enqueuing the inherited prefix.
+        if (event.seq < handle.inheritedEventCount) continue;
         if (event.type === 'turn/start') start = index;
         if (event.type !== 'turn/end' || start < 0 || event.seq <= (source?.cursor ?? -1)) continue;
         if (!['completed','error','max-tokens','blocked'].includes(event.data.reason.kind)) continue;

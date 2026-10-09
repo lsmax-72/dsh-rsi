@@ -5,7 +5,7 @@ import {mkdirSync, openSync, closeSync, fsyncSync, writeFileSync, renameSync, ap
 import {execFileSync} from 'node:child_process';
 import {LlmAdapter, createUserMessage} from '@deepseek-ai/dsh-llm';
 import {auditRequests} from './audit-session-requests.mjs';
-import {Session} from '@deepseek-ai/dsh-session';
+import {Session,buildForkSeed} from '@deepseek-ai/dsh-session';
 import {taskProtocol,taskHistoryGuidance} from './task-input.mjs';
 
 export const name = 'rsi-pilot-task';
@@ -16,6 +16,8 @@ export function apply(ctx, config) {
   assert.ok(['baseline', 'rsi'].includes(config.arm));
   const dir = '/state/pilot/' + config.instanceId;
   mkdirSync(dir, {recursive:true});
+  let compaction;
+  if(config.continuousState)ctx.inject(['compaction'],scope=>{compaction=scope.compaction;});
   const blocked = [];
   const requests = [], results = [], sessions = new Map(), phaseResults = [];
   let learningAttempts = 0;
@@ -66,20 +68,23 @@ export function apply(ctx, config) {
     if (background) learningAttempts++;
     if (!background && (foreground >= dispatchLimit || phaseCalls >= phaseLimit)) throw new Error('Pilot foreground dispatch limit reached');
     if (!background) {foreground++; phaseCalls++;}
-    const session = sessions.get(options.sessionId);
-    if (session) await ctx.sessions.flush(session);
+    const session = sessions.get(options.sessionId);let prefixEndSeq,inheritedEventCount=0;
+    if (session) {
+      await ctx.sessions.flush(session);prefixEndSeq=session.snapshotEvents().at(-1)?.seq;inheritedEventCount=session.inheritedEventCount;
+    }
     else {
       // The native background bridge writes persistence directly and flushes before stream.
       assert.ok(background, 'Foreground request has no observed native session');
       const handle = await ctx.sessionPersistence.open(options.sessionId,'read');
       try {
         const stored = await handle.read();
+        prefixEndSeq=stored.events.at(-1)?.seq;inheritedEventCount=handle.inheritedEventCount;
         const restored = Session.fromRestore(options.sessionId,stored.events,handle.header,handle.inheritedEventCount,stored.eventState);
         assert.deepEqual([...restored.deriveMessages()],options.messages);
       } finally {await handle.close();}
     }
     const request = {sessionId:options.sessionId, phase:background?'learning':currentPhase,
-      messages:structuredClone(options.messages), status:'DISPATCHING', usage:null, reasoningBlocks:[], reasoningDeltas:[], finish:null, observedAt:Date.now()};
+      prefixEndSeq,inheritedEventCount,purpose:options.purpose??'task',messages:structuredClone(options.messages), status:'DISPATCHING', usage:null, reasoningBlocks:[], reasoningDeltas:[], finish:null, observedAt:Date.now()};
     requests.push(request); patch(); ledger();
     try {
       for await (const chunk of next()) {
@@ -99,7 +104,13 @@ export function apply(ctx, config) {
   });
   if (config.fixture) {
     class Fixture extends LlmAdapter {
+      async resolveModel(provider,model){return {provider,id:model,name:model,context:{contextWindow:262144},defaultMaxTokens:8192};}
       async *stream(options) {
+        if(options.purpose==='compaction'){
+          const block={type:'text',text:'已完成前序隔离任务；原始日志保留在会话记录。当前任务须重新读取源码。'};
+          yield {type:'block-start',index:0,blockType:'text'};yield {type:'block-end',index:0,block};
+          yield {type:'usage',usage:{inputTokens:13,outputTokens:7,totalTokens:20}};yield {type:'finish',reason:{kind:'stop'}};return;
+        }
         if (options.sessionId.startsWith('rsi-')) {
           assert.ok(config.fixtureLearning);
           const block={type:'text',text:options.tools?.length?'No reusable skill candidates.':'[]'};
@@ -108,18 +119,25 @@ export function apply(ctx, config) {
           yield {type:'usage',usage:{inputTokens:13,outputTokens:7,totalTokens:20}};
           yield {type:'finish',reason:{kind:'stop'}};return;
         }
-        const n = requests.filter(r=>r.sessionId===options.sessionId).length;
+        const n = requests.filter(r=>r.sessionId===options.sessionId && r.purpose!=='compaction').length;
         if (config.interruptCheckpoint && n === 2) {
           console.log('RSI_CHECKPOINT_READY');
           await new Promise(()=>{});
         }
-        const block = n === 1 ? {type:'tool-call', id:'fixture-write', name:'write',
+        if(config.continuousState && config.priorTaskLogs?.length && n===1){
+          const previous=config.priorTaskLogs.at(-1);
+          const block={type:'tool-call',id:'fixture-history-read-'+options.sessionId,name:'read',arguments:JSON.stringify({file_path:'/state/home/sessions/'+previous.relativePath})};
+          yield {type:'block-start',index:0,blockType:block.type};yield {type:'block-end',index:0,block};
+          yield {type:'usage',usage:{inputTokens:13,outputTokens:7,totalTokens:20}};yield {type:'finish',reason:{kind:'tool-calls'}};return;
+        }
+        const writeOrdinal=config.continuousState && config.priorTaskLogs?.length?2:1;
+        const block = n === writeOrdinal ? {type:'tool-call', id:config.continuousState?'fixture-write-'+options.sessionId:'fixture-write', name:'write',
           arguments:JSON.stringify({file_path:'/workspace/preflight-marker.txt', content:'isolated change\n'})}
           : {type:'text', text:'固定响应检查完成。'};
         yield {type:'block-start', index:0, blockType:block.type};
         yield {type:'block-end', index:0, block};
         yield {type:'usage', usage:{inputTokens:13, outputTokens:7, totalTokens:20}};
-        yield {type:'finish', reason:{kind:n===1?'tool-calls':'stop'}};
+        yield {type:'finish', reason:{kind:n===writeOrdinal?'tool-calls':'stop'}};
       }
     }
     ctx.effect(()=>ctx.llm.registerAdapter(['pilot-fixture'], new Fixture()));
@@ -147,7 +165,7 @@ export function apply(ctx, config) {
         durable(dir + '/initial.json', {arm:config.arm, baselineTree, settings:before?.settings??null,
           baselineCommitTime:git('show','-s','--format=%ct','HEAD').trim(),
           djangoVersion,
-          assets:exportedBefore, toolSchemas:ctx.tools.schemas().map(t=>t.name),
+          priorTaskLogs:config.priorTaskLogs??[], assets:exportedBefore, toolSchemas:ctx.tools.schemas().map(t=>t.name),
           skillCandidates:await ctx.skills.list({cwd:'/workspace'})});
         const task = JSON.parse(await readFile('/opt/rsi/task.json','utf8'));
         if (!config.fixture && config.instanceId !== 'preflight') assert.equal(task.instance_id,config.instanceId,'Task image/public ID mismatch');
@@ -159,9 +177,28 @@ export function apply(ctx, config) {
           const phaseStartedAt=Date.now();
           const id = 'pilot-' + config.instanceId + '-' + phase.name;
           const protocol=phase.protocol===taskProtocol?phase.protocol+'\n'+taskHistoryGuidance(id,config.priorTaskLogs??[]):phase.protocol;
-          const handle = await ctx.agents.create({sessionId:id, meta:{cwd:'/workspace'},
+          let inheritance;
+          const parent=config.continuousState?config.priorTaskLogs?.at(-1):undefined;
+          if(parent){
+            const reader=await ctx.sessionPersistence.open(parent.sessionId,'read');
+            try{
+              const saved=await reader.read(),last=saved.events.at(-1);
+              assert.ok(last && saved.events.filter(e=>e.type==='turn/end').length,'Missing closed parent task');
+              const restored=Session.fromRestore(parent.sessionId,saved.events,reader.header,reader.inheritedEventCount,saved.eventState);
+              inheritance={seed:buildForkSeed(saved.events,last.seq),inheritedEventCount:saved.events.length,meta:{cwd:'/workspace',parentSession:parent.sessionId,isSeeded:true}};
+              durable(dir+'/history-inheritance.json',{parentSessionId:parent.sessionId,inheritedEventCount:saved.events.length,parentLastSeq:last.seq,parentDerivedMessagesSha256:createHash('sha256').update(JSON.stringify([...restored.deriveMessages()])).digest('hex'),parentMessages:[...restored.deriveMessages()].map(m=>({id:m.id,role:m.role,contentSha256:createHash('sha256').update(JSON.stringify(m.content)).digest('hex')})),parentEventsSha256:createHash('sha256').update(JSON.stringify(saved.events)).digest('hex')});
+            }finally{await reader.close();}
+          }
+          const handle = await ctx.agents.create({sessionId:id, meta:{cwd:'/workspace'},...inheritance,
             agentOptions:{provider:config.fixture?'pilot-fixture':'qwen', model:config.fixture?'fixture':'qwen3.8-27b', maxTokens:8192}});
+          if(config.fixtureCompact && parent){
+            assert.ok(config.fixture && config.continuousState);
+            const result=await compaction.compactNow(handle.agent,AbortSignal.timeout(30000));
+            assert.ok(result,'Native fixture compaction did not select a useful span');
+            durable(dir+'/fixture-compaction.json',result);
+          }
           deadline = setTimeout(()=>handle.agent.cancel({kind:'hook',reason:'Pilot wall time limit reached'}),wallTimeMs);
+          if(parent)handle.agent.inject(createUserMessage({source:{kind:'benchmark-protocol',form:'source-reset'},content:[{type:'text',text:'当前任务已恢复为本题初始源码。此前工具结果仅属于前序任务；不能将其当作本题当前代码、测试或补丁状态。请以本题问题和当前工具结果为准。'}]}));
           if(protocol)handle.agent.inject(createUserMessage({source:{kind:'benchmark-protocol',form:'instructions'},content:[{type:'text',text:protocol}]}));
           handle.agent.followup(createUserMessage({source:{kind:'user'},content:[{type:'text',text:phase.prompt}]}));
           await handle.agent.whenIdle(); await ctx.sessions.flush(handle.agent.session); clearTimeout(deadline); patch();
@@ -181,10 +218,13 @@ export function apply(ctx, config) {
         const after = await snapshot();
         if (rsi) durable(dir + '/assets.json', await rsi.request('export',{cwd:'/workspace'}));
         // Shutdown first: aborted background calls must settle before final usage and request audit.
+        const shutdownStartedAt=Date.now();
         await ctx.root.fiber.dispose();
+        const shutdownFinishedAt=Date.now();
         const audit = await auditRequests(dir + '/model-requests.json', process.env.DSH_HOME + '/sessions', dir + '/reconstruction.json');
         const receipt = {runnerStatus:'COMPLETED', formalBenchmark:!!config.formal, arm:config.arm, fixture:!!config.fixture,
           instanceId:config.instanceId, officialResolved:null, taskDispatches:foreground,
+          nativeFiberDisposed:true,shutdownStartedAt,shutdownFinishedAt,
           backgroundDispatches:requests.length-foreground, phases:phaseResults,
           before, after, blockedDispatches:blocked, learningDispatchLimit:config.learningDispatchLimit, toolResults:results, logReconstructionMatches:true,
           knownTokens:requests.reduce((n,r)=>n+(r.usage?.totalTokens??0),0),

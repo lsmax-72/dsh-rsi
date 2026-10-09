@@ -82,6 +82,16 @@ def run(root):
             save(root / 'state.json', state)
         return 0 if state['status'] in ['READY', 'TEST_READY', 'STOPPED', 'STOPPED_LOW_DISK'] else 1
 
+def preparation_cases(spec):
+    if spec.get('purpose')=='formal' and spec.get('historyMode')=='native-fork':
+        cases=[dict(c,stage='continuous') for c in spec['cases']]
+        if len(cases)!=100 or len({c['instanceId'] for c in cases})!=100 or set(c['instanceId'] for c in cases)&set(spec['excluded']):raise ValueError('Continuous preparation requires 100 unexposed distinct cases, no prefix')
+    else:
+        cases = [dict(c, stage=stage) for stage in ['prefix', 'heldOut'] for c in spec['manifest'][stage]]
+        if len(spec['manifest']['prefix']) != 4 or len(spec['manifest']['heldOut']) != 100 or len({c['instanceId'] for c in cases}) != 104:
+            raise ValueError('Legacy preparation requires the fixed 4 + 100 distinct cases')
+    return cases
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('action', choices=['start', 'run', 'status'])
@@ -105,9 +115,7 @@ def main():
     spec = json.loads(specpath.read_text())
     if sha(dataset) != spec['datasetSha256']:
         p.error('Dataset hash mismatch')
-    cases = [dict(c, stage=stage) for stage in ['prefix', 'heldOut'] for c in spec['manifest'][stage]]
-    if len(spec['manifest']['prefix']) != 4 or len(spec['manifest']['heldOut']) != 100 or len({c['instanceId'] for c in cases}) != 104:
-        p.error('Preparation requires the fixed 4 + 100 distinct cases')
+    cases=preparation_cases(spec)
     executor = a.fixture_executor.resolve() if a.fixture_executor else PROJECT / 'scripts/prepare-task-image.py'
     inputs = [specpath, Path(__file__).resolve(), executor]
     if not a.fixture_executor:

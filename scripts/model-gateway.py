@@ -5,6 +5,7 @@ import hashlib
 from pathlib import Path
 import os
 import threading
+import time
 import urllib.error
 import urllib.request
 
@@ -60,7 +61,7 @@ class ResponseAudit:
         elif complete:
             try:self.event(json.loads((self.directory/(self.stem+'.response.bin')).read_bytes()))
             except (ValueError,TypeError,AttributeError):self.parseErrors+=1
-        summary={'responseRequest':int(self.stem.split('-')[1]),'responseComplete':complete,'sseDone':self.done,'contentType':self.contentType,'reasoningEvents':self.reasoningEvents,'reasoningChars':self.reasoningChars,'reasoningContentEvents':self.reasoningContentEvents,'reasoningContentChars':self.reasoningContentChars,'finishReasons':self.finishReasons,'responseModels':self.responseModels,'systemFingerprints':self.systemFingerprints,'weightsHash':None,'usage':self.usage,'parseErrors':self.parseErrors,'requestSha256':hashlib.sha256(self.body).hexdigest(),'responseSha256':self.digest.hexdigest(),'rawRequest':self.stem+'.request.json','rawResponse':self.stem+'.response.bin','error':error}
+        summary={'responseRequest':int(self.stem.split('-')[1]),'finishedAt':int(time.time()*1000),'responseComplete':complete,'sseDone':self.done,'contentType':self.contentType,'reasoningEvents':self.reasoningEvents,'reasoningChars':self.reasoningChars,'reasoningContentEvents':self.reasoningContentEvents,'reasoningContentChars':self.reasoningContentChars,'finishReasons':self.finishReasons,'responseModels':self.responseModels,'systemFingerprints':self.systemFingerprints,'weightsHash':None,'usage':self.usage,'parseErrors':self.parseErrors,'requestSha256':hashlib.sha256(self.body).hexdigest(),'responseSha256':self.digest.hexdigest(),'rawRequest':self.stem+'.request.json','rawResponse':self.stem+'.response.bin','error':error}
         (self.directory/(self.stem+'.summary.json')).write_text(json.dumps(summary,ensure_ascii=False)+'\n');print(json.dumps(summary,ensure_ascii=False),flush=True)
 
 

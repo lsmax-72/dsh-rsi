@@ -1,0 +1,61 @@
+{
+  "status": "PASS_NATIVE_CONTAINER_CONTINUOUS_STATE",
+  "realModelRequests": 0,
+  "officialScorerInvocations": 0,
+  "fixtureModel": true,
+  "checks": [
+    {
+      "position": 1,
+      "arm": "baseline",
+      "carriedFirstFixture": true,
+      "nativeCompaction": false,
+      "nativeCalls": 2,
+      "sourceTreeVerified": true,
+      "directNativeHistoryInFirstRequest": false,
+      "historyByteExact": false,
+      "priorHistoryDeliveredToFixtureRequest": false,
+      "naturalAssetRestoreVerified": false,
+      "realModelRequests": 0
+    },
+    {
+      "position": 1,
+      "arm": "rsi",
+      "carriedFirstFixture": true,
+      "nativeCompaction": false,
+      "nativeCalls": 2,
+      "sourceTreeVerified": true,
+      "directNativeHistoryInFirstRequest": false,
+      "historyByteExact": false,
+      "priorHistoryDeliveredToFixtureRequest": false,
+      "naturalAssetRestoreVerified": false,
+      "realModelRequests": 0
+    },
+    {
+      "position": 2,
+      "arm": "baseline",
+      "carriedFirstFixture": false,
+      "nativeCompaction": true,
+      "nativeCalls": 4,
+      "sourceTreeVerified": true,
+      "directNativeHistoryInFirstRequest": false,
+      "historyByteExact": true,
+      "priorHistoryDeliveredToFixtureRequest": true,
+      "naturalAssetRestoreVerified": false,
+      "realModelRequests": 0
+    },
+    {
+      "position": 2,
+      "arm": "rsi",
+      "carriedFirstFixture": false,
+      "nativeCompaction": true,
+      "nativeCalls": 4,
+      "sourceTreeVerified": true,
+      "directNativeHistoryInFirstRequest": false,
+      "historyByteExact": true,
+      "priorHistoryDeliveredToFixtureRequest": true,
+      "naturalAssetRestoreVerified": true,
+      "realModelRequests": 0
+    }
+  ],
+  "limitation": "Actual native fork inheritance, agents/tools/persistence/container restore and no duplicate inherited-turn capture verified with fixed model replies; no natural asset generation, Qwen quality or formal effect proof."
+}

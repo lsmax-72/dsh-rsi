@@ -1,0 +1,25 @@
+{
+  "status": "PASS_OFFLINE_NATIVE_COMPACTION_AUDIT",
+  "realModelRequests": 0,
+  "officialScorerInvocations": 0,
+  "checks": [
+    {
+      "arm": "baseline",
+      "nativeCalls": 4,
+      "compactionCalls": 1,
+      "exactNativeInstructionSource": "b7ac52f20a36430cf01a66b3a36f23a48ffdb22708d714dbe1fff541b5df4ec5",
+      "persistedPrefixReconstructed": true,
+      "alteredDirectiveRejected": true,
+      "alteredSourceBodyRejected": true
+    },
+    {
+      "arm": "rsi",
+      "nativeCalls": 4,
+      "compactionCalls": 1,
+      "exactNativeInstructionSource": "b7ac52f20a36430cf01a66b3a36f23a48ffdb22708d714dbe1fff541b5df4ec5",
+      "persistedPrefixReconstructed": true,
+      "alteredDirectiveRejected": true,
+      "alteredSourceBodyRejected": true
+    }
+  ]
+}

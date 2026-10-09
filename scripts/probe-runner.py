@@ -90,7 +90,7 @@ def verify_seed(assets, sessions):
     return {'sourceSessionIds':sorted(sources),'requiredSessionIds':sorted(required),'inputSha256':hashes,'priorTaskLogs':prior_tasks}
 
 
-def verify_thinking_wire(output,mode,allow_budget_abort=False,write_result=True):
+def verify_thinking_wire(output,mode,allow_budget_abort=False,write_result=True,shutdown_receipt=None):
     rows=[json.loads(line) for line in (output/'gateway.log').read_text().splitlines() if line.strip()]
     sent=[r for r in rows if r.get('request') and r.get('model')]
     summaries=[r for r in rows if 'responseRequest' in r]
@@ -105,7 +105,11 @@ def verify_thinking_wire(output,mode,allow_budget_abort=False,write_result=True)
         assert r['parseErrors']==0,'Unparseable upstream response'
         complete=r['responseComplete'] and ('event-stream' not in r['contentType'] or r['sseDone'])
         if not complete:
-            assert allow_budget_abort and timed_out and r['responseRequest']==max(x['request'] for x in sent) and r['error']=='CLIENT_DISCONNECTED','Unfinished upstream response outside declared budget cancellation'
+            at=r.get('finishedAt',0)
+            closed_shutdown=bool(shutdown_receipt and shutdown_receipt.get('nativeFiberDisposed') is True and shutdown_receipt.get('runnerStatus')=='COMPLETED' and shutdown_receipt['shutdownStartedAt']-1000<=at<=shutdown_receipt['shutdownFinishedAt']+1000)
+            closed_wall=bool(shutdown_receipt and timed_out and any('wall time' in json.dumps(p.get('stopReason',{})).lower() and at>=p['finishedAt']-1000 for p in phases))
+            independent_wall=allow_budget_abort and timed_out and r['responseRequest']==max(x['request'] for x in sent)
+            assert (independent_wall or closed_shutdown or closed_wall) and r['error']=='CLIENT_DISCONNECTED','Unfinished upstream response outside declared budget cancellation/shutdown'
             budget_aborted.append(r['responseRequest'])
         for key,path in [('requestSha256','rawRequest'),('responseSha256','rawResponse')]:
             assert hashlib.sha256((output/'gateway-evidence'/r[path]).read_bytes()).hexdigest()==r[key],'Wire evidence bytes changed'
@@ -147,6 +151,8 @@ def main():
     parser.add_argument('--learning-dispatch-limit',type=int,help='New background streams for this run, independent of historical daily usage')
     parser.add_argument('--learning-pool',type=Path,help='Explicitly initialized host experiment pool, never mounted into task containers')
     parser.add_argument('--interrupt-checkpoint', action='store_true', help='Fixture-only SIGKILL after tool edit and durable request ledger')
+    parser.add_argument('--fixture-compact',action='store_true',help='Fixture-only native idle compaction test; no real model dispatch')
+    parser.add_argument('--history-order',type=Path,help='Continuous study: exact prior task ID sequence, independently checked against restored sessions')
     parser.add_argument('--baseline-history',type=Path,help='Continuous study only: previous baseline official logs, with no RSI assets or grading files')
     parser.add_argument('--seed-assets', type=Path, help='Copy an experiment-owned frozen asset store; never a personal profile')
     parser.add_argument('--seed-sessions',type=Path,help='Matching experiment-owned official session directory for source reconstruction')
@@ -171,6 +177,8 @@ def main():
     if args.formal and args.arm=='rsi' and not args.learning_pool: parser.error('Formal RSI requires a durable learning pool')
     if not re.fullmatch(r'[a-zA-Z0-9_-]+',args.instance): parser.error('Invalid task ID')
     if args.baseline_history and (args.arm!='baseline' or args.seed_assets or args.seed_sessions or args.persona_input or args.profile_recovery or (not args.formal and not args.fixture)): parser.error('Baseline raw history requires its own continuous task arm and no assets')
+    if args.fixture_compact and not (args.fixture and args.history_order):parser.error('Native compaction fixture requires --fixture and ordered history')
+    if args.history_order and (args.persona_input or args.scope_quality_protocol or args.profile_recovery or args.phases):parser.error('Ordered history is for coding sequences only')
     if args.seed_sessions and not args.seed_assets: parser.error('Source sessions require matching asset snapshot')
     if args.seed_assets and not args.seed_sessions: parser.error('Asset snapshots require matching official source sessions')
     if args.fixture_learning and (not args.fixture or args.arm!='rsi'): parser.error('Fixture learning requires --fixture --arm rsi')
@@ -322,6 +330,7 @@ def main():
             shutil.copy2(project/'package.json',root/'package.json')
             shutil.copy2(project/'package-lock.json',root/'package-lock.json')
             dockerfile = f'FROM {args.image}\nUSER root\nCOPY package.json package-lock.json /opt/rsi/\nRUN cd /opt/rsi && npm ci --ignore-scripts\nCOPY lib /opt/rsi/lib\nCOPY model-gateway.py pilot-task.mjs audit-session-requests.mjs task-input.mjs pilot.json /opt/rsi/scripts/\nENV NODE_LLAMA_CPP_GPU=false\n'
+            if args.history_order:dockerfile += 'ENV RSI_NATIVE_COMPACTION_MODULE=/opt/dsh/node_modules/@deepseek-ai/dsh-compaction-basic/lib/index.js\n'
             if args.persona_input:
                 dockerfile += 'COPY personamem-pilot-task.mjs personamem-history.mjs personamem-learning-policy.mjs personamem-native-learning-policy.mjs /opt/rsi/scripts/\nCOPY personamem.json /opt/rsi/personamem.json\n'
             if args.scope_quality_protocol:dockerfile += 'COPY review-scope-quality.mjs personamem-history.mjs scope-quality.json /opt/rsi/scripts/\n'
@@ -344,6 +353,21 @@ def main():
                 seed=verify_seed(root/'seed-assets',root/'seed-sessions')
                 driver['config']['priorTaskLogs']=seed['priorTaskLogs']
                 (output/'source-snapshot.json').write_text(json.dumps(seed,indent=2))
+            if args.history_order:
+                ordered=json.loads(args.history_order.read_text())
+                if not isinstance(ordered,list) or len(ordered)!=len(set(ordered)) or any(not re.fullmatch(r'django__django-\d+',id) for id in ordered):raise ValueError('Invalid prior task order')
+                restored={log['sessionId']:log for log in driver['config'].get('priorTaskLogs',[])}
+                if set(restored)!={'pilot-'+id+'-task' for id in ordered}:raise ValueError('Prior task order differs from restored closed sessions')
+                driver['config']['priorTaskLogs']=[restored['pilot-'+id+'-task'] for id in ordered]
+                driver['config']['continuousState']=True
+                driver['config']['fixtureCompact']=args.fixture_compact
+                # Match the native desktop context management on both arms.
+                # Summarizer output must respect the same gateway output cap.
+                services[:0]=[
+                    {'id':'continuous-token-meter','name':'@deepseek-ai/dsh-token-meter'},
+                    {'id':'continuous-compaction','name':'@deepseek-ai/dsh-compaction-basic','config':{'auto':True,'thresholdRatio':0.8,'headroomTokens':65536,'retainRatio':0.16,'maxTokens':8192,'compactionRetries':1,'maxOverflowRetries':1}},
+                    {'id':'continuous-tool-pruner','name':'@deepseek-ai/dsh-compaction-tool-result-pruner','config':{'thresholdChars':8192,'headChars':4096,'tailChars':1024}}]
+
             (root/'pilot.json').write_text(json.dumps(patch,ensure_ascii=False))
             (root/'Dockerfile').write_text(dockerfile)
             with (output/'build.log').open('w') as log:

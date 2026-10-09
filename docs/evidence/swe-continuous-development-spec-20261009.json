@@ -1,0 +1,86 @@
+{
+  "status": "SCOPED_DEVELOPMENT_INPUTS",
+  "purpose": "development",
+  "model": "qwen3.8-27b",
+  "thinking": "off",
+  "thinkingConfirmed": true,
+  "budgetConfirmed": true,
+  "serial": true,
+  "emptyStart": true,
+  "stageSize": 20,
+  "confidenceInterval": null,
+  "orderSeed": null,
+  "cases": [
+    {
+      "instanceId": "django__django-11848",
+      "environmentFile": "/Users/lsmax/Coder/dsh-rsi/.artifacts/next-evaluation-20261004/environments/django__django-11848-audited/environment.json",
+      "environmentSha256": "c78d62de601541c22a94d6011984cbad66ee86436642cee39d83647811c0db6d",
+      "publicInputSha256": "333a089376a4a46a894f15734b4bd24a2a366ac7fd35a1c5a6daf554c694a1c2",
+      "publicMetadata": {
+        "repo": "django/django",
+        "base_commit": "f0adf3b9b7a19cdee05368ff0c0c2d087f011180",
+        "version": "3.1"
+      },
+      "taskTag": "dsh-rsi-formal:django__django-11848",
+      "taskImageId": "sha256:7155e37164684c18bc73523ee5865ef60e757e48679bd652ddf187975afcf9ff",
+      "scorerKey": "swebench/sweb.eval.x86_64.django_1776_django-11848:latest",
+      "scorerImageId": "sha256:08eac9219e5d4b15b445fde26c587157a0ad8a2d9209e4b1e266259edf51bb4b",
+      "baselineDate": "@1786771386 +0000",
+      "expectedTree": "523bee2a370238733dd0eb7883dbefccab44ca64",
+      "expectedVersion": "3.1",
+      "checks": {
+        "instanceMatches": true,
+        "publicInputHashMatches": true,
+        "taskImageIdMatches": true,
+        "scorerImageIdMatches": true,
+        "publicRepoMatches": true
+      }
+    },
+    {
+      "instanceId": "django__django-11551",
+      "environmentFile": "/Users/lsmax/Coder/dsh-rsi/.artifacts/next-evaluation-20261004/environments/django__django-11551-audited/environment.json",
+      "environmentSha256": "e63f17627b8f0c6f8fcde99a37dfb878b967b00637dfcf7b9df8f6c71c387bd0",
+      "publicInputSha256": "eb3f8375c52d441aac33926313f77b04898d1037e957314a08dd8227ac4ff7c4",
+      "publicMetadata": {
+        "repo": "django/django",
+        "base_commit": "7991111af12056ec9a856f35935d273526338c1f",
+        "version": "3.0"
+      },
+      "taskTag": "dsh-rsi-formal:django__django-11551",
+      "taskImageId": "sha256:170bf21103e6cbe977df939385189d9a3b2dfd846cc45f558e5c3ae15abd895f",
+      "scorerKey": "swebench/sweb.eval.x86_64.django_1776_django-11551:latest",
+      "scorerImageId": "sha256:2c2327cffde3e63d1d2631235539e57622eb3c60b118302148ce0e6fe109a0dd",
+      "baselineDate": "@1786582999 +0000",
+      "expectedTree": "4067b5171a44f6d559c6d44cda34338c75b73ecc",
+      "expectedVersion": "3.0.dev20260813010319",
+      "checks": {
+        "instanceMatches": true,
+        "publicInputHashMatches": true,
+        "taskImageIdMatches": true,
+        "scorerImageIdMatches": true,
+        "publicRepoMatches": true
+      }
+    }
+  ],
+  "budgets": {
+    "foregroundCalls": 40,
+    "wallSeconds": 1200,
+    "maxOutputTokens": 8192,
+    "learningCallsPerTask": 20,
+    "learningTotal": 40,
+    "settleSeconds": 900
+  },
+  "datasetSha256": "a45b1fe4e2f0c8390b2b2938ac83e92ed5979000856808f3679c07812e9e6dcd",
+  "selection": "First two already exposed development tasks, original order, no outcome selection",
+  "diagnosticPositions": [
+    1,
+    2
+  ],
+  "sourceManifestSha256": "d27204b6a22a5b39a0d9e16f4ee40e050c17b620988203a64843992b72474216",
+  "historyPolicy": "Native fork directly inherits own prior original session events into subsequent requests; ordered raw logs also remain tool-readable. RSI also restores natural native asset/checkpoint state. No grading feedback.",
+  "scorerFeedbackAllowed": false,
+  "automaticRetries": false,
+  "realModelRequests": 0,
+  "formal100Allowed": false,
+  "historyMode": "native-fork"
+}
