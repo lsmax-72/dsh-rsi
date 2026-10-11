@@ -168,19 +168,23 @@ def checkpoint(root,r,s,previous):
             db=sqlite3.connect(target);jobs=db.execute('SELECT id,session,turn,status,payload FROM jobs').fetchall();sources=dict(db.execute('SELECT id,cursor FROM sources'));db.close()
         require(not any(j[3]=='running' for j in jobs),'Closed checkpoint contains running learning work')
         session_id='pilot-'+r['instanceId']+'-task';stored=[json.loads(line) for line in (state/'home/sessions/--workspace--'/session_id/'session.v4.jsonl').read_text().splitlines()];cut=read(state/'pilot'/r['instanceId']/'history-inheritance.json')['inheritedEventCount'] if previous else 0
-        expected_jobs={};begin=None
+        expected_jobs={};closed_user_turns=0;skipped_turns=[];begin=None
         for event in stored[1:]:
             if event.get('seq',-1)<cut:continue
             if event['type']=='turn/start':begin=[]
             if begin is not None:begin.append(event)
             if event['type']=='turn/end' and begin is not None:
-                if event['data']['reason']['kind'] in ['completed','error','max-tokens','blocked'] and any(e['type']=='user/message' and e['data']['source'].get('kind')=='user' for e in begin):expected_jobs[session_id+':'+str(event['data']['turn'])]=event['seq']
+                if any(e['type']=='user/message' and e['data']['source'].get('kind')=='user' for e in begin):
+                    closed_user_turns+=1;kind=event['data']['reason']['kind']
+                    require(kind in ['completed','error','max-tokens','blocked','aborted'],'Unsupported closed turn kind')
+                    if kind=='aborted':skipped_turns.append({'turn':event['data']['turn'],'reason':kind})
+                    else:expected_jobs[session_id+':'+str(event['data']['turn'])]=event['seq']
                 begin=None
         current={j[0]:j for j in jobs if j[1]==session_id}
-        require(expected_jobs and set(current)==set(expected_jobs),'Task capture missing or duplicate learning jobs')
-        require(all(json.loads(current[k][4])['endSeq']==end for k,end in expected_jobs.items()) and sources.get(session_id,-1)>=max(expected_jobs.values()),'Task learning cursor not safely captured')
+        require(closed_user_turns and set(current)==set(expected_jobs),'Task capture missing or duplicate learning jobs')
+        require(all(json.loads(current[k][4])['endSeq']==end for k,end in expected_jobs.items()) and (not expected_jobs or sources.get(session_id,-1)>=max(expected_jobs.values())),'Task learning cursor not safely captured')
         for file in (state/'assets/learning-runs').glob('*.json'):require(read(file)['status']!='running','Native model call did not safely close')
-        r['ownTurnCaptureVerified']=True;r['learningWait']=receipt.get('learningSettlements',[])
+        r['ownTurnCaptureVerified']=True;r['nativeLearningSkippedTurns']=skipped_turns;r['learningWait']=receipt.get('learningSettlements',[])
     restored=native.verify_seed(state/'assets' if r['arm']=='rsi' else None,state/'home/sessions')
     require({p['sessionId'] for p in restored['priorTaskLogs']}==set(expected+['pilot-'+r['instanceId']+'-task']),'State missing own task or containing other tasks')
     cp={'position':r['position'],'instanceId':r['instanceId'],'arm':r['arm'],'state':str(state),'sessions':files(state/'home/sessions'),'assets':files(state/'assets') if r['arm']=='rsi' else None,'previousPosition':previous['position'] if previous else None,'scorerNeverCarried':True}

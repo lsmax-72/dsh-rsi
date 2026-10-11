@@ -73,6 +73,11 @@ with tempfile.TemporaryDirectory() as td:
             else:raise AssertionError('Unsafe learning checkpoint admitted: '+mutation)
         finally:dbfile.write_bytes(closed)
     checks.append('missing/duplicate task learning, cursor lag and running jobs reject cross-task checkpoint')
+    log=Path(first_rsi['runDir'])/'state/home/sessions/--workspace--'/('pilot-'+ids[0]+'-task')/'session.v4.jsonl';closed_log=log.read_bytes();events=[json.loads(line) for line in log.read_text().splitlines()];events[-1]['data']['reason']={'kind':'aborted','reason':{'kind':'hook','reason':'Pilot wall time limit reached'}}
+    try:
+        log.write_text('\n'.join(json.dumps(e) for e in events)+'\n');db=sqlite3.connect(dbfile);db.execute('DELETE FROM jobs');db.execute('DELETE FROM sources');db.commit();db.close();r=copy.deepcopy(first_rsi);m.checkpoint(root,r,s,None);assert r['nativeLearningSkippedTurns']==[{'turn':1,'reason':'aborted'}]
+    finally:log.write_bytes(closed_log);dbfile.write_bytes(closed);m.checkpoint(root,dict(first_rsi),s,None)
+    checks.append('safely aborted native turn inherits closed state without fabricating a learning job')
     before=len(commands);m.run(root,s,True);assert len(commands)==before
     r=saved[0];cp=m.checkpoint_check(root,r);file=Path(cp['state'])/'home/sessions'/next(iter(cp['sessions']));file.write_text(file.read_text()+'tamper')
     try:m.checkpoint_check(root,r)
@@ -86,6 +91,18 @@ with tempfile.TemporaryDirectory() as td:
     except ValueError:pass
     else:raise AssertionError('Ambiguous execution replayed')
 checks+=['STOP prevents dispatch and ambiguous RUNNING cannot replay']
+# A pre-dispatch cancellation is closed INFRA, not an invented scored failure.
+original_execute=m.thinking.execute
+def zero_execute(argv,log,timeout=None):
+    result=original_execute(argv,log,timeout);argv=[str(x) for x in argv]
+    if Path(argv[2]).name=='probe-runner.py' and argv[argv.index('--arm')+1]=='rsi' and argv[argv.index('--instance')+1]==ids[0]:
+        out=Path(argv[argv.index('--output')+1]);pilot=out/'state/pilot'/ids[0];m.write(pilot/'model-requests.json',[]);(out/'gateway.log').write_text('');m.write(pilot/'phases.json',[{'wallMs':1,'stopReason':{'kind':'aborted','reason':{'kind':'hook','reason':'Pilot wall time limit reached'}}}]);file=out/'state/home/sessions/--workspace--'/('pilot-'+ids[0]+'-task')/'session.v4.jsonl';events=[json.loads(l) for l in file.read_text().splitlines()];events[-1]['data']['reason']={'kind':'aborted'};file.write_text('\n'.join(json.dumps(e) for e in events)+'\n');db=sqlite3.connect(out/'state/assets/rsi-state.sqlite');db.execute('DELETE FROM jobs');db.execute('DELETE FROM sources');db.commit();db.close()
+    return result
+m.thinking.execute=zero_execute
+with tempfile.TemporaryDirectory() as td:
+    root=Path(td);m.run(root,s);saved=m.rows(root);assert m.read(root/'state.json')['status']=='COMPLETE';r=next(r for r in saved if r['arm']=='rsi' and r['position']==1);assert r['status']=='CLOSED_INFRA' and r['foreground']['calls']==0 and r['checkpointVerified'] and r['nativeLearningSkippedTurns'];second=next(r for r in saved if r['arm']=='rsi' and r['position']==2);assert second['directNativeHistoryInherited']
+m.thinking.execute=original_execute
+checks.append('zero-request native wall cancellation remains measured zero-call INFRA and hands closed history to next task')
 with tempfile.TemporaryDirectory() as td:
     root=Path(td);hundred=copy.deepcopy(s);hundred['cases']=[{'instanceId':'django__django-'+str(50000+i)} for i in range(100)]
     for i,c in enumerate(hundred['cases'],1):

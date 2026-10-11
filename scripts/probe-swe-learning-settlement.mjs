@@ -21,4 +21,6 @@ clock=0;
 const pending=await waitForLearning({rsi:{runtime},snapshot:async()=>({...complete,jobs:[{session:'task',turn:1,status:'paused'}]}),sessionId:'task',turn:1,endSeq:20,maxWaitMs:2500,persist:()=>{},now:()=>clock,sleep:async ms=>{clock+=ms;}});
 assert.equal(pending.status,'DEADLINE_CHECKPOINT');assert.equal(pending.waitMs,2500);
 assert.equal(complete.jobs[0].status,'completed');
-console.log(JSON.stringify({status:'PASS_SETTLEMENT_POLICY',realModelRequests:0,checks:['empty queue before capture rejected','buffered idle L1 and delayed L2 rejected','queued/running native work rejected','cursor behind rejected','safe completion exits before900seconds','deadline preserves paused work without classifying complete']}));
+assert.deepEqual(settlementReasons({...complete,jobs:[]},{...empty,sourceCursor:undefined},'task',1,20,false),[]);
+assert.ok(settlementReasons({...complete,jobs:[]},{...empty,activeCalls:1},'task',1,20,false).length);
+console.log(JSON.stringify({status:'PASS_SETTLEMENT_POLICY',realModelRequests:0,checks:['empty queue before capture rejected','buffered idle L1 and delayed L2 rejected','queued/running native work rejected','cursor behind rejected','safe completion exits before900seconds','deadline preserves paused work without classifying complete','native aborted turn skips new capture but still waits for prior work']}));

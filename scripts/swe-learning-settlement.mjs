@@ -1,10 +1,10 @@
 // Runner-only observation: never trigger or change the native learning pipeline.
-export function settlementReasons(snapshot, work, sessionId, turn, endSeq) {
+export function settlementReasons(snapshot, work, sessionId, turn, endSeq, captureExpected=true) {
   const reasons=[];
   const job=snapshot.jobs.find(j=>j.session===sessionId && j.turn===turn);
-  if(!job)reasons.push('task-not-captured');
-  else if(job.status!=='completed')reasons.push('job-'+job.status);
-  if((work.sourceCursor??-1)<endSeq)reasons.push('capture-cursor-behind');
+  if(captureExpected && !job)reasons.push('task-not-captured');
+  else if(job && job.status!=='completed')reasons.push('job-'+job.status);
+  if(captureExpected && (work.sourceCursor??-1)<endSeq)reasons.push('capture-cursor-behind');
   if(work.activeCalls)reasons.push('active-native-work');
   if(snapshot.profilePending)reasons.push('profile-pending');
   for(const pipeline of work.pipelines){
@@ -17,7 +17,7 @@ export function settlementReasons(snapshot, work, sessionId, turn, endSeq) {
   return [...new Set(reasons)];
 }
 
-export async function waitForLearning({rsi,snapshot,sessionId,turn,endSeq,maxWaitMs,persist,now=Date.now,sleep=ms=>new Promise(r=>setTimeout(r,ms))}) {
+export async function waitForLearning({rsi,snapshot,sessionId,turn,endSeq,captureExpected=true,maxWaitMs,persist,now=Date.now,sleep=ms=>new Promise(r=>setTimeout(r,ms))}) {
   const start=now(),deadline=start+maxWaitMs;
   if(!rsi || maxWaitMs===0)return {status:'SKIPPED',waitMs:0};
   for(;;){
@@ -27,8 +27,8 @@ export async function waitForLearning({rsi,snapshot,sessionId,turn,endSeq,maxWai
     const state=await snapshot();
     const work={sourceCursor:rsi.runtime.state.sources().find(s=>s.id===sessionId)?.cursor,activeCalls:rsi.runtime.active.size,
       pipelines:[...rsi.runtime.pipelines.values()].map(p=>({queues:p.getQueueSizes(),sessions:p.getSessionKeys().map(k=>({...p.getSessionState(k),bufferedMessages:p.getBufferedMessageCount(k)}))}))};
-    const reasons=settlementReasons(state,work,sessionId,turn,endSeq);
-    const result={status:reasons.length?'WAITING':'COMPLETED',waitMs:now()-start,sessionId,turn,endSeq,reasons,work};
+    const reasons=settlementReasons(state,work,sessionId,turn,endSeq,captureExpected);
+    const result={status:reasons.length?'WAITING':'COMPLETED',waitMs:now()-start,sessionId,turn,endSeq,captureExpected,reasons,work};
     persist(state,result);
     if(!reasons.length)return result;
     if(now()>=deadline)return {...result,status:'DEADLINE_CHECKPOINT'};

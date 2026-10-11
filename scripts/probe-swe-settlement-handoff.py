@@ -28,5 +28,15 @@ def main():
     m.require(m.asset_inventory(out/'state')==inventory,'Original natural assets lost or rewritten by the fixture')
    checks.append({'position':pos,'arm':arm,'actualNativeCalls':len(ledger),'learningCalls':r['backgroundDispatches'],'wait':r['learningSettlements'][0],'oldLogsByteExact':True,'nativePrefixExact':True,'naturalAssetsUnchanged':arm=='rsi','newLearningJobs':1 if arm=='rsi' else 0})
    seeds[arm]=out/'state';histories[arm].append(c['instanceId']);m.write(root/'progress.json',{'completed':len(checks),'planned':4})
- result={'status':'PASS_SETTLEMENT_NATIVE_HANDOFF','fixtureModel':True,'realQwenRequests':0,'scorerInvocations':0,'newAssetConsumptionSpecialty':False,'checks':checks,'mechanismSha256':m.mechanism_hashes()};m.write(root/'audit.json',result);print(json.dumps(result))
+ # Exercise the actual native wall-cancellation path in an isolated branch.
+ c=cases[0];out=root/'aborted-rsi';old=P/'.artifacts/swe-continuous-development-20261009/002-rsi/state';history=root/'aborted.order.json';m.write(history,['django__django-11848','django__django-11551'])
+ cmd=[sys.executable,'-B',P/'scripts/probe-runner.py','--fixture','--fixture-learning','--arm','rsi','--image',c['taskTag'],'--instance',c['instanceId'],'--output',out,'--history-order',history,'--dispatch-limit','4','--request-limit','24','--learning-call-budget','40','--learning-dispatch-limit','20','--wall-seconds','1','--settle-seconds','120','--baseline-date',c['baselineDate'],'--expected-tree',c['expectedTree'],'--expected-version',c['expectedVersion'],'--seed-assets',old/'assets','--seed-sessions',old/'home/sessions']
+ rc=m.thinking.execute([str(x) for x in cmd],root/'aborted-rsi.log',timeout=600);m.require(rc==0,'Native aborted turn did not close safely')
+ pilot=out/'state/pilot'/c['instanceId'];receipt=m.read(pilot/'receipt.json');wait=receipt['learningSettlements'][0]
+ m.require(receipt['nativeFiberDisposed'] and receipt['phases'][0]['stopReason']['kind']=='aborted' and not wait['captureExpected'] and wait['status']=='COMPLETED' and wait['waitMs']<120000,'Cancellation misclassified as missed/completed learning')
+ m.require(not any(j['session']=='pilot-'+c['instanceId']+'-task' for j in receipt['after']['jobs']) and m.asset_inventory(out/'state')==inventory,'Aborted task fabricated learning or lost original assets')
+ m.require(all(m.sha(out/'state/home/sessions'/f)==h for f,h in m.files(old/'home/sessions').items()),'Aborted task lost raw history')
+ m.require(all(r['matches'] for r in m.read(pilot/'reconstruction.json')),'Aborted actual input reconstruction failed')
+ aborted={'status':'PASS_NATIVE_ABORT_HANDOFF','nativeFiberDisposed':True,'wait':wait,'stopReason':receipt['phases'][0]['stopReason'],'actualNativeCalls':len(m.read(pilot/'model-requests.json')),'requestReconstruction': 'NOT_APPLICABLE_NO_REQUESTS' if receipt['noObservedModelRequests'] else 'PASS_NATIVE_REQUESTS','newLearningJobs':0,'oldLogsByteExact':True,'naturalAssetsUnchanged':True,'realQwenRequests':0}
+ result={'status':'PASS_SETTLEMENT_NATIVE_HANDOFF','fixtureModel':True,'realQwenRequests':0,'scorerInvocations':0,'newAssetConsumptionSpecialty':False,'checks':checks,'abortedCheck':aborted,'mechanismSha256':m.mechanism_hashes()};m.write(root/'audit.json',result);print(json.dumps(result))
 if __name__=='__main__':main()

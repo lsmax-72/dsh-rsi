@@ -35,6 +35,8 @@ export function apply(ctx, config) {
     const parent = openSync(dir, 'r'); try {fsyncSync(parent);} finally {closeSync(parent);}
   };
   const ledger = () => durable(dir + '/model-requests.json', requests);
+  // A native turn can be cancelled before its first dispatch or tool result.
+  ledger();durable(dir+'/tool-results.json',results);
   const patchSnapshots=[];let previousPatch;
   mkdirSync(dir+'/patch-snapshots',{recursive:true});
   const patch = () => {
@@ -215,7 +217,7 @@ export function apply(ctx, config) {
           phaseResults.push({phase:phase.name, sessionId:id, stopReason, startedAt:phaseStartedAt, finishedAt:Date.now(), wallMs:Date.now()-phaseStartedAt, requests:requests.filter(r=>r.sessionId===id).length});
           durable(dir + '/phases.json', phaseResults);
           const end=outcome.events.filter(e=>e.type==='turn/end').at(-1);
-          const settled=await waitForLearning({rsi,snapshot,sessionId:id,turn:end.data.turn,endSeq:end.seq,maxWaitMs:config.settleMs ?? 90000,
+          const settled=await waitForLearning({rsi,snapshot,sessionId:id,turn:end.data.turn,endSeq:end.seq,captureExpected:['completed','error','max-tokens','blocked'].includes(end.data.reason.kind),maxWaitMs:config.settleMs ?? 90000,
             persist:(state,progress)=>{durable(dir+'/scheduler.json',state);durable(dir+'/learning-wait.json',progress);}});
           learningSettlements.push(settled);durable(dir+'/learning-settlements.json',learningSettlements);
         }
@@ -225,12 +227,13 @@ export function apply(ctx, config) {
         const shutdownStartedAt=Date.now();
         await ctx.root.fiber.dispose();
         const shutdownFinishedAt=Date.now();
-        const audit = await auditRequests(dir + '/model-requests.json', process.env.DSH_HOME + '/sessions', dir + '/reconstruction.json');
+        const audit = requests.length?await auditRequests(dir + '/model-requests.json', process.env.DSH_HOME + '/sessions', dir + '/reconstruction.json'):[];
+        if(!requests.length)durable(dir+'/reconstruction.json',[]);
         const receipt = {runnerStatus:'COMPLETED', formalBenchmark:!!config.formal, arm:config.arm, fixture:!!config.fixture,
           instanceId:config.instanceId, officialResolved:null, taskDispatches:foreground,
           nativeFiberDisposed:true,shutdownStartedAt,shutdownFinishedAt,
           backgroundDispatches:requests.length-foreground, phases:phaseResults,learningSettlements,
-          before, after, blockedDispatches:blocked, learningDispatchLimit:config.learningDispatchLimit, toolResults:results, logReconstructionMatches:true,
+          before, after, blockedDispatches:blocked, learningDispatchLimit:config.learningDispatchLimit, toolResults:results, logReconstructionMatches:requests.length>0,noObservedModelRequests:requests.length===0,
           knownTokens:requests.reduce((n,r)=>n+(r.usage?.totalTokens??0),0),
           unknownUsage:requests.filter(r=>!r.usage).length,
           limitation:config.fixture?'Fixed responses validate runner plumbing; no effectiveness result.':config.formal?'One fixed formal arm; use paired official reports to interpret effect.':'Default-flow pilot; not a formal paired benchmark.'};
