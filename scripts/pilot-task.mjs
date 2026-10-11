@@ -158,9 +158,13 @@ export function apply(ctx, config) {
         rsi = ctx.get('rsi');
         if (config.arm === 'rsi') {assert.ok(rsi); await rsi.ready;}
         else assert.equal(rsi, undefined, 'Baseline must not instantiate RSI');
+        // Restored preferences override startup defaults. Disable learning via
+        // the normal settings API on the isolated copy before task execution.
+        if(config.assetConsumptionOnly) await rsi.request('settings',{cwd:'/workspace',settings:{learningEnabled:false,dailyCallBudget:0}});
         const snapshot = async()=>rsi ? await rsi.request('snapshot',{cwd:'/workspace'}) : null;
         const before = await snapshot();
         if (before) assert.equal(before.settings.dailyCallBudget, config.learningCallBudget ?? 30);
+        if(config.assetConsumptionOnly) assert.equal(before.settings.learningEnabled,false,'Consumption replay must not learn');
         const exportedBefore = rsi ? await rsi.request('export',{cwd:'/workspace'}) : null;
         durable(dir + '/initial.json', {arm:config.arm, baselineTree, settings:before?.settings??null,
           baselineCommitTime:git('show','-s','--format=%ct','HEAD').trim(),
@@ -169,13 +173,14 @@ export function apply(ctx, config) {
           skillCandidates:await ctx.skills.list({cwd:'/workspace'})});
         const task = JSON.parse(await readFile('/opt/rsi/task.json','utf8'));
         if (!config.fixture && config.instanceId !== 'preflight') assert.equal(task.instance_id,config.instanceId,'Task image/public ID mismatch');
-        const phases = config.phases ?? [{name:'task',prompt:task.problem_statement,protocol:taskProtocol}];
+        const phases = config.phases ?? [{name:config.assetConsumptionOnly?'consumption':'task',prompt:task.problem_statement,protocol:taskProtocol}];
         for (const phase of phases) {
           assert.match(phase.name,/^[a-zA-Z0-9_-]+$/);
           currentPhase = phase.name; phaseCalls = 0; phaseLimit = phase.dispatchLimit ?? dispatchLimit;
           if (phase.resetWorkspace) {git('reset','--hard','HEAD');git('clean','-fdx');}
           const phaseStartedAt=Date.now();
           const id = 'pilot-' + config.instanceId + '-' + phase.name;
+          if(config.assetConsumptionOnly) assert.notEqual(id,config.priorTaskLogs?.at(-1)?.sessionId,'Replay must use a fresh native session');
           const protocol=phase.protocol===taskProtocol?phase.protocol+'\n'+taskHistoryGuidance(id,config.priorTaskLogs??[]):phase.protocol;
           let inheritance;
           const parent=config.continuousState?config.priorTaskLogs?.at(-1):undefined;

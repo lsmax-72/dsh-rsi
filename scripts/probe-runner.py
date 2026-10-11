@@ -144,6 +144,7 @@ def main():
     parser.add_argument('--persona-fixture-questions',type=int,choices=[2,4],default=2,help='Fixture-only question count; real independent cases require a frozen manifest')
     parser.add_argument('--validate-only',action='store_true',help='Verify a frozen PersonaMem case without Docker or model dispatch')
     parser.add_argument('--profile-recovery',action='store_true',help='Native checkpoint recovery only; requires matching closed assets/source logs, no foreground tasks')
+    parser.add_argument('--asset-consumption-only',action='store_true',help='Exposed-task replay with closed natural assets, no learning or scoring')
     parser.add_argument('--formal',action='store_true')
     parser.add_argument('--expected-tree',help='Verified source Git tree for this task')
     parser.add_argument('--expected-version',help='Verified Django version in its scorer image')
@@ -184,6 +185,7 @@ def main():
     if args.fixture_learning and (not args.fixture or args.arm!='rsi'): parser.error('Fixture learning requires --fixture --arm rsi')
     if args.learning_pool and args.arm!='rsi': parser.error('Baseline cannot reserve a learning pool')
     learning_limit=args.learning_dispatch_limit if args.learning_dispatch_limit is not None else args.learning_call_budget
+    if args.asset_consumption_only and (args.arm!='rsi' or not args.seed_assets or not args.seed_sessions or not args.history_order or args.formal or args.fixture or args.phases or args.persona_input or args.profile_recovery or learning_limit!=0 or args.learning_call_budget!=0 or args.settle_seconds!=0 or args.learning_pool): parser.error('Consumption-only requires real closed RSI state, ordered history, zero learning, no formal/scorer mode')
     if learning_limit<0 or args.learning_call_budget<0 or args.settle_seconds<0: parser.error('Invalid background limit or settling window')
     if args.interrupt_checkpoint and not args.fixture:
         parser.error('Interruption control must use a fixture, not a paid model request.')
@@ -211,6 +213,7 @@ def main():
         'fixtureAnswerStop':args.fixture_answer_stop,'interruptCheckpoint':args.interrupt_checkpoint, 'baselineDate':args.baseline_date, 'dispatchLimit':args.dispatch_limit,
         'learningCallBudget':args.learning_call_budget, 'learningDispatchLimit':learning_limit, 'fixtureLearning':args.fixture_learning, 'wallTimeMs':args.wall_seconds*1000,
         'settleMs':args.settle_seconds*1000,'formal':args.formal,'expectedTree':args.expected_tree,'expectedVersion':args.expected_version}
+    if args.asset_consumption_only: driver['config']['assetConsumptionOnly']=True
     if args.persona_fixture_closed_profile_failure:
         driver['config'].update(fixtureClosedProfileFailure=True,learningFailurePolicy='evaluate-closed-native-failure-v2')
     if args.persona_fixture_closed_learning_failure:
@@ -271,6 +274,7 @@ def main():
     else:
         service = next(s for s in services if s['id']=='rsi')
         service['config']['settings']={'dailyCallBudget':args.learning_call_budget}
+        if args.asset_consumption_only: service['config']['settings']['learningEnabled']=False
         if args.scope_quality_protocol: service['config']['settings'].update(learningEnabled=False,maxTokens=4096,maxIterations=8,timeoutMs=180000)
         if args.fixture:
             service['config']['settings']['learningEnabled']=False if args.scope_quality_protocol else args.fixture_learning
