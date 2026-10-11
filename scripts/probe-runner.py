@@ -330,10 +330,11 @@ def main():
                 shutil.copy2(args.persona_input,root/'personamem.json')
             shutil.copy2(project/'scripts/audit-session-requests.mjs',root/'audit-session-requests.mjs')
             shutil.copy2(project/'scripts/task-input.mjs',root/'task-input.mjs')
+            shutil.copy2(project/'scripts/swe-learning-settlement.mjs',root/'swe-learning-settlement.mjs')
             # Only public problem metadata already present in the prepared task image is reused.
             shutil.copy2(project/'package.json',root/'package.json')
             shutil.copy2(project/'package-lock.json',root/'package-lock.json')
-            dockerfile = f'FROM {args.image}\nUSER root\nCOPY package.json package-lock.json /opt/rsi/\nRUN cd /opt/rsi && npm ci --ignore-scripts\nCOPY lib /opt/rsi/lib\nCOPY model-gateway.py pilot-task.mjs audit-session-requests.mjs task-input.mjs pilot.json /opt/rsi/scripts/\nENV NODE_LLAMA_CPP_GPU=false\n'
+            dockerfile = f'FROM {args.image}\nUSER root\nCOPY package.json package-lock.json /opt/rsi/\nRUN cd /opt/rsi && npm ci --ignore-scripts\nCOPY lib /opt/rsi/lib\nCOPY model-gateway.py pilot-task.mjs audit-session-requests.mjs task-input.mjs swe-learning-settlement.mjs pilot.json /opt/rsi/scripts/\nENV NODE_LLAMA_CPP_GPU=false\n'
             if args.history_order:dockerfile += 'ENV RSI_NATIVE_COMPACTION_MODULE=/opt/dsh/node_modules/@deepseek-ai/dsh-compaction-basic/lib/index.js\n'
             if args.persona_input:
                 dockerfile += 'COPY personamem-pilot-task.mjs personamem-history.mjs personamem-learning-policy.mjs personamem-native-learning-policy.mjs /opt/rsi/scripts/\nCOPY personamem.json /opt/rsi/personamem.json\n'

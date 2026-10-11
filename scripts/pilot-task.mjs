@@ -6,6 +6,7 @@ import {execFileSync} from 'node:child_process';
 import {LlmAdapter, createUserMessage} from '@deepseek-ai/dsh-llm';
 import {auditRequests} from './audit-session-requests.mjs';
 import {Session,buildForkSeed} from '@deepseek-ai/dsh-session';
+import {waitForLearning} from './swe-learning-settlement.mjs';
 import {taskProtocol,taskHistoryGuidance} from './task-input.mjs';
 
 export const name = 'rsi-pilot-task';
@@ -19,7 +20,7 @@ export function apply(ctx, config) {
   let compaction;
   if(config.continuousState)ctx.inject(['compaction'],scope=>{compaction=scope.compaction;});
   const blocked = [];
-  const requests = [], results = [], sessions = new Map(), phaseResults = [];
+  const requests = [], results = [], sessions = new Map(), phaseResults = [], learningSettlements = [];
   let learningAttempts = 0;
   let foreground = 0, phaseCalls = 0, phaseLimit, deadline, initialized = false, currentPhase = 'setup';
   const dispatchLimit = config.dispatchLimit ?? 50;
@@ -213,12 +214,10 @@ export function apply(ctx, config) {
           const stopReason = outcome.events.filter(e=>e.type==='turn/end').at(-1)?.data.reason;
           phaseResults.push({phase:phase.name, sessionId:id, stopReason, startedAt:phaseStartedAt, finishedAt:Date.now(), wallMs:Date.now()-phaseStartedAt, requests:requests.filter(r=>r.sessionId===id).length});
           durable(dir + '/phases.json', phaseResults);
-          // Observe the default scheduler; never invoke learn/captureStored or inject a named Skill.
-          const until = Date.now() + (config.settleMs ?? 90000);
-          while (rsi && Date.now() < until) {
-            durable(dir + '/scheduler.json', await snapshot());
-            await new Promise(resolve=>setTimeout(resolve,1000));
-          }
+          const end=outcome.events.filter(e=>e.type==='turn/end').at(-1);
+          const settled=await waitForLearning({rsi,snapshot,sessionId:id,turn:end.data.turn,endSeq:end.seq,maxWaitMs:config.settleMs ?? 90000,
+            persist:(state,progress)=>{durable(dir+'/scheduler.json',state);durable(dir+'/learning-wait.json',progress);}});
+          learningSettlements.push(settled);durable(dir+'/learning-settlements.json',learningSettlements);
         }
         const after = await snapshot();
         if (rsi) durable(dir + '/assets.json', await rsi.request('export',{cwd:'/workspace'}));
@@ -230,7 +229,7 @@ export function apply(ctx, config) {
         const receipt = {runnerStatus:'COMPLETED', formalBenchmark:!!config.formal, arm:config.arm, fixture:!!config.fixture,
           instanceId:config.instanceId, officialResolved:null, taskDispatches:foreground,
           nativeFiberDisposed:true,shutdownStartedAt,shutdownFinishedAt,
-          backgroundDispatches:requests.length-foreground, phases:phaseResults,
+          backgroundDispatches:requests.length-foreground, phases:phaseResults,learningSettlements,
           before, after, blockedDispatches:blocked, learningDispatchLimit:config.learningDispatchLimit, toolResults:results, logReconstructionMatches:true,
           knownTokens:requests.reduce((n,r)=>n+(r.usage?.totalTokens??0),0),
           unknownUsage:requests.filter(r=>!r.usage).length,

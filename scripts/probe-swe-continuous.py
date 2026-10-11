@@ -38,13 +38,15 @@ def execute(argv,log,timeout=None):
         if arm=='rsi':
             if '--seed-assets' in argv:shutil.copytree(get('--seed-assets'),state/'assets')
             else:
-                (state/'assets/learning-runs').mkdir(parents=True);db=sqlite3.connect(state/'assets/rsi-state.sqlite');db.execute('CREATE TABLE sources(id TEXT)');db.commit();db.close()
+                (state/'assets/learning-runs').mkdir(parents=True);db=sqlite3.connect(state/'assets/rsi-state.sqlite');db.execute('CREATE TABLE sources(id TEXT,cursor INTEGER)');db.execute('CREATE TABLE jobs(id TEXT,session TEXT,turn INTEGER,status TEXT,payload TEXT)');db.commit();db.close()
         session_id='pilot-'+instance+'-task';file=sessions/'--workspace--'/session_id/'session.v4.jsonl';file.parent.mkdir(parents=True);prefix=[];header={'type':'session','version':4,'id':session_id,'isSeeded':False}
         if seed:
             parent='pilot-'+expected[-1]+'-task';prefix=[json.loads(line) for line in (seed/'--workspace--'/parent/'session.v4.jsonl').read_text().splitlines()][1:];cut=len(prefix);header.update(isSeeded=True,parentSession=parent)
             m.write(pilot/'history-inheritance.json',{'parentSessionId':parent,'inheritedEventCount':cut})
             prefix=prefix+[{'type':'session/end-seed','seq':cut,'data':{'inherited':True}}]
-        all_events=prefix+[{'type':'turn/start','seq':len(prefix)},{'type':'turn/end','seq':len(prefix)+1}];file.write_text('\n'.join(json.dumps(r) for r in [header]+all_events)+'\n')
+        all_events=prefix+[{'type':'turn/start','seq':len(prefix)},{'type':'user/message','seq':len(prefix)+1,'data':{'source':{'kind':'user'}}},{'type':'turn/end','seq':len(prefix)+2,'data':{'turn':1,'reason':{'kind':'completed'}}}];file.write_text('\n'.join(json.dumps(r) for r in [header]+all_events)+'\n')
+        if arm=='rsi':
+            db=sqlite3.connect(state/'assets/rsi-state.sqlite');db.execute('INSERT INTO sources VALUES (?,?)',(session_id,len(prefix)+2));db.execute('INSERT INTO jobs VALUES (?,?,?,?,?)',(session_id+':1',session_id,1,'completed',json.dumps({'endSeq':len(prefix)+2})));db.commit();db.close()
         ledger=[{'sessionId':session_id,'phase':'task','status':'RETURNED','messages':[],'usage':{'inputTokens':12,'outputTokens':8,'totalTokens':20},'finish':{'kind':'stop'},'reasoningChars':0}]
         m.write(pilot/'model-requests.json',ledger);m.write(pilot/'tool-results.json',[]);m.write(pilot/'phases.json',[{'wallMs':100,'stopReason':{'kind':'completed'}}]);m.write(pilot/'reconstruction.json',[{'matches':True}]);(pilot/'prediction.patch').write_text('synthetic patch')
         m.write(pilot/'receipt.json',{'runnerStatus':'COMPLETED','nativeFiberDisposed':True,'formalBenchmark':True,'fixture':False,'instanceId':instance,'arm':arm,'backgroundDispatches':0})
@@ -62,6 +64,15 @@ with tempfile.TemporaryDirectory() as td:
         assert ('--seed-assets' in cmd)==(arm=='rsi') and ('--baseline-history' in cmd)==(arm=='baseline')
         assert not any('grader-only' in item for item in cmd)
     result=m.read(root/'summary.json');assert result['overall']['pairedNet'] is None and result['overall']['arms']['rsi']['officialPassRate'] is None and result['overall']['arms']['rsi']['infrastructureCases']==1
+    first_rsi=next(r for r in saved if r['arm']=='rsi' and r['position']==1);dbfile=Path(first_rsi['runDir'])/'state/assets/rsi-state.sqlite';closed=dbfile.read_bytes()
+    for mutation in ['DELETE FROM jobs','UPDATE sources SET cursor=-1',"UPDATE jobs SET status='running'", "INSERT INTO jobs VALUES ('duplicate','pilot-"+ids[0]+"-task',999,'completed','{}')"]:
+        try:
+            db=sqlite3.connect(dbfile);db.execute(mutation);db.commit();db.close()
+            try:m.checkpoint(root,dict(first_rsi),s,None)
+            except ValueError:pass
+            else:raise AssertionError('Unsafe learning checkpoint admitted: '+mutation)
+        finally:dbfile.write_bytes(closed)
+    checks.append('missing/duplicate task learning, cursor lag and running jobs reject cross-task checkpoint')
     before=len(commands);m.run(root,s,True);assert len(commands)==before
     r=saved[0];cp=m.checkpoint_check(root,r);file=Path(cp['state'])/'home/sessions'/next(iter(cp['sessions']));file.write_text(file.read_text()+'tamper')
     try:m.checkpoint_check(root,r)
