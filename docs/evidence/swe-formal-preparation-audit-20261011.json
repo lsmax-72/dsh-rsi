@@ -1,0 +1,88 @@
+{
+  "status": "ASSET_CONSUMPTION_ACCEPTED_FORMAL_BUDGET_AND_ENVIRONMENTS_PENDING",
+  "formal100Started": false,
+  "budgetConfirmed": false,
+  "taskCount": 100,
+  "uniqueTasks": 100,
+  "exposedOverlap": [],
+  "orderSeed": 20261008,
+  "taskOrderSha256": "b32120b3c87f82418fdfa36cd4b85962dcc13173e719c75203568fa8bbae93ac",
+  "realConsumptionEvidence": "/Users/lsmax/Coder/dsh-rsi/docs/evidence/swe-asset-consumption-acceptance-20261011.json",
+  "acceptanceCases": [
+    {
+      "instanceId": "django__django-11848",
+      "arm": "rsi",
+      "modelCalls": 16,
+      "knownModelTokens": 822661,
+      "agentWallSeconds": 128.481,
+      "memory": [
+        {
+          "id": "m_1791530289346_6c544801",
+          "scope": "c52ddf65534b7b4603508435",
+          "bodySha256": "64b452626615538e11d1f5fd6ef2bcd41d0a9f58ba44dbf00d26bbb888ee7a6b",
+          "messageId": "869cf8b5-e154-43d4-9be1-6f854312989c",
+          "requestOrdinal": 1
+        }
+      ],
+      "skills": [
+        {
+          "name": "rsi-django-parse-http-date-two-digit-year",
+          "bodySha256": "94ce44f6c83074151df8ce9c0f949420678c88433da6f43dd82fb543db5c73c1",
+          "toolCallId": "call_c0ef50d09d6949209249b500",
+          "requestOrdinal": 2
+        }
+      ],
+      "officialScore": null
+    },
+    {
+      "instanceId": "django__django-11551",
+      "arm": "rsi",
+      "modelCalls": 16,
+      "knownModelTokens": 856498,
+      "agentWallSeconds": 160.381,
+      "memory": [
+        {
+          "id": "m_1791530289346_6c544801",
+          "scope": "c52ddf65534b7b4603508435",
+          "bodySha256": "64b452626615538e11d1f5fd6ef2bcd41d0a9f58ba44dbf00d26bbb888ee7a6b",
+          "messageId": "563d02e3-ebcb-4cf3-a111-088b1d1a88a2",
+          "requestOrdinal": 1
+        }
+      ],
+      "skills": [
+        {
+          "name": "rsi-django-admin-listdisplay-e108-descriptor",
+          "bodySha256": "8ea6407590599e2b83b3a79ea4859c6ccbaa146c6094093e148f551e32de900a",
+          "toolCallId": "call_6b316260b1d643f39f1b538a",
+          "requestOrdinal": 2
+        }
+      ],
+      "officialScore": null
+    },
+    {
+      "instanceId": "django__django-11551",
+      "arm": "baseline",
+      "modelCalls": 1,
+      "knownModelTokens": 21870,
+      "agentWallSeconds": 6.906,
+      "memory": [],
+      "skills": [],
+      "officialScore": null
+    }
+  ],
+  "successfulBatchCalls": 33,
+  "earlierSetupAttemptModelCalls": 1,
+  "totalAcceptanceModelCalls": 34,
+  "preparedFormalEnvironments": 0,
+  "cachedFormalTaskImages": 0,
+  "formalGateRejectedWithoutBudgetConfirmation": true,
+  "testOnlyBudgetOverrideNotWritten": true,
+  "limitations": [
+    "Same-source-task replay does not establish cross-task transfer or performance gain",
+    "Admin Memory also recalled on unrelated HTTP task",
+    "Formal environments incomplete",
+    "Embedding Token usage unavailable",
+    "Model deployment metadata is not a weights hash",
+    "900-second fixed wait may add25hours"
+  ]
+}
