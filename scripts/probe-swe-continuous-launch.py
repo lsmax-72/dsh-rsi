@@ -113,3 +113,13 @@ with tempfile.TemporaryDirectory() as td:
   before=study/f'001-{arm}'/'state/home/sessions/old.jsonl';after=study/f'002-{arm}'/'state/home/sessions/old.jsonl';assert before.read_bytes()==after.read_bytes() and before.stat().st_ino!=after.stat().st_ino;after.write_text('changed clone');assert before.read_text()=='independent-'+arm
  cache.compact_history(study,audit) # Each closed checkpoint is processed once.
 print(json.dumps({'status':'PASS_REAL_APFS_HISTORY_CLONES','realModelRequests':0,'checks':['closed own-group history bytes and checkpoint hashes unchanged','independent inodes: later writes never mutate previous checkpoint','groups remain separate and repeat pass skips completed clone']}))
+
+# Shared generic roots do not authorize their unrelated sibling builds.
+root={'ID':'root1','Reclaimable':True,'Shared':True,'Description':'generic base','Parents':None}
+project={'ID':'project1','Reclaimable':True,'Shared':False,'Description':'COPY /opt/rsi','Parents':['root1']}
+child={'ID':'child1','Reclaimable':True,'Shared':False,'Description':'WORKDIR /workspace','Parents':['project1']}
+other={'ID':'other1','Reclaimable':True,'Shared':False,'Description':'other project','Parents':['root1']}
+assert [r['ID'] for r in cache.candidates([root,project,child,other])]==['child1','project1']
+assert [r['ID'] for r in cache.candidates([root|{'Shared':False},project,child,other])]==['child1','project1','root1']
+assert cache.candidates([root,project,child|{'Shared':True},other])==[project]
+print(json.dumps({'status':'PASS_PROJECT_CACHE_DEPENDENCY_ORDER','checks':['unused project children removed before parents','project ancestor dependencies selected without unrelated sibling branches','shared or active records excluded','nullable parent metadata supported']}))

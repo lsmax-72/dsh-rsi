@@ -26,7 +26,7 @@ python3 -B scripts/start-swe-continuous-study.py start \
   --embedding .artifacts/models/embeddinggemma-300m-qat-Q8_0.gguf
 ```
 
-同一输出目录只允许启动一次。已有目录先查状态，不重复执行start。另有后台缓存维护：空间低于30GiB时，只按记录ID清理未共享、可回收且描述明确属于本项目的构建缓存；保留镜像和状态，操作清单写入启动目录。关闭检查点之间重复的本组历史使用APFS独立文件克隆共享物理块，前后核验原哈希；文件仍独立，后续写入不改动上一检查点，不清除历史。模型服务与Docker须保持可用、电脑不能关机；进程会脱离当前窗口，但不跨系统重启。
+同一输出目录只允许启动一次。已有目录先查状态，不重复执行start。另有后台缓存维护：空间低于30GiB时，只按记录ID清理未共享、可回收且属于本项目构建依赖链的缓存，先清理子记录再清理父记录；保留镜像和状态，操作清单写入启动目录。关闭检查点之间重复的本组历史使用APFS独立文件克隆共享物理块，前后核验原哈希；文件仍独立，后续写入不改动上一检查点，不清除历史。模型服务与Docker须保持可用、电脑不能关机；进程会脱离当前窗口，但不跨系统重启。
 
 ```bash
 python3 -B scripts/start-swe-continuous-study.py status --output .artifacts/swe-continuous-launch-20261011
@@ -44,3 +44,14 @@ python3 -B scripts/start-swe-continuous-study.py stop --output .artifacts/swe-co
 `summary.json`每次关闭后自动更新，包含每20题阶段和累计通过率、同题配对净差、Memory/Skill生成与正文消费、前台/后台实际Token、未知usage、嵌入调用/字符/耗时及执行异常；`report.md`列出逐题状态。单条连续序列存在历史依赖，不计算100次独立重复的置信区间。资产正文进入请求仅证明消费，不能单独证明相关性或决策收益。
 
 完整100题官方通过率及净差仅在判分完整时提供；INFRA单列，不能当成官方失败。等待逻辑、容器交接和启动器的固定回复/合成测试属于工程验证，不是正式实验成绩。
+
+
+## 2026-10-12 磁盘阻断恢复
+
+原启动目录 `swe-continuous-launch-20261011` 在准备85/100时因低于15GiB停止，正式模型任务未开始。发现旧缓存维护只删除带项目路径的父记录，未先删除引用它们的末端构建记录，导致大量命令返回0B。修复后按项目标记确定后继和祖先依赖，排除共享/在用记录与共用祖先下的其他项目分支，按子层到父层清理。
+
+恢复保持原题单、种子、预算、原生能力、Prompt及已完成的85份环境收据不变；原停止目录保留。更新的启动候选使用新目录 `.artifacts/swe-continuous-launch-resume-20261012`，仍在100题环境全部核验后才冻结和派发。可用下面命令查看恢复批次：
+
+```bash
+python3 -B scripts/start-swe-continuous-study.py status --output .artifacts/swe-continuous-launch-resume-20261012
+```

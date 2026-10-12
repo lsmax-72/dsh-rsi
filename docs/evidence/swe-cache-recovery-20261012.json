@@ -1,0 +1,68 @@
+{
+  "status": "PASS_PROJECT_CACHE_RECOVERY",
+  "formalModelRequests": 0,
+  "preparedEnvironmentsUnchanged": 85,
+  "taskAndScorerImageIdsUnchanged": 170,
+  "cacheRecordsExamined": 162,
+  "dockerReportedReclaimedBytes": 19463318069,
+  "hostFreeBytes": 33465241600,
+  "tests": [
+    {
+      "status": "PASS_OFFLINE_CONTINUOUS_LAUNCH",
+      "realModelRequests": 0,
+      "syntheticScoresAreExperimentResults": false,
+      "checks": [
+        "all100 receipts, public-only fields, dataset/order, official source/version and image IDs required",
+        "HALTED/missing/foreign/tampered environment or changed image stops before dispatch",
+        "pinned inputs and clean code are checked before readiness and freeze",
+        "real coordinator entry launches existing runner only after complete_spec and successful freeze",
+        "blocking preparation/input/freeze failure and STOP never launch formal tasks or retry"
+      ]
+    },
+    {
+      "status": "PASS_PROJECT_CACHE_SELECTION",
+      "realModelRequests": 0,
+      "imagesOrStateRemoved": false,
+      "checks": [
+        "only reclaimable unshared project build records selected",
+        "shared active unrelated and malformed records excluded"
+      ]
+    },
+    {
+      "status": "PASS_PREMODEL_TRANSPORT_RECOVERY",
+      "realModelRequests": 0,
+      "checks": [
+        "up to3 empty network failures archived and resumed",
+        "retry limit preserved",
+        "partial bytes and source/freeze failures never retried"
+      ]
+    },
+    {
+      "status": "PASS_PREMODEL_RECOVERY_NEGATIVE_CONTROLS",
+      "checks": [
+        "partial source, source validation, completed environment and live worker stop recovery before first retry"
+      ]
+    },
+    {
+      "status": "PASS_REAL_APFS_HISTORY_CLONES",
+      "realModelRequests": 0,
+      "checks": [
+        "closed own-group history bytes and checkpoint hashes unchanged",
+        "independent inodes: later writes never mutate previous checkpoint",
+        "groups remain separate and repeat pass skips completed clone"
+      ]
+    },
+    {
+      "status": "PASS_PROJECT_CACHE_DEPENDENCY_ORDER",
+      "checks": [
+        "unused project children removed before parents",
+        "project ancestor dependencies selected without unrelated sibling branches",
+        "shared or active records excluded",
+        "nullable parent metadata supported"
+      ]
+    }
+  ],
+  "oldLaunchPreserved": ".artifacts/swe-continuous-launch-20261011",
+  "newLaunch": ".artifacts/swe-continuous-launch-resume-20261012",
+  "protocolBudgetsPromptsAndNativeMechanismChanged": false
+}

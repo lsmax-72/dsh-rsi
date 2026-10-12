@@ -4,7 +4,26 @@ import argparse, hashlib, json, os, re, shutil, subprocess, tempfile, time
 from pathlib import Path
 MARKERS=('/opt/rsi','/opt/dsh','/opt/task-source','@deepseek-ai/dsh@')
 def candidates(rows):
- return [r for r in rows if r.get('Reclaimable') is True and r.get('Shared') is False and re.fullmatch(r'[a-z0-9]+',r.get('ID','')) and any(x in r.get('Description','') for x in MARKERS)]
+ by={r['ID']:r for r in rows if re.fullmatch(r'[a-z0-9]+',r.get('ID',''))}
+ # Include project descendants (e.g. final WORKDIR) that retain the marked
+ # layers, then their ancestors. Do not expand sibling projects via ancestors.
+ owned={k for k,r in by.items() if any(x in r.get('Description','') for x in MARKERS)}
+ while True:
+  added={k for k,r in by.items() if set(r.get('Parents') or [])&owned}-owned
+  if not added:break
+  owned|=added
+ selected=set(owned);todo=list(owned)
+ while todo:
+  for parent in by[todo.pop()].get('Parents') or []:
+   if parent in by and parent not in selected:selected.add(parent);todo.append(parent)
+ eligible={k for k in selected if by[k].get('Reclaimable') is True and by[k].get('Shared') is False}
+ ordered=[]
+ while eligible:
+  parents={p for k in eligible for p in by[k].get('Parents') or []}
+  leaves=sorted(eligible-parents)
+  if not leaves:raise ValueError('Cyclic project cache dependency graph')
+  ordered.extend(by[k] for k in leaves);eligible-=set(leaves)
+ return ordered
 def alive(pid):
  if not pid:return False
  try:os.kill(pid,0);return True
