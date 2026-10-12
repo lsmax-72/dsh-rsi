@@ -51,12 +51,12 @@
 
 项目主要由四部分组成：
 
-| 模块 | 主要职责 | 代码位置 |
-| --- | --- | --- |
-| dsh 宿主接入 | 会话事件、模型步骤、Skill Provider、插件管理 API | `src/index.ts`、`src/runtime.ts` |
-| 后台执行与治理 | 模型桥接、学习队列、预算、诊断日志和作用范围 | `src/model-bridge.ts`、`src/state.ts` |
-| Memory / Skill 核心 | 分层提炼、检索、Review Agent、资源与版本处理 | `vendor/core/` |
-| 管理页面与 UI 适配 | 资产浏览、编辑、版本管理、学习状态和设置 | `src/client/`、`vendor/panel/` |
+| 模块 | 主要职责 |
+| --- | --- |
+| dsh 宿主接入 | 会话事件、模型步骤、Skill Provider、插件管理 API |
+| 后台执行与治理 | 模型桥接、学习队列、预算、诊断日志和作用范围 |
+| Memory / Skill 核心 | 分层提炼、检索、Review Agent、资源与版本处理 |
+| 管理页面与 UI 适配 | 资产浏览、编辑、版本管理、学习状态和设置 |
 
 
 ## 快速开始
@@ -157,5 +157,3 @@ npm run test:package
 本项目的设计与实现参考了以下开源项目：
 
 - [TencentDB-Agent-Memory](https://github.com/TencentCloud/TencentDB-Agent-Memory)
-
-第三方代码的来源、固定版本及许可信息，请参阅 [核心来源清单](vendor/core/manifest.json)、[界面来源清单](vendor/panel/manifest.json)、[核心许可证](vendor/core/LICENSE) 和 [界面许可证](vendor/panel/LICENSE)。

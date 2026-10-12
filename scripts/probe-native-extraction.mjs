@@ -36,6 +36,6 @@ try {
   assert.deepEqual(result.candidates,[]);
   const l1=calls.find(p=>p.taskId==='l1-extraction');assert.ok(l1.systemPrompt.includes('assistant-reported/unverified'));assert.ok(l1.prompt.includes('所有测试都通过了'));
 
-  const manifest=JSON.parse(await readFile(fileURLToPath(new URL('../vendor/core/manifest.json',import.meta.url)),'utf8'));
+  const manifest=JSON.parse(await readFile(fileURLToPath(new URL('../vendor/source-manifest.json',import.meta.url)),'utf8')).core;
   console.log(JSON.stringify({status:'PASS',checkedAt:new Date().toISOString(),sourceRevision:manifest.revision,sourceFileSha256:manifest.files.find(f=>f.path==='core/skill/prompts/skill-review-prompt.ts').sha256,configuredNativePromptSha256:createHash('sha256').update(review.systemPrompt.slice(0,SKILL_REVIEW_PROMPT.length)).digest('hex'),nativePromptChars:SKILL_REVIEW_PROMPT.length,nativeProductionPromptDelivered:true,transcriptRolesPreserved:true,noChangeContract:true,conciseSkillGuidanceDelivered:true,toolEvidenceGuidanceDelivered:true,callerContractAndCoverageGuidanceDelivered:true,executableCodeFidelityAndResourceGuidanceDelivered:true,historicalRetrievalIsNotCurrentExecutionGuidanceDelivered:true,L1ProseOnlyClaimsExplicitlyUnverified:true,fixtureRunnerCalls:calls.length,realModelRequests:0},null,2));
 }finally{core.close();await rm(root,{recursive:true,force:true});}
