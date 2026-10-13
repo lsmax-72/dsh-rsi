@@ -20,7 +20,7 @@ def fixture(root):
     return spec,rows,pool
 
 checks=[]
-for kind in ['valid','model-evidence','state-evidence','used-lease','unsettled-lease','wrong-budget','wrong-source','not-storage','later-record','checkpoint','duplicate','wrong-task']:
+for kind in ['valid','model-evidence','state-evidence','used-lease','unsettled-lease','wrong-budget','wrong-source','not-storage','later-record','checkpoint','duplicate','wrong-task','npm-timeout','npm-integrity','npm-lockfile','recovery-limit']:
     with tempfile.TemporaryDirectory() as td:
         root=Path(td);spec,rows,pool=fixture(root);out=root/'002-rsi'
         if kind=='model-evidence': (out/'gateway.log').write_text('request')
@@ -34,8 +34,23 @@ for kind in ['valid','model-evidence','state-evidence','used-lease','unsettled-l
         if kind=='checkpoint': write(root/'002-rsi.checkpoint.json',{})
         if kind=='duplicate': rows.append(copy.deepcopy(rows[0]))
         if kind=='wrong-task': rows[-1]['instanceId']='django__django-3'
+        if kind in ['npm-timeout','npm-integrity','npm-lockfile']:
+            code={'npm-timeout':'EIDLETIMEOUT','npm-integrity':'EINTEGRITY','npm-lockfile':'EUSAGE'}[kind]
+            (out/'build.log').write_text('RUN cd /opt/rsi && npm ci --ignore-scripts\nnpm error code '+code+'\nregistry.npmjs.org\ndid not complete successfully: exit code: 1\nERROR: failed to build: npm failed')
+        if kind=='recovery-limit':
+            for i in range(3):
+                archive=root/'prelaunch-recovery'/str(i);archive.mkdir(parents=True)
+                write(archive/'audit.json',{'position':2,'arm':'rsi'})
         try: m.evidence(root,spec,rows,pool); accepted=True
         except ValueError: accepted=False
-        assert accepted==(kind=='valid'),kind
+        assert accepted==(kind in ['valid','npm-timeout']),kind
         checks.append(kind)
-print(json.dumps({'status':'PASS_PRELAUNCH_RECOVERY_CONTROLS','checks':checks,'realModelRequests':0,'formalDispatches':0}))
+q=importlib.util.spec_from_file_location('watch',p.with_name('watch-swe-prelaunch.py'));watch=importlib.util.module_from_spec(q);q.loader.exec_module(watch)
+watch_checks=[]
+for status,alive,stop,wanted in [('RUNNING',True,False,'WAIT'),('HALTED',False,False,'AUDIT_RECOVERY'),('COMPLETE',False,False,'FINISHED'),('STOPPED',False,False,'FINISHED'),('RUNNING',True,True,'FINISHED')]:
+    assert watch.action({'status':status},alive,stop)==wanted
+    watch_checks.append(status+':'+wanted)
+try: watch.action({'status':'RUNNING'},False,False)
+except ValueError: watch_checks.append('dead worker blocks')
+else: raise AssertionError('Unexpected dead worker must block')
+print(json.dumps({'status':'PASS_PRELAUNCH_RECOVERY_CONTROLS','checks':checks,'watchChecks':watch_checks,'realModelRequests':0,'formalDispatches':0}))

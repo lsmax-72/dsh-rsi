@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Audit and archive a storage failure before task launch; reuse the frozen runner."""
+"""Audit and archive a transient build failure before task launch; reuse the frozen runner."""
 import argparse, fcntl, importlib.util, json, os, re, shutil, sqlite3, subprocess, sys, time
 from pathlib import Path
 
@@ -9,6 +9,19 @@ def require(ok, message):
 
 
 def read(path): return json.loads(path.read_text())
+
+
+def classify_build(log):
+    require('ERROR: failed to build:' in log, 'Build failure not evidenced')
+    if 'input/output error' in log and 'exporting to image' in log:
+        return 'STORAGE_EXPORT_IO'
+    codes=set(re.findall(r'npm (?:error|ERR!) code ([A-Z_]+)',log))
+    transient={'EIDLETIMEOUT','ETIMEDOUT','ECONNRESET','EAI_AGAIN'}
+    require(codes and codes<=transient and 'registry.npmjs.org' in log
+            and 'RUN cd /opt/rsi && npm ci --ignore-scripts' in log
+            and 'did not complete successfully: exit code: 1' in log,
+            'Not an evidenced transient registry download failure')
+    return 'NPM_REGISTRY_TRANSPORT'
 
 
 def evidence(root, spec, records, pool):
@@ -33,7 +46,9 @@ def evidence(root, spec, records, pool):
     require({p.name for p in out.iterdir()}=={'build.log','source-snapshot.json','budget-reservation.json','budget-settlement.json'}, 'Possible task/model/state evidence: refuse recovery')
     require(not (root/(name+'.checkpoint.json')).exists(), 'Failed attempt has checkpoint')
     log=(out/'build.log').read_text()
-    require('ERROR: failed to build:' in log and 'input/output error' in log and 'exporting to image' in log, 'Not an evidenced storage build failure')
+    classify_build(log)
+    prior_recoveries=[read(p) for p in (root/'prelaunch-recovery').glob('*/audit.json')]
+    require(sum(a['position']==r['position'] and a['arm']==r['arm'] for a in prior_recoveries)<3, 'Prelaunch recovery limit reached (3 per task)')
     reservation=read(out/'budget-reservation.json'); lease=reservation['leaseId']
     require(re.fullmatch(r'rsi-preflight-[0-9a-f]{10}',lease), 'Invalid resource prefix')
     require(pool['cap']==spec['budgets']['learningTotal'] and all(x['used'] is not None for x in pool['leases']), 'Budget cap differs or unsettled work remains')
@@ -93,6 +108,7 @@ def main():
         for lock in [launch,worker]: fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
         m,s,work,r,hashes,pool=audit(root)
         result={'status':'PASS_SAFE_PRELAUNCH_RECOVERY','position':r['position'],'arm':r['arm'],
+                'failureKind':classify_build((root/f"{r['position']:03d}-{r['arm']}"/'build.log').read_text()),
                 'closedRecords':len(hashes),'closedRecordHashes':hashes,'frozenRevision':s['revision'],
                 'protocolSha256':m.sha(root/'protocol.json'),'taskOrModelStarted':False,
                 'learningCallsCharged':sum(x['used'] for x in pool['leases']),

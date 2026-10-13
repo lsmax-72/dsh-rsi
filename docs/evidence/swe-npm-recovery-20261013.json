@@ -1,0 +1,45 @@
+{
+  "status": "PASS_ZERO_CALL_NPM_RECOVERY_BACKGROUND_WATCH",
+  "observedAt": 1791888231.949939,
+  "failureKind": "NPM_REGISTRY_TRANSPORT",
+  "position": 30,
+  "arm": "rsi",
+  "preservedClosedRuns": 58,
+  "closedRecordsByteExact": true,
+  "taskOrModelStartedInFailedBuild": false,
+  "frozenRevision": "3df8f2712b6017f40f678510ad5c8c53bafc4236",
+  "protocolSha256": "569e611f7e1c019a7723c2d6081feb6e360d08366caab7c6472de3ea69b85cca",
+  "frozenCodeConfigurationPromptsUnchanged": true,
+  "hostFreeBytes": 33734549504,
+  "learningCallsChargedBeforeResume": 486,
+  "failedZeroUsedLeaseRetained": true,
+  "archive": ".artifacts/swe-continuous-formal-20261011/prelaunch-recovery/1791888110264060000",
+  "registryConnectivity": {
+    "hostHTTP": 200,
+    "dockerHTTP": 200
+  },
+  "backgroundStudy": {
+    "status": "RUNNING",
+    "position": 30,
+    "arm": "rsi",
+    "completedRuns": 58,
+    "plannedRuns": 200,
+    "pid": 35287
+  },
+  "backgroundWatch": {
+    "status": "WATCHING",
+    "pid": 34380,
+    "runnerPid": 35287,
+    "cachePid": 35907,
+    "updatedAt": 1791888203.4612281
+  },
+  "maxPrelaunchRecoveriesPerTask": 3,
+  "tests": {
+    "prelaunchControls": 16,
+    "watchStateControls": 6,
+    "realModelRequests": 0
+  },
+  "noFinishedAgentTaskReplayed": true,
+  "CodexRequiredWhileRunning": false,
+  "limitation": "Transient registry connectivity recovered at probe time. Future outage may persist; retries are bounded and unsafe state always blocks."
+}
