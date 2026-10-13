@@ -1,0 +1,50 @@
+{
+  "status": "PASS_STORAGE_REPAIR_SAFE_BACKGROUND_RESUME",
+  "checkedAt": 1791869190.25458,
+  "frozenRevision": "3df8f2712b6017f40f678510ad5c8c53bafc4236",
+  "protocolSha256": "569e611f7e1c019a7723c2d6081feb6e360d08366caab7c6472de3ea69b85cca",
+  "validatedTaskScorerImageReferences": 200,
+  "verifiedClosedCheckpoints": 49,
+  "closedRecordsByteExactAfterRecovery": true,
+  "modelDeploymentUnchanged": true,
+  "budgetsUnchanged": {
+    "foregroundCalls": 60,
+    "wallSeconds": 1200,
+    "maxOutputTokens": 8192,
+    "learningCallsPerTask": 20,
+    "learningTotal": 2000,
+    "settleSeconds": 900
+  },
+  "failedPosition": 25,
+  "failedArm": "rsi",
+  "failedTransactionTaskOrModelStarted": false,
+  "learningCallsChargedBeforeResume": 386,
+  "unsettledLearningLeasesBeforeResume": 0,
+  "failedZeroUsedLeaseRetained": true,
+  "archive": ".artifacts/swe-continuous-formal-20261011/prelaunch-recovery/1791869041697812000",
+  "realDockerWriteRead": "PASS_REAL_DOCKER_WRITE_READ",
+  "runningContainersRestored": 12,
+  "hostFreeBytes": 35725094912,
+  "runnerPid": 99992,
+  "cachePid": 1041,
+  "backgroundState": {
+    "status": "RUNNING",
+    "position": 25,
+    "arm": "rsi",
+    "completedRuns": 49,
+    "plannedRuns": 200,
+    "pid": 99992
+  },
+  "CodexRequiredWhileRunning": false,
+  "formalProtocolOrFrozenCodeChanged": false,
+  "tests": {
+    "status": "PASS_PRELAUNCH_RECOVERY_CONTROLS",
+    "cases": 12,
+    "realModelRequests": 0
+  },
+  "limitations": [
+    "Full 100-pair experiment has not finished.",
+    "Docker health and startup verified at this observation; future storage or service faults can still halt safe dispatch.",
+    "First storage probe incorrectly treated an image ID as a remote tag; no task/model ran. A verified local tag with pull disabled passed."
+  ]
+}
