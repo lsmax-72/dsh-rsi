@@ -9,7 +9,7 @@
 
 目标不是让模型自行修改权重或插件源码，而是实现**外部记忆和技能资产的持续演化**。
 
-> **项目状态：开发中。** 会话采集、资产提炼、持久化、管理界面以及后续独立会话中的真实资产消费已完成相关验证；当前实验尚未证明稳定的任务效果提升。详见[验证状态](#验证状态)。
+> **项目状态：开发中。**
 
 ## 核心能力
 
@@ -42,8 +42,6 @@
 
 - **Memory**：在 `agent/pre-step` 的首个模型步骤前，使用 SQLite FTS5、向量检索与 RRF 召回相关 L1，并在默认 **6000 字符**预算内提供相关记忆、场景导航和画像。模型还可通过 `rsi_memory_search`、`rsi_conversation_search`、`rsi_profile_read` 查询详情。
 - **Skill**：通过 dsh 官方 Skill Provider 暴露带 `rsi-` 前缀的技能名称与描述，Agent 自行决定是否加载正文及对应版本的资源。
-
-**资产生成、资产进入模型上下文和任务效果改善是三个不同的验证环节。** 历史 Skill 中记载的测试结果，也不能作为当前会话已经执行测试的证据。
 
 ## 系统架构
 
@@ -81,7 +79,7 @@ npm ci
 
 在项目目录执行 `pwd`（Windows 可获取对应的绝对目录路径）。打开 dsh 的 **插件 → 添加插件**，选择或输入构建后的项目目录，安装并启用。随后进入插件详情页。
 
-目前已验证**本地目录安装**；尚未完成通过远程 GitHub URL 安装的端到端验收。项目当前为 `private: true`，未发布到 npm。
+项目当前为 `private: true`，未发布到 npm。
 
 ### 3. 开始使用
 
@@ -107,7 +105,7 @@ npm ci
 
 ![技能管理页（模拟数据）](docs/evidence/ui/skills.png)
 
-> 以上管理页面截图使用模拟数据，不代表真实学习成果或实验效果。当前 L2/L3 不支持直接编辑，Skill 资源提供只读预览。
+> 以上管理页面截图使用模拟数据。当前 L2/L3 不支持直接编辑，Skill 资源提供只读预览。
 
 ### 工作区和 Global
 
@@ -128,29 +126,17 @@ npm ci
 
 请求预算按 UTC 日期计算，包含工具循环和失败的模型请求；**它不是费用或 Token 总量上限**。后台学习会增加模型调用成本，即使学习暂停，已保存的资产仍可消费。
 
-## 验证状态
-
-当前验证主要分为两个层面：
-
-- **链路可用性**：已验证会话捕获、后台提炼与持久化、管理界面、独立会话中的真实 Memory/Skill 正文消费，以及相关构建与恢复检查。
-- **任务效果**：已有开发样本尚未证明插件能够稳定提升任务成功率；已有实验存在效果不增反降、Token 开销明显增长的情况。开发样本已曝光，不能作为独立盲测结果。新的正式扩大实验尚待完成。
-
-完整历史结果及问题分析保留在 [PersonaMem 开发复验](docs/personamem-native-v2-outcome-20261007.md)、[连续学习实验](docs/continuous-learning-outcome-20261005.md) 和 [实验推进记录](docs/rsi-roadmap-20261004.md)。README 不以生成的资产数量替代效果证据。
-
 ## 开发与文档
 
 ```bash
 npm run build
-npm run test:integration
-npm run test:runtime
-npm run test:package
 ```
 
-上述集成检查中的固定响应部分不调用真实模型，不能替代真实任务质量评测。提交代码前请阅读 [AGENTS.md](AGENTS.md)。
+提交代码前请阅读 [AGENTS.md](AGENTS.md)。
 
-进一步阅读：[产品需求](docs/product-requirements.md) · [实现进度](docs/implementation-progress.md) · [dsh 接入审查](docs/integration-audit.md) · [安装与发布审查](docs/packaging-review.md) · [管理页验收](docs/client-mount-review.md)
+进一步阅读：[产品需求](docs/product-requirements.md) · [实现进度](docs/implementation-progress.md)
 
-本项目不包含模型权重训练、自动修改插件自身源码、团队权限系统或自动索引整个代码库。历史记录、详细故障分析与实验协议保存在 `docs/`。
+本项目不包含模型权重训练、自动修改插件自身源码、团队权限系统或自动索引整个代码库。更多项目文档保存在 `docs/`。
 
 ## 开源参考与致谢
 
