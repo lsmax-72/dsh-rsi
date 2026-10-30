@@ -1,0 +1,32 @@
+# Publish only plugin runtime sources, build inputs and installation metadata.
+# Everything else stays local, including experiments, tests and generated data.
+/*
+!/.gitignore
+!/.gitattributes
+!/README.md
+!/package.json
+!/package-lock.json
+!/cordis.patch.yml
+!/src/
+!/adapters/
+!/vendor/
+!/scripts/
+/scripts/*
+!/scripts/build.mjs
+!/scripts/verify-core.mjs
+!/scripts/verify-panel.mjs
+/vendor/core/README.md
+
+# Local/test files are excluded even inside public source directories.
+**/__tests__/
+**/__pycache__/
+**/node_modules/
+**/fixtures/
+**/*.test.*
+**/*.spec.*
+**/.DS_Store
+**/.env
+**/.env.*
+**/*.log
+**/*.sqlite*
+**/*.db
