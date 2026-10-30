@@ -3,8 +3,8 @@ import { homedir } from 'node:os';
 import { TypertRemoteService, Remote } from '@deepseek-ai/dsh-typert-protocol';
 import { createUserMessage } from '@deepseek-ai/dsh-llm';
 import { defineTool } from '@deepseek-ai/dsh-tools';
-import {parseOperation,parsePayload} from './rpc-contract.js';
-import { Runtime } from './runtime.js';
+import {parseOperation,parsePayload} from './api/contract.js';
+import { Runtime } from './runtime/runtime.js';
 
 export const name = 'dsh-rsi';
 export const inject = ['sessions','sessionPersistence','llm','skills','tools'];

@@ -1,6 +1,6 @@
 import { AsyncLocalStorage } from 'node:async_hooks';
-import { FileLogger } from '../vendor/core/src/core/report/file-logger.js';
-import { NoopObservabilityBackend } from '../vendor/core/src/core/report/noop-backend.js';
+import { FileLogger } from '../../vendor/core/src/core/report/file-logger.js';
+import { NoopObservabilityBackend } from '../../vendor/core/src/core/report/noop-backend.js';
 const context=new AsyncLocalStorage<{sink:FileLogger,attrs:Record<string,unknown>}>();
 export { FileLogger };
 export function diagnosticProvenance(){return {...context.getStore()?.attrs};}

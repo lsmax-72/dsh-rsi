@@ -1,4 +1,4 @@
-import type { SkillCore } from '../vendor/core/src/core/skill/skill-core.js';
+import type { SkillCore } from '../../vendor/core/src/core/skill/skill-core.js';
 
 /** Display IDs in native extraction prefixes; tools must retain the original core. */
 export function prefixPresentationCore(core: SkillCore): SkillCore {

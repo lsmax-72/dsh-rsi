@@ -2,18 +2,18 @@ import { DatabaseSync } from 'node:sqlite';
 import { AsyncLocalStorage } from 'node:async_hooks';
 import { mkdir } from 'node:fs/promises';
 import { join } from 'node:path';
-import { createReadyEmbedding, guardedEmbedding, withEmbeddingIntegrity, verifyVectorCoverage } from './native-embedding.js';
-import { prefixPresentationCore } from './skill-prefix.js';
-import { profileSourceStrategy } from './profile-strategy.js';
-import { fitNativeMemoryEntries } from './recall-context.js';
-import { FileLogger } from '../adapters/local-observability.js';
+import { createReadyEmbedding, guardedEmbedding, withEmbeddingIntegrity, verifyVectorCoverage } from '../memory/embedding.js';
+import { prefixPresentationCore } from '../skills/prefix.js';
+import { profileSourceStrategy } from '../memory/profile-strategy.js';
+import { fitNativeMemoryEntries } from '../memory/recall.js';
+import { FileLogger } from '../../adapters/observability/local-observability.js';
 import {
   SkillCore, SqliteSkillStore, SkillResourceStore, SkillVersioning, SkillExtractor, SKILL_REVIEW_PROMPT,
   StorageAdapter, LocalStorageBackend, extractL1Memories, VectorStore,
   queryMemoryRecords, readAllMemoryRecords, recordConversation, SceneExtractor, PersonaGenerator, PersonaTrigger, CheckpointManager, stripSceneNavigation,
   performAutoRecall, parseConfig, writeMemory, buildFtsQuery, readSceneIndex, parseSceneBlock,
-} from './core-entry.js';
-import { withinSkillReviewBudget, GENERATED_SKILL_BODY_MAX_CHARS, GENERATED_SKILL_BODY_DRAFT_CHARS } from './skill-review-budget.js';
+} from './exports.js';
+import { withinSkillReviewBudget, GENERATED_SKILL_BODY_MAX_CHARS, GENERATED_SKILL_BODY_DRAFT_CHARS } from '../skills/review-budget.js';
 
 const PROFILE_TIME_PROVENANCE='Profile source-time provenance: memory created_at and recording timestamps, scene META created/updated, and the current runtime date are processing metadata, not historical activity dates. Preserve calendar event claims only when supported by original source facts. Keep unanchored relative times relative; use unknown date or relative order for Evolution when no source date is established. Existing generated scenes/personas are derived summaries, not independent evidence for their inherited calendar claims. Keep native file META and profile update timestamps as recording/update metadata; do not erase explicit source-supported event dates.';
 

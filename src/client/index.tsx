@@ -1,5 +1,5 @@
 import React,{useEffect,useRef,useState} from 'react';
-import {remoteContribution,clientRequest} from '../rpc-contract.js';
+import {remoteContribution,clientRequest} from '../api/contract.js';
 export const inject=['slots','locale','remote'];
 import {css,hostCss} from './styles.js';
 import {AssetPageHeader,hubCss} from './hub.js';

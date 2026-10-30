@@ -10,11 +10,11 @@
 !/src/
 !/adapters/
 !/vendor/
-!/scripts/
-/scripts/*
-!/scripts/build.mjs
-!/scripts/verify-core.mjs
-!/scripts/verify-panel.mjs
+!/build/
+/build/*
+!/build/build.mjs
+!/build/verify-core.mjs
+!/build/verify-panel.mjs
 /vendor/core/README.md
 
 # Local/test files are excluded even inside public source directories.
@@ -30,3 +30,12 @@
 **/*.log
 **/*.sqlite*
 **/*.db
+
+# Private validation, experiments, reports and runtime outputs stay local.
+/tests/
+/experiments/
+/docs/
+/.artifacts/
+/AGENTS.md
+/lib/
+/node_modules/

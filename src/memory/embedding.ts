@@ -1,7 +1,7 @@
 import { AsyncLocalStorage } from 'node:async_hooks';
 import { join } from 'node:path';
-import { createEmbeddingService } from './core-entry.js';
-import { FileLogger, diagnosticProvenance } from '../adapters/local-observability.js';
+import { createEmbeddingService } from '../core/exports.js';
+import { FileLogger, diagnosticProvenance } from '../../adapters/observability/local-observability.js';
 const failures=new AsyncLocalStorage<any[]>();
 export async function createReadyEmbedding(config:any,directory:string,logger:any) {
   const actual=config ? {...config,...(config.provider==='local' && !config.modelCacheDir?{modelCacheDir:join(directory,'models')}:{})} : {provider:'local',modelCacheDir:join(directory,'models')};

@@ -17,13 +17,13 @@
     "src",
     "adapters",
     "vendor",
-    "scripts/build.mjs",
+    "build/build.mjs",
     "cordis.patch.yml",
-    "scripts/verify-core.mjs",
-    "scripts/verify-panel.mjs"
+    "build/verify-core.mjs",
+    "build/verify-panel.mjs"
   ],
   "scripts": {
-    "build": "node scripts/build.mjs",
+    "build": "node build/build.mjs",
     "prepare": "npm run build"
   },
   "dsh": {

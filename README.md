@@ -136,8 +136,25 @@ npm run build
 
 请求预算按 UTC 日期计算，包含工具循环和失败的模型请求；**它不是费用或 Token 总量上限**。后台学习会增加模型调用成本，即使学习暂停，已保存的资产仍可消费。
 
+## 源码目录
+
+```text
+src/
+├── index.ts        # DSH 插件入口
+├── runtime/        # 会话采集、调度、状态与预算
+├── core/           # 复用核心导出与本地装配
+├── model/          # DSH 模型调用桥接
+├── memory/         # 检索上下文、向量与画像适配
+├── skills/         # 技能资源、名称与正文预算
+├── api/            # 资产查询与管理接口契约
+└── client/         # 插件管理页面
+adapters/           # 按宿主、观测、技能与客户端分组的适配
+vendor/             # 固定修订的复用组件与第三方许可证
+build/              # 构建入口和复用源码完整性校验
+```
+
 ## 构建与许可
 
-`src/`、`adapters/` 和 `vendor/` 包含插件运行源码；`scripts/build.mjs` 负责构建，`verify-core.mjs` 与 `verify-panel.mjs` 在构建时校验复用源码的完整性。运行 `npm run build` 可重新生成 `lib/`。
+`src/` 按 `runtime`（调度与状态）、`core`（核心装配）、`model`（模型桥接）、`memory`（记忆与向量）、`skills`（技能资源）、`api`（管理接口）和 `client`（管理页面）组织。`adapters/` 按宿主、观测、技能和客户端划分适配代码，`vendor/` 保存固定修订的复用组件；`build/build.mjs` 负责构建，`verify-core.mjs` 与 `verify-panel.mjs` 在构建时校验复用源码的完整性。运行 `npm run build` 可重新生成 `lib/`。
 
 记忆与技能核心及管理页面部分组件来自固定修订的复用组件，必要适配位于 `adapters/`。来源文件及修订见 `vendor/source-manifest.json`，第三方版权与许可证保留在 `vendor/LICENSE`。

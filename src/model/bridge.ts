@@ -1,7 +1,7 @@
 import { asSchema } from 'ai';
 import Ajv from 'ajv';
 import { randomUUID } from 'node:crypto';
-import { createStorageTools } from './core-entry.js';
+import { createStorageTools } from '../core/exports.js';
 import {
   BlockAssembler, createSystemMessage, createUserMessage, createToolResultMessage,
 } from '@deepseek-ai/dsh-llm';

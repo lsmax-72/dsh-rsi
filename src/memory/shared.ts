@@ -1,6 +1,6 @@
 import {createHash} from 'node:crypto';
-import {batchDedup,writeMemory} from './core-entry.js';
-import {withEmbeddingIntegrity} from './native-embedding.js';
+import {batchDedup,writeMemory} from '../core/exports.js';
+import {withEmbeddingIntegrity} from './embedding.js';
 
 const fingerprint=(value:any)=>createHash('sha256').update((JSON.stringify(value) ?? 'null')).digest('hex');
 // This pinned SQLite implementation does not implement recordIds in its query filter.

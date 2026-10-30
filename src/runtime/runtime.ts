@@ -1,16 +1,16 @@
 import { AsyncLocalStorage } from 'node:async_hooks';
 import { mkdir, writeFile, rm, readdir, rename } from 'node:fs/promises';
 import { join,relative,resolve,isAbsolute } from 'node:path';
-import { DshModelRunner } from './model-bridge.js';
-import { openLocalCore,validateSkillTranscriptWindow } from './local-core.js';
-import { MemoryPipelineManager, parseSkillFile, buildFtsQuery, shouldExtractL1 } from './core-entry.js';
-import { copyResources,versionResources } from './resources.js';
+import { DshModelRunner } from '../model/bridge.js';
+import { openLocalCore,validateSkillTranscriptWindow } from '../core/local-core.js';
+import { MemoryPipelineManager, parseSkillFile, buildFtsQuery, shouldExtractL1 } from '../core/exports.js';
+import { copyResources,versionResources } from '../skills/resources.js';
 import { State, workspace, type Settings } from './state.js';
-import { listAllSkills, listAllVersions } from './asset-pages.js';
-import { fitRecallScope, recallToolGuide } from './recall-context.js';
-import {planSharedMemories,applySharedMemory} from './shared-memory.js';
-import { createReadyEmbedding } from './native-embedding.js';
-import { FileLogger, withLocalDiagnostics, diagnosticEvent } from '../adapters/local-observability.js';
+import { listAllSkills, listAllVersions } from '../api/assets.js';
+import { fitRecallScope, recallToolGuide } from '../memory/recall.js';
+import {planSharedMemories,applySharedMemory} from '../memory/shared.js';
+import { createReadyEmbedding } from '../memory/embedding.js';
+import { FileLogger, withLocalDiagnostics, diagnosticEvent } from '../../adapters/observability/local-observability.js';
 
 const ids = (scope: string) => ({ user_id:'local-user', team_id:scope, agent_id:'local-agent' });
 const text = (message: any) => (message?.content ?? []).map((block: any) => block.type === 'text' ? block.text : JSON.stringify(block)).join('\n');
