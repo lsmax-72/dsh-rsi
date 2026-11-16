@@ -171,4 +171,6 @@ build/              # 构建入口和复用源码完整性校验
 
 `src/` 按 `runtime`（调度与状态）、`core`（核心装配）、`model`（模型桥接）、`memory`（记忆与向量）、`skills`（技能资源）、`api`（管理接口）和 `client`（管理页面）组织。`adapters/` 按宿主、观测、技能和客户端划分适配代码，`vendor/` 保存固定修订的复用组件；`build/build.mjs` 负责构建，`verify-core.mjs` 与 `verify-panel.mjs` 在构建时校验复用源码的完整性。运行 `npm run build` 可重新生成 `lib/`。
 
+运行时的 `@deepseek-ai/dsh-llm`、`@deepseek-ai/dsh-tools` 和 `@deepseek-ai/dsh-typert-protocol` 由 `src/host-packages.ts` 从当前 dsh 安装解析，与宿主共用同一模块实例；`peerDependencies` 仅作兼容声明并标记为可选，不随插件安装自己的副本。
+
 记忆与技能核心及管理页面部分组件来自固定修订的复用组件，必要适配位于 `adapters/`。来源文件及修订见 `vendor/source-manifest.json`，第三方版权与许可证保留在 `vendor/LICENSE`。
