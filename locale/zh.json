@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "自进化记忆",
+    "description": "从会话中积累可复用的记忆与技能，并在后续任务中召回，附带资产管理页面。",
+    "detail": "docs/DETAIL.md"
+  }
+}

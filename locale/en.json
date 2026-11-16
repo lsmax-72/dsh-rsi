@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "Self-evolving memory",
+    "description": "Learns reusable chat memory and skills from sessions, then recalls them in later work with a management panel.",
+    "detail": "docs/DETAIL.md"
+  }
+}

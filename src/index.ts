@@ -1,10 +1,33 @@
 import { isAbsolute, join } from 'node:path';
 import { homedir } from 'node:os';
-import { TypertRemoteService, Remote } from '@deepseek-ai/dsh-typert-protocol';
-import { createUserMessage } from '@deepseek-ai/dsh-llm';
-import { defineTool } from '@deepseek-ai/dsh-tools';
+import { host } from './host-packages.js';
 import {parseOperation,parsePayload} from './api/contract.js';
 import { Runtime } from './runtime/runtime.js';
+
+const { Remote, TypertRemoteService } = host.typert;
+const { createUserMessage } = host.llm;
+const { defineTool } = host.tools;
+
+/** Validate the Loader row config without adding another runtime dependency. */
+export const Config = {
+  '~standard': {
+    version: 1 as const,
+    vendor: 'dsh-rsi',
+    validate(value: any) {
+      if (value === undefined || value === null) return { value: {} };
+      if (typeof value !== 'object' || Array.isArray(value)) return { issues: [{ message: '配置必须是对象' }] };
+      for (const key of ['dataDir', 'cwd'] as const) {
+        if (value[key] !== undefined && (typeof value[key] !== 'string' || !isAbsolute(value[key]))) {
+          return { issues: [{ message: `${key} 必须是绝对路径`, path: [key] }] };
+        }
+      }
+      if (value.embedding !== undefined && (typeof value.embedding !== 'object' || value.embedding === null || Array.isArray(value.embedding))) {
+        return { issues: [{ message: 'embedding 必须是对象', path: ['embedding'] }] };
+      }
+      return { value };
+    },
+  },
+};
 
 export const name = 'dsh-rsi';
 export const inject = ['sessions','sessionPersistence','llm','skills','tools'];

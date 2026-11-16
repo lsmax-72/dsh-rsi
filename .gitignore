@@ -15,6 +15,8 @@
 !/build/build.mjs
 !/build/verify-core.mjs
 !/build/verify-panel.mjs
+!/locale/
+!/icon.svg
 /vendor/core/README.md
 
 # Local/test files are excluded even inside public source directories.
@@ -35,6 +37,9 @@
 /tests/
 /experiments/
 /docs/
+!/docs/
+/docs/*
+!/docs/DETAIL.md
 /.artifacts/
 /AGENTS.md
 /lib/
