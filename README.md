@@ -58,7 +58,7 @@
 
 ### 环境要求
 
-- 官方 dsh；兼容范围为 `0.2.0-rc.2` 或 `>=0.2.1-rc.2 <0.2.2-0`（含后续 0.2.1 RC 和正式版）。宿主兼容版本由 `package.json` 的 `engines.dsh` 声明。
+- 官方 dsh；兼容范围为 `0.2.0-rc.2` 或 `>=0.2.1-rc.2 <0.3.0-0`（覆盖 0.2.1 与 0.2.2 系列）。已在 `0.2.2-rc.3` 上验证插件激活、记忆检索与 Skill Provider 加载；宿主兼容版本由 `package.json` 的 `engines.dsh` 声明。
 - Node.js **24 或更高版本**。
 - 在 dsh 中配置可用的模型；后台学习默认跟随来源会话的模型。
 
@@ -93,7 +93,7 @@ npm run build
 
 ### DSH 版本兼容
 
-插件兼容范围由 `package.json` 的 `engines.dsh` 声明。同一 `0.2.1` 版本线后续 RC 与正式版无需逐个修改白名单；`0.2.2` 及其预发布版本仍需后续适配。RC 版本可能改变接口，范围声明不等于对所有未来版本的运行保证。
+插件兼容范围由 `package.json` 的 `engines.dsh` 声明，当前为 `0.2.0-rc.2` 或 `>=0.2.1-rc.2 <0.3.0-0`。`0.2.2-rc.3` 已完成激活、记忆检索工具、召回注入与 Skill Provider 的实机验证；管理页界面的视觉验证和其余 0.2.2 版本仍以实际运行结果为准。RC 版本可能改变接口，范围声明不等于对所有未来版本的运行保证。
 
 ### 3. 开始使用
 
@@ -135,6 +135,20 @@ npm run build
 | 自动 Memory 注入预算 | 6000 字符 |
 
 请求预算按 UTC 日期计算，包含工具循环和失败的模型请求；**它不是费用或 Token 总量上限**。后台学习会增加模型调用成本，即使学习暂停，已保存的资产仍可消费。
+
+### 嵌入模型
+
+记忆检索使用本地 `embeddinggemma-300m`（768 维）。默认从 Hugging Face 下载到 `$DSH_HOME/plugin-data/dsh-rsi/models`；无法访问 Hugging Face 时，在 profile 的 `cordis.patch.yml` 中为 `dsh-rsi` 指定已有 GGUF 文件：
+
+```yaml
+- id: dsh-rsi
+  config:
+    embedding:
+      provider: local
+      modelPath: /path/to/embeddinggemma-300m-qat-Q8_0.gguf
+```
+
+向量模型未就绪时，记忆检索会明确报错，不会静默退回关键词检索。改动后需要重启 dsh 或重新启用插件才会生效。
 
 ## 源码目录
 
