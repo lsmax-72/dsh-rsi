@@ -175,10 +175,38 @@ vendor/             # 固定修订的复用组件与第三方许可证
 build/              # 构建入口和复用源码完整性校验
 ```
 
-## 构建与许可
+## 分享给其他人使用
 
-`src/` 按 `runtime`（调度与状态）、`core`（核心装配）、`model`（模型桥接）、`memory`（记忆与向量）、`skills`（技能资源）、`api`（管理接口）和 `client`（管理页面）组织。`adapters/` 按宿主、观测、技能和客户端划分适配代码，`vendor/` 保存固定修订的复用组件；`build/build.mjs` 负责构建，`verify-core.mjs` 与 `verify-panel.mjs` 在构建时校验复用源码的完整性。运行 `npm run build` 可重新生成 `lib/`。
+dsh-rsi 是单用户本地插件，没有发布到 npm（`package.json` 中为 `private: true`），所以其他人使用时需要先拿到代码并在本机构建一次。插件不依赖服务端，Memory、Skill、日志和调用记录都保存在使用者自己的机器上。
 
-运行时的 `@deepseek-ai/dsh-llm`、`@deepseek-ai/dsh-tools` 和 `@deepseek-ai/dsh-typert-protocol` 由 `src/host-packages.ts` 从当前 dsh 安装解析，与宿主共用同一模块实例；`peerDependencies` 仅作兼容声明并标记为可选，不随插件安装自己的副本。
+### 对方需要准备
 
-记忆与技能核心及管理页面部分组件来自固定修订的复用组件，必要适配位于 `adapters/`。来源文件及修订见 `vendor/source-manifest.json`，第三方版权与许可证保留在 `vendor/LICENSE`。
+- 已安装兼容版本的 dsh：兼容范围由 `package.json` 的 `engines.dsh` 声明，当前为 `0.2.0-rc.2` 或 `>=0.2.1-rc.2 <0.3.0-0`。
+- Node.js **24 或更高版本**。
+- dsh 中已配置可用模型；后台学习默认跟随来源会话的模型，并产生真实的模型调用（默认每日后台预算 100 次，见「默认配置」）。
+
+### 安装与使用
+
+1. 获取代码并构建：
+
+   ```bash
+   git clone https://github.com/lsmax-72/dsh-rsi.git
+   cd dsh-rsi
+   npm ci
+   ```
+
+   `npm ci` 会通过 `prepare` 自动构建；如果对方的环境禁用了生命周期脚本，再执行 `npm run build`。没有 git 时，也可以把整个项目目录打包发给对方，解压后执行 `npm ci`（`node_modules/` 和 `lib/` 不必一起打包）。
+
+2. 在 dsh 中打开 **插件 → 添加插件**，选择或输入该目录的绝对路径，安装并启用。
+
+3. 打开插件详情页，在「概览」中选择要学习的工作区，然后正常执行 Coding Agent 任务。稳定阶段后后台会入队提炼 Memory / Skill。
+
+4. 后续在相同工作区的新会话中继续任务，检查 Memory 是否被召回、`rsi-` 技能是否被自然加载。首次使用时资产为空、任务结束没有产生新资产都属于正常情况。
+
+5. 记忆检索使用本地嵌入模型：默认自动从 Hugging Face 下载 `embeddinggemma-300m` 到 `$DSH_HOME/plugin-data/dsh-rsi/models`；无法访问 Hugging Face 时，按「嵌入模型」一节在 `cordis.patch.yml` 中指定已有的 GGUF 文件。
+
+### 数据、升级与卸载
+
+- 资产保存在 `$DSH_HOME/plugin-data/dsh-rsi`（未配置时为 `~/.dsh/plugin-data/dsh-rsi`），与插件代码目录分离；升级或重装插件不会删除已有资产。
+- 升级时在插件目录执行 `git pull && npm run build`，然后完全退出并重新打开 dsh，在插件页确认版本。必要时卸载旧条目，再通过「添加插件」重新选择该目录。
+- 插件目录在安装后不要删除或移动；也不要在设置中执行「清理资产」，否则会丢失已学习的 Memory 和 Skill。
