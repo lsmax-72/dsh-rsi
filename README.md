@@ -24,6 +24,8 @@
 
 ## 工作原理
 
+![dsh-rsi 学习与消费闭环](docs/images/dsh-rsi-learning-loop.png)
+
 ### 1. 采集：保留真实任务证据
 
 插件监听 dsh 的 `session/event`，在任务轮次结束后读取已持久化的会话事件。Memory 主要使用用户与助手正文；Skill Review 额外使用工具调用、执行结果及结束原因。后台学习任务写入 SQLite，并通过来源游标与唯一任务 ID 防止重复入队。
@@ -44,6 +46,8 @@
 - **Skill**：通过 dsh 官方 Skill Provider 暴露带 `rsi-` 前缀的技能名称与描述，Agent 自行决定是否加载正文及对应版本的资源。
 
 ## 系统架构
+
+![dsh-rsi 系统架构](docs/images/dsh-rsi-architecture.png)
 
 项目主要由四部分组成：
 
@@ -115,7 +119,11 @@ npm run build
 | 技能 | 查看正文和资源、编辑、禁用、历史版本及回滚、复制为 Global Skill |
 | 设置 | 学习开关、语言与调用预算、资产导出和清理 |
 
-当前 L2/L3 不支持直接编辑，Skill 资源提供只读预览。
+![记忆管理页（模拟数据）](docs/evidence/ui/memory.png)
+
+![技能管理页（模拟数据）](docs/evidence/ui/skills.png)
+
+> 以上管理页面截图使用模拟数据。当前 L2/L3 不支持直接编辑，Skill 资源提供只读预览。
 
 ### 工作区和 Global
 

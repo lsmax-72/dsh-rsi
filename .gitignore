@@ -40,6 +40,16 @@
 !/docs/
 /docs/*
 !/docs/DETAIL.md
+# Public README diagrams and mock-data UI screenshots only; other docs stay local.
+!/docs/images/
+/docs/images/*
+!/docs/images/*.png
+!/docs/evidence/
+/docs/evidence/*
+!/docs/evidence/ui/
+/docs/evidence/ui/*
+!/docs/evidence/ui/memory.png
+!/docs/evidence/ui/skills.png
 /.artifacts/
 /AGENTS.md
 /lib/
